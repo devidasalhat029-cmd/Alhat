@@ -6,91 +6,211 @@ Weather Forecast
 
 {% block content %}
 
-<div class="container mt-4">
+<style>
 
-    <h1 class="text-center mb-4">
-        🌦️ Weather Forecast
-    </h1>
+.weather-banner{
+    background:linear-gradient(135deg,#0ea5e9,#2563eb);
+    color:white;
+    padding:40px;
+    border-radius:25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
 
-    <div class="card shadow">
-        <div class="card-body">
+.weather-banner i{
+    font-size:100px;
+}
 
-            <h3 class="mb-3">
-                📅 Weekly Weather Report
-            </h3>
+.weather-cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin-top:25px;
+}
 
-            <table class="table table-bordered table-hover">
+.card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+    transition:.3s;
+}
 
-                <tr class="table-primary">
-                    <th>📆 Day</th>
-                    <th>🌤️ Weather</th>
-                    <th>🌡️ Temperature</th>
-                    <th>📋 Condition</th>
-                </tr>
+.card:hover{
+    transform:translateY(-8px);
+}
 
-                <tr>
-                    <td>Monday</td>
-                    <td>☀️</td>
-                    <td>32°C</td>
-                    <td>Sunny</td>
-                </tr>
+.card i{
+    font-size:50px;
+    color:#2563eb;
+    margin-bottom:10px;
+}
 
-                <tr>
-                    <td>Tuesday</td>
-                    <td>⛅</td>
-                    <td>29°C</td>
-                    <td>Cloudy</td>
-                </tr>
+.forecast{
+    margin-top:25px;
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
 
-                <tr>
-                    <td>Wednesday</td>
-                    <td>🌧️</td>
-                    <td>25°C</td>
-                    <td>Rainy</td>
-                </tr>
+.days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:15px;
+    margin-top:20px;
+}
 
-                <tr>
-                    <td>Thursday</td>
-                    <td>🌩️</td>
-                    <td>27°C</td>
-                    <td>Thunderstorm</td>
-                </tr>
+.day{
+    background:#f1f5f9;
+    padding:15px;
+    border-radius:15px;
+    text-align:center;
+}
 
-                <tr>
-                    <td>Friday</td>
-                    <td>☁️</td>
-                    <td>28°C</td>
-                    <td>Partly Cloudy</td>
-                </tr>
+.day i{
+    font-size:30px;
+    color:#2563eb;
+    margin:10px 0;
+}
 
-            </table>
+.alert{
+    margin-top:25px;
+    background:#fff7ed;
+    border-left:6px solid orange;
+    padding:20px;
+    border-radius:15px;
+}
 
-        </div>
-    </div>
+</style>
 
-    <div class="card mt-4 shadow">
-        <div class="card-body">
+<div class="weather-banner">
 
-            <h3>🌾 Farming Recommendation</h3>
+<div>
 
-            <p>
-                ☀️ Sunny weather is suitable for harvesting crops.
-            </p>
+<h1>
+<i class="fas fa-cloud-sun-rain"></i>
+ Weather Forecast
+</h1>
 
-            <p>
-                🌧️ Rain expected on Wednesday, avoid irrigation.
-            </p>
+<br>
 
-            <p>
-                🌱 Monitor soil moisture regularly for better crop growth.
-            </p>
+<h2>31°C</h2>
 
-            <p>
-                🚜 Use weather forecasts to plan farming activities effectively.
-            </p>
+<p>Today's Climate Status</p>
 
-        </div>
-    </div>
+</div>
+
+<i class="fas fa-sun"></i>
+
+</div>
+
+<div class="weather-cards">
+
+<div class="card">
+<i class="fas fa-temperature-high"></i>
+<h2>31°C</h2>
+<p>Temperature</p>
+</div>
+
+<div class="card">
+<i class="fas fa-droplet"></i>
+<h2>72%</h2>
+<p>Humidity</p>
+</div>
+
+<div class="card">
+<i class="fas fa-wind"></i>
+<h2>15 km/h</h2>
+<p>Wind Speed</p>
+</div>
+
+<div class="card">
+<i class="fas fa-cloud-rain"></i>
+<h2>60%</h2>
+<p>Rain Chance</p>
+</div>
+
+</div>
+
+<div class="forecast">
+
+<h2>
+<i class="fas fa-calendar-days"></i>
+ Weekly Forecast
+</h2>
+
+<div class="days">
+
+<div class="day">
+Mon
+<br>
+<i class="fas fa-sun"></i>
+<p>32°C</p>
+</div>
+
+<div class="day">
+Tue
+<br>
+<i class="fas fa-cloud"></i>
+<p>30°C</p>
+</div>
+
+<div class="day">
+Wed
+<br>
+<i class="fas fa-cloud-rain"></i>
+<p>28°C</p>
+</div>
+
+<div class="day">
+Thu
+<br>
+<i class="fas fa-cloud-showers-heavy"></i>
+<p>27°C</p>
+</div>
+
+<div class="day">
+Fri
+<br>
+<i class="fas fa-sun"></i>
+<p>33°C</p>
+</div>
+
+<div class="day">
+Sat
+<br>
+<i class="fas fa-cloud-sun"></i>
+<p>29°C</p>
+</div>
+
+<div class="day">
+Sun
+<br>
+<i class="fas fa-cloud-rain"></i>
+<p>26°C</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="alert">
+
+<h3>
+<i class="fas fa-triangle-exclamation"></i>
+ Weather Alert
+</h3>
+
+<br>
+
+<p>
+Heavy rainfall expected in the next 48 hours.
+Farmers are advised to avoid irrigation and monitor crop drainage.
+</p>
 
 </div>
 

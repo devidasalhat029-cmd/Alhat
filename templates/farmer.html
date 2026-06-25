@@ -1,78 +1,168 @@
 {% extends "baseofhtml.html" %}
 
 {% block title %}
-Farmer Information
+Farmer Profile
 {% endblock %}
 
 {% block content %}
 
-<div class="container mt-4">
+<style>
 
-    <h1 class="mb-4">
-        👨‍🌾 Farmer Information
-    </h1>
+.profile-banner{
+    background:linear-gradient(135deg,#16a34a,#22c55e);
+    color:white;
+    padding:40px;
+    border-radius:25px;
+    display:flex;
+    align-items:center;
+    gap:30px;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
 
-    <div class="card shadow">
-        <div class="card-body">
+.profile-icon{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
-            <table class="table table-bordered table-hover">
+.profile-icon i{
+    font-size:70px;
+    color:#16a34a;
+}
 
-                <tr class="table-success">
-                    <th>📋 Details</th>
-                    <th>📊 Information</th>
-                </tr>
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    margin-top:25px;
+}
 
-                <tr>
-                    <td>👤 Name</td>
-                    <td>{{ farmer.name }}</td>
-                </tr>
+.card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+    transition:.3s;
+}
 
-                <tr>
-                    <td>🎂 Age</td>
-                    <td>{{ farmer.age }}</td>
-                </tr>
+.card:hover{
+    transform:translateY(-8px);
+}
 
-                <tr>
-                    <td>📍 Location</td>
-                    <td>{{ farmer.location }}</td>
-                </tr>
+.card i{
+    font-size:45px;
+    color:#16a34a;
+    margin-bottom:10px;
+}
 
-                <tr>
-                    <td>🌾 Crop</td>
-                    <td>{{ farmer.crop }}</td>
-                </tr>
+.details{
+    margin-top:25px;
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
 
-                <tr>
-                    <td>📈 Crop Yield</td>
-                    <td>{{ farmer.crop_yield }} kg</td>
-                </tr>
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
 
-            </table>
+table th{
+    background:#16a34a;
+    color:white;
+}
 
-        </div>
-    </div>
+table,th,td{
+    border:1px solid #ddd;
+    padding:12px;
+    text-align:center;
+}
 
-    <div class="card mt-4 shadow">
-        <div class="card-body">
+</style>
 
-            <h3>🌱 Farming Status</h3>
+<div class="profile-banner">
 
-            <p>
-                🚜 Farmer is actively monitoring crops using the
-                Automated Agriculture Monitoring System.
-            </p>
+<div class="profile-icon">
+<i class="fas fa-user"></i>
+</div>
 
-            <p>
-                🌦️ Weather updates, crop information and yield tracking
-                help improve farming decisions.
-            </p>
+<div>
+<h1>👨‍🌾 Farmer Profile</h1>
+<h2> VARAD KOTKAR</h2>
+<p>Smart Agriculture Monitoring User</p>
+</div>
 
-            <p>
-                🌾 Smart Farming = Better Production + Better Profit 💰
-            </p>
+</div>
 
-        </div>
-    </div>
+<div class="info-grid">
+
+<div class="card">
+<i class="fas fa-phone"></i>
+<h3>Mobile</h3>
+<p>9876543210</p>
+</div>
+
+<div class="card">
+<i class="fas fa-location-dot"></i>
+<h3>Village</h3>
+<p>Hingoli</p>
+</div>
+
+<div class="card">
+<i class="fas fa-tractor"></i>
+<h3>Farm Area</h3>
+<p>5 Acres</p>
+</div>
+
+</div>
+
+<div class="details">
+
+<h2>
+<i class="fas fa-address-card"></i>
+ Farmer Details
+</h2>
+
+<table>
+
+<tr>
+<th>Field</th>
+<th>Information</th>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>Yogita Alhat</td>
+</tr>
+
+<tr>
+<td>Village</td>
+<td>Hingoli</td>
+</tr>
+
+<tr>
+<td>Mobile</td>
+<td>9876543210</td>
+</tr>
+
+<tr>
+<td>Main Crop</td>
+<td>Soybean</td>
+</tr>
+
+<tr>
+<td>Land Area</td>
+<td>5 Acres</td>
+</tr>
+
+</table>
 
 </div>
 

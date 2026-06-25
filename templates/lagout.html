@@ -1,0 +1,63 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}
+Logout
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.logout-box{
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:80vh;
+}
+
+.card{
+background:white;
+padding:50px;
+border-radius:25px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+width:500px;
+}
+
+.card i{
+font-size:90px;
+color:#dc2626;
+margin-bottom:20px;
+}
+
+.btn{
+display:inline-block;
+padding:12px 25px;
+background:#16a34a;
+color:white;
+text-decoration:none;
+border-radius:10px;
+margin-top:20px;
+}
+
+</style>
+
+<div class="logout-box">
+
+<div class="card">
+
+<i class="fas fa-right-from-bracket"></i>
+
+<h1>Logged Out Successfully</h1>
+
+<p>You have been logged out from the Agriculture Monitoring System.</p>
+
+<a href="/login" class="btn">
+Login Again
+</a>
+
+</div>
+
+</div>
+
+{% endblock %}

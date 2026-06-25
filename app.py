@@ -1,50 +1,145 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, session
+import sqlite3
 
 app = Flask(__name__)
+app.secret_key = "agrotech123"
 
-farmer = {
-    "name": "Rushikesh",
-    "age": 25,
-    "location": "Pune",
-    "crop": "Wheat",
-    "crop_yield": 2500
-}
+# Database Connection
+def connect():
+    conn = sqlite3.connect("agriculture.db")
+    conn.row_factory = sqlite3.Row
+    return conn
 
-records_data = [
-    {"id": 1, "field": "Field A", "crop": "Wheat"},
-    {"id": 2, "field": "Field B", "crop": "Rice"},
-    {"id": 3, "field": "Field C", "crop": "Cotton"}
-]
-
-@app.route("/")
+# Home Page
+@app.route('/')
 def home():
-    return render_template("home.html",farmer=farmer)
+    return render_template('home.html')
 
-@app.route("/records")
-def records():
-    
-    return render_template("records.html", records=records_data)
+# Register
+@app.route('/register', methods=['GET','POST'])
+def register():
 
-@app.route("/farmer")
-def farmer_information():
-    return render_template("farmer.html", farmer=farmer)
-@app.route("/motor")
-def motor():
-    return render_template("motor.html")
+    if request.method == 'POST':
 
-@app.route("/weather")
-def weather():
-    return render_template("weather.html")
+        name = request.form['name']
+        mobile = request.form['mobile']
+        village = request.form['village']
+        username = request.form['username']
+        password = request.form['password']
 
-@app.route("/analytics")
-def analytics():
-    return render_template("analytics.html")
-@app.route("/crop")
-def crop():
-    return render_template("crop.html")
-@app.route("/login",methods=["GET","POST"])
+        conn = connect()
+
+        conn.execute("""
+        INSERT INTO farmers
+        (name,mobile,village,username,password)
+        VALUES(?,?,?,?,?)
+        """,(name,mobile,village,username,password))
+
+        conn.commit()
+        conn.close()
+
+        return redirect('/login')
+
+    return render_template('register.html')
+
+# Login
+@app.route('/login', methods=['GET','POST'])
 def login():
-    return render_template("login.html")
+
+    if request.method == 'POST':
+
+        username = request.form['username']
+        password = request.form['password']
+
+        conn = connect()
+
+        user = conn.execute("""
+        SELECT * FROM farmers
+        WHERE username=? AND password=?
+        """,(username,password)).fetchone()
+
+        conn.close()
+
+        if user:
+            session['user'] = user['name']
+            return redirect('/dashboard')
+
+    return render_template('login.html')
+
+# Dashboard
+@app.route('/dashboard')
+def dashboard():
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    return render_template('dashboard.html')
+
+# Farmer Profile@app.route('/farmer')
+@app.route('/farmer')
+def farmer():
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    farmer = {
+        "name": session['user']
+    }
+
+    return render_template('farmer.html', farmer=farmer)
+
+# Crop Recommendation
+@app.route('/crop')
+def crop():
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    return render_template('crop.html')
+
+# Weather Forecast
+@app.route('/weather')
+def weather():
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    return render_template('weather.html')
+
+# Motor Control
+@app.route('/motor')
+def motor():
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    return render_template('motor.html')
+
+# Records
+@app.route('/record')
+def record():
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    return render_template('records.html')
+
+# Analytics
+@app.route('/analysis')
+def analysis():
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    return render_template('analysis.html')
+
+# Logout
+@app.route('/logout')
+def logout():
+
+    session.clear()
+
+    return redirect('/')
 
 if __name__ == "__main__":
     app.run(debug=True)

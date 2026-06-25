@@ -1,0 +1,146 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}
+Register
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.register-container{
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:80vh;
+}
+
+.register-card{
+width:550px;
+background:white;
+padding:35px;
+border-radius:25px;
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+.register-header{
+text-align:center;
+margin-bottom:20px;
+}
+
+.register-header i{
+font-size:70px;
+color:#16a34a;
+margin-bottom:10px;
+}
+
+.input-group{
+margin-bottom:15px;
+}
+
+.input-group label{
+font-weight:bold;
+display:block;
+margin-bottom:5px;
+}
+
+.input-box{
+position:relative;
+}
+
+.input-box i{
+position:absolute;
+left:15px;
+top:15px;
+color:#16a34a;
+}
+
+.input-box input{
+width:100%;
+padding:14px 14px 14px 45px;
+border:1px solid #ddd;
+border-radius:10px;
+}
+
+.btn{
+width:100%;
+padding:14px;
+border:none;
+background:#16a34a;
+color:white;
+border-radius:10px;
+font-size:17px;
+cursor:pointer;
+margin-top:10px;
+}
+
+</style>
+
+<div class="register-container">
+
+<div class="register-card">
+
+<div class="register-header">
+
+<i class="fas fa-user-plus"></i>
+
+<h1>Farmer Registration</h1>
+
+<p>Create New Account</p>
+
+</div>
+
+<form method="POST">
+
+<div class="input-group">
+<label>Name</label>
+<div class="input-box">
+<i class="fas fa-user"></i>
+<input type="text" name="name" required>
+</div>
+</div>
+
+<div class="input-group">
+<label>Mobile</label>
+<div class="input-box">
+<i class="fas fa-phone"></i>
+<input type="text" name="mobile" required>
+</div>
+</div>
+
+<div class="input-group">
+<label>Village</label>
+<div class="input-box">
+<i class="fas fa-location-dot"></i>
+<input type="text" name="village" required>
+</div>
+</div>
+
+<div class="input-group">
+<label>Username</label>
+<div class="input-box">
+<i class="fas fa-id-card"></i>
+<input type="text" name="username" required>
+</div>
+</div>
+
+<div class="input-group">
+<label>Password</label>
+<div class="input-box">
+<i class="fas fa-lock"></i>
+<input type="password" name="password" required>
+</div>
+</div>
+
+<button class="btn">
+<i class="fas fa-user-check"></i>
+ Register
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,85 +1,158 @@
 {% extends "baseofhtml.html" %}
 
 {% block title %}
-Sensor Details
+Records
 {% endblock %}
 
 {% block content %}
 
-<div class="container mt-4">
+<style>
 
-    <div class="text-center mb-4">
-        <h1>🌾 Agriculture Monitoring System</h1>
-        <p class="text-muted">
-            Real-Time Sensor Monitoring Dashboard
-        </p>
-    </div>
+.record-banner{
+background:linear-gradient(135deg,#059669,#16a34a);
+padding:35px;
+border-radius:25px;
+color:white;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
 
-    <div class="row">
+.record-banner i{
+font-size:75px;
+margin-bottom:10px;
+}
 
-        <div class="col-md-3 mb-4">
-            <div class="card shadow text-center">
-                <div class="card-body">
-                    <h3>🌱</h3>
-                    <h5>Soil Moisture</h5>
-                    <h2 class="text-success">65%</h2>
-                    <p>Good Moisture Level</p>
-                </div>
-            </div>
-        </div>
+.record-table{
+background:white;
+padding:25px;
+margin-top:25px;
+border-radius:25px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+overflow-x:auto;
+}
 
-        <div class="col-md-3 mb-4">
-            <div class="card shadow text-center">
-                <div class="card-body">
-                    <h3>🌡️</h3>
-                    <h5>Temperature</h5>
-                    <h2 class="text-danger">28°C</h2>
-                    <p>Normal Temperature</p>
-                </div>
-            </div>
-        </div>
+table{
+width:100%;
+border-collapse:collapse;
+}
 
-        <div class="col-md-3 mb-4">
-            <div class="card shadow text-center">
-                <div class="card-body">
-                    <h3>💧</h3>
-                    <h5>Humidity</h5>
-                    <h2 class="text-primary">72%</h2>
-                    <p>Suitable For Crops</p>
-                </div>
-            </div>
-        </div>
+table th{
+background:#16a34a;
+color:white;
+padding:15px;
+}
 
-        <div class="col-md-3 mb-4">
-            <div class="card shadow text-center">
-                <div class="card-body">
-                    <h3>🚰</h3>
-                    <h5>Water Pump</h5>
-                    <h2 class="text-success">ON</h2>
-                    <p>Running</p>
-                </div>
-            </div>
-        </div>
+table td{
+padding:15px;
+text-align:center;
+border-bottom:1px solid #ddd;
+}
 
-    </div>
+.status-good{
+color:green;
+font-weight:bold;
+}
 
-    <div class="card shadow mt-4">
-        <div class="card-body">
+.summary{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+margin-top:25px;
+}
 
-            <h3>📊 System Information</h3>
+.card{
+background:white;
+padding:25px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
 
-            <p>🌱 Soil moisture is currently at an optimal level for crop growth.</p>
+.card i{
+font-size:45px;
+color:#16a34a;
+margin-bottom:10px;
+}
 
-            <p>🌡️ Temperature conditions are favorable for farming activities.</p>
+</style>
 
-            <p>💧 Humidity levels are balanced and suitable for healthy crops.</p>
+<div class="record-banner">
 
-            <p>🚰 Water pump is active and supplying irrigation water.</p>
+<i class="fas fa-database"></i>
 
-            <p>🌾 Smart Farming = Better Production + Better Profit 💰</p>
+<h1>Sensor Records</h1>
 
-        </div>
-    </div>
+<p>Farm Monitoring Data History</p>
+
+</div>
+
+<div class="summary">
+
+<div class="card">
+<i class="fas fa-droplet"></i>
+<h2>68%</h2>
+<p>Average Moisture</p>
+</div>
+
+<div class="card">
+<i class="fas fa-temperature-high"></i>
+<h2>29°C</h2>
+<p>Average Temperature</p>
+</div>
+
+<div class="card">
+<i class="fas fa-cloud-rain"></i>
+<h2>72%</h2>
+<p>Humidity</p>
+</div>
+
+</div>
+
+<div class="record-table">
+
+<table>
+
+<tr>
+<th>Date</th>
+<th>Moisture</th>
+<th>Temperature</th>
+<th>Humidity</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td>25-06-2026</td>
+<td>68%</td>
+<td>29°C</td>
+<td>72%</td>
+<td class="status-good">Normal</td>
+</tr>
+
+<tr>
+<td>24-06-2026</td>
+<td>65%</td>
+<td>30°C</td>
+<td>70%</td>
+<td class="status-good">Normal</td>
+</tr>
+
+<tr>
+<td>23-06-2026</td>
+<td>70%</td>
+<td>28°C</td>
+<td>74%</td>
+<td class="status-good">Good</td>
+</tr>
+
+<tr>
+<td>22-06-2026</td>
+<td>62%</td>
+<td>31°C</td>
+<td>69%</td>
+<td class="status-good">Normal</td>
+</tr>
+
+</table>
 
 </div>
 

@@ -1,98 +1,175 @@
 {% extends "baseofhtml.html" %}
 
 {% block title %}
-Farmer Login
+Login
 {% endblock %}
 
 {% block content %}
 
-<div class="container">
+<style>
 
-    <div class="row justify-content-center mt-5">
+.login-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:80vh;
+}
 
-        <div class="col-md-5">
+.login-card{
+    width:450px;
+    background:white;
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
 
-            <div class="card shadow-lg border-0">
+.login-header{
+    text-align:center;
+    margin-bottom:25px;
+}
 
-                <div class="card-body p-5">
+.login-header i{
+    font-size:70px;
+    color:#16a34a;
+    margin-bottom:10px;
+}
 
-                    <div class="text-center mb-4">
+.login-header h1{
+    color:#16a34a;
+}
 
-                        <h1 class="display-4">🌾</h1>
+.input-group{
+    margin-bottom:20px;
+}
 
-                        <h2 class="text-success">
-                            Farmer Login
-                        </h2>
+.input-group label{
+    font-weight:bold;
+    display:block;
+    margin-bottom:8px;
+}
 
-                        <p class="text-muted">
-                            Automatic Agriculture Monitoring System
-                        </p>
+.input-box{
+    position:relative;
+}
 
-                    </div>
+.input-box i{
+    position:absolute;
+    left:15px;
+    top:15px;
+    color:#16a34a;
+}
 
-                    <form method="POST">
+.input-box input{
+    width:100%;
+    padding:14px 14px 14px 45px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    outline:none;
+}
 
-                        <div class="mb-3">
+.input-box input:focus{
+    border-color:#16a34a;
+}
 
-                            <label class="form-label">
-                                👤 Username
-                            </label>
+.btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    background:#16a34a;
+    color:white;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
 
-                            <input
-                                type="text"
-                                name="username"
-                                class="form-control"
-                                placeholder="Enter Username"
-                                required>
+.btn:hover{
+    background:#15803d;
+}
 
-                        </div>
+.register-link{
+    text-align:center;
+    margin-top:15px;
+}
 
-                        <div class="mb-3">
+.register-link a{
+    color:#16a34a;
+    text-decoration:none;
+    font-weight:bold;
+}
 
-                            <label class="form-label">
-                                🔒 Password
-                            </label>
+</style>
 
-                            <input
-                                type="password"
-                                name="password"
-                                class="form-control"
-                                placeholder="Enter Password"
-                                required>
+<div class="login-container">
 
-                        </div>
+<div class="login-card">
 
-                        <div class="d-grid">
+<div class="login-header">
 
-                            <button
-                                type="submit"
-                                class="btn btn-success btn-lg">
+<i class="fas fa-seedling"></i>
 
-                                🚀 Login
+<h1>Farmer Login</h1>
 
-                            </button>
+<p>Smart Agriculture Monitoring System</p>
 
-                        </div>
+</div>
 
-                    </form>
+<form method="POST">
 
-                    <hr>
+<div class="input-group">
 
-                    <div class="text-center">
+<label>Username</label>
 
-                        <small class="text-muted">
-                            🌾 Smart Farming Dashboard © 2026
-                        </small>
+<div class="input-box">
 
-                    </div>
+<i class="fas fa-user"></i>
 
-                </div>
+<input type="text"
+name="username"
+placeholder="Enter Username"
+required>
 
-            </div>
+</div>
 
-        </div>
+</div>
 
-    </div>
+<div class="input-group">
+
+<label>Password</label>
+
+<div class="input-box">
+
+<i class="fas fa-lock"></i>
+
+<input type="password"
+name="password"
+placeholder="Enter Password"
+required>
+
+</div>
+
+</div>
+
+<button type="submit" class="btn">
+
+<i class="fas fa-right-to-bracket"></i>
+ Login
+
+</button>
+
+</form>
+
+<div class="register-link">
+
+Don't have an account?
+
+<a href="/register">
+Register Here
+</a>
+
+</div>
+
+</div>
 
 </div>
 
