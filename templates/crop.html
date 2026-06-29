@@ -1,158 +1,113 @@
 {% extends "baseofhtml.html" %}
 
 {% block title %}
-Crop Recommendation
+Crop Management
 {% endblock %}
 
 {% block content %}
 
-<style>
+<div class="container mt-5">
 
-.crop-banner{
-    background:linear-gradient(135deg,#16a34a,#65a30d);
-    color:white;
-    padding:35px;
-    border-radius:25px;
-    text-align:center;
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
-}
+    <div class="card shadow p-4">
 
-.crop-banner i{
-    font-size:80px;
-}
+        <h2 class="text-center text-success mb-4">
+            🌾 Crop Management
+        </h2>
 
-.crop-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-    margin-top:25px;
-}
+        <form action="/add_crop" method="POST">
 
-.crop-card{
-    background:white;
-    padding:25px;
-    border-radius:20px;
-    text-align:center;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-    transition:.3s;
-}
+            <div class="row">
 
-.crop-card:hover{
-    transform:translateY(-8px);
-}
+                <div class="col-md-5 mb-3">
+                    <input
+                    type="text"
+                    name="crop_name"
+                    class="form-control"
+                    placeholder="Enter Crop Name"
+                    required>
+                </div>
 
-.crop-card i{
-    font-size:50px;
-    color:#16a34a;
-    margin-bottom:15px;
-}
+                <div class="col-md-5 mb-3">
+                    <input
+                    type="text"
+                    name="season"
+                    class="form-control"
+                    placeholder="Enter Season"
+                    required>
+                </div>
 
-.recommendation{
-    margin-top:25px;
-    background:white;
-    padding:30px;
-    border-radius:25px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
+                <div class="col-md-2 mb-3">
+                    <button
+                    type="submit"
+                    class="btn btn-success w-100">
+                        Add
+                    </button>
+                </div>
 
-.recommendation h2{
-    color:#16a34a;
-    margin-bottom:15px;
-}
+            </div>
 
-.crop-list{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-    margin-top:20px;
-}
+        </form>
 
-.crop-item{
-    background:#f0fdf4;
-    padding:20px;
-    border-radius:15px;
-    text-align:center;
-    border:2px solid #22c55e;
-}
+    </div>
 
-.crop-item i{
-    font-size:40px;
-    color:#16a34a;
-    margin-bottom:10px;
-}
+    <br>
 
-</style>
+    <div class="card shadow p-3">
 
-<div class="crop-banner">
+        <h4 class="text-primary mb-3">
+            Crop Records
+        </h4>
 
-<i class="fas fa-seedling"></i>
+        <table class="table table-bordered table-hover text-center">
 
-<h1>Crop Recommendation System</h1>
+            <thead class="table-success">
 
-<p>AI Based Smart Crop Suggestions For Farmers</p>
+                <tr>
+                    <th>ID</th>
+                    <th>Crop Name</th>
+                    <th>Season</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
 
-</div>
+            </thead>
 
-<div class="crop-grid">
+            <tbody>
 
-<div class="crop-card">
-<i class="fas fa-temperature-high"></i>
-<h3>Temperature</h3>
-<p>29°C</p>
-</div>
+                {% for crop in data %}
 
-<div class="crop-card">
-<i class="fas fa-droplet"></i>
-<h3>Humidity</h3>
-<p>72%</p>
-</div>
+                <tr>
 
-<div class="crop-card">
-<i class="fas fa-water"></i>
-<h3>Soil Moisture</h3>
-<p>68%</p>
-</div>
+                    <td>{{ crop.id }}</td>
 
-<div class="crop-card">
-<i class="fas fa-mountain"></i>
-<h3>Soil Type</h3>
-<p>Black Soil</p>
-</div>
+                    <td>{{ crop.crop_name }}</td>
 
-</div>
+                    <td>{{ crop.season }}</td>
 
-<div class="recommendation">
+                    <td>
+                        <a href="/edit_crop/{{ crop.id }}"
+                        class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+                    </td>
 
-<h2>
-<i class="fas fa-leaf"></i>
- Recommended Crops
-</h2>
+                    <td>
+                        <a href="/delete_crop/{{ crop.id }}"
+                        class="btn btn-danger btn-sm"
+                        onclick="return confirm('Are you sure you want to delete this crop?')">
+                            Delete
+                        </a>
+                    </td>
 
-<p>Based on current soil and weather conditions.</p>
+                </tr>
 
-<div class="crop-list">
+                {% endfor %}
 
-<div class="crop-item">
-<i class="fas fa-wheat-awn"></i>
-<h3>Wheat</h3>
-</div>
+            </tbody>
 
-<div class="crop-item">
-<i class="fas fa-seedling"></i>
-<h3>Soybean</h3>
-</div>
+        </table>
 
-<div class="crop-item">
-<i class="fas fa-leaf"></i>
-<h3>Cotton</h3>
-</div>
-
-<div class="crop-item">
-<i class="fas fa-plant-wilt"></i>
-<h3>Tur</h3>
-</div>
-
-</div>
+    </div>
 
 </div>
 

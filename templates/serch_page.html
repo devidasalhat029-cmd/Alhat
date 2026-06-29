@@ -1,0 +1,99 @@
+{% extends "baseofhtml.html" %}
+
+{% block content %}
+
+<style>
+body{
+    background:#f4f8fb;
+}
+
+.search-box{
+    width:70%;
+    margin:60px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+    text-align:center;
+}
+
+.search-box h2{
+    color:green;
+    margin-bottom:20px;
+    font-weight:bold;
+}
+
+input[type=text]{
+    width:80%;
+    padding:15px;
+    border:2px solid green;
+    border-radius:30px;
+    font-size:18px;
+    outline:none;
+}
+
+button{
+    margin-top:20px;
+    padding:12px 35px;
+    border:none;
+    border-radius:30px;
+    background:green;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:darkgreen;
+}
+
+.result-box{
+    width:70%;
+    margin:30px auto;
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+mark{
+    background:yellow;
+    color:black;
+    padding:2px;
+}
+</style>
+
+<div class="search-box">
+
+    <h2>🔍 Search Agriculture Data</h2>
+
+    <form method="GET" action="/search">
+        <input type="text" name="q" placeholder="Search Crop, Sensor, Motor, Weather..." value="{{ q }}">
+        <br>
+        <button type="submit">Search</button>
+    </form>
+
+</div>
+
+{% if results %}
+<div class="result-box">
+
+<h3>Search Results</h3>
+
+{% for item in results %}
+
+<p>
+{{ item|replace(q,'<mark>' + q + '</mark>')|safe }}
+</p>
+<hr>
+
+{% endfor %}
+
+</div>
+{% elif q %}
+<div class="result-box">
+<h4 style="color:red;">No Result Found</h4>
+</div>
+{% endif %}
+
+{% endblock %}

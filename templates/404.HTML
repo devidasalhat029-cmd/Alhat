@@ -1,0 +1,9 @@
+{% extends 'baseofhtml.html' %}
+{% block title %}404 -page Not Found {% endblock %}
+{% block content %}
+<div class ="text-center py-5">
+    <h1 class="mb-4">Page Not Found</h1>
+    <p class="lable text-muted mb-4">The page are looking for data are not exist</p>
+    <a href="{{url_for('home')}}" class="btn btn-primary btn-lg">Go Page</a>
+</div>
+{% endblock %}

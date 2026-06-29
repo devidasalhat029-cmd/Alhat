@@ -1,0 +1,130 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}
+Irrigation Schedule
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+body{
+    background:#e8f5e9;
+    font-family:Arial,sans-serif;
+}
+
+h2{
+    text-align:center;
+    color:darkgreen;
+    margin-top:30px;
+    margin-bottom:30px;
+    font-weight:bold;
+}
+
+.card{
+    border-radius:15px;
+    box-shadow:0px 5px 15px gray;
+    padding:20px;
+    margin-bottom:30px;
+}
+
+.table{
+    background:white;
+}
+
+.table thead{
+    background:green;
+    color:white;
+    text-align:center;
+}
+
+.table tbody{
+    text-align:center;
+}
+
+.btn-save{
+    background:green;
+    color:white;
+    border:none;
+    border-radius:8px;
+    padding:10px 25px;
+}
+
+.btn-save:hover{
+    background:darkgreen;
+}
+
+</style>
+
+<div class="container">
+
+<h2>🚿 Irrigation Schedule</h2>
+
+<div class="card">
+
+<div class="row">
+
+<div class="col-md-4">
+<label><b>Crop Name</b></label>
+<input type="text" class="form-control" placeholder="Enter Crop Name">
+</div>
+
+<div class="col-md-4">
+<label><b>Water Time</b></label>
+<input type="time" class="form-control">
+</div>
+
+<div class="col-md-4">
+<label><b>Duration (Minutes)</b></label>
+<input type="number" class="form-control" placeholder="30">
+</div>
+
+</div>
+
+<div class="text-center mt-4">
+<button class="btn-save">Save Schedule</button>
+</div>
+
+</div>
+
+<table class="table table-bordered table-hover">
+
+<thead>
+<tr>
+<th>Crop</th>
+<th>Time</th>
+<th>Duration</th>
+<th>Motor Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Wheat</td>
+<td>06:00 AM</td>
+<td>30 Min</td>
+<td class="text-success">Scheduled</td>
+</tr>
+
+<tr>
+<td>Cotton</td>
+<td>05:30 PM</td>
+<td>20 Min</td>
+<td class="text-success">Scheduled</td>
+</tr>
+
+<tr>
+<td>Rice</td>
+<td>07:00 AM</td>
+<td>40 Min</td>
+<td class="text-warning">Pending</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

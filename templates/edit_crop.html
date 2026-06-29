@@ -1,0 +1,62 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}
+Edit Crop
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow p-4">
+
+        <h2 class="text-center text-success mb-4">
+            Edit Crop
+        </h2>
+
+        <form method="POST">
+
+            <div class="mb-3">
+                <label class="form-label">
+                    Crop Name
+                </label>
+
+                <input
+                type="text"
+                name="crop_name"
+                class="form-control"
+                value="{{ crop.crop_name }}"
+                required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">
+                    Season
+                </label>
+
+                <input
+                type="text"
+                name="season"
+                class="form-control"
+                value="{{ crop.season }}"
+                required>
+            </div>
+
+            <button
+            type="submit"
+            class="btn btn-success">
+                Update Crop
+            </button>
+
+            <a href="/crop"
+            class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
