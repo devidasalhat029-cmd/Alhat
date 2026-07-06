@@ -5,6 +5,37 @@ Home
 {% endblock %}
 
 {% block content %}
+<style>
+body{
+    background:linear-gradient(to bottom,#5b86e5,#36d1dc,#7bc96f);
+    overflow-x:hidden;
+}
+
+/* Rain */
+.rain{
+    position:fixed;
+    top:-100px;
+    width:2px;
+    height:30px;
+    background:rgba(255,255,255,0.8);
+    animation:rain linear infinite;
+    z-index:1;
+}
+
+@keyframes rain{
+    from{
+        transform:translateY(-100px);
+    }
+    to{
+        transform:translateY(120vh);
+    }
+}
+
+.container{
+    position:relative;
+    z-index:2;
+}
+</style>
 
 <div class="container mt-5">
 
@@ -29,7 +60,7 @@ Home
 
     <div class="row mt-5">
 
-        <div class="col-md-3">
+        <div class="col-12 col-md-4 md-3">
             <div class="card shadow text-center border-0">
                 <div class="card-body">
                     <i class="fas fa-seedling fa-3x text-success"></i>
@@ -39,7 +70,7 @@ Home
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-12 col-md-4 md-3">
             <div class="card shadow text-center border-0">
                 <div class="card-body">
                     <i class="fas fa-cloud-sun-rain fa-3x text-primary"></i>
@@ -49,7 +80,7 @@ Home
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-12 col-md-4 md-3">
             <div class="card shadow text-center border-0">
                 <div class="card-body">
                     <i class="fas fa-tint fa-3x text-info"></i>
@@ -59,7 +90,7 @@ Home
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-12 col-md-4 md-3">
             <div class="card shadow text-center border-0">
                 <div class="card-body">
                     <i class="fas fa-chart-line fa-3x text-danger"></i>
@@ -83,7 +114,7 @@ Home
 
             <div class="row">
 
-                <div class="col-md-6">
+                <div class="col-12 col-md-6">
 
                     <p><b>👤 Name :</b> Varad Kotkar</p>
                     <p><b>📍 Location :</b> Maharashtra</p>
@@ -91,7 +122,7 @@ Home
 
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-12 col-md-6">
 
                     <p><b>✅ Status :</b> Active</p>
                     <p><b>🌾 Crop Yield :</b> 1200 Kg</p>

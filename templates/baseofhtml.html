@@ -107,55 +107,48 @@ margin-top:30px;
 
 <body>
 
-<nav class="navbar">
+<nav class="navbar expand-lg navbar-dark shadow-sm" style="background-color: #198754;">
 
 <a href="/" class="logo">
 🌾 Agro Monitor
 </a>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
 
-<div class="nav-links">
-
-<a href="/">
-<i class="fas fa-house"></i> Home
-</a>
-
-<a href="/dashboard">
-<i class="fas fa-chart-line"></i> Dashboard
-</a>
-
-<a href="/farmer">
-<i class="fas fa-user"></i> Farmer
-</a>
-
-<a href="/weather">
-<i class="fas fa-cloud-sun"></i> Weather
-</a>
-
-<a href="/crop">
-<i class="fas fa-seedling"></i> Crop
-</a>
-
-<a href="/irrigation">
-<i class="fas fa-droplet"></i> Irrigation
-</a>
-
-<a href="/motor">
-<i class="fas fa-faucet"></i> Motor
-</a>
-
-<a href="/records">
-<i class="fas fa-database"></i> Records
-</a>
-
-<a href="/analytics">
-<i class="fas fa-chart-pie"></i> Analytics
-</a>
-
-<a href="/logout">
-<i class="fas fa-right-from-bracket"></i> Logout
-</a>
-
+<div class="collapse navbar-collapse" id="mainNav">
+    <ul class="navbar-nav me-auto align-items-lg-center">
+        <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/farmer">Farmer</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/weather">Weather</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/crop">Crop</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/irrigation">Irrigation</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/motor">Motor</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/records">Records</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/analytics">Analytics</a>
+        </li>
+    </ul>
 </div>
+
+
 
 <form class="search-form" action="/search" method="POST">
 
@@ -184,6 +177,7 @@ Search
 <div class="footer">
 Automatic Agriculture Monitoring System © 2026
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

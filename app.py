@@ -3,7 +3,9 @@ import sqlite3
 
 app = Flask(__name__)
 app.secret_key = "agrotech123"
+import os
 
+print(os.path.abspath("agriculture.db"))                                                                                                                                                                                                       
 # Database Connection
 def connect():
     conn = sqlite3.connect("agriculture.db")
@@ -204,14 +206,29 @@ def weather():
     return render_template('weather.html')
 
 # Motor Control
-@app.route('/motor')
+@app.route('/motor', methods=['GET', 'POST'])
 def motor():
 
     if 'user' not in session:
         return redirect('/login')
 
-    return render_template('motor.html')
+    if 'motor_status' not in session:
+        session['motor_status'] = False
 
+    if request.method == "POST":
+
+        action = request.form.get("action")
+
+        if action == "start":
+            session['motor_status'] = True
+
+        elif action == "stop":
+            session['motor_status'] = False
+
+    return render_template(
+        "motor.html",
+        status=session['motor_status']
+    )
 # Records
 @app.route('/records')
 def records():

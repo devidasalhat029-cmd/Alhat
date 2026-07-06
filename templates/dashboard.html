@@ -1,148 +1,211 @@
 {% extends "baseofhtml.html" %}
-
-{% block title %}
-Dashboard
-{% endblock %}
+{% block title %}Smart Agriculture Dashboard{% endblock %}
 
 {% block content %}
 
 <style>
 
-.hero{
-background:linear-gradient(135deg,#16a34a,#22c55e);
-color:white;
-padding:40px;
-border-radius:25px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-box-shadow:0 10px 25px rgba(0,0,0,.15);
+body{
+    background:linear-gradient(135deg,#d4fc79,#96e6a1);
 }
 
-.hero i{
-font-size:90px;
+.dashboard{
+    max-width:1100px;
+    margin:auto;
+    padding:30px;
 }
 
-.cards{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:20px;
-margin-top:25px;
+.title{
+    background:linear-gradient(90deg,#0f9d58,#28c76f);
+    color:white;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
 }
 
-.card-box{
-background:white;
-padding:25px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
-transition:.3s;
+.title h1{
+    margin:0;
+    font-size:38px;
 }
 
-.card-box:hover{
-transform:translateY(-8px);
+.title p{
+    margin-top:10px;
+    font-size:20px;
 }
 
-.card-box i{
-font-size:45px;
-color:#16a34a;
-margin-bottom:10px;
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-top:30px;
 }
 
-.quick-links{
-margin-top:25px;
-background:white;
-padding:25px;
-border-radius:20px;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
+.card{
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 10px 20px rgba(0,0,0,.15);
+    transition:.4s;
 }
 
-.btn-box{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px;
-margin-top:20px;
+.card:hover{
+    transform:translateY(-8px);
 }
 
-.btn-box a{
-text-decoration:none;
-text-align:center;
-padding:15px;
-border-radius:10px;
-color:white;
-font-weight:bold;
+.icon{
+    font-size:50px;
 }
 
-.farmer{background:#16a34a;}
-.weather{background:#0ea5e9;}
-.crop{background:#f59e0b;}
-.motor{background:#dc2626;}
+.value{
+    font-size:32px;
+    color:#0f9d58;
+    font-weight:bold;
+}
+
+.progress{
+    height:18px;
+    background:#ddd;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.bar{
+    height:100%;
+    width:45%;
+    background:#28c76f;
+    transition:1s;
+}
+
+.status{
+    margin-top:35px;
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 10px 20px rgba(0,0,0,.15);
+}
+
+#pump{
+    color:green;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.farm{
+    margin-top:40px;
+    font-size:70px;
+    text-align:center;
+    animation:move 3s infinite alternate;
+}
+
+@keyframes move{
+from{transform:translateY(0);}
+to{transform:translateY(-10px);}
+}
 
 </style>
 
-<div class="hero">
+<div class="dashboard">
 
-<div>
-<h1>🌾 Agriculture Dashboard</h1>
-<p>Smart Farm Monitoring System</p>
+<div class="title">
+<h1>🌱 Automatic Agriculture Monitoring System</h1>
+<p>📡 IoT Connected Successfully</p>
 </div>
 
-<i class="fas fa-tractor"></i>
+<div class="grid">
 
+<div class="card">
+<div class="icon">🌡️</div>
+<h3>Temperature</h3>
+<div class="value" id="temp">29°C</div>
 </div>
 
-<div class="cards">
-
-<div class="card-box">
-<i class="fas fa-temperature-high"></i>
-<h2>29°C</h2>
-<p>Temperature</p>
+<div class="card">
+<div class="icon">💧</div>
+<h3>Humidity</h3>
+<div class="value" id="hum">70%</div>
 </div>
 
-<div class="card-box">
-<i class="fas fa-droplet"></i>
-<h2>68%</h2>
-<p>Soil Moisture</p>
-</div>
+<div class="card">
+<div class="icon">🌱</div>
+<h3>Soil Moisture</h3>
+<div class="value" id="soil">45%</div>
 
-<div class="card-box">
-<i class="fas fa-cloud-rain"></i>
-<h2>72%</h2>
-<p>Humidity</p>
-</div>
-
-<div class="card-box">
-<i class="fas fa-faucet-drip"></i>
-<h2>ON</h2>
-<p>Motor Status</p>
+<div class="progress">
+<div class="bar" id="soilbar"></div>
 </div>
 
 </div>
 
-<div class="quick-links">
+<div class="card">
+<div class="icon">☀️</div>
+<h3>Light Sensor</h3>
+<div class="value" id="light">Bright</div>
+</div>
 
-<h2>Quick Access</h2>
+</div>
 
-<div class="btn-box">
+<div class="status">
 
-<a href="/farmer" class="farmer">
-👨‍🌾 Farmer
-</a>
+<h2>🚰 Automatic Water Pump</h2>
 
-<a href="/weather" class="weather">
-🌦️ Weather
-</a>
+<h1 id="pump">🟢 ON</h1>
 
-<a href="/crop" class="crop">
-🌱 Crop
-</a>
+<p id="msg">Soil is Dry - Pump Started Automatically</p>
 
-<a href="/motor" class="motor">
-🚰 Motor
-</a>
+</div>
+
+<div class="farm">
+
+ 🌾  🌾  🌾  🌾  🌾  🌾  🌾 
 
 </div>
 
 </div>
+
+<script>
+
+setInterval(function(){
+
+let soil=Math.floor(Math.random()*100);
+
+document.getElementById("soil").innerHTML=soil+"%";
+
+document.getElementById("soilbar").style.width=soil+"%";
+
+let temp=Math.floor(Math.random()*8)+25;
+
+document.getElementById("temp").innerHTML=temp+"°C";
+
+let hum=Math.floor(Math.random()*30)+60;
+
+document.getElementById("hum").innerHTML=hum+"%";
+
+if(soil<40){
+
+document.getElementById("pump").innerHTML="🟢 ON";
+
+document.getElementById("pump").style.color="green";
+
+document.getElementById("msg").innerHTML="Soil is Dry - Pump Started Automatically";
+
+}
+
+else{
+
+document.getElementById("pump").innerHTML="🔴 OFF";
+
+document.getElementById("pump").style.color="red";
+
+document.getElementById("msg").innerHTML="Soil Moisture is Enough - Pump Stopped";
+
+}
+
+},3000);
+
+</script>
 
 {% endblock %}
