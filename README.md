@@ -32,6 +32,6 @@ https://yogita12.pythonanywhere.com
 ## 🚀 How to Run Locally
 ```bash
 git clone (https://github.com/devidasalhat029-cmd/week--3.git)
-cd TUMHARA_REPO
+cd Automatic AgricultureMonitoring System
 pip install -r requirements.txt
 python app.py
