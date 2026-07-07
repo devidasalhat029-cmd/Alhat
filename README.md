@@ -7,22 +7,22 @@ A web application built with Python and Flask.
 https://yogita12.pythonanywhere.com
 
 ## 📋 Features
-🌱 Project Features
-👨‍🌾 Farmer Registration & Login System
-🌾 Crop Management (Add, Update, Delete Crop Details)
-🌡️ Temperature Monitoring
-💧 Soil Moisture Monitoring
-🌤️ Humidity Monitoring
-🚰 Water Pump (Motor) ON/OFF Control
-📅 Smart Irrigation Scheduling
-📊 Real-Time Sensor Data Dashboard
-🔍 Crop Search Facility
-📝 Farm Records & History
-⚠️ Alerts & Notifications (Low Soil Moisture / High Temperature)
-☁️ Weather Information Display
-📈 Reports & Data Analysis
-👤 Farmer Profile Management
-🔒 Secure Login & Database Storage (SQLite)
+1.🌱 Project Features
+2.👨‍🌾 Farmer Registration & Login System
+3.🌾 Crop Management (Add, Update, Delete Crop Details)
+4.🌡️ Temperature Monitoring
+5.💧 Soil Moisture Monitoring
+6.🌤️ Humidity Monitoring
+7.🚰 Water Pump (Motor) ON/OFF Control
+8.📅 Smart Irrigation Scheduling
+9.📊 Real-Time Sensor Data Dashboard
+10'🔍 Crop Search Facility
+11.📝 Farm Records & History
+12⚠️ Alerts & Notifications (Low Soil Moisture / High Temperature)
+13.☁️ Weather Information Display
+14.📈 Reports & Data Analysis
+15.👤 Farmer Profile Management
+16.🔒 Secure Login & Database Storage (SQLite)
 ## 🛠️ Tech Stack
 - Backend: Python, Flask
 - Database: SQLite
