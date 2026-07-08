@@ -34,6 +34,7 @@ body{
     font-size:20px;
 }
 
+
 .grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -113,9 +114,34 @@ to{transform:translateY(-10px);}
 <div class="title">
 <h1>🌱 Automatic Agriculture Monitoring System</h1>
 <p>📡 IoT Connected Successfully</p>
+<h2 style="margin-top:15px;">
+    Welcome, {{ username }} 👋
+</h2>
 </div>
 
 <div class="grid">
+<div class="card">
+<div class="icon">📡</div>
+<h3>Sensor Status</h3>
+<div class="value" style="color:green;">Connected</div>
+</div>
+
+<div class="card">
+    <div class="icon">👨‍🌾</div>
+    <h3>Total Farmers</h3>
+    <div class="value">{{ total_farmers }}</div>
+</div>
+<div class="card">
+    <div class="icon">📅</div>
+    <h3>Date & Time</h3>
+    <div class="value" id="datetime"></div>
+</div>
+
+<div class="card">
+    <div class="icon">🌾</div>
+    <h3>Total Crops</h3>
+    <div class="value">{{ total_crops }}</div>
+</div>
 
 <div class="card">
 <div class="icon">🌡️</div>
@@ -140,6 +166,7 @@ to{transform:translateY(-10px);}
 
 </div>
 
+
 <div class="card">
 <div class="icon">☀️</div>
 <h3>Light Sensor</h3>
@@ -156,6 +183,18 @@ to{transform:translateY(-10px);}
 
 <p id="msg">Soil is Dry - Pump Started Automatically</p>
 
+</div>
+<div style="text-align:center;margin-top:30px;">
+<a href="/motor"
+style="
+background:#28c76f;
+color:white;
+padding:15px 30px;
+text-decoration:none;
+border-radius:10px;
+font-size:18px;">
+🚰 Control Motor
+</a>
 </div>
 
 <div class="farm">
@@ -205,6 +244,14 @@ document.getElementById("msg").innerHTML="Soil Moisture is Enough - Pump Stopped
 }
 
 },3000);
+setInterval(function(){
+
+let now = new Date();
+
+document.getElementById("datetime").innerHTML =
+now.toLocaleString();
+
+},1000);
 
 </script>
 

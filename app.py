@@ -76,7 +76,24 @@ def dashboard():
     if 'user' not in session:
         return redirect('/login')
 
-    return render_template('dashboard.html')
+    conn = connect()
+
+    total_farmers = conn.execute(
+        "SELECT COUNT(*) FROM farmers"
+    ).fetchone()[0]
+
+    total_crops = conn.execute(
+        "SELECT COUNT(*) FROM crop"
+    ).fetchone()[0]
+
+    conn.close()
+
+    return render_template(
+        "dashboard.html",
+        total_farmers=total_farmers,
+        total_crops=total_crops,
+        username=session['user']
+    )
 
 # Farmer Profile
 @app.route('/farmer')
@@ -287,7 +304,7 @@ def logout():
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template("404.html"),40
+    return render_template("404.html"),404
 
 
 if __name__ == "__main__":
