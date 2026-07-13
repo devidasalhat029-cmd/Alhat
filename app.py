@@ -13,6 +13,11 @@ import os
 load_dotenv()
 
 
+client = Groq(
+    api_key=os.getenv("GROQ_API_KEY")
+)
+
+
 app = Flask(__name__)
 app.secret_key = "agrotech123"
 import os
@@ -182,7 +187,7 @@ def dashboard():
 
     conn.close()
 
-    # Demo Weather Data
+
     weather = {
         "temp": 28,
         "humidity": 65,
@@ -190,8 +195,31 @@ def dashboard():
         "condition": "Sunny"
     }
 
+
     if 'motor_status' not in session:
         session['motor_status'] = False
+
+
+    # 🤖 AI Farmer Advice
+    prompt = f"""
+    Farmer name: {session['username']}
+
+    Give a short farming advice for this farmer.
+    Keep it simple and useful.
+    """
+
+    response = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
+    )
+
+    ai_tip = response.choices[0].message.content
+
 
     return render_template(
         "dashboard.html",
@@ -206,9 +234,9 @@ def dashboard():
         humidity=65,
         moisture=45,
         city="Hingoli",
-        wind="12 km/h"
+        wind="12 km/h",
+        ai_tip=ai_tip
     )
-
 
  # Replace only the search route in your existing app.py
 
@@ -666,6 +694,56 @@ def remove_record(id):
     conn.close()
 
     return redirect("/analytics")
+@app.route('/ai_assistant', methods=['GET','POST'])
+def ai_assistant():
+
+    if 'username' not in session:
+        return redirect('/login')
+
+    answer = ""
+
+    # Demo sensor data 
+    temperature = 28
+    humidity = 65
+    moisture = 45
+
+    if request.method == "POST":
+
+        question = request.form['question']
+
+        prompt = f"""
+        You are an Agriculture AI Assistant.
+
+        Farmer Name: {session['username']}
+
+        Current Farm Data:
+        Temperature: {temperature} °C
+        Humidity: {humidity} %
+        Soil Moisture: {moisture} %
+
+        Give simple advice for farmers.
+
+        Farmer Question:
+        {question}
+        """
+
+        response = client.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            messages=[
+                {
+                    "role":"user",
+                    "content":prompt
+                }
+            ]
+        )
+
+        answer = response.choices[0].message.content
+
+
+    return render_template(
+        "ai_assistant.html",
+        answer=answer
+    )
 
 @app.errorhandler(404)
 def page_not_found(error):
