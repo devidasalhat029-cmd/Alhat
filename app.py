@@ -1,11 +1,16 @@
 from xmlrpc import client
+from datetime import datetime
 import random
+import json
 from click import prompt
 from flask import Flask, render_template, request, redirect, session
+import requests          # Request for Wether Api
 import sqlite3
 from groq import Groq
 from os import path
-
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 
 app = Flask(__name__)
@@ -18,41 +23,76 @@ def connect():
     conn = sqlite3.connect("agriculture.db")
     conn.row_factory = sqlite3.Row
     return conn
-
-
-
-@app.route('/farmer/<int:id>')
-def farmer_profile(id):
-    conn = connect()
-    farmer = conn.execute("SELECT * FROM farmers WHERE id=?", (id,)).fetchone()
-    conn.close()
-    if farmer is None:
-        return "Farmer not found", 404
-    prompt = f"""
-    Farmer's Name: {farmer['name']}     
-    Farmer's Email: {farmer['username']}
-    Please write a short and simple email to the farmer about the
-    Automatic Agriculture Monitoring System.
-    """
-
-    client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
-    response = client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ],
-        model="mixtral-8x7b-32768",
-    )
-    tip = response.choices[0].message.content
-    return render_template('farmer_profile.html', farmer=farmer, tip=tip)
-
 # Home Page
 @app.route('/')
 def home():
     return render_template('home.html')
 
+
+@app.route("/farmer")
+def farmer_profile():
+
+    if "username" not in session:
+        return redirect("/login")
+
+    conn = sqlite3.connect("agriculture.db")
+    cur = conn.cursor()
+
+    cur.execute(
+        "SELECT * FROM farmers WHERE username=?",
+        (session["username"],)
+    )
+
+    farmer = cur.fetchone()
+
+    conn.close()
+
+    return render_template(
+        "farmer.html",
+        farmer=farmer
+    )
+
+@app.route("/edit_profile", methods=["GET","POST"])
+def edit_profile():
+
+    if "username" not in session:
+        return redirect("/edit_profile")
+
+    conn = sqlite3.connect("agriculture.db")
+    cur = conn.cursor()
+
+    if request.method == "POST":
+
+        name = request.form["name"]
+        mobile = request.form["mobile"]
+        village = request.form["village"]
+
+        cur.execute("""
+        UPDATE farmers
+        SET name=?, mobile=?, village=?
+        WHERE username=?
+        """,
+        (name, mobile, village, session["username"]))
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/farmer")
+
+
+    cur.execute(
+        "SELECT * FROM farmers WHERE username=?",
+        (session["username"],)
+    )
+
+    farmer = cur.fetchone()
+
+    conn.close()
+
+    return render_template(
+        "edit_profile.html",
+        farmer=farmer
+    )
 # Register
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -99,11 +139,13 @@ def login():
         conn.close()
 
         if user:
-            session['user'] = user['name']
-            return redirect('/dashboard')
+            session['username'] = user['username']
+            return redirect('/farmer')
+
+        else:
+            return "Invalid Username or Password"
 
     return render_template('login.html')
-
 
 @app.route("/motor/on")
 def motor_on():
@@ -125,7 +167,7 @@ def motor_off():
 @app.route('/dashboard')
 def dashboard():
 
-    if 'user' not in session:
+    if 'username' not in session:
         return redirect('/login')
 
     conn = connect()
@@ -153,8 +195,8 @@ def dashboard():
 
     return render_template(
         "dashboard.html",
-        username=session['user'],
-        farmers_name=session['user'],
+        username=session['username'],
+        farmers_name=session['username'],
         farmers_email="farmer@gmail.com",
         total_farmers=total_farmers,
         total_crops=total_crops,
@@ -167,18 +209,7 @@ def dashboard():
         wind="12 km/h"
     )
 
-# Farmer Profile
-@app.route('/farmer')
-def farmer():
 
-    if 'user' not in session:
-        return redirect('/login')
-
-    farmer = {
-        "name": session['user']
-    }
-
-    return render_template('farmer.html', farmer=farmer)
  # Replace only the search route in your existing app.py
 
 @app.route('/search', methods=['GET', 'POST'])
@@ -207,7 +238,7 @@ def search():
 @app.route('/crop')
 def crop():
 
-    if 'user' not in session:
+    if 'username' not in session:
         return redirect('/login')
 
     conn = connect()
@@ -289,69 +320,123 @@ def delete_crop(id):
 @app.route('/weather')
 def weather():
 
-    if 'user' not in session:
-        return redirect('/login')
+    API_KEY = os.getenv("My API_key")   
 
-    return render_template('weather.html')
+    city = "Hingoli"
+
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
+
+    response = requests.get(url)
+
+    data = response.json()
+
+    weather_data = {
+        "city": data["name"],
+        "temperature": round(data["main"]["temp"]),
+        "humidity": data["main"]["humidity"],
+        "wind": data["wind"]["speed"],
+        "condition": data["weather"][0]["description"],
+        "icon": data["weather"][0]["icon"]
+    }
+
+    return render_template("weather.html", weather=weather_data)
 
 # Motor Control
-@app.route('/motor', methods=['GET', 'POST'])
+@app.route("/motor", methods=["GET", "POST"])
 def motor():
 
-    if 'user' not in session:
-        return redirect('/login')
-
-    if 'motor_status' not in session:
-        session['motor_status'] = False
+    conn = sqlite3.connect("agriculture.db")
+    cur = conn.cursor()
 
     if request.method == "POST":
 
         action = request.form.get("action")
 
-        if action == "start":
-            session['motor_status'] = True
-            motor = "ON"
-            irrigation = "Running"
-
-        elif action == "stop":
-            session['motor_status'] = False
-            motor = "OFF"
-            irrigation = "Stopped"
-
-
-        # Sensor Record Save
-        conn = sqlite3.connect("agriculture.db")
-        cur = conn.cursor()
-
         moisture = f"{random.randint(40,80)}%"
         temperature = f"{random.randint(24,36)}°C"
         humidity = f"{random.randint(50,90)}%"
 
-        cur.execute("""
-        INSERT INTO sensor_record
-        (moisture, temperature, humidity, motor_status, irrigation_status)
-        VALUES (?,?,?,?,?)
-        """,
-        (
-           moisture,
-           temperature,
-           humidity,
-           motor,
-           irrigation
-        ))
-        conn.commit()
-        conn.close()
+        if action == "start":
 
+            session["motor_status"] = True
+            session["start_time"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            # Save Motor ON record
+            cur.execute("""
+            INSERT INTO sensor_record
+            (moisture, temperature, humidity, motor_status,
+             irrigation_status, start_time)
+            VALUES (?,?,?,?,?,?)
+            """,
+            (
+                moisture,
+                temperature,
+                humidity,
+                "ON",
+                "Running",
+                session["start_time"]
+            ))
+
+            conn.commit()
+
+            conn.close()
+            return redirect("/motor")
+
+        elif action == "stop":
+
+            session["motor_status"] = False
+
+            if "start_time" in session:
+
+                end = datetime.now()
+
+                start = datetime.strptime(
+                    session["start_time"],
+                    "%Y-%m-%d %H:%M:%S"
+                )
+
+                duration = str(end - start)
+
+                # Save Motor OFF record
+                cur.execute("""
+                INSERT INTO sensor_record
+                (moisture, temperature, humidity, motor_status,
+                 irrigation_status, start_time, end_time, duration)
+                VALUES (?,?,?,?,?,?,?,?)
+                """,
+                (
+                    moisture,
+                    temperature,
+                    humidity,
+                    "OFF",
+                    "Completed",
+                    session["start_time"],
+                    end.strftime("%Y-%m-%d %H:%M:%S"),
+                    duration
+                ))
+
+                conn.commit()
+
+                session.pop("start_time", None)
+
+            conn.close()
+            return redirect("/motor")
+
+    status = session.get("motor_status", False)
+
+    conn.close()
 
     return render_template(
         "motor.html",
-        status=session['motor_status']
+        status=status
     )
+    
 #live_farm
 @app.route('/live_farm')
 def livefarm():
 
-    if 'user' not in session:
+    
+    if 'username' not in session:
         return redirect('/login')
 
     return render_template(
@@ -378,7 +463,7 @@ def record():
 @app.route('/irrigation', methods=['GET','POST'])
 def irrigation():
 
-    if 'user' not in session:
+    if 'username' not in session:
         return redirect('/login')
 
     conn = sqlite3.connect("agriculture.db")
@@ -406,14 +491,11 @@ def irrigation():
 
     return render_template("irrigation.html", records=records)
 
-
-#update data
-
 # Analytics
 @app.route('/analytics')
 def analytics():
 
-    if 'user' not in session:
+    if 'username' not in session:
         return redirect('/login')
 
     conn = sqlite3.connect("agriculture.db")
@@ -427,13 +509,64 @@ def analytics():
     cur.execute("SELECT COUNT(*) FROM sensor_record WHERE motor_status='OFF'")
     motor_off = cur.fetchone()[0]
 
-    # Last 10 Sensor Records
+    # Total Running Time
+    cur.execute("""
+        SELECT duration
+        FROM sensor_record
+        WHERE duration IS NOT NULL
+    """)
+
+    times = cur.fetchall()
+
+    total_seconds = 0
+
+    for t in times:
+        try:
+            h, m, s = t[0].split(":")
+            total_seconds += int(h) * 3600 + int(m) * 60 + int(float(s))
+        except:
+            pass
+
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+    seconds = total_seconds % 60
+
+    total_time = f"{hours} Hr {minutes} Min {seconds} Sec"
+
+    # Last 10 Records
+    cur.execute("""
+    SELECT duration
+    FROM sensor_record
+    WHERE motor_status='OFF'
+    ORDER BY id
+    """)
+
+    rows = cur.fetchall()
+
+    graph_labels = []
+    graph_data = []
+
+    count = 1
+
+    for row in rows:
+        if row[0]:
+            try:
+                h, m, s = row[0].split(":")
+                seconds = int(h) * 3600 + int(m) * 60 + int(float(s))
+
+                graph_labels.append(f"Run {count}")
+                graph_data.append(seconds)
+
+                count += 1
+            except:
+                pass
     cur.execute("""
         SELECT moisture,
                temperature,
                humidity,
                motor_status,
-               irrigation_status
+               irrigation_status,
+               id
         FROM sensor_record
         ORDER BY id DESC
         LIMIT 10
@@ -444,16 +577,21 @@ def analytics():
     conn.close()
 
     return render_template(
-        "analytics.html",
-        motor_on=motor_on,
-        motor_off=motor_off,
-        records=records
-    )
+
+    "analytics.html",
+    motor_on=motor_on,
+    motor_off=motor_off,
+    total_time=total_time,
+    records=records,
+    graph_labels=json.dumps(graph_labels),
+    graph_data=json.dumps(graph_data)
+)
 
 # Logout
 @app.route('/logout')
 def logout():
 
+    
     session.clear()
 
     return redirect('/')
@@ -518,6 +656,16 @@ def edit_irrigation(id):
         "edit_irrigation.html",
         data=data
     )
+@app.route("/remove_record/<int:id>")
+def remove_record(id):
+    conn = sqlite3.connect("agriculture.db")
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM sensor_record WHERE id = ?", (id,))
+    conn.commit()
+    conn.close()
+
+    return redirect("/analytics")
 
 @app.errorhandler(404)
 def page_not_found(error):

@@ -5,165 +5,99 @@ Farmer Profile
 {% endblock %}
 
 {% block content %}
-
 <style>
 
-.profile-banner{
-    background:linear-gradient(135deg,#16a34a,#22c55e);
-    color:white;
-    padding:40px;
-    border-radius:25px;
-    display:flex;
-    align-items:center;
-    gap:30px;
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
-}
-
-.profile-icon{
-    width:120px;
-    height:120px;
-    border-radius:50%;
-    background:white;
+.profile-container{
     display:flex;
     justify-content:center;
     align-items:center;
+    min-height:80vh;
 }
 
-.profile-icon i{
-    font-size:70px;
-    color:#16a34a;
-}
-
-.info-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-    margin-top:25px;
-}
-
-.card{
+.profile-card{
+    width:450px;
     background:white;
-    padding:25px;
-    border-radius:20px;
+    padding:35px;
+    border-radius:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
     text-align:center;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-    transition:.3s;
 }
 
-.card:hover{
-    transform:translateY(-8px);
-}
-
-.card i{
-    font-size:45px;
-    color:#16a34a;
-    margin-bottom:10px;
-}
-
-.details{
-    margin-top:25px;
-    background:white;
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:15px;
-}
-
-table th{
+.profile-icon{
+    width:100px;
+    height:100px;
     background:#16a34a;
     color:white;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:45px;
+    margin:auto;
 }
 
-table,th,td{
-    border:1px solid #ddd;
+.profile-card h1{
+    color:#166534;
+    margin-top:20px;
+}
+
+.info{
+    margin-top:25px;
+    text-align:left;
+}
+
+.info p{
     padding:12px;
-    text-align:center;
+    border-bottom:1px solid #ddd;
+    font-size:17px;
+}
+
+.edit-btn{
+    display:inline-block;
+    margin-top:25px;
+    background:#16a34a;
+    color:white;
+    padding:12px 30px;
+    border-radius:25px;
+    text-decoration:none;
 }
 
 </style>
 
-<div class="profile-banner">
+
+<div class="profile-container">
+
+<div class="profile-card">
 
 <div class="profile-icon">
-<i class="fas fa-user"></i>
+<i class="fa-solid fa-user"></i>
 </div>
 
-<div>
-<h1>👨‍🌾 Farmer Profile</h1>
-<h2> VARAD KOTKAR</h2>
-<p>Smart Agriculture Monitoring User</p>
-</div>
+
+<h1>{{ farmer[1] }}</h1>
+
+<p>🌱 Smart Farmer</p>
+
+
+<div class="info">
+
+<p>📱 Mobile : {{ farmer[2] }}</p>
+
+<p>📍 Village : {{ farmer[3] }}</p>
+
+<p>👤 Username : {{ farmer[4] }}</p>
 
 </div>
 
-<div class="info-grid">
 
-<div class="card">
-<i class="fas fa-phone"></i>
-<h3>Mobile</h3>
-<p>9876543210</p>
-</div>
+<a href="/edit_profile" class="edit-btn">
+✏️ Edit Profile
+</a>
 
-<div class="card">
-<i class="fas fa-location-dot"></i>
-<h3>Village</h3>
-<p>Hingoli</p>
-</div>
 
-<div class="card">
-<i class="fas fa-tractor"></i>
-<h3>Farm Area</h3>
-<p>50 Acres</p>
 </div>
 
 </div>
 
-<div class="details">
-
-<h2>
-<i class="fas fa-address-card"></i>
- Farmer Details
-</h2>
-
-<table>
-
-<tr>
-<th>Field</th>
-<th>Information</th>
-</tr>
-
-<tr>
-<td>Name</td>
-<td> Varad Kotkar</td>
-</tr>
-
-<tr>
-<td>Village</td>
-<td>Hingoli</td>
-</tr>
-
-<tr>
-<td>Mobile</td>
-<td>9876543210</td>
-</tr>
-
-<tr>
-<td>Main Crop</td>
-<td>Soybean</td>
-</tr>
-
-<tr>
-<td>Land Area</td>
-<td>50 Acres</td>
-</tr>
-
-</table>
-
-</div>
 
 {% endblock %}

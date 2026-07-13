@@ -2,24 +2,98 @@
 {% block title %}Analytics{% endblock %}
 {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+.analytics-card{
+    border:none;
+    border-radius:18px;
+    color:white;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    transition:.3s;
+}
+.analytics-card:hover{
+    transform:translateY(-6px);
+}
+.on-card{
+    background:linear-gradient(135deg,#00c853,#43a047);
+}
+.off-card{
+    background:linear-gradient(135deg,#ff5252,#d32f2f);
+}
+.graph-card{
+    background:#fff;
+    border:none;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+.table-card{
+    border:none;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+.table thead{
+    background:#198754;
+    color:white;
+}
+</style>
 
 <div class="container mt-4">
-<div class="row g-3">
-  <div class="col-md-3"><div class="card p-3 text-center"><h5>Motor ON</h5><h2>{{ motor_on }}</h2></div></div>
-  <div class="col-md-3"><div class="card p-3 text-center"><h5>Motor OFF</h5><h2>{{ motor_off }}</h2></div></div>
-  <div class="col-md-6"><div class="card p-3"><canvas id="motorChart"></canvas></div></div>
+<div class="row g-4">
+
+<div class="col-md-6">
+<div class="analytics-card on-card">
+<h5>🟢 Motor ON</h5>
+<h1>{{ motor_on }}</h1>
+</div>
 </div>
 
+<div class="col-md-6">
+<div class="analytics-card off-card">
+<h5>🔴 Motor OFF</h5>
+<h1>{{ motor_off }}</h1>
+</div>
+</div>
+
+</div>
+<div class="col-md-12 mt-3">
+    <div class="analytics-card" style="background:linear-gradient(135deg,#2196F3,#00BCD4);">
+        <h5>⏱️ Total Motor Running Time</h5>
+        <h2>{{ total_time }}</h2>
+    </div>
+</div>
+<hr/>
 <div class="row mt-4">
 <div class="col-12">
-<div class="card p-3">
-<h4>Recent Sensor Records</h4>
-<table class="table table-bordered">
+<div class="graph-card">
+
+<h4 class="text-center text-success mb-4">
+📊 Motor Analytics
+</h4>
+
+<canvas id="motorChart" height="100"></canvas>
+
+</div>
+</div>
+</div>
+<div class="card table-card p-4 mt-4">
+<h4 class="text-success mb-3">🌱 Recent Sensor Records</h4>
+
+<div class="table-responsive">
+<hr/>
+<table class="table table-bordered table-hover">
 <thead>
 <tr>
-<th>Moisture</th><th>Temperature</th><th>Humidity</th><th>Motor</th><th>Irrigation</th>
+<th>Moisture</th>
+<th>Temperature</th>
+<th>Humidity</th>
+<th>Motor</th>
+<th>Irrigation</th>
+<th>Action</th>
 </tr>
 </thead>
+
 <tbody>
 {% for r in records %}
 <tr>
@@ -28,26 +102,58 @@
 <td>{{ r[2] }}</td>
 <td>{{ r[3] }}</td>
 <td>{{ r[4] }}</td>
+
+<td>
+<a href="/remove_record/{{ r[5] }}"
+class="btn btn-danger btn-sm"
+onclick="return confirm('Delete this record?')">
+🗑️ Remove
+</td>
+
 </tr>
 {% endfor %}
 </tbody>
+
 </table>
 </div>
 </div>
-</div>
-</div>
-
 <script>
-new Chart(document.getElementById('motorChart'),{
-type:'bar',
-data:{
-labels:['Motor ON','Motor OFF'],
-datasets:[{
-label:'Motor Count',
-data:[{{ motor_on }},{{ motor_off }}]
-}]
-},
-options:{responsive:true}
+new Chart(document.getElementById("motorChart"),{
+    type:"line",
+    data:{
+        labels: {{ graph_labels|safe }},
+        datasets:[{
+            label:"Motor Running Time (Seconds)",
+            data: {{ graph_data|safe }},
+            borderColor:"#00c853",
+            backgroundColor:"rgba(0,200,83,0.2)",
+            fill:true,
+            tension:0.4
+        }]
+    },
+    options:{
+        responsive:true,
+        plugins:{
+            legend:{
+                display:true
+            }
+        },
+        scales:{
+            y:{
+                beginAtZero:true,
+                title:{
+                    display:true,
+                    text:"Seconds"
+                }
+            },
+            x:{
+                title:{
+                    display:true,
+                    text:"Motor Runs"
+                }
+            }
+        }
+    }
 });
 </script>
 {% endblock %}
