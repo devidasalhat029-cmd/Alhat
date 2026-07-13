@@ -10,7 +10,7 @@ from groq import Groq
 from os import path
 from dotenv import load_dotenv
 import os
-load_dotenv()
+load_dotenv("/home/yogita12/Alhat/.env")
 
 
 client = Groq(
