@@ -1,33 +1,132 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <link href ="http://cdn.j
-        <style>
-            .box  {
-                  background:blue;
-                  color:white;
-                  padding:20px;
-                  text-aling-crnter
-                  margin-bottom:10px;
-                  border-radius:8px;
-            }
-        </style>
-    </head>
-    <body class="p-4">
-        <h2>Grid Demo</h2>
-        <div class  ="row mb-3">
-            <div class="col-md-12">
-                <div class ="box">full width</div>div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motor Control Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <style>
+        body {
+            background: #f4fff6;
+        }
+        .motor-banner {
+            background: linear-gradient(135deg, #0f9d58, #36d16f);
+            color: #fff;
+            padding: 35px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .motor-section {
+            background: #fff;
+            margin-top: 25px;
+            padding: 30px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.15);
+        }
+        .motor-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: 0.4s;
+        }
+        .rotate {
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .status-card {
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 15px;
+            background: #f0fdf4;
+            border: 2px solid #22c55e;
+        }
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .start {
+            background: #16a34a;
+        }
+        .start:hover {
+            background: #15803d;
+        }
+        .stop {
+            background: #dc2626;
+        }
+        .stop:hover {
+            background: #b91c1c;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+            margin-top: 25px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="motor-banner">
+                    <h1>🚜 Smart Irrigation Motor Control</h1>
+                    <p>Automatic Water Pump Monitoring System</p>
+                </div>
+
+                <div class="motor-section">
+                    <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&h=400&fit=crop"
+                         class="motor-image"
+                         alt="Water Pump Motor"
+                         onerror="this.src='https://via.placeholder.com/300?text=Water+Pump+Motor'">
+
+                    <div class="status-card">
+                        <h2>
+                            <span style="color: green;">🟢 Motor Status: ON</span>
+                        </h2>
+                        <p>Motor is running successfully.</p>
+                    </div>
+
+                    <form method="POST">
+                        <button class="btn stop" name="action" value="stop">⛔ Stop Motor</button>
+                    </form>
+
+                    <div class="grid">
+                        <div class="card">
+                            <h3>💧 Water Flow</h3>
+                            <p>120 L/min</p>
+                        </div>
+                        <div class="card">
+                            <h3>⚡ Power Usage</h3>
+                            <p>1.5 KW</p>
+                        </div>
+                        <div class="card">
+                            <h3>🌡️ Temperature</h3>
+                            <p>28°C</p>
+                        </div>
+                        <div class="card">
+                            <h3>⏱️ Running Time</h3>
+                            <p>Running</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class ="row mb-3>
-            <div class ="col-md-6">
-                <div class="box">colunm 1</div>
-        <div class ="col-md-6">
-            <div class="box">colunm 2]\
-                
-            </div>
-            </div>
-    </body>
+    </div>
+</body>
 </html>
