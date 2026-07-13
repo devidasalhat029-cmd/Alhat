@@ -1,0 +1,321 @@
+{% extends "baseofhtml.html" %}
+{% block title %}Live Smart Farm{% endblock %}
+
+{% block content %}
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#87CEEB;
+overflow:hidden;
+}
+
+.farm{
+position:relative;
+width:100%;
+height:100vh;
+background:linear-gradient(
+to bottom,
+#87CEEB 0%,
+#BFEFFF 45%,
+#66BB6A 45%,
+#2E7D32 100%
+);
+overflow:hidden;
+}
+
+/* Clouds */
+
+.cloud{
+position:absolute;
+font-size:60px;
+animation:cloudMove 40s linear infinite;
+}
+
+.c1{
+top:40px;
+left:-200px;
+}
+
+.c2{
+top:120px;
+left:-500px;
+animation-delay:10s;
+}
+
+@keyframes cloudMove{
+
+0%{
+left:-300px;
+}
+
+100%{
+left:120%;
+}
+
+}
+/*rain */
+.rain{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+overflow:hidden;
+z-index:20;
+}
+
+.rain span{
+position:absolute;
+top:-20px;
+width:6px;
+height:20px;
+background:#03a9f4;
+border-radius:50%;
+animation:fall 1.5s linear infinite;
+}
+
+.rain span:nth-child(1){left:10%;animation-delay:0s;}
+.rain span:nth-child(2){left:25%;animation-delay:.3s;}
+.rain span:nth-child(3){left:40%;animation-delay:.6s;}
+.rain span:nth-child(4){left:55%;animation-delay:.9s;}
+.rain span:nth-child(5){left:70%;animation-delay:.2s;}
+.rain span:nth-child(6){left:85%;animation-delay:.5s;}
+.rain span:nth-child(7){left:95%;animation-delay:.8s;}
+.rain span:nth-child(8){left:35%;animation-delay:1s;}
+
+@keyframes fall{
+
+0%{
+transform:translateY(0);
+opacity:1;
+}
+
+100%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+}
+.motor-btn{
+    position:absolute;
+    top:20px;
+    left:20px;
+    padding:12px 25px;
+    background:#0f9d58;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    z-index:100;
+}
+
+.motor-btn:hover{
+    background:#087f3d;
+}
+/* ================= Birds ================= */
+
+.bird{
+position:absolute;
+font-size:30px;
+animation:birdFly 12s linear infinite;
+z-index:5;
+}
+
+.bird1{
+top:80px;
+left:-100px;
+}
+
+.bird2{
+top:140px;
+left:-250px;
+animation-delay:4s;
+}
+
+.bird3{
+top:200px;
+left:-400px;
+animation-delay:8s;
+}
+
+@keyframes birdFly{
+
+0%{
+left:-150px;
+}
+
+100%{
+left:110%;
+}
+
+}
+
+.tree-bird1{
+position:absolute;
+top:90px;
+left:20%;
+font-size:30px;
+}
+
+.tree-bird2{
+position:absolute;
+top:120px;
+left:25%;
+font-size:30px;
+}
+
+.tree-bird3{
+position:absolute;
+top:80px;
+right:20%;
+font-size:30px;
+}
+
+/* ================= Trees ================= */
+
+.tree{
+position:absolute;
+bottom:150px;
+font-size:80px;
+}
+
+.t1{left:5%;}
+.t2{left:18%;}
+.t3{right:18%;}
+.t4{right:5%;}
+
+/* ================= Crops ================= */
+
+.crop{
+position:absolute;
+bottom:70px;
+font-size:42px;
+}
+
+.crop1{left:10%;}
+.crop2{left:20%;}
+.crop3{left:30%;}
+.crop4{left:40%;}
+.crop5{left:50%;}
+.crop6{left:60%;}
+.crop7{left:70%;}
+.crop8{left:80%;}
+/* ================= Flowers ================= */
+
+.flower{
+position:absolute;
+bottom:55px;
+font-size:28px;
+animation:flowerMove 3s ease-in-out infinite;
+}
+
+.f1{left:15%;}
+.f2{left:28%;}
+.f3{left:42%;}
+.f4{left:58%;}
+.f5{left:72%;}
+.f6{left:86%;}
+
+@keyframes flowerMove{
+
+0%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-6px);
+}
+
+100%{
+transform:translateY(0);
+}
+
+}
+
+/* ================= Grass ================= */
+
+.grass{
+position:absolute;
+bottom:0;
+width:100%;
+height:70px;
+background:linear-gradient(#43a047,#1b5e20);
+animation:grassWave 2s ease-in-out infinite;
+}
+
+@keyframes grassWave{
+
+0%{
+filter:brightness(100%);
+}
+
+50%{
+filter:brightness(110%);
+}
+
+100%{
+filter:brightness(100%);
+}
+
+}
+
+</style>
+
+<div class="farm">
+
+<a href="{{ url_for('motor') }}" class="motor-btn">
+    🚰 Motor Control
+</a>
+
+<div class="cloud c1">☁️</div>
+<div class="cloud c2">☁️</div>
+
+{% if not status %}
+<div class="bird bird1">🐦</div>
+<div class="bird bird2">🐦</div>
+<div class="bird bird3">🐦</div>
+{% endif %}
+
+<div class="tree t1">🌳</div>
+<div class="tree t2">🌳</div>
+<div class="tree t3">🌳</div>
+<div class="tree t4">🌳</div>
+
+<div class="crop crop1">🌾</div>
+<div class="crop crop2">🌾</div>
+<div class="crop crop3">🌾</div>
+<div class="crop crop4">🌾</div>
+<div class="crop crop5">🌾</div>
+<div class="crop crop6">🌾</div>
+<div class="crop crop7">🌾</div>
+<div class="crop crop8">🌾</div>
+
+<div class="flower f1">🌼</div>
+<div class="flower f2">🌼</div>
+<div class="flower f3">🌼</div>
+<div class="flower f4">🌼</div>
+<div class="flower f5">🌼</div>
+<div class="flower f6">🌼</div>
+<div class="grass"></div>
+</div>
+{% if status %}
+<div class="rain">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+{% endif %}
+<div class="grass"></div>
+{% endblock %}

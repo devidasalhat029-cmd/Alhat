@@ -22,6 +22,27 @@ CREATE TABLE IF NOT EXISTS crop(
  )
 """)
 
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS sensor_record(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    temperature REAL,
+    humidity REAL,
+    soil_moisture REAL,
+    motor_status TEXT,
+    irrigation_status TEXT,
+    date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+""")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS irrigation_schedule(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    crop_name TEXT,
+    water_time TEXT,
+    duration TEXT,
+    status TEXT
+)
+""")
 
 conn.commit()
 conn.close()

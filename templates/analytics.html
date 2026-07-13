@@ -1,197 +1,53 @@
 {% extends "baseofhtml.html" %}
-
-{% block title %}
-Analytics
-{% endblock %}
-
+{% block title %}Analytics{% endblock %}
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<style>
-
-.analytics-hero{
-background:linear-gradient(135deg,#4f46e5,#7c3aed);
-padding:40px;
-border-radius:25px;
-color:white;
-display:flex;
-justify-content:space-between;
-align-items:center;
-box-shadow:0 10px 25px rgba(0,0,0,.15);
-}
-
-.hero-icon{
-font-size:100px;
-}
-
-.analytics-cards{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:20px;
-margin-top:25px;
-}
-
-.a-card{
-background:white;
-padding:25px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
-transition:.3s;
-}
-
-.a-card:hover{
-transform:translateY(-8px);
-}
-
-.a-card i{
-font-size:50px;
-color:#7c3aed;
-margin-bottom:10px;
-}
-
-.graph-box{
-background:white;
-margin-top:25px;
-padding:30px;
-border-radius:25px;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
-
-.graph-box h2{
-margin-bottom:20px;
-color:#4f46e5;
-}
-
-.bars{
-height:320px;
-display:flex;
-align-items:flex-end;
-justify-content:space-around;
-}
-
-.bar{
-width:70px;
-background:linear-gradient(#7c3aed,#4f46e5);
-border-radius:15px 15px 0 0;
-}
-
-.bar1{height:120px;}
-.bar2{height:220px;}
-.bar3{height:170px;}
-.bar4{height:280px;}
-.bar5{height:200px;}
-.bar6{height:260px;}
-
-.bottom-cards{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-margin-top:25px;
-}
-
-.info{
-background:white;
-padding:25px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
-
-.info i{
-font-size:45px;
-color:#4f46e5;
-margin-bottom:10px;
-}
-
-</style>
-
-<div class="analytics-hero">
-
-<div>
-
-<h1>
-<i class="fas fa-chart-pie"></i>
- Analytics Dashboard
-</h1>
-
-<p>
-Smart Farm Monitoring & Performance Overview
-</p>
-
+<div class="container mt-4">
+<div class="row g-3">
+  <div class="col-md-3"><div class="card p-3 text-center"><h5>Motor ON</h5><h2>{{ motor_on }}</h2></div></div>
+  <div class="col-md-3"><div class="card p-3 text-center"><h5>Motor OFF</h5><h2>{{ motor_off }}</h2></div></div>
+  <div class="col-md-6"><div class="card p-3"><canvas id="motorChart"></canvas></div></div>
 </div>
 
-<i class="fas fa-chart-line hero-icon"></i>
-
+<div class="row mt-4">
+<div class="col-12">
+<div class="card p-3">
+<h4>Recent Sensor Records</h4>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Moisture</th><th>Temperature</th><th>Humidity</th><th>Motor</th><th>Irrigation</th>
+</tr>
+</thead>
+<tbody>
+{% for r in records %}
+<tr>
+<td>{{ r[0] }}</td>
+<td>{{ r[1] }}</td>
+<td>{{ r[2] }}</td>
+<td>{{ r[3] }}</td>
+<td>{{ r[4] }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </div>
 
-<div class="analytics-cards">
-
-<div class="a-card">
-<i class="fas fa-droplet"></i>
-<h2>68%</h2>
-<p>Soil Moisture</p>
-</div>
-
-<div class="a-card">
-<i class="fas fa-temperature-high"></i>
-<h2>29°C</h2>
-<p>Temperature</p>
-</div>
-
-<div class="a-card">
-<i class="fas fa-cloud-rain"></i>
-<h2>72%</h2>
-<p>Humidity</p>
-</div>
-
-<div class="a-card">
-<i class="fas fa-faucet-drip"></i>
-<h2>ON</h2>
-<p>Motor Status</p>
-</div>
-
-</div>
-
-<div class="graph-box">
-
-<h2>
-<i class="fas fa-chart-column"></i>
- Farm Performance
-</h2>
-
-<div class="bars">
-
-<div class="bar bar1"></div>
-<div class="bar bar2"></div>
-<div class="bar bar3"></div>
-<div class="bar bar4"></div>
-<div class="bar bar5"></div>
-<div class="bar bar6"></div>
-
-</div>
-
-</div>
-
-<div class="bottom-cards">
-
-<div class="info">
-<i class="fas fa-seedling"></i>
-<h3>Crop Health</h3>
-<p>Healthy</p>
-</div>
-
-<div class="info">
-<i class="fas fa-water"></i>
-<h3>Water Usage</h3>
-<p>250 Litres</p>
-</div>
-
-<div class="info">
-<i class="fas fa-award"></i>
-<h3>Efficiency</h3>
-<p>89%</p>
-</div>
-
-</div>
-
+<script>
+new Chart(document.getElementById('motorChart'),{
+type:'bar',
+data:{
+labels:['Motor ON','Motor OFF'],
+datasets:[{
+label:'Motor Count',
+data:[{{ motor_on }},{{ motor_off }}]
+}]
+},
+options:{responsive:true}
+});
+</script>
 {% endblock %}

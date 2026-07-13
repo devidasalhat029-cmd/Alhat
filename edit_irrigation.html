@@ -1,0 +1,105 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}
+Edit Irrigation Schedule
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+body{
+    background:#e8f5e9;
+}
+
+.edit-card{
+    max-width:700px;
+    margin:40px auto;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+h2{
+    text-align:center;
+    color:#15803d;
+    margin-bottom:25px;
+}
+
+.btn-save{
+    background:#16a34a;
+    color:white;
+    border:none;
+    padding:10px 25px;
+    border-radius:8px;
+}
+
+.btn-save:hover{
+    background:#15803d;
+}
+
+</style>
+
+<div class="edit-card">
+
+<h2>✏️ Edit Irrigation Schedule</h2>
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label><b>Crop Name</b></label>
+
+<input
+type="text"
+name="crop_name"
+class="form-control"
+value="{{ data[1] }}"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label><b>Water Time</b></label>
+
+<input
+type="time"
+name="water_time"
+class="form-control"
+value="{{ data[2] }}"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label><b>Duration (Minutes)</b></label>
+
+<input
+type="number"
+name="duration"
+class="form-control"
+value="{{ data[3] }}"
+required>
+
+</div>
+
+<div class="text-center">
+
+<button type="submit" class="btn-save">
+💾 Update Schedule
+</button>
+
+<a href="/irrigation" class="btn btn-secondary">
+Cancel
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+{% endblock %}
