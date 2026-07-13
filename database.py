@@ -43,6 +43,13 @@ CREATE TABLE IF NOT EXISTS irrigation_schedule(
     status TEXT
 )
 """)
+conn = sqlite3.connect("agriculture.db")
+cur = conn.cursor()
+
+cur.execute("""
+ALTER TABLE sensor_record
+ADD COLUMN duration TEXT
+""")
 
 conn.commit()
 conn.close()

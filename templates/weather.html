@@ -23,6 +23,10 @@ Weather Forecast
     font-size:100px;
 }
 
+.weather-banner img{
+    width:120px;
+}
+
 .weather-cards{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -36,17 +40,11 @@ Weather Forecast
     border-radius:20px;
     text-align:center;
     box-shadow:0 5px 15px rgba(0,0,0,.1);
-    transition:.3s;
-}
-
-.card:hover{
-    transform:translateY(-8px);
 }
 
 .card i{
     font-size:50px;
     color:#2563eb;
-    margin-bottom:10px;
 }
 
 .forecast{
@@ -54,28 +52,8 @@ Weather Forecast
     background:white;
     padding:25px;
     border-radius:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
 }
 
-.days{
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
-    gap:15px;
-    margin-top:20px;
-}
-
-.day{
-    background:#f1f5f9;
-    padding:15px;
-    border-radius:15px;
-    text-align:center;
-}
-
-.day i{
-    font-size:30px;
-    color:#2563eb;
-    margin:10px 0;
-}
 
 .alert{
     margin-top:25px;
@@ -87,6 +65,7 @@ Weather Forecast
 
 </style>
 
+
 <div class="weather-banner">
 
 <div>
@@ -96,107 +75,79 @@ Weather Forecast
  Weather Forecast
 </h1>
 
+<h3>
+<i class="fas fa-location-dot"></i>
+{{weather.city}}
+</h3>
+
 <br>
 
-<h2>31°C</h2>
+<h2>{{weather.temperature}}°C</h2>
 
-<p>Today's Climate Status</p>
+<p>{{weather.condition}}</p>
+
+</div>
+
+
+<img src="https://openweathermap.org/img/wn/{{weather.icon}}@2x.png">
 
 </div>
 
-<i class="fas fa-sun"></i>
 
-</div>
 
 <div class="weather-cards">
 
+
 <div class="card">
+
 <i class="fas fa-temperature-high"></i>
-<h2>31°C</h2>
+
+<h2>{{weather.temperature}}°C</h2>
+
 <p>Temperature</p>
+
 </div>
 
+
+
 <div class="card">
+
 <i class="fas fa-droplet"></i>
-<h2>72%</h2>
+
+<h2>{{weather.humidity}}%</h2>
+
 <p>Humidity</p>
+
 </div>
 
+
+
 <div class="card">
+
 <i class="fas fa-wind"></i>
-<h2>15 km/h</h2>
+
+<h2>{{weather.wind}} km/h</h2>
+
 <p>Wind Speed</p>
+
 </div>
+
+
 
 <div class="card">
+
 <i class="fas fa-cloud-rain"></i>
-<h2>60%</h2>
+
+<h2>--</h2>
+
 <p>Rain Chance</p>
-</div>
 
 </div>
 
-<div class="forecast">
-
-<h2>
-<i class="fas fa-calendar-days"></i>
- Weekly Forecast
-</h2>
-
-<div class="days">
-
-<div class="day">
-Mon
-<br>
-<i class="fas fa-sun"></i>
-<p>32°C</p>
-</div>
-
-<div class="day">
-Tue
-<br>
-<i class="fas fa-cloud"></i>
-<p>30°C</p>
-</div>
-
-<div class="day">
-Wed
-<br>
-<i class="fas fa-cloud-rain"></i>
-<p>28°C</p>
-</div>
-
-<div class="day">
-Thu
-<br>
-<i class="fas fa-cloud-showers-heavy"></i>
-<p>27°C</p>
-</div>
-
-<div class="day">
-Fri
-<br>
-<i class="fas fa-sun"></i>
-<p>33°C</p>
-</div>
-
-<div class="day">
-Sat
-<br>
-<i class="fas fa-cloud-sun"></i>
-<p>29°C</p>
-</div>
-
-<div class="day">
-Sun
-<br>
-<i class="fas fa-cloud-rain"></i>
-<p>26°C</p>
-</div>
 
 </div>
 
-</div>
+
 
 <div class="alert">
 
@@ -208,10 +159,10 @@ Sun
 <br>
 
 <p>
-Heavy rainfall expected in the next 48 hours.
-Farmers are advised to avoid irrigation and monitor crop drainage.
+{{weather.condition}}. Farmers can plan irrigation according to current weather conditions.
 </p>
 
 </div>
+
 
 {% endblock %}
