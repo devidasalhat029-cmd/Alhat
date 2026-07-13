@@ -1,0 +1,81 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}
+AI Assistant
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.ai-box{
+    width:600px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+input{
+    width:100%;
+    padding:15px;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+button{
+    margin-top:15px;
+    width:100%;
+    padding:12px;
+    background:#16a34a;
+    color:white;
+    border:none;
+    border-radius:10px;
+}
+
+.answer{
+    margin-top:20px;
+    background:#f0fdf4;
+    padding:20px;
+    border-radius:15px;
+}
+
+</style>
+
+
+<div class="ai-box">
+
+<h1>🤖 AI Farmer Assistant</h1>
+
+<form method="POST">
+
+<input 
+type="text"
+name="question"
+placeholder="Ask farming question..."
+required>
+
+<button>
+Ask AI
+</button>
+
+</form>
+
+
+{% if answer %}
+
+<div class="answer">
+
+<h3>🌱 AI Advice</h3>
+
+<p>{{answer}}</p>
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+{% endblock %}
