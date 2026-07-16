@@ -62,8 +62,20 @@ Edit Profile
 
 <h1>✏️ Edit Farmer Profile</h1>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
+<div style="text-align:center;margin-bottom:20px;">
 
+<label for="photo" style="cursor:pointer;">
+
+<div class="profile-icon">
+<i class="fa-solid fa-camera"></i>
+</div>
+
+</label>
+
+<input type="file" id="photo" name="photo" accept=".png,.jpg,.jpeg" hidden>
+
+</div>
 <div class="input-group">
 <label>Name</label>
 <input type="text" name="name" value="{{ farmer[1] }}">

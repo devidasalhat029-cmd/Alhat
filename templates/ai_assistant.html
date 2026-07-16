@@ -1,81 +1,620 @@
 {% extends "baseofhtml.html" %}
 
 {% block title %}
-AI Assistant
+AI Farmer Assistant
 {% endblock %}
 
 {% block content %}
 
 <style>
 
-.ai-box{
-    width:600px;
-    margin:auto;
+body{
+    background:#e8f5e9;
+    font-family:'Segoe UI', sans-serif;
+}
+
+
+/* Main AI Card */
+
+.ai-card{
+
+    width:90%;
+    max-width:850px;
+
+    margin:40px auto;
+
     background:white;
-    padding:30px;
-    border-radius:25px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,0.18);
+
 }
 
-input{
-    width:100%;
-    padding:15px;
-    border-radius:10px;
-    border:1px solid #ccc;
-}
 
-button{
-    margin-top:15px;
-    width:100%;
-    padding:12px;
-    background:#16a34a;
+/* Header */
+
+.ai-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:25px;
+
+    background:
+    linear-gradient(135deg,#15803d,#22c55e);
+
     color:white;
-    border:none;
-    border-radius:10px;
+
 }
 
-.answer{
-    margin-top:20px;
-    background:#f0fdf4;
+
+.robot-icon{
+
+    width:70px;
+
+    height:70px;
+
+    background:white;
+
+    color:#15803d;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:40px;
+
+}
+
+
+.ai-header h2{
+
+    margin:0;
+
+    font-size:28px;
+
+}
+
+
+.ai-header p{
+
+    margin:5px 0 0;
+
+}
+
+
+
+/* Chat Area */
+
+.chat-area{
+
+    height:450px;
+
+    padding:25px;
+
+    overflow-y:auto;
+
+    background:#f7fff8;
+
+}
+
+
+
+/* AI Message */
+
+.ai-message{
+
+    width:75%;
+
+    background:white;
+
+    padding:18px;
+
+    border-radius:20px;
+
+    margin-bottom:20px;
+
+    box-shadow:
+    0 5px 15px rgba(0,0,0,0.1);
+
+    line-height:1.6;
+
+    animation:show .5s;
+
+}
+
+
+
+/* User Message */
+
+.user-message{
+
+    width:75%;
+
+    margin-left:auto;
+
+    background:#16a34a;
+
+    color:white;
+
+    padding:18px;
+
+    border-radius:20px;
+
+    margin-bottom:20px;
+
+    animation:show .5s;
+
+}
+
+
+
+/* Input Area */
+
+.input-area{
+
     padding:20px;
-    border-radius:15px;
+
+    background:white;
+
+    border-top:1px solid #ddd;
+
+}
+
+
+.input-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+.input-box input{
+
+    flex:1;
+
+    padding:15px 20px;
+
+    border-radius:30px;
+
+    border:1px solid #ccc;
+
+    outline:none;
+
+    font-size:16px;
+
+}
+
+
+
+/* Mic Button */
+
+.mic-btn{
+
+    width:55px;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+}
+
+
+
+/* Send Button */
+
+.send-btn{
+
+    width:55px;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#16a34a;
+
+    color:white;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+}
+
+
+
+.mic-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+
+.send-btn:hover{
+
+    background:#15803d;
+
+}
+
+
+
+/* Animation */
+
+@keyframes show{
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+
+
+/* Mobile */
+
+@media(max-width:600px){
+
+.ai-card{
+
+width:95%;
+
+}
+
+
+.ai-header h2{
+
+font-size:22px;
+
+}
+
+
+.chat-area{
+
+height:400px;
+
+}
+
+
+.ai-message,
+.user-message{
+
+width:85%;
+
+}
+
 }
 
 </style>
+<div class="ai-card">
+
+    <!-- Header -->
+    <div class="ai-header">
+
+        <div class="robot-icon">
+            🤖
+        </div>
+
+        <div>
+            <h2>AI Farmer Assistant</h2>
+            <p>🌱 Smart Farming With AI</p>
+        </div>
+
+    </div>
 
 
-<div class="ai-box">
-
-<h1>🤖 AI Farmer Assistant</h1>
-
-<form method="POST">
-
-<input 
-type="text"
-name="question"
-placeholder="Ask farming question..."
-required>
-
-<button>
-Ask AI
-</button>
-
-</form>
+    <!-- Chat Area -->
+    <div class="chat-area">
 
 
-{% if answer %}
+        <div class="ai-message">
 
-<div class="answer">
+            👋 Hello Farmer! <br><br>
 
-<h3>🌱 AI Advice</h3>
+            I can help you with:
+            
+        </div>
 
-<p>{{answer}}</p>
+
+        {% if answer %}
+
+
+        <div class="user-message">
+
+            👨‍🌾 {{ request.form.question }}
+
+        </div>
+
+
+        <div class="ai-message" id="answer">
+
+            🤖 {{ answer }}
+
+        </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+
+    <!-- Input Area -->
+
+    <div class="input-area">
+
+        <form method="POST">
+
+            <div class="input-box">
+
+
+                <input 
+                type="text"
+                name="question"
+                placeholder="Ask your farming question..."
+                required>
+
+
+                <button type="button" class="mic-btn">
+                    🎤
+                </button>
+
+
+                <button type="submit" class="send-btn">
+                    ➤
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
 
 </div>
+<script>
 
-{% endif %}
+
+// =====================
+// 🎤 Voice Input (Mic)
+// =====================
 
 
-</div>
+const micBtn = document.querySelector(".mic-btn");
+
+const inputBox = document.querySelector(
+    "input[name='question']"
+);
+
+
+if ("webkitSpeechRecognition" in window){
+
+
+const recognition = new webkitSpeechRecognition();
+
+
+recognition.lang = "en-IN";
+
+recognition.continuous = false;
+
+recognition.interimResults = false;
+
+
+
+micBtn.onclick = function(){
+
+
+    recognition.start();
+
+    micBtn.innerHTML="🎙️";
+
+
+};
+
+
+
+recognition.onresult=function(event){
+
+
+    let voiceText =
+    event.results[0][0].transcript;
+
+
+    inputBox.value = voiceText;
+
+
+    micBtn.innerHTML="🎤";
+
+
+};
+
+
+
+recognition.onerror=function(){
+
+
+    micBtn.innerHTML="🎤";
+
+
+    alert("Voice recognition failed");
+
+
+};
+
+
+}
+
+
+
+
+
+// =====================
+// 🔊 AI Voice Answer
+// =====================
+
+
+function speakAI(text){
+
+
+    let speech =
+    new SpeechSynthesisUtterance();
+
+
+    speech.text=text;
+
+
+    speech.lang="en-IN";
+
+
+    speech.rate=1;
+
+
+    speech.pitch=1;
+
+
+    speech.volume=1;
+
+
+
+    window.speechSynthesis.speak(speech);
+
+
+}
+
+
+
+window.onload=function(){
+
+
+    let answer =
+    document.getElementById("answer");
+
+
+    if(answer){
+
+
+        speakAI(answer.innerText);
+
+
+    }
+
+
+};
+
+
+
+
+
+// =====================
+// ⌨️ Typing Animation
+// =====================
+
+
+const form =
+document.querySelector("form");
+
+
+form.addEventListener(
+"submit",
+function(){
+
+
+let chat =
+document.querySelector(".chat-area");
+
+
+
+let typing =
+document.createElement("div");
+
+
+
+typing.className="ai-message";
+
+
+typing.id="typing";
+
+
+typing.innerHTML =
+"🤖 <i>AI is typing...</i>";
+
+
+
+chat.appendChild(typing);
+
+
+
+chat.scrollTop =
+chat.scrollHeight;
+
+
+
+});
+
+
+
+
+
+
+// =====================
+// Auto Scroll
+// =====================
+
+
+let chatBox =
+document.querySelector(".chat-area");
+
+
+chatBox.scrollTop =
+chatBox.scrollHeight;
+
+
+
+</script>
+
 
 {% endblock %}

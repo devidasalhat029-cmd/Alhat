@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+.hero{
+    background:url("/static/img/farm.jpg");
+    background-size:cover;
+    background-position:center;
+    padding:140px 20px;
+    color:white;
+    text-align:center;
+    text-shadow:2px 2px 5px black;
+}
+
+.feature-card{
+    border-radius:20px;
+    transition:0.4s;
+}
+
+.feature-card:hover{
+    transform:translateY(-10px);
+}
+
+.chat-box{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    display:flex;
+    align-items:center;
+}
+
+.robot{
+    font-size:45px;
+}
+
+.message{
+    background:white;
+    padding:15px;
+    border-radius:15px;
+    margin-left:10px;
+    box-shadow:0 0 10px gray;
+}
+</style>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container text-center">
+        <h1>🌾 Agriculture Automatic Monitoring System</h1>
+        <p>Smart Farming | Smart Irrigation | Better Future</p>
+
+        <a href="/login" class="btn btn-success btn-lg m-2">
+            Login
+        </a>
+
+        <a href="/register" class="btn btn-outline-light btn-lg m-2">
+            Register
+        </a>
+    </div>
+</section>
+
+<!-- Features -->
+<div class="container mt-5">
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="card shadow feature-card">
+                <div class="card-body text-center">
+                    <h1>🌡️</h1>
+                    <h4>Temperature</h4>
+                    <p>Monitor live temperature.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow feature-card">
+                <div class="card-body text-center">
+                    <h1>💧</h1>
+                    <h4>Soil Moisture</h4>
+                    <p>Check soil moisture instantly.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow feature-card">
+                <div class="card-body text-center">
+                    <h1>☁️</h1>
+                    <h4>Weather</h4>
+                    <p>Live weather updates.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- About -->
+<section class="container mt-5">
+
+<div class="card shadow p-4">
+
+<h2 class="text-success text-center">
+🌿 About Project
+</h2>
+
+<p class="text-center">
+
+Agriculture Automatic Monitoring System helps farmers monitor
+temperature, humidity, soil moisture, weather and irrigation.
+
+It saves water, improves crop production and makes farming smarter.
+
+</p>
+
+</div>
+
+</section>
+
+<!-- AI Assistant -->
+<div class="chat-box">
+
+<div class="robot">
+🤖
+</div>
+
+<div class="message">
+👋 Hello Farmer!<br>
+How can I help you today?
+</div>
+
+</div>
+
+{% endblock %}

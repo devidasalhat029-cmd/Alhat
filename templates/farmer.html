@@ -7,59 +7,174 @@ Farmer Profile
 {% block content %}
 <style>
 
-.profile-container{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:80vh;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.profile-card{
-    width:450px;
-    background:white;
-    padding:35px;
-    border-radius:25px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.15);
-    text-align:center;
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
 }
 
-.profile-icon{
-    width:100px;
-    height:100px;
-    background:#16a34a;
-    color:white;
-    border-radius:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:45px;
-    margin:auto;
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E");
+    opacity: 0.6;
+    z-index: -1;
 }
 
-.profile-card h1{
-    color:#166534;
-    margin-top:20px;
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px 40px;
 }
 
-.info{
-    margin-top:25px;
-    text-align:left;
+.profile-card {
+    width: 450px;
+    background: white;
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: 0 25px 80px rgba(102, 126, 234, 0.25);
+    text-align: center;
+    animation: slideIn 0.6s ease-out;
 }
 
-.info p{
-    padding:12px;
-    border-bottom:1px solid #ddd;
-    font-size:17px;
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-.edit-btn{
-    display:inline-block;
-    margin-top:25px;
-    background:#16a34a;
-    color:white;
-    padding:12px 30px;
-    border-radius:25px;
-    text-decoration:none;
+.profile-icon {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    margin: auto;
+    box-shadow: 0 10px 35px rgba(102, 126, 234, 0.4);
+    position: relative;
+}
+
+.profile-icon::after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+    z-index: -1;
+    opacity: 0.3;
+    filter: blur(8px);
+}
+
+.profile-card h1 {
+    color: #667eea;
+    margin-top: 25px;
+    font-size: 2rem;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(102, 126, 234, 0.1);
+}
+
+.profile-card > p {
+    color: #6b7280;
+    font-size: 1.1rem;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.info {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.info p {
+    padding: 15px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 1.05rem;
+    color: #374151;
+    font-weight: 500;
+    transition: background 0.3s ease, padding-left 0.3s ease;
+}
+
+.info p:hover {
+    background: linear-gradient(135deg, #f8f9ff 0%, #eef2ff 100%);
+    padding-left: 20px;
+}
+
+.info p:last-child {
+    border-bottom: none;
+}
+
+.edit-btn {
+    display: inline-block;
+    margin-top: 30px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 14px 40px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s ease;
+}
+
+.edit-btn:hover {
+    background: linear-gradient(135deg, #764ba2, #667eea);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+
+.edit-btn:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        justify-content: center;
+        padding: 20px;
+    }
+    
+    .profile-card {
+        width: 100%;
+        max-width: 400px;
+        padding: 30px;
+    }
+    
+    .profile-icon {
+        width: 100px;
+        height: 100px;
+        font-size: 40px;
+    }
+    
+    .profile-card h1 {
+        font-size: 1.6rem;
+    }
 }
 
 </style>
@@ -70,7 +185,7 @@ Farmer Profile
 <div class="profile-card">
 
 <div class="profile-icon">
-<i class="fa-solid fa-user"></i>
+👨‍🌾
 </div>
 
 
@@ -100,4 +215,4 @@ Farmer Profile
 </div>
 
 
-{% endblock %}
+{% endblock %}s

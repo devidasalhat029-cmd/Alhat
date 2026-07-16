@@ -1,3 +1,4 @@
+
 from xmlrpc import client
 from datetime import datetime
 import random
@@ -9,8 +10,10 @@ import sqlite3
 from groq import Groq
 from os import path
 from dotenv import load_dotenv
+from werkzeug.utils import secure_filename
 import os
-load_dotenv("/home/yogita12/Alhat/.env")
+
+load_dotenv(r"C:\Users\user\Yogita\.env")
 
 
 client = Groq(
@@ -19,8 +22,12 @@ client = Groq(
 
 
 app = Flask(__name__)
+
+UPLOAD_FOLDER = "static/uploads"
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
+
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.secret_key = "agrotech123"
-import os
 
 print(os.path.abspath("agriculture.db"))                                                                                                                                                                                                       
 # Database Connection
@@ -56,12 +63,11 @@ def farmer_profile():
         "farmer.html",
         farmer=farmer
     )
-
 @app.route("/edit_profile", methods=["GET","POST"])
 def edit_profile():
 
     if "username" not in session:
-        return redirect("/edit_profile")
+        return redirect("/login")
 
     conn = sqlite3.connect("agriculture.db")
     cur = conn.cursor()
@@ -72,12 +78,36 @@ def edit_profile():
         mobile = request.form["mobile"]
         village = request.form["village"]
 
-        cur.execute("""
-        UPDATE farmers
-        SET name=?, mobile=?, village=?
-        WHERE username=?
-        """,
-        (name, mobile, village, session["username"]))
+        photo = request.files.get("photo")
+
+        filename = None
+
+        if photo and photo.filename:
+            filename = secure_filename(photo.filename)
+
+            photo.save(
+                os.path.join(
+                    app.config["UPLOAD_FOLDER"],
+                    filename
+                )
+            )
+
+            cur.execute("""
+            UPDATE farmers
+            SET name=?, mobile=?, village=?, photo=?
+            WHERE username=?
+            """,
+            (name, mobile, village, filename, session["username"]))
+
+        else:
+
+            cur.execute("""
+            UPDATE farmers
+            SET name=?, mobile=?, village=?
+            WHERE username=?
+            """,
+            (name, mobile, village, session["username"]))
+
 
         conn.commit()
         conn.close()
@@ -348,7 +378,7 @@ def delete_crop(id):
 @app.route('/weather')
 def weather():
 
-    API_KEY = os.getenv("My API_key")   
+    API_KEY = os.getenv("API_KEY")   
 
     city = "Hingoli"
 
@@ -471,6 +501,9 @@ def livefarm():
         "live_farm.html",
         status=session.get('motor_status', False)
     )
+
+
+    return f"Report Generated Successfully: {filename}"
 # Records
 @app.route('/records')
 def record():
@@ -663,7 +696,7 @@ def edit_irrigation(id):
         SET crop_name=?,
             water_time=?,
             duration=?
-        WHERE id=?w
+        WHERE id=?
         """,(crop_name, water_time, duration, id))
 
         conn.commit()
@@ -694,57 +727,132 @@ def remove_record(id):
     conn.close()
 
     return redirect("/analytics")
+
+@app.route('/ai_advice')
+def ai_advice():
+
+    if 'username' not in session:
+        return redirect('/login')
+
+
+    temperature = 28
+    humidity = 65
+    moisture = 45
+
+
+    prompt = f"""
+
+You are an agriculture expert.
+
+Farm Data:
+
+Temperature:
+{temperature} C
+
+Humidity:
+{humidity} %
+
+Soil Moisture:
+{moisture} %
+
+Give simple farming advice.
+
+"""
+
+
+    response = client.chat.completions.create(
+
+        model="llama-3.1-8b-instant",
+
+        messages=[
+            {
+                "role":"user",
+                "content":prompt
+            }
+        ]
+
+    )
+
+
+    advice = response.choices[0].message.content
+
+
+    return render_template(
+        "ai_advice.html",
+        username=session["username"],
+        temperature=temperature,
+        humidity=humidity,
+        moisture=moisture,
+        advice=advice
+    )
+
 @app.route('/ai_assistant', methods=['GET','POST'])
 def ai_assistant():
 
     if 'username' not in session:
         return redirect('/login')
 
+
     answer = ""
 
-    # Demo sensor data 
-    temperature = 28
-    humidity = 65
-    moisture = 45
 
     if request.method == "POST":
 
-        question = request.form['question']
+
+        question = request.form["question"]
+
 
         prompt = f"""
-        You are an Agriculture AI Assistant.
 
-        Farmer Name: {session['username']}
+You are an Agriculture AI Assistant.
 
-        Current Farm Data:
-        Temperature: {temperature} °C
-        Humidity: {humidity} %
-        Soil Moisture: {moisture} %
+Farmer Name:
+{session['username']}
 
-        Give simple advice for farmers.
 
-        Farmer Question:
-        {question}
-        """
+Give simple and useful farming advice.
+
+Help about:
+- Crop selection
+- Irrigation
+- Fertilizer
+- Weather
+- Plant diseases
+- Soil management
+
+
+Farmer Question:
+
+{question}
+
+"""
+
 
         response = client.chat.completions.create(
+
             model="llama-3.1-8b-instant",
+
             messages=[
                 {
                     "role":"user",
                     "content":prompt
                 }
             ]
+
         )
+
 
         answer = response.choices[0].message.content
 
 
-    return render_template(
-        "ai_assistant.html",
-        answer=answer
-    )
 
+    return render_template(
+
+        "ai_assistant.html",
+
+        answer=answer
+
+    )
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template("404.html"),404

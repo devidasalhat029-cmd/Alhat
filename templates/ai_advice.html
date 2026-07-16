@@ -1,0 +1,47 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}
+AI Farming Advice
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="advice-card">
+
+<h1>🌱 AI Farming Advice</h1>
+
+<p>
+👨‍🌾 Farmer: {{ username }}
+</p>
+
+
+<div class="farm-data">
+
+<h3>🌦️ Farm Condition</h3>
+
+<p>🌡️ Temperature : {{ temperature }} °C</p>
+
+<p>💧 Humidity : {{ humidity }} %</p>
+
+<p>🌱 Soil Moisture : {{ moisture }} %</p>
+
+</div>
+
+
+<div class="ai-result">
+
+<h3>🤖 AI Recommendation</h3>
+
+<p>
+{{ advice }}
+</p>
+
+</div>
+
+
+</div>
+
+
+{% endblock %}
