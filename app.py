@@ -854,8 +854,9 @@ Farmer Question:
 
     )
 @app.errorhandler(404)
-def page_not_found(error):
-    return render_template("404.html"),404
+def page_not_found(e):
+    return"404 -page not found"
+404
 
 
 if __name__ == "__main__":
