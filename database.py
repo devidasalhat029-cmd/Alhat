@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS crop(
  )
 """)
 
+
+
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS sensor_record(
     id INTEGER PRIMARY KEY AUTOINCREMENT,

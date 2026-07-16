@@ -1,17 +1,103 @@
-{% extends "base.html" %}
+{% extends "baseofhtml.html" %}
+
+{% block title %}
+Farmer Profile
+{% endblock %}
 
 {% block content %}
+<style>
 
-<h2>Add Record</h2>
+.profile-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:80vh;
+}
 
-<form>
-    <label>Field Name:</label><br>
-    <input type="text"><br><br>
+.profile-card{
+    width:450px;
+    background:white;
+    padding:35px;
+    border-radius:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    text-align:center;
+}
 
-    <label>Crop Name:</label><br>
-    <input type="text"><br><br>
+.profile-icon{
+    width:100px;
+    height:100px;
+    background:#16a34a;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:45px;
+    margin:auto;
+}
 
-    <button type="submit">Add</button>
-</form>
+.profile-card h1{
+    color:#166534;
+    margin-top:20px;
+}
+
+.info{
+    margin-top:25px;
+    text-align:left;
+}
+
+.info p{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+    font-size:17px;
+}
+
+.edit-btn{
+    display:inline-block;
+    margin-top:25px;
+    background:#16a34a;
+    color:white;
+    padding:12px 30px;
+    border-radius:25px;
+    text-decoration:none;
+}
+
+</style>
+
+
+<div class="profile-container">
+
+<div class="profile-card">
+
+<div class="profile-icon">
+<i class="fa-solid fa-user"></i>
+</div>
+
+
+<h1>{{ farmer[1] }}</h1>
+
+<p>🌱 Smart Farmer</p>
+
+
+<div class="info">
+
+<p>📱 Mobile : {{ farmer[2] }}</p>
+
+<p>📍 Village : {{ farmer[3] }}</p>
+
+<p>👤 Username : {{ farmer[4] }}</p>
+
+</div>
+
+
+<a href="/edit_profile" class="edit-btn">
+✏️ Edit Profile
+</a>
+
+
+</div>
+
+</div>
+
 
 {% endblock %}
