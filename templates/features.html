@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>AgroTech Features</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+
+body{
+background:rgb(204, 0, 255);
+}
+
+
+/* Features Section */
+
+.features-section{
+
+padding:80px 8%;
+text-align:center;
+
+}
+
+
+.features-section h1{
+
+font-size:45px;
+font-weight:700;
+color:#1b5e20;
+margin-bottom:10px;
+
+}
+
+
+.subtitle{
+
+font-size:18px;
+color:#666;
+margin-bottom:50px;
+
+}
+
+
+/* Cards */
+
+.feature-container{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+
+}
+
+
+.feature-card{
+
+background:rgb(135, 209, 222);
+padding:35px 25px;
+border-radius:25px;
+box-shadow:0 10px 30px rgba(0,0,0,.1);
+transition:.4s;
+
+}
+
+
+.feature-card:hover{
+
+transform:translateY(-12px);
+box-shadow:0 20px 40px rgba(0,0,0,.2);
+
+}
+
+
+.feature-card i{
+
+font-size:55px;
+color:#2e7d32;
+margin-bottom:20px;
+
+}
+
+
+.feature-card h3{
+
+font-size:24px;
+font-weight:600;
+color:#1b5e20;
+
+}
+
+
+.feature-card p{
+
+color:#666;
+margin-top:15px;
+line-height:1.6;
+
+}
+
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.features-section h1{
+
+font-size:32px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<section class="features-section">
+
+<h1>Our Smart Farming Features</h1>
+
+<p class="subtitle">
+Advanced technology for modern agriculture
+</p>
+
+
+<div class="feature-container">
+
+
+<div class="feature-card">
+<i class="fa-solid fa-temperature-half"></i>
+<h3>Temperature Monitoring</h3>
+<p>Monitor real-time farm temperature and improve crop health.</p>
+</div>
+
+
+<div class="feature-card">
+<i class="fa-solid fa-droplet"></i>
+<h3>Soil Moisture</h3>
+<p>Track soil moisture levels for efficient irrigation management.</p>
+</div>
+
+
+<div class="feature-card">
+<i class="fa-solid fa-cloud-sun-rain"></i>
+<h3>Weather Forecast</h3>
+<p>View live weather updates and rainfall prediction.</p>
+</div>
+
+
+<div class="feature-card">
+<i class="fa-solid fa-faucet-drip"></i>
+<h3>Motor Control</h3>
+<p>Start and stop irrigation motor easily.</p>
+</div>
+
+
+<div class="feature-card">
+<i class="fa-solid fa-seedling"></i>
+<h3>Crop Management</h3>
+<p>Manage crop records and farming activities.</p>
+</div>
+
+
+<div class="feature-card">
+<i class="fa-solid fa-chart-line"></i>
+<h3>Analytics Dashboard</h3>
+<p>Analyze farming data using charts and reports.</p>
+</div>
+
+
+</div>
+
+</section>
+
+
+</body>
+</html>
