@@ -13,36 +13,10 @@ font-family:'Poppins',sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#d4fc79,#96e6a1);
+background:linear-gradient(135deg,purple,cyan);
 overflow-x:hidden;
 min-height:100vh;
 }
-/* ===== BUTTERFLY ===== */
-
-.butterfly{
-position:fixed;
-font-size:35px;
-animation:fly 12s linear infinite;
-z-index:5;
-}
-
-.b1{top:12%;left:-60px;}
-.b2{top:35%;left:-80px;animation-delay:3s;}
-.b3{top:60%;left:-70px;animation-delay:6s;}
-.b4{top:82%;left:-90px;animation-delay:9s;}
-
-@keyframes fly{
-0%{
-transform:translateX(0) translateY(0);
-}
-50%{
-transform:translateX(700px) translateY(-60px);
-}
-100%{
-transform:translateX(1500px) translateY(40px);
-}
-}
-
 /* ===== ROSES ===== */
 
 .leftFlower{
@@ -160,12 +134,12 @@ padding:25px;
 text-align:center;
 box-shadow:0 10px 25px rgba(0,0,0,.18);
 transition:.4s;
-border:1px solid rgba(255,255,255,.35);
+border-color: black(255, 255,255,.35);
 }
 
 .quick-card:hover{
 transform:translateY(-10px) scale(1.05);
-background:rgba(255,255,255,.35);
+background-color: blueviolet(255,255,255,.35);
 box-shadow:0 20px 40px rgba(0,0,0,.25);
 }
 
@@ -177,13 +151,13 @@ animation:floatIcon 3s ease-in-out infinite;
 
 .quick-card h3{
 font-size:22px;
-color:#145a32;
+color: cyan;
 margin-bottom:8px;
 }
 
 .quick-card p{
 font-size:15px;
-color:#444;
+color: blue;
 }
 
 /* ================= SECTION TITLE ================= */
@@ -193,7 +167,7 @@ margin:35px 0 20px;
 }
 
 .section-title h2{
-color:#fff;
+color:#5e271b;
 font-size:30px;
 }
 
@@ -209,7 +183,7 @@ margin-bottom:40px;
 /* ================= CARD ================= */
 
 .card{
-background:rgba(255,255,255,.22);
+background-color: #5e271b(255,255,255,.22);
 backdrop-filter:blur(15px);
 border-radius:25px;
 padding:25px;
@@ -300,8 +274,8 @@ backdrop-filter:blur(15px);
 border-radius:25px;
 padding:30px;
 text-align:center;
-box-shadow:0 10px 30px rgba(0,0,0,.18);
-border:1px solid rgba(255,255,255,.35);
+box-shadow:0 10px 30px rgba(0, 0, 0, 0.18);
+border:1px solid rgba(255, 255, 255, 0.35);
 transition:.4s;
 
 }
@@ -314,7 +288,7 @@ transform:translateY(-10px);
 
 .status-card h2{
 
-color:#155724;
+color:#57153b;
 margin-bottom:20px;
 
 }
@@ -364,7 +338,7 @@ transition:.4s;
 
 .control-btn:hover{
 
-background:#1b5e20;
+background:#5e271b;
 transform:scale(1.05);
 
 }
@@ -372,8 +346,8 @@ transform:scale(1.05);
 /* ================= ACTIVITY ================= */
 
 .activity-card{ 
-
-background:rgba(255,255,255,.22);
+    
+background-color: #00c853(255, 255, 255, 0.22);
 backdrop-filter:blur(15px)
 }
 
@@ -499,7 +473,7 @@ width:10px;
 }
 
 ::-webkit-scrollbar-track{
-background:#dcedc8;
+background:#c8c9ed;
 }
 
 ::-webkit-scrollbar-thumb{

@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 import os
 
-load_dotenv(r"C:\Users\user\Yogita\.env")
+load_dotenv()
 
 
 client = Groq(
@@ -38,7 +38,11 @@ def connect():
 # Home Page
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home1.html')
+@app.route('/features')
+def features():
+    return render_template('features.html')
+
 
 
 @app.route("/farmer")
@@ -46,6 +50,8 @@ def farmer_profile():
 
     if "username" not in session:
         return redirect("/login")
+    
+ 
 
     conn = sqlite3.connect("agriculture.db")
     cur = conn.cursor()
