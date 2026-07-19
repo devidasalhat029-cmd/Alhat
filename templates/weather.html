@@ -53,7 +53,44 @@ Weather Forecast
     padding:25px;
     border-radius:20px;
 }
+.progress-circle{
+    width:120px;
+    height:120px;
+    margin:15px auto;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+}
 
+.progress-circle::before{
+    content:"";
+    position:absolute;
+    width:90px;
+    height:90px;
+    background:white;
+    border-radius:50%;
+}
+
+.progress-value{
+    position:relative;
+    z-index:1;
+    font-size:22px;
+    font-weight:bold;
+    color:#2563eb;
+}
+.progress-circle{
+    width:120px;
+    height:120px;
+    margin:15px auto;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    background:conic-gradient(#2563eb 0deg,#e5e7eb 0deg);
+}
 
 .alert{
     margin-top:25px;
@@ -97,31 +134,34 @@ Weather Forecast
 
 <div class="weather-cards">
 
-
 <div class="card">
 
-<i class="fas fa-temperature-high"></i>
+<h4>🌡️ Temperature</h4>
 
-<h2>{{weather.temperature}}°C</h2>
+<div class="progress-circle temp-circle"
+     data-value="{{weather.temperature}}">
 
-<p>Temperature</p>
+<div class="progress-value">
+{{weather.temperature}}°C
+</div>
 
 </div>
 
-
-
+</div>
 <div class="card">
 
-<i class="fas fa-droplet"></i>
+<h4>💧 Humidity</h4>
 
-<h2>{{weather.humidity}}%</h2>
+<div class="progress-circle humidity-circle"
+     data-value="{{weather.humidity}}">
 
-<p>Humidity</p>
+<div class="progress-value">
+{{weather.humidity}}%
+</div>
 
 </div>
 
-
-
+</div>
 <div class="card">
 
 <i class="fas fa-wind"></i>
@@ -163,6 +203,23 @@ Weather Forecast
 </p>
 
 </div>
+<script>
+document.querySelectorAll(".progress-circle").forEach(function(circle){
 
+    let value = parseFloat(circle.dataset.value);
+
+    let max = 100;
+
+    if(circle.classList.contains("temp-circle")){
+        max = 50;   // Temperature 0-50°C
+    }
+
+    let degree = (value / max) * 360;
+
+    circle.style.background =
+    `conic-gradient(#2563eb ${degree}deg, #e5e7eb ${degree}deg 360deg)`;
+
+});
+</script>
 
 {% endblock %}

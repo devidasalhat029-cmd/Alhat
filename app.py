@@ -23,10 +23,10 @@ client = Groq(
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = "static/uploads"
-ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
-
+UPLOAD_FOLDER = os.path.join(app.root_path, "static", "uploads")
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 app.secret_key = "agrotech123"
 
 print(os.path.abspath("agriculture.db"))                                                                                                                                                                                                       
@@ -859,6 +859,37 @@ Farmer Question:
         answer=answer
 
     )
+@app.route("/disease")
+def disease():
+    return render_template("disease.html")
+
+
+@app.route("/predict_disease", methods=["POST"])
+def predict_disease():
+
+    file = request.files["image"]
+
+    if file.filename == "":
+        return "No file selected"
+
+    filename = secure_filename(file.filename)
+
+    filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+
+    file.save(filepath)
+
+    # Demo Prediction
+    disease = "Tomato Early Blight"
+    confidence = "98%"
+    treatment = "Use recommended fungicide and remove infected leaves."
+
+    return render_template(
+    "predict_disease.html",
+    image=filename,
+    disease=disease,
+    confidence=confidence,
+    treatment=treatment
+)
 @app.errorhandler(404)
 def page_not_found(e):
     return"404 -page not found"
