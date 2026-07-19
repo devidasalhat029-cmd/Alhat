@@ -1,0 +1,141 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}
+Plant Disease Detection
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.container{
+    max-width:900px;
+    margin:30px auto;
+}
+
+.banner{
+    background:linear-gradient(135deg,#16a34a,#22c55e);
+    color:white;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
+
+.banner i{
+    font-size:70px;
+    margin-bottom:10px;
+}
+
+.upload-card{
+    margin-top:30px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+.upload-card input[type=file]{
+    width:100%;
+    padding:12px;
+    border:2px dashed #16a34a;
+    border-radius:10px;
+    margin:20px 0;
+    cursor:pointer;
+}
+
+.btn-detect{
+    background:#16a34a;
+    color:white;
+    border:none;
+    padding:12px 30px;
+    border-radius:10px;
+    font-size:18px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn-detect:hover{
+    background:#15803d;
+}
+
+.info{
+    margin-top:30px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.box{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 5px 12px rgba(0,0,0,.1);
+}
+
+.box i{
+    font-size:45px;
+    color:#16a34a;
+    margin-bottom:10px;
+}
+
+@media(max-width:768px){
+    .info{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+
+<div class="container">
+
+<div class="banner">
+    <i class="fas fa-leaf"></i>
+    <h2>Plant Disease Detection</h2>
+    <p>Upload a leaf image to identify plant diseases.</p>
+</div>
+
+<div class="upload-card">
+
+<form action="/predict_disease" method="POST" enctype="multipart/form-data">
+
+<h3>Select Leaf Image</h3>
+
+<input type="file" name="image" accept="image/*" required>
+
+<button type="submit" class="btn-detect">
+<i class="fas fa-magnifying-glass"></i>
+ Detect Disease
+</button>
+
+</form>
+
+</div>
+
+<div class="info">
+
+<div class="box">
+<i class="fas fa-camera"></i>
+<h4>Upload Image</h4>
+<p>Select a clear leaf image.</p>
+</div>
+
+<div class="box">
+<i class="fas fa-microchip"></i>
+<h4>AI Analysis</h4>
+<p>The AI model analyzes the uploaded image.</p>
+</div>
+
+<div class="box">
+<i class="fas fa-notes-medical"></i>
+<h4>Get Result</h4>
+<p>View disease name and treatment suggestions.</p>
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}
