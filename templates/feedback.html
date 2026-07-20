@@ -1,0 +1,551 @@
+{% extends "baseofhtml.html" %}
+
+{% block content %}
+
+<style>
+/* ===========================
+   FEEDBACK TABLE
+=========================== */
+
+.table{
+    border-radius:15px;
+    overflow:hidden;
+    background:#fff;
+}
+
+.table thead{
+    background:#198754;
+    color:#fff;
+}
+
+.table thead th{
+    text-align:center;
+    vertical-align:middle;
+    padding:15px;
+}
+
+.table tbody td{
+    text-align:center;
+    vertical-align:middle;
+    padding:12px;
+}
+
+.table tbody tr{
+    transition:0.3s;
+}
+
+.table tbody tr:hover{
+    background:#e9f7ef;
+    transform:scale(1.01);
+}
+
+/* ===========================
+   BADGES
+=========================== */
+
+.badge{
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:14px;
+    font-weight:600;
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+
+.btn{
+    border-radius:25px;
+    transition:0.3s;
+}
+
+.btn-success:hover{
+    transform:translateY(-3px);
+}
+
+.btn-danger:hover{
+    transform:translateY(-3px);
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px);
+}
+
+/* ===========================
+   CHART CONTAINER
+=========================== */
+
+canvas{
+    width:100% !important;
+    height:350px !important;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:768px){
+
+    .page-title{
+        font-size:28px;
+    }
+
+    .stats-card h2{
+        font-size:28px;
+    }
+
+    .stats-card h5{
+        font-size:16px;
+    }
+
+    #search{
+        font-size:15px;
+    }
+
+    .table{
+        font-size:13px;
+    }
+
+    canvas{
+        height:250px !important;
+    }
+
+}
+
+/* ===========================
+   SCROLLBAR
+=========================== */
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#f1f1f1;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#198754;
+    border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#146c43;
+}
+
+/* ===========================
+   ANIMATION
+=========================== */
+
+.card{
+    animation:fadeIn 0.7s ease;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+</style>
+<div class="container mt-4">
+
+    <!-- Page Title -->
+    <div class="text-center mb-4">
+        <h2 class="text-success">
+            <i class="fas fa-chart-line"></i>
+            Feedback Dashboard
+        </h2>
+        <p class="text-muted">
+            Agriculture Automatic Monitoring System
+        </p>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card shadow border-0 bg-success text-white">
+
+                <div class="card-body text-center">
+
+                    <i class="fas fa-comments fa-3x mb-3"></i>
+
+                    <h2>{{ total }}</h2>
+
+                    <h5>Total Feedback</h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card shadow border-0 bg-warning">
+
+                <div class="card-body text-center">
+
+                    <i class="fas fa-star fa-3x mb-3"></i>
+
+                    <h2>{{ avg }} ⭐</h2>
+
+                    <h5>Average Rating</h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Search Box -->
+
+    <div class="card shadow border-0 mb-4">
+
+        <div class="card-body">
+
+            <input
+                type="text"
+                id="search"
+                class="form-control"
+                placeholder="🔍 Search Feedback By Name">
+
+        </div>
+
+    </div>
+
+    <!-- Pie Chart -->
+
+    <div class="card shadow border-0 mb-4">
+
+        <div class="card-header bg-success text-white">
+
+            <h5 class="mb-0">
+                <i class="fas fa-chart-pie"></i>
+                Feedback Rating Distribution
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <canvas id="pieChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <!-- Bar Chart -->
+
+    <div class="card shadow border-0 mb-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <h5 class="mb-0">
+                <i class="fas fa-chart-bar"></i>
+                Feedback Rating Analysis
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <canvas id="barChart"></canvas>
+
+        </div>
+
+    </div>
+    <!-- Feedback Table -->
+
+<div class="card shadow-lg border-0 rounded-4 mb-5">
+
+    <div class="card-header bg-success text-white">
+
+        <h4 class="mb-0">
+            <i class="fas fa-comments"></i>
+            Feedback Records
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table
+                class="table table-bordered table-hover align-middle"
+                id="feedbackTable">
+
+                <thead class="table-success text-center">
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Name</th>
+
+                        <th>Email</th>
+
+                        <th>Rating</th>
+
+                        <th>Experience</th>
+
+                        <th>Feedback</th>
+
+                        <th>Date</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for row in feedback %}
+
+                <tr>
+
+                    <td>{{ row["id"] }}</td>
+
+                    <td>{{ row["name"] }}</td>
+
+                    <td>{{ row["email"] }}</td>
+
+                    <td class="text-center">
+
+                        {% if row["rating"]==5 %}
+                        <span class="badge bg-success fs-6">
+                            ⭐⭐⭐⭐⭐
+                        </span>
+
+                        {% elif row["rating"]==4 %}
+                        <span class="badge bg-primary fs-6">
+                            ⭐⭐⭐⭐
+                        </span>
+
+                        {% elif row["rating"]==3 %}
+                        <span class="badge bg-warning text-dark fs-6">
+                            ⭐⭐⭐
+                        </span>
+
+                        {% elif row["rating"]==2 %}
+                        <span class="badge bg-info text-dark fs-6">
+                            ⭐⭐
+                        </span>
+
+                        {% else %}
+                        <span class="badge bg-danger fs-6">
+                            ⭐
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        <span class="badge bg-secondary">
+
+                            {{ row["experience"] }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        {{ row["message"] }}
+
+                    </td>
+
+                    <td>
+
+                        {{ row["feedback_date"] }}
+
+                    </td>
+
+                    <td class="text-center">
+
+                        <a
+                        href="/delete_feedback/{{ row['id'] }}"
+                        class="btn btn-danger btn-sm"
+                        onclick="return confirm('Delete this feedback?')">
+
+                        <i class="fas fa-trash"></i>
+
+                        Delete
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+// =====================
+// Live Search
+// =====================
+
+document.getElementById("search").addEventListener("keyup", function () {
+
+    let value = this.value.toLowerCase();
+
+    let rows = document.querySelectorAll("#feedbackTable tbody tr");
+
+    rows.forEach(function(row){
+
+        let text = row.innerText.toLowerCase();
+
+        if(text.indexOf(value) > -1){
+            row.style.display="";
+        }
+        else{
+            row.style.display="none";
+        }
+
+    });
+
+});
+
+
+// =====================
+// Pie Chart
+// =====================
+
+new Chart(document.getElementById("pieChart"),{
+
+    type:"pie",
+
+    data:{
+
+        labels:[
+            "★★★★★",
+            "★★★★",
+            "★★★",
+            "★★",
+            "★"
+        ],
+
+        datasets:[{
+
+            data:[
+                {{ five }},
+                {{ four }},
+                {{ three }},
+                {{ two }},
+                {{ one }}
+            ],
+
+            backgroundColor:[
+                "#28a745",
+                "#17a2b8",
+                "#ffc107",
+                "#fd7e14",
+                "#dc3545"
+            ]
+
+        }]
+
+    },
+
+    options:{
+        responsive:true,
+        plugins:{
+            legend:{
+                position:"bottom"
+            }
+        }
+    }
+
+});
+
+
+// =====================
+// Bar Chart
+// =====================
+
+new Chart(document.getElementById("barChart"),{
+
+    type:"bar",
+
+    data:{
+
+        labels:[
+            "5 Star",
+            "4 Star",
+            "3 Star",
+            "2 Star",
+            "1 Star"
+        ],
+
+        datasets:[{
+
+            label:"Feedback Count",
+
+            data:[
+                {{ five }},
+                {{ four }},
+                {{ three }},
+                {{ two }},
+                {{ one }}
+            ],
+
+            backgroundColor:[
+                "#28a745",
+                "#17a2b8",
+                "#ffc107",
+                "#fd7e14",
+                "#dc3545"
+            ]
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        scales:{
+
+            y:{
+                beginAtZero:true
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+</div>
+
+{% endblock %}
