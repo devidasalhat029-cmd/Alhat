@@ -12,7 +12,16 @@ CREATE TABLE IF NOT EXISTS farmers(
       password TEXT
 )
   """)
-
+cursor.execute("""  
+CREATE TABLE IF NOT EXISTS  contact (                
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    email TEXT,
+    mobile TEXT,
+    subject TEXT,
+    message TEXT 
+)
+""")
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS crop(
@@ -47,11 +56,27 @@ CREATE TABLE IF NOT EXISTS irrigation_schedule(
 conn = sqlite3.connect("agriculture.db")
 cur = conn.cursor()
 
-cur.execute("""
+cursor.execute("""
 ALTER TABLE sensor_record
-ADD COLUMN duration TEXT
+ADD COLUMN du_ration  TEXT
 """)
+cursor.execute(""" 
+CREATE TABLE IF NOT EXISTS feedback(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
 
+    name TEXT,
+
+    email TEXT,
+
+    rating INTEGER,
+
+    experience TEXT,
+
+    message TEXT,
+
+    feedback_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+""")
 conn.commit()
 conn.close()
 

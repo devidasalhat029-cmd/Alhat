@@ -4,7 +4,7 @@ from datetime import datetime
 import random
 import json
 from click import prompt
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session,flash
 import requests          # Request for Wether Api
 import sqlite3
 from groq import Groq
@@ -890,6 +890,135 @@ def predict_disease():
     confidence=confidence,
     treatment=treatment
 )
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+
+    if request.method == "POST":
+        name = request.form["name"]
+        email = request.form["email"]
+        mobile = request.form["mobile"]
+        subject = request.form["subject"]
+        message = request.form["message"]
+
+        conn = sqlite3.connect("agriculture.db")
+        cur = conn.cursor()
+
+        cur.execute("""
+        INSERT INTO contact(name,email,mobile,subject,message)
+        VALUES(?,?,?,?,?)
+        """,(name,email,mobile,subject,message))
+
+        conn.commit()
+        conn.close()
+
+        flash("Message Sent Successfully!")
+        return redirect("/contact")
+
+    return render_template("contact.html")
+@app.route("/feedback", methods=["GET", "POST"])
+def feedback():
+
+    if request.method == "POST":
+
+        name = request.form["name"]
+        email = request.form["email"]
+        rating = request.form["rating"]
+        experience = request.form["experience"]
+        message = request.form["message"]
+
+        conn = sqlite3.connect("agriculture.db")
+        cur = conn.cursor()
+
+        cur.execute("""
+            INSERT INTO feedback
+            (name,email,rating,experience,message)
+            VALUES(?,?,?,?,?)
+        """,
+        (name,email,rating,experience,message))
+
+        conn.commit()
+        conn.close()
+
+        flash("Feedback submitted successfully!", "success")
+
+        return redirect("/feedback")
+
+    return render_template("feedback.html")
+@app.route("/feedback_dashboard")
+def feedback_dashboard():
+
+    conn = sqlite3.connect("agriculture.db")
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT * FROM feedback 
+        ORDER BY id DESC
+    """)
+
+    feedback = cur.fetchall()
+
+
+    cur.execute("SELECT COUNT(*) FROM feedback")
+    total = cur.fetchone()[0]
+
+
+    cur.execute("SELECT AVG(rating) FROM feedback")
+    avg = cur.fetchone()[0]
+
+    if avg is None:
+        avg = 0
+
+
+    # Rating Count
+
+    cur.execute("SELECT COUNT(*) FROM feedback WHERE rating=5")
+    five = cur.fetchone()[0]
+
+    cur.execute("SELECT COUNT(*) FROM feedback WHERE rating=4")
+    four = cur.fetchone()[0]
+
+    cur.execute("SELECT COUNT(*) FROM feedback WHERE rating=3")
+    three = cur.fetchone()[0]
+
+    cur.execute("SELECT COUNT(*) FROM feedback WHERE rating=2")
+    two = cur.fetchone()[0]
+
+    cur.execute("SELECT COUNT(*) FROM feedback WHERE rating=1")
+    one = cur.fetchone()[0]
+
+
+    conn.close()
+
+
+    return render_template(
+        "feedback_dashboard.html",
+        feedback=feedback,
+        total=total,
+        avg=round(avg,1),
+        five=five,
+        four=four,
+        three=three,
+        two=two,
+        one=one
+    )
+@app.route("/delete_feedback/<int:id>")
+def delete_feedback(id):
+
+    conn = sqlite3.connect("agriculture.db")
+    cur = conn.cursor()
+
+    cur.execute(
+        "DELETE FROM feedback WHERE id=?",
+        (id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    flash("Feedback deleted successfully!")
+
+    return redirect("/feedback_dashboard")
 @app.errorhandler(404)
 def page_not_found(e):
     return"404 -page not found"
