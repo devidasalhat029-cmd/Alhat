@@ -1,104 +1,325 @@
 {% extends "baseofhtml.html" %}
 
+{% block title %}Contact Us{% endblock %}
+
 {% block content %}
 
-<div class="container my-5">
+<style>
+body{
+    background:#f5fdf7;
+}
 
-    <h2 class="text-center text-success fw-bold">Contact Us</h2>
-    <p class="text-center text-muted mb-5">
-        We'd love to hear from you! Feel free to contact us anytime.
-    </p>
+.hero{
+    background:linear-gradient(135deg,#198754,#20c997);
+    color:white;
+    padding:60px 20px;
+    text-align:center;
+    border-radius:0 0 40px 40px;
+}
 
-    <div class="row">
+.hero h1{
+    font-size:45px;
+    font-weight:bold;
+}
 
-        <!-- Contact Details -->
-        <div class="col-md-5">
+.hero p{
+    font-size:18px;
+}
 
-            <div class="card shadow border-0 p-4 mb-4">
-                <h4 class="text-success mb-4">Contact Information</h4>
+.contact-section{
+    margin-top:50px;
+}
 
-                <p><i class="fas fa-map-marker-alt text-success"></i>
-                    <strong> Address:</strong><br>
-                    Government Polytechnic Hingoli,<br>
-                    Hingoli, Maharashtra.
-                </p>
+.left-box{
+    background:white;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+    height:100%;
+}
 
-                <p><i class="fas fa-phone text-success"></i>
-                    <strong> Phone:</strong><br>
-                    +91 9876543210
-                </p>
+.left-box h3{
+    color:#198754;
+    margin-bottom:25px;
+}
 
-                <p><i class="fas fa-envelope text-success"></i>
-                    <strong> Email:</strong><br>
-                    support@agromonitor.com
-                </p>
+.info{
+    display:flex;
+    align-items:center;
+    margin-bottom:22px;
+}
 
-                <p><i class="fas fa-clock text-success"></i>
-                    <strong> Working Hours:</strong><br>
-                    Monday - Saturday<br>
-                    9:00 AM - 6:00 PM
-                </p>
+.icon{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#198754;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    margin-right:18px;
+}
 
+.info h5{
+    margin:0;
+    color:#198754;
+}
+
+.info p{
+    margin:0;
+    color:#555;
+    word-break:break-word;
+}
+
+.social{
+    margin-top:30px;
+}
+
+.social a{
+    text-decoration:none;
+    margin-right:10px;
+    padding:10px 20px;
+    border-radius:30px;
+    color:white;
+    font-weight:bold;
+}
+
+.github{
+    background:#24292e;
+}
+
+.live{
+    background:#0d6efd;
+}
+
+.email{
+    background:#dc3545;
+}
+
+.right-box{
+    background:white;
+    border-radius:20px;
+    padding:35px;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+.form-control{
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:18px;
+}
+
+.send-btn{
+    width:100%;
+    border:none;
+    border-radius:30px;
+    background:#198754;
+    color:white;
+    padding:14px;
+    font-size:18px;
+    transition:.3s;
+}
+
+.send-btn:hover{
+    background:#146c43;
+}
+</style>
+
+<div class="hero">
+    <h1><i class="fas fa-envelope-open-text"></i> Contact Us</h1>
+    <p>We'd love to hear from you. Send your queries anytime.</p>
+</div>
+
+<div class="container contact-section">
+
+<div class="row g-4">
+
+<div class="col-lg-5">
+
+<div class="left-box">
+
+<h3>Get In Touch</h3>
+
+<div class="info">
+<div class="icon">
+<i class="fas fa-user"></i>
+</div>
+
+<div>
+<h5>Developer</h5>
+<p>Yogita Alhat</p>
+</div>
+</div>
+
+<div class="info">
+<div class="icon">
+<i class="fas fa-envelope"></i>
+</div>
+
+<div>
+<h5>Email</h5>
+<p>alhatyogita32@gmail.com</p>
+</div>
+</div>
+
+<div class="info">
+<div class="icon">
+<i class="fas fa-map-marker-alt"></i>
+</div>
+
+<div>
+<h5>College</h5>
+<p>Government Polytechnic, Hingoli,<br>Maharashtra - 431513</p>
+</div>
+</div>
+
+<div class="info">
+<div class="icon">
+<i class="fab fa-github"></i>
+</div>
+
+<div>
+<h5>GitHub</h5>
+<p>github.com/devidasalhat029-cmd/Alhat</p>
+</div>
+</div>
+
+<div class="info">
+<div class="icon">
+<i class="fas fa-globe"></i>
+</div>
+
+<div>
+<h5>Live Website</h5>
+<p>yogita12.pythonanywhere.com</p>
+</div>
+</div>
+<a href="https://github.com/devidasalhat029-cmd/Alhat"
+   target="_blank"
+   class="github">
+   <i class="fab fa-github"></i> GitHub
+</a>
+*********************************************************************
+<a href="https://yogita12.pythonanywhere.com"
+   target="_blank"
+   class="live">
+   <i class="fas fa-globe"></i> Live Demo
+</a>
+
+</div>
+
+</div>
+
+<div class="col-lg-7">
+
+<div class="right-box">
+
+<h3 class="text-success mb-4">
+<i class="fas fa-paper-plane"></i> Send Message
+</h3>
+
+<form method="POST">
+
+<input type="text" class="form-control" name="name" placeholder="Your Name" required>
+
+<input type="email" class="form-control" name="email" placeholder="Your Email" required>
+
+<input type="text" class="form-control" name="subject" placeholder="Subject" required>
+
+<textarea class="form-control" rows="6" name="message" placeholder="Write your message here..." required></textarea>
+
+<button class="send-btn">
+<i class="fas fa-paper-plane"></i> Send Message
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<!-- Google Map -->
+<div class="container mt-5 mb-5">
+
+    <h2 class="text-center text-success mb-4">
+        <i class="fas fa-map-marked-alt"></i> Our Location
+    </h2>
+
+    <div class="shadow rounded-4 overflow-hidden">
+        <iframe
+            src="https://www.google.com/maps?q=Government+Polytechnic+Hingoli&output=embed"
+            width="100%"
+            height="350"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy">
+        </iframe>
+    </div>
+
+</div>
+
+<!-- Why Contact Us -->
+<div class="container mb-5">
+
+    <div class="row text-center">
+
+        <div class="col-md-4 mb-4">
+            <div class="p-4 shadow rounded-4 bg-white h-100">
+                <i class="fas fa-headset fa-3x text-success mb-3"></i>
+                <h4>24×7 Support</h4>
+                <p>We are always ready to help you with project related queries.</p>
             </div>
-
-            <div class="card shadow border-0">
-                <iframe
-                    src="https://maps.google.com/maps?q=Government%20Polytechnic%20Hingoli&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                    width="100%"
-                    height="250"
-                    style="border:0;">
-                </iframe>
-            </div>
-
         </div>
 
-        <!-- Contact Form -->
-        <div class="col-md-7">
-
-            <div class="card shadow border-0 p-4">
-
-                <h4 class="text-success mb-4">Send Message</h4>
-
-                <form action="/contact" method="POST">
-
-                    <div class="mb-3">
-                        <label>Full Name</label>
-                        <input type="text" class="form-control" name="name" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Email Address</label>
-                        <input type="email" class="form-control" name="email" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Mobile Number</label>
-                        <input type="text" class="form-control" name="mobile">
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Subject</label>
-                        <input type="text" class="form-control" name="subject">
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Message</label>
-                        <textarea class="form-control" rows="5" name="message" required></textarea>
-                    </div>
-
-                    <button class="btn btn-success w-100">
-                        <i class="fas fa-paper-plane"></i>
-                        Send Message
-                    </button>
-
-                </form>
-
+        <div class="col-md-4 mb-4">
+            <div class="p-4 shadow rounded-4 bg-white h-100">
+                <i class="fas fa-laptop-code fa-3x text-primary mb-3"></i>
+                <h4>Project Guidance</h4>
+                <p>Get support for Flask, Python, Database and Web Development.</p>
             </div>
+        </div>
 
+        <div class="col-md-4 mb-4">
+            <div class="p-4 shadow rounded-4 bg-white h-100">
+                <i class="fas fa-leaf fa-3x text-warning mb-3"></i>
+                <h4>Smart Farming</h4>
+                <p>Helping farmers with modern agriculture technology.</p>
+            </div>
         </div>
 
     </div>
 
 </div>
+
+<!-- Footer -->
+<footer class="text-center text-white py-4"
+        style="background:linear-gradient(90deg,#198754,#20c997);">
+
+    <h5>🌱 Agriculture Automatic Monitoring System</h5>
+
+    <p class="mb-1">
+        Developed By <b>Yogita Alhat</b>
+    </p>
+
+    <p class="mb-1">
+        <i class="fas fa-envelope"></i>
+        yogitaalhat900@gmail.com
+    </p>
+
+    <p class="mb-1">
+        <i class="fab fa-github"></i>
+        github.com/devidasalhat029-cmd/Alhat
+    </p>
+
+    <p class="mb-0">
+        © 2026 All Rights Reserved.
+    </p>
+
+</footer>
 
 {% endblock %}

@@ -1,0 +1,142 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}About Project{% endblock %}
+
+{% block content %}
+
+<style>
+.about-section{
+    background: linear-gradient(135deg,#0f5132,#198754);
+    color:white;
+    padding:80px 40px;
+    border-radius:25px;
+    margin-top:30px;
+}
+
+.about-title{
+    font-size:55px;
+    font-weight:bold;
+}
+
+.about-subtitle{
+    font-size:22px;
+    opacity:0.9;
+}
+
+.info-section{
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    margin-top:30px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.12);
+}
+
+.section-heading{
+    color:#198754;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.feature-item{
+    padding:12px 0;
+    border-bottom:1px solid #e9ecef;
+    font-size:18px;
+}
+
+.feature-item:last-child{
+    border-bottom:none;
+}
+
+.icon{
+    color:#198754;
+    margin-right:10px;
+}
+
+.mission-box{
+    background:#e8f5e9;
+    border-left:6px solid #198754;
+    padding:20px;
+    border-radius:12px;
+    margin-top:20px;
+}
+
+.explore-btn{
+    background:#198754;
+    color:white;
+    padding:12px 30px;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.explore-btn:hover{
+    color:white;
+}
+</style>
+
+<div class="container">
+
+    <div class="about-section text-center">
+        <h1 class="about-title">
+            <i class="fas fa-seedling"></i>
+            Agriculture Automatic Monitoring System
+        </h1>
+
+        <p class="about-subtitle">
+            Smart Farming Through Technology & Automation
+        </p>
+    </div>
+
+    <div class="info-section">
+
+        <h3 class="section-heading">
+            <i class="fas fa-info-circle icon"></i>
+            Project Overview
+        </h3>
+
+        <p>
+            Agriculture Automatic Monitoring System is a web-based application
+            designed to help farmers monitor crops, manage irrigation,
+            analyze farm data, and improve agricultural productivity using
+            modern technologies.
+        </p>
+
+        <h3 class="section-heading mt-4">
+            <i class="fas fa-bullseye icon"></i>
+            Objectives
+        </h3>
+
+        <div class="feature-item">🌱 Monitor crop conditions efficiently</div>
+        <div class="feature-item">💧 Reduce water wastage through smart irrigation</div>
+        <div class="feature-item">🌦️ Provide real-time weather information</div>
+        <div class="feature-item">📊 Generate reports and analytics</div>
+        <div class="feature-item">🚜 Improve overall farm productivity</div>
+
+        <h3 class="section-heading mt-4">
+            <i class="fas fa-code icon"></i>
+            Technologies Used
+        </h3>
+
+        <p>
+            Python, Flask, SQLite, HTML, CSS, Bootstrap, JavaScript
+        </p>
+
+        <div class="mission-box">
+            <h5>🌍 Our Mission</h5>
+            <p>
+                To empower farmers with smart digital tools that make farming
+                more efficient, sustainable, and productive.
+            </p>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/dashboard" class="explore-btn">
+                Explore Dashboard
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,10 +1,10 @@
 
-from xmlrpc import client
+from xmlrpc import client 
 from datetime import datetime
 import random
 import json
 from click import prompt
-from flask import Flask, render_template, request, redirect, session,flash
+from flask import Flask, render_template, request, redirect, session,flash,url_for
 import requests          # Request for Wether Api
 import sqlite3
 from groq import Groq
@@ -12,6 +12,21 @@ from os import path
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 import os
+
+from flask_mail import Mail, Message
+
+
+app = Flask(__name__)
+
+# Gmail Configuration
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'yogitaalhat900.com'
+app.config['MAIL_PASSWORD'] = 'Gmail_Pass'
+
+
+mail = Mail(app)
 
 load_dotenv()
 
@@ -21,7 +36,6 @@ client = Groq(
 )
 
 
-app = Flask(__name__)
 
 UPLOAD_FOLDER = os.path.join(app.root_path, "static", "uploads")
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
@@ -892,27 +906,29 @@ def predict_disease():
 )
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
-
     if request.method == "POST":
         name = request.form["name"]
         email = request.form["email"]
-        mobile = request.form["mobile"]
         subject = request.form["subject"]
         message = request.form["message"]
 
-        conn = sqlite3.connect("agriculture.db")
-        cur = conn.cursor()
+        msg = Message(
+            subject=f"Contact Form: {subject}",
+            sender="yogitaalhat900@gmail.com",
+            recipients=["yogitaalhat900@gmail.com"]
+        )
 
-        cur.execute("""
-        INSERT INTO contact(name,email,mobile,subject,message)
-        VALUES(?,?,?,?,?)
-        """,(name,email,mobile,subject,message))
+        msg.body = f"""
+Name: {name}
+Email: {email}
 
-        conn.commit()
-        conn.close()
+Message:
+{message}
+"""
 
-        flash("Message Sent Successfully!")
-        return redirect("/contact")
+        mail.send(msg)
+        flash("Message sent successfully!", "success")
+        return redirect(url_for("contact"))
 
     return render_template("contact.html")
 @app.route("/feedback", methods=["GET", "POST"])
@@ -944,6 +960,10 @@ def feedback():
         return redirect("/feedback")
 
     return render_template("feedback.html")
+@app.route('/about')
+def about():
+
+    return  render_template("about.html")
 @app.route("/feedback_dashboard")
 def feedback_dashboard():
 

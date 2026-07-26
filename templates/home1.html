@@ -1,497 +1,131 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "baseofhtml.html" %}
 
-<title>Agriculture Automatic Monitoring System</title>
+{% block title %}
+Home
+{% endblock %}
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+{% block content %}
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-scroll-behavior:smooth;
-}
-
-body{
-background:#f5fff6;
-overflow-x:hidden;
-}
-
-/* Navbar */
-
-.navbar{
-background:rgba(0,0,0,.35);
-backdrop-filter:blur(10px);
-transition:.4s;
-padding:15px 0;
-}
-
-.navbar-brand{
-font-size:28px;
-font-weight:700;
-color:#fff!important;
-}
-
-.nav-link{
-color:white!important;
-font-size:17px;
-margin-left:18px;
-transition:.3s;
-}
-
-.nav-link:hover{
-color:#9cff8b!important;
-}
-
-/* Hero */
-
-.hero{
+    .hero{
 height:100vh;
-background:url("{{ url_for('static', filename='images/hero-bg.jpg') }}");
-background-size:cover;
-background-position:center;
+background:url("{{ url_for('static', filename='images/hero-bg.jpg') }}") center center/cover no-repeat;
 position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
-.hero::before{
-content:"";
+.hero-overlay{
 position:absolute;
+top:0;
+left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,.55);
+background:rgba(0,0,0,0.45);
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
 .hero-content{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
+position:relative;
+z-index:2;
 text-align:center;
-color:rgb(255, 255, 255);
-width:90%;
-z-index:5;
+color:white;
+padding:20px;
 }
 
-.hero-content h1{
-font-size:65px;
-font-weight:700;
-animation:fadeDown 1.2s;
+.hero-title{
+font-size:60px;
+font-weight:bold;
+animation:float 3s ease-in-out infinite;
 }
 
-.hero-content p{
+.hero-text{
 font-size:22px;
-margin-top:20px;
-animation:fadeUp 1.2s;
+margin:20px 0;
 }
 
-/* Buttons */
-
-.btn-green{
-
-background:#28a745;
-color:white;
-padding:15px 35px;
-border-radius:40px;
-font-size:18px;
-font-weight:600;
-margin:10px;
-transition:.4s;
-border:none;
-
+.btn{
+transition:.3s;
 }
 
-.btn-green:hover{
-
-background:#1f8d39;
-transform:translateY(-5px);
-
+.btn:hover{
+transform:translateY(-6px) scale(1.05);
 }
 
-.btn-white{
+@keyframes float{
 
-background:white;
-color:#28a745;
-padding:15px 35px;
-border-radius:40px;
-font-size:18px;
-font-weight:600;
-margin:10px;
-transition:.4s;
-border:none;
-
+0%{
+transform:translateY(0);
 }
 
-.btn-white:hover{
-
-background:#e9ffe8;
-transform:translateY(-5px);
-
-}
-/* Project Statistics */
-
-.stats-section{
-
-padding:80px 0;
-text-align:center;
-
-background:
-linear-gradient(rgba(0,70,20,.75),rgba(0,70,20,.75)),
-url("{{ url_for('static', filename='images/farm.png') }}");
-
-background-size:cover;
-background-position:center;
-color:white;
-
-}
-
-
-.stats-section h2{
-
-font-size:42px;
-font-weight:700;
-
-}
-
-
-.stats-section p{
-
-font-size:18px;
-margin-bottom:50px;
-
-}
-
-
-.stats-container{
-
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:30px;
-
-}
-
-
-.stat-card{
-
-background:rgba(255,255,255,0.15);
-padding:35px;
-border-radius:25px;
-backdrop-filter:blur(10px);
-transition:.4s;
-
-}
-
-
-.stat-card:hover{
-
+50%{
 transform:translateY(-10px);
-
 }
 
-
-.stat-card i{
-
-font-size:55px;
-color:#b9ff9b;
-margin-bottom:20px;
-
-}
-
-
-.stat-card h3{
-
-font-size:45px;
-font-weight:700;
-
-}
-
-
-.stat-card span{
-
-font-size:20px;
-
-}
-/* Contact Section */
-
-.contact-section{
-
-padding:80px 0;
-background:#f5fff6;
-text-align:center;
-
-}
-
-
-.contact-section h2{
-
-font-size:42px;
-font-weight:700;
-color:#1b5e20;
-
-}
-
-
-.contact-subtitle{
-
-color:#666;
-margin-bottom:50px;
-
-}
-
-
-.contact-box{
-
-display:flex;
-gap:40px;
-justify-content:center;
-align-items:center;
-flex-wrap:wrap;
-
-}
-
-
-.contact-info{
-
-background:#2e7d32;
-color:white;
-padding:35px;
-border-radius:25px;
-flex:1;
-min-width:280px;
-
-}
-
-
-.contact-info div{
-
-margin-bottom:25px;
-
-}
-
-
-.contact-info i{
-
-font-size:35px;
-color:#b9ff9b;
-
-}
-
-
-.contact-info h4{
-
-margin-top:10px;
-
-}
-
-
-.contact-form{
-
-background:rgb(255, 255, 255);
-padding:35px;
-border-radius:25px;
-box-shadow:0 10px 30px rgba(0,0,0,.1);
-flex:1;
-min-width:300px;
-
-}
-
-
-.contact-form input,
-.contact-form textarea{
-
-width:100%;
-padding:15px;
-margin-bottom:20px;
-border-radius:10px;
-border:1px solid #dddddd;
-
-}
-
-
-.contact-form textarea{
-
-resize:none;
-
-}
-/* Section */
-
-.section-title{
-
-text-align:center;
-font-size:42px;
-font-weight:700;
-margin-bottom:60px;
-color:#1b5e20;
-
-}
-/* Footer */
-
-footer{
-
-background:#103c16;
-padding:40px 0;
-color:white;
-text-align:center;
-
-}
-
-/* Animations */
-
-@keyframes fadeDown{
-
-from{
-
-opacity:0;
-transform:translateY(-40px);
-
-}
-
-to{
-
-opacity:1;
+100%{
 transform:translateY(0);
-
 }
 
 }
+.features-section{
+    background:linear-gradient(
+        rgba(0,0,0,0.55),
+        rgba(0,0,0,0.55)
+    ),
+    url("{{ url_for('static', filename='images/farm.png') }}");
 
-@keyframes fadeUp{
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
 
-from{
-
-opacity:0;
-transform:translateY(40px);
-
+    padding:80px 0;
 }
 
-to{
-
-opacity:1;
-transform:translateY(0);
-
+.features-section h2,
+.features-section h4,
+.features-section p{
+    color:white;
 }
 
+.features-section .card{
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    border:none;
+    border-radius:20px;
+    color:white;
+    transition:.3s;
 }
 
-/* Responsive */
-
-@media(max-width:768px){
-
-.hero-content h1{
-
-font-size:38px;
-
+.features-section .card:hover{
+    transform:translateY(-8px);
+    background:rgba(255,255,255,0.2);
 }
-
-.hero-content p{
-
-font-size:18px;
-
-}
-
-.section-title{
-
-font-size:30px;
-
-}
-
-}
-
 </style>
 
-</head>
-<body>
-
-<!-- ================= NAVBAR ================= -->
-
-<nav class="navbar navbar-expand-lg fixed-top">
-
-<div class="container">
-
-<a class="navbar-brand" href="#">
-🌾 AgroTech
-</a>
-
-<button class="navbar-toggler bg-light"
-type="button"
-data-bs-toggle="collapse"
-data-bs-target="#navbar">
-
-<span class="navbar-toggler-icon"></span>
-
-</button>
-
-<div class="collapse navbar-collapse"
-id="navbar">
-
-<ul class="navbar-nav ms-auto">
-
-<li class="nav-item">
-<a class="nav-link active" href="/">Home</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="/dashboard">Dashboard</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="/weather">Weather</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="/crop">Crop</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="/motor">Motor</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="/login">Login</a>
-</li>
-
-</ul>
-
-</div>
-
-</div>
-
-</nav>
-
-<!-- ================= HERO ================= -->
-
+<!-- Hero Section -->
 <section class="hero">
+
+<div class="hero-overlay">
 
 <div class="hero-content">
 
-<h1>
-Agriculture Automatic<br>
-Monitoring System
+<h1 class="hero-title">
+🌾 Agriculture Automatic Monitoring System
 </h1>
 
-<p>
-Smart Farming with Modern Technology for Better Crop Production
+<p class="hero-text">
+Smart Farming with AI, IoT and Modern Technology
 </p>
 
 <div class="mt-4">
 
-<a href="/register" class="btn btn-green">
-<i class="fa-solid fa-user-plus"></i>
+<a href="/register" class="btn btn-success btn-lg me-3">
 Get Started
 </a>
 
-<a href="/features" class="btn btn-white">
-<i class="fa-solid fa-circle-info"></i>
+<a href="/about" class="btn btn-outline-light btn-lg">
 Learn More
 </a>
 
@@ -499,67 +133,189 @@ Learn More
 
 </div>
 
+</div>
+
+</section><!-- ================= FEATURES ================= -->
+
+<section class="features-section">
+
+<div class="container py-5">
+
+<h2 class="text-center fw-bold text-white mb-5">
+🌾 Our Smart Farming Features
+</h2>
+
+<div class="row g-4">
+
+<div class="col-md-4">
+
+<div class="card feature-card h-100">
+
+<div class="card-body text-center">
+
+<i class="fa-solid fa-temperature-three-quarters fa-3x text-danger mb-3"></i>
+
+<h4>Temperature Monitoring</h4>
+
+<p>
+Monitor real-time temperature to maintain healthy crop growth.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card feature-card h-100">
+
+<div class="card-body text-center">
+
+<i class="fa-solid fa-droplet fa-3x text-info mb-3"></i>
+
+<h4>Soil Moisture</h4>
+
+<p>
+Check soil moisture levels continuously for efficient irrigation.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card feature-card h-100">
+
+<div class="card-body text-center">
+
+<i class="fa-solid fa-cloud-sun fa-3x text-warning mb-3"></i>
+
+<h4>Weather Forecast</h4>
+
+<p>
+Live weather information helps farmers make better decisions.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card feature-card h-100">
+
+<div class="card-body text-center">
+
+<i class="fa-solid fa-faucet-drip fa-3x text-primary mb-3"></i>
+
+<h4>Smart Irrigation</h4>
+
+<p>
+Automatic irrigation scheduling helps save water and improve productivity.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card feature-card h-100">
+
+<div class="card-body text-center">
+
+<i class="fa-solid fa-gear fa-3x text-secondary mb-3"></i>
+
+<h4>Motor Control</h4>
+
+<p>
+Control water pump remotely and monitor motor activity instantly.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card feature-card h-100">
+
+<div class="card-body text-center">
+
+<i class="fa-solid fa-robot fa-3x text-success mb-3"></i>
+
+<h4>AI Assistant</h4>
+
+<p>
+Get AI-powered farming advice and crop recommendations anytime.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 <!-- ================= PROJECT STATISTICS ================= -->
 
-<section class="stats-section">
+<section class="bg-success text-white py-5">
+    
 
 <div class="container">
 
-<h2>Project Statistics</h2>
+<h2 class="text-center mb-5">
+Project Statistics
+</h2>
 
-<p>
-Smart Farming System Performance Overview
-</p>
+<div class="row text-center">
 
+<div class="col-md-3">
 
-<div class="stats-container">
+<h1>150+</h1>
 
-
-<div class="stat-card">
-
-<i class="fa-solid fa-users"></i>
-
-<h3>150+</h3>
-
-<span>Farmers</span>
+<p>Registered Farmers</p>
 
 </div>
 
+<div class="col-md-3">
 
-<div class="stat-card">
+<h1>50+</h1>
 
-<i class="fa-solid fa-seedling"></i>
-
-<h3>50+</h3>
-
-<span>Crops</span>
+<p>Crops</p>
 
 </div>
 
+<div class="col-md-3">
 
-<div class="stat-card">
+<h1>2500 L</h1>
 
-<i class="fa-solid fa-droplet"></i>
-
-<h3>2500 L</h3>
-
-<span>Water Saved</span>
+<p>Water Saved</p>
 
 </div>
 
+<div class="col-md-3">
 
-<div class="stat-card">
+<h1>24×7</h1>
 
-<i class="fa-solid fa-microchip"></i>
-
-<h3>24×7</h3>
-
-<span>Monitoring</span>
+<p>Monitoring</p>
 
 </div>
-
 
 </div>
 
@@ -567,111 +323,4 @@ Smart Farming System Performance Overview
 
 </section>
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-<!-- ================= CONTACT ================= -->
-
-<section class="contact-section">
-
-<div class="container">
-
-<h2>Contact Us</h2>
-
-<p class="contact-subtitle">
-Have questions about our Smart Farming System?
-Contact us for more information.
-</p>
-
-
-<div class="contact-box">
-
-
-<div class="contact-info">
-
-<div>
-<i class="fa-solid fa-location-dot"></i>
-<h4>Location</h4>
-<p>Hingoli, Maharashtra</p>
-</div>
-
-
-<div>
-<i class="fa-solid fa-envelope"></i>
-<h4>Email</h4>
-<p>agrotech@gmail.com</p>
-</div>
-
-
-<div>
-<i class="fa-solid fa-phone"></i>
-<h4>Phone</h4>
-<p>+91 9876543210</p>
-</div>
-
-
-</div>
-
-
-
-<form class="contact-form">
-
-<input type="text" placeholder="Your Name">
-
-<input type="email" placeholder="Email Address">
-
-<textarea rows="5" placeholder="Your Message"></textarea>
-
-
-<button class="btn-green">
-<i class="fa-solid fa-paper-plane"></i>
-Send Message
-</button>
-
-
-</form>
-
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-<div class="container">
-
-<h3>🌾 AgroTech</h3>
-
-<p class="mt-3">
-
-Agriculture Automatic Monitoring System
-
-</p>
-
-<p>
-
-Developed using Flask, Bootstrap, HTML, CSS & SQLite
-
-</p>
-
-<hr>
-
-<p>
-
-© 2026 All Rights Reserved | Smart Farming Project
-
-</p>
-
-</div>
-
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-
-</html>
+{% endblock %}

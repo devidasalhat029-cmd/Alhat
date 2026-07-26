@@ -1,0 +1,107 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+
+<style>
+.about-card{
+    background:white;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    padding:40px;
+}
+
+.feature-card{
+    border:none;
+    border-radius:15px;
+    transition:.3s;
+}
+
+.feature-card:hover{
+    transform:translateY(-8px);
+}
+
+.python{background:#3776AB;color:white;}
+.flask{background:#198754;color:white;}
+.sqlite{background:#ffc107;}
+.html{background:#e34c26;color:white;}
+</style>
+
+<div class="container py-5">
+
+<div class="about-card">
+
+<h1 class="text-center text-success">
+<i class="fas fa-seedling"></i> About Project
+</h1>
+
+<p class="text-center text-primary">
+Agriculture Automatic Monitoring System
+</p>
+
+<hr>
+
+<h3 class="text-success">
+<i class="fas fa-info-circle"></i> Project Overview
+</h3>
+
+<p>
+Agriculture Automatic Monitoring System is a smart web application that helps farmers monitor crops, irrigation, weather, and farm activities efficiently.
+</p>
+
+<h3 class="text-success mt-4">
+<i class="fas fa-star"></i> Features
+</h3>
+
+<div class="row g-3">
+
+<div class="col-md-4">
+<div class="card feature-card bg-success text-white p-3">
+<i class="fas fa-seedling fa-2x"></i>
+<h5 class="mt-2">Crop Management</h5>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card feature-card bg-primary text-white p-3">
+<i class="fas fa-cloud-sun-rain fa-2x"></i>
+<h5 class="mt-2">Weather Monitoring</h5>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card feature-card bg-warning p-3">
+<i class="fas fa-tint fa-2x"></i>
+<h5 class="mt-2">Irrigation Control</h5>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card feature-card bg-info text-white p-3">
+<i class="fas fa-chart-line fa-2x"></i>
+<h5 class="mt-2">Analytics</h5>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card feature-card bg-danger text-white p-3">
+<i class="fas fa-user fa-2x"></i>
+<h5 class="mt-2">Farmer Profile</h5>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card feature-card bg-secondary text-white p-3">
+<i class="fas fa-robot fa-2x"></i>
+<h5 class="mt-2">AI Assistant</h5>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}
