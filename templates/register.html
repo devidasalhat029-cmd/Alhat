@@ -90,7 +90,7 @@ margin-top:10px;
 
 </div>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 
 <div class="input-group">
 <label>Name</label>
@@ -130,6 +130,13 @@ margin-top:10px;
 <i class="fas fa-lock"></i>
 <input type="password" name="password" required>
 </div>
+</div>
+<div class="input-group">
+    <label>Photo</label>
+    <div class="input-box">
+        <i class="fas fa-image"></i>
+        <input type="file" name="photo" accept="image/*">
+    </div>
 </div>
 
 <button class="btn">

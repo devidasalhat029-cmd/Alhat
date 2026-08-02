@@ -5,6 +5,7 @@ cursor = conn.cursor()
 
 cursor.execute("ALTER TABLE sensor_record ADD COLUMN moisture TEXT")
 
+
 conn.commit()
 conn.close()
 

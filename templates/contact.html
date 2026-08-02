@@ -1,325 +1,493 @@
 {% extends "baseofhtml.html" %}
 
-{% block title %}Contact Us{% endblock %}
+{% block title %}Contact Agro Monitoring{% endblock %}
 
 {% block content %}
 
 <style>
-body{
-    background:#f5fdf7;
-}
 
-.hero{
-    background:linear-gradient(135deg,#198754,#20c997);
-    color:white;
-    padding:60px 20px;
-    text-align:center;
-    border-radius:0 0 40px 40px;
-}
+    .contact-page {
+        min-height: 88vh;
+        padding: 35px 15px;
+        background: linear-gradient(135deg, #f1f8e9, #f3e5f5);
+    }
 
-.hero h1{
-    font-size:45px;
-    font-weight:bold;
-}
+    .contact-wrapper {
+        max-width: 900px;
+        margin: auto;
+    }
 
-.hero p{
-    font-size:18px;
-}
+    /* Main Heading */
 
-.contact-section{
-    margin-top:50px;
-}
+    .contact-header {
+        text-align: center;
+        margin-bottom: 28px;
+    }
 
-.left-box{
-    background:white;
-    border-radius:20px;
-    padding:30px;
-    box-shadow:0 10px 25px rgba(0,0,0,.12);
-    height:100%;
-}
+    .contact-header .leaf {
+        font-size: 48px;
+    }
 
-.left-box h3{
-    color:#198754;
-    margin-bottom:25px;
-}
+    .contact-header h1 {
+        margin: 8px 0;
+        font-size: 36px;
+        color: #4a148c;
+        font-weight: 700;
+    }
 
-.info{
-    display:flex;
-    align-items:center;
-    margin-bottom:22px;
-}
+    .contact-header h1 span {
+        color: #388e3c;
+    }
 
-.icon{
-    width:55px;
-    height:55px;
-    border-radius:50%;
-    background:#198754;
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:22px;
-    margin-right:18px;
-}
+    .contact-header p {
+        color: #666;
+        font-size: 15px;
+        margin: 0;
+    }
 
-.info h5{
-    margin:0;
-    color:#198754;
-}
 
-.info p{
-    margin:0;
-    color:#555;
-    word-break:break-word;
-}
+    /* Main Box */
 
-.social{
-    margin-top:30px;
-}
+    .contact-box {
+        background: rgba(255,255,255,0.96);
+        border-radius: 24px;
+        padding: 32px;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+    }
 
-.social a{
-    text-decoration:none;
-    margin-right:10px;
-    padding:10px 20px;
-    border-radius:30px;
-    color:white;
-    font-weight:bold;
-}
 
-.github{
-    background:#24292e;
-}
+    /* Intro */
 
-.live{
-    background:#0d6efd;
-}
+    .intro {
+        text-align: center;
+        margin-bottom: 25px;
+    }
 
-.email{
-    background:#dc3545;
-}
+    .intro h2 {
+        color: #388e3c;
+        margin-bottom: 8px;
+    }
 
-.right-box{
-    background:white;
-    border-radius:20px;
-    padding:35px;
-    box-shadow:0 10px 25px rgba(0,0,0,.12);
-}
+    .intro p {
+        color: #777;
+        margin: 0;
+    }
 
-.form-control{
-    border-radius:12px;
-    padding:12px;
-    margin-bottom:18px;
-}
 
-.send-btn{
-    width:100%;
-    border:none;
-    border-radius:30px;
-    background:#198754;
-    color:white;
-    padding:14px;
-    font-size:18px;
-    transition:.3s;
-}
+    /* Contact Details */
 
-.send-btn:hover{
-    background:#146c43;
-}
+    .details {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+        padding: 20px 0;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+    }
+
+    .detail {
+        text-align: center;
+        min-width: 180px;
+    }
+
+    .detail-icon {
+        font-size: 27px;
+    }
+
+    .detail h4 {
+        margin: 7px 0 4px;
+        color: #6a1b9a;
+    }
+
+    .detail p {
+        margin: 0;
+        color: #666;
+        font-size: 14px;
+    }
+
+
+    /* Project Links */
+
+    .links {
+        text-align: center;
+        margin: 25px 0;
+    }
+
+    .links h3 {
+        color: #4a148c;
+        margin-bottom: 15px;
+    }
+
+    .link-btn {
+        display: inline-block;
+        text-decoration: none;
+        padding: 10px 18px;
+        margin: 5px;
+        border-radius: 25px;
+        border: 1px solid #ddd;
+        color: #4a148c;
+        background: #faf7ff;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .link-btn:hover {
+        background: #4a148c;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+
+    /* Messages */
+
+    .success {
+        background: #e8f5e9;
+        color: #2e7d32;
+        padding: 12px;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .error {
+        background: #ffebee;
+        color: #c62828;
+        padding: 12px;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+
+    /* Form */
+
+    .form-title {
+        text-align: center;
+        color: #388e3c;
+        margin-top: 28px;
+        margin-bottom: 5px;
+    }
+
+    .form-subtitle {
+        text-align: center;
+        color: #888;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin: 15px 0 7px;
+        font-weight: bold;
+        color: #444;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 13px 15px;
+        border: 1px solid #ddd;
+        border-radius: 11px;
+        outline: none;
+        font-size: 15px;
+        font-family: Arial, sans-serif;
+    }
+
+    input:focus,
+    textarea:focus {
+        border-color: #6a1b9a;
+        box-shadow: 0 0 6px rgba(106,27,154,0.15);
+    }
+
+    textarea {
+        height: 130px;
+        resize: vertical;
+    }
+
+
+    /* Send Button */
+
+    .send-btn {
+        width: 100%;
+        margin-top: 22px;
+        padding: 14px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #388e3c, #6a1b9a);
+        color: white;
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .send-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 7px 18px rgba(56,142,60,0.25);
+    }
+
+
+    /* Back */
+
+    .back-btn {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #6a1b9a;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+
+    /* Mobile */
+
+    @media (max-width: 600px) {
+
+        .contact-page {
+            padding: 25px 12px;
+        }
+
+        .contact-box {
+            padding: 22px;
+        }
+
+        .contact-header h1 {
+            font-size: 28px;
+        }
+
+        .details {
+            gap: 20px;
+        }
+
+    }
+
 </style>
 
-<div class="hero">
-    <h1><i class="fas fa-envelope-open-text"></i> Contact Us</h1>
-    <p>We'd love to hear from you. Send your queries anytime.</p>
-</div>
 
-<div class="container contact-section">
+<div class="contact-page">
 
-<div class="row g-4">
+    <div class="contact-wrapper">
 
-<div class="col-lg-5">
 
-<div class="left-box">
+        <!-- Main Heading -->
 
-<h3>Get In Touch</h3>
+        <div class="contact-header">
 
-<div class="info">
-<div class="icon">
-<i class="fas fa-user"></i>
-</div>
+            <div class="leaf">
+                🌱
+            </div>
 
-<div>
-<h5>Developer</h5>
-<p>Yogita Alhat</p>
-</div>
-</div>
+            <h1>
+                Contact <span>Agro Monitoring</span>
+            </h1>
 
-<div class="info">
-<div class="icon">
-<i class="fas fa-envelope"></i>
-</div>
+            <p>
+                Smart technology for smarter farming.
+            </p>
 
-<div>
-<h5>Email</h5>
-<p>alhatyogita32@gmail.com</p>
-</div>
-</div>
+        </div>
 
-<div class="info">
-<div class="icon">
-<i class="fas fa-map-marker-alt"></i>
-</div>
 
-<div>
-<h5>College</h5>
-<p>Government Polytechnic, Hingoli,<br>Maharashtra - 431513</p>
-</div>
-</div>
+        <div class="contact-box">
 
-<div class="info">
-<div class="icon">
-<i class="fab fa-github"></i>
-</div>
 
-<div>
-<h5>GitHub</h5>
-<p>github.com/devidasalhat029-cmd/Alhat</p>
-</div>
-</div>
+            <!-- Intro -->
 
-<div class="info">
-<div class="icon">
-<i class="fas fa-globe"></i>
-</div>
+            <div class="intro">
 
-<div>
-<h5>Live Website</h5>
-<p>yogita12.pythonanywhere.com</p>
-</div>
-</div>
-<a href="https://github.com/devidasalhat029-cmd/Alhat"
-   target="_blank"
-   class="github">
-   <i class="fab fa-github"></i> GitHub
-</a>
-*********************************************************************
-<a href="https://yogita12.pythonanywhere.com"
-   target="_blank"
-   class="live">
-   <i class="fas fa-globe"></i> Live Demo
-</a>
+                <h2>We're Here to Help 🤝</h2>
 
-</div>
+                <p>
+                    Have a question, suggestion, or feedback?
+                    Send us a message and we'll get back to you.
+                </p>
 
-</div>
+            </div>
 
-<div class="col-lg-7">
 
-<div class="right-box">
+            <!-- Success -->
 
-<h3 class="text-success mb-4">
-<i class="fas fa-paper-plane"></i> Send Message
-</h3>
+            {% if success %}
 
-<form method="POST">
+            <div class="success">
+                ✅ {{ success }}
+            </div>
 
-<input type="text" class="form-control" name="name" placeholder="Your Name" required>
+            {% endif %}
 
-<input type="email" class="form-control" name="email" placeholder="Your Email" required>
 
-<input type="text" class="form-control" name="subject" placeholder="Subject" required>
+            <!-- Error -->
 
-<textarea class="form-control" rows="6" name="message" placeholder="Write your message here..." required></textarea>
+            {% if error %}
 
-<button class="send-btn">
-<i class="fas fa-paper-plane"></i> Send Message
-</button>
+            <div class="error">
+                ❌ {{ error }}
+            </div>
 
-</form>
+            {% endif %}
 
-</div>
 
-</div>
+            <!-- Details -->
 
-</div>
+            <div class="details">
 
-</div>
-<!-- Google Map -->
-<div class="container mt-5 mb-5">
+                <div class="detail">
 
-    <h2 class="text-center text-success mb-4">
-        <i class="fas fa-map-marked-alt"></i> Our Location
-    </h2>
+                    <div class="detail-icon">📧</div>
 
-    <div class="shadow rounded-4 overflow-hidden">
-        <iframe
-            src="https://www.google.com/maps?q=Government+Polytechnic+Hingoli&output=embed"
-            width="100%"
-            height="350"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy">
-        </iframe>
+                    <h4>Email</h4>
+
+                    <p>
+                        agromonitor@gmail.com
+                    </p>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-icon">📱</div>
+
+                    <h4>Phone</h4>
+
+                    <p>
+                        +91 XXXXX XXXXX
+                    </p>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-icon">📍</div>
+
+                    <h4>Location</h4>
+
+                    <p>
+                        Maharashtra, India
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Project Links -->
+
+            <div class="links">
+
+                <h3>🔗 Project Links</h3>
+
+                <a
+                    href="
+                    https://github.com/devidasalhat029-cmd/Alhat.git"
+                    target="_blank"
+                    class="link-btn"
+                >
+                    💻 GitHub
+                </a>
+
+                <a
+                    href="https://yogita12.pythonanywhere.com/"
+                    target="_blank"
+                    class="link-btn"
+                >
+                    🌐 Live Website
+                </a>
+
+            </div>
+
+
+            <!-- Form -->
+
+            <h2 class="form-title">
+                💬 Send Us a Message
+            </h2>
+
+            <p class="form-subtitle">
+                Your message will be sent directly to our email.
+            </p>
+
+
+            <form method="POST" action="{{ url_for('contact') }}">
+
+
+                <label for="name">
+                    👤 Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Your name"
+                    required
+                >
+
+
+                <label for="email">
+                    📧 Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Your email"
+                    required
+                >
+
+
+                <label for="subject">
+                    📝 Subject
+                </label>
+
+                <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    placeholder="What is this about?"
+                    required
+                >
+
+
+                <label for="message">
+                    💬 Message
+                </label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Write your message here..."
+                    required
+                ></textarea>
+
+
+                <button
+                    type="submit"
+                    class="send-btn"
+                >
+                    📩 Send Message
+                </button>
+
+            </form>
+
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="back-btn"
+            >
+                ← Back to Dashboard
+            </a>
+
+
+        </div>
+
     </div>
 
 </div>
-
-<!-- Why Contact Us -->
-<div class="container mb-5">
-
-    <div class="row text-center">
-
-        <div class="col-md-4 mb-4">
-            <div class="p-4 shadow rounded-4 bg-white h-100">
-                <i class="fas fa-headset fa-3x text-success mb-3"></i>
-                <h4>24×7 Support</h4>
-                <p>We are always ready to help you with project related queries.</p>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="p-4 shadow rounded-4 bg-white h-100">
-                <i class="fas fa-laptop-code fa-3x text-primary mb-3"></i>
-                <h4>Project Guidance</h4>
-                <p>Get support for Flask, Python, Database and Web Development.</p>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="p-4 shadow rounded-4 bg-white h-100">
-                <i class="fas fa-leaf fa-3x text-warning mb-3"></i>
-                <h4>Smart Farming</h4>
-                <p>Helping farmers with modern agriculture technology.</p>
-            </div>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- Footer -->
-<footer class="text-center text-white py-4"
-        style="background:linear-gradient(90deg,#198754,#20c997);">
-
-    <h5>🌱 Agriculture Automatic Monitoring System</h5>
-
-    <p class="mb-1">
-        Developed By <b>Yogita Alhat</b>
-    </p>
-
-    <p class="mb-1">
-        <i class="fas fa-envelope"></i>
-        yogitaalhat900@gmail.com
-    </p>
-
-    <p class="mb-1">
-        <i class="fab fa-github"></i>
-        github.com/devidasalhat029-cmd/Alhat
-    </p>
-
-    <p class="mb-0">
-        © 2026 All Rights Reserved.
-    </p>
-
-</footer>
 
 {% endblock %}

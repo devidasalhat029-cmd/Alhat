@@ -154,6 +154,16 @@ color:white;
 
 .dark .dropdown-item:hover{
 background:#198754;
+
+}
+.dark-btn{
+    width:40px;
+    height:40px;
+    padding:0;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 /* Mobile */
@@ -175,7 +185,7 @@ margin-top:15px;
 </head>
 <body>
 
-<nav class="navbar navbar-dark  bg-success">
+<nav class="navbar  navbar-dark bg-success">
 
 <div class="container-fluid">
 
@@ -198,100 +208,120 @@ data-bs-target="#mainNav">
 
 <li class="nav-item">
 <a class="nav-link" href="/">
-<i class="fa-solid fa-house"></i> Home
+🏠 Home
 </a>
 </li>
 
 <li class="nav-item">
 <a class="nav-link" href="/dashboard">
-<i class="fa-solid fa-chart-line"></i> Dashboard
+📊 Dashboard
 </a>
 </li>
 
-<li class="nav-item">
-<a class="nav-link" href="/farmer">
-<i class="fa-solid fa-user"></i> Farmer
-</a>
-</li>
+
 
 <li class="nav-item">
-<a class="nav-link" href="/crop">
-<i class="fa-solid fa-seedling"></i> Crop
+<a class="nav-link" href="/crop_ai">
+🌱 Crop
 </a>
 </li>
 
 <li class="nav-item">
 <a class="nav-link" href="/weather">
-<i class="fa-solid fa-cloud-sun"></i> Weather
+☁️ Weather
+
 </a>
 </li>
 
 <li class="nav-item">
 <a class="nav-link" href="/irrigation">
-<i class="fa-solid fa-droplet"></i> Irrigation
+💧 Irrigation
 </a>
 </li>
 
 <li class="nav-item">
 <a class="nav-link" href="/motor">
-<i class="fa-solid fa-gear"></i> Motor
+⚙️ Motor
 </a>
 </li>
 
 <li class="nav-item">
 <a class="nav-link" href="/live_farm">
-<i class="fa-solid fa-leaf"></i> Live Farm
+🌿 Live Farm
+
 </a>
 </li>
 
 <li class="nav-item">
 <a class="nav-link" href="/records">
-<i class="fa-solid fa-file-lines"></i> Records
+📋 Records
+
 </a>
 </li>
 
 <li class="nav-item">
 <a class="nav-link" href="/analytics">
-<i class="fa-solid fa-chart-column"></i> Analytics
+📈 Analytics
 </a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/alerts">
+🔔 Smart Alerts
+</a>
+</li>
+
+
+<li class="nav-item">
+    <a class="nav-link" href="/disease">
+🦠 Disease
+
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/contact">
+    📞  Contact
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="/feedback">
+    💬 Feedback
+    </a>
 </li>
 
 <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle"
+    href="#"
+    role="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false">
+    🤖 Ai
+    </a>
 
-<a class="nav-link dropdown-toggle"
-href="#"
-role="button"
-data-bs-toggle="dropdown">
-
-<i class="fa-solid fa-robot"></i> AI
-
-</a>
-
-<ul class="dropdown-menu">
-
-<li>
-<a class="dropdown-item"
-href="/ai_assistant">
-
-🤖 AI Assistant
-
-</a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="/ai_assistant">🤖 AI Assistant</a></li>
+        <li><a class="dropdown-item" href="/ai_tips">💡 AI Tips</a></li>
+    </ul>
 </li>
 
-<li>
-<a class="dropdown-item"
-href="/ai_advice">
+{% if session.get("username") %}
 
-💡 AI Advice
-
-</a>
+<li class="nav-item">
+    <a class="nav-link" href="/logout">🔐Logout</a>
 </li>
 
-</ul>
+{% else %}
 
+<li class="nav-item">
+    <a class="nav-link" href="/login">
+    </i>🔑 Login
+    </a>
 </li>
 
-</ul>
+{% endif %}
+
+
+
 
 <form class="d-flex"
 action="/search"
@@ -315,21 +345,11 @@ type="submit">
 
 </form>
 
-<button
-class="btn btn-dark ms-3"
-onclick="darkMode()">
-
-🌙
-
+<button class="btn btn-dark dark-btn ms-2" onclick="darkMode()">
+    <i class="fa-solid fa-moon"></i>
 </button>
 
-<a
-href="/farmer"
-class="btn btn-outline-light ms-2">
 
-<i class="fa-solid fa-user-circle"></i>
-
-</a>
 
 </div>
 
@@ -343,84 +363,6 @@ class="btn btn-outline-light ms-2">
 {% endblock %}
 
 </div>
-<!-- Footer -->
-
-<footer class="footer">
-
-<div class="container">
-
-<div class="row">
-
-<div class="col-md-4">
-
-<h5>🌾 Agro Monitor</h5>
-
-<p>
-Smart Agriculture Monitoring System using Flask, SQLite,
-Bootstrap and AI Technology.
-</p>
-
-</div>
-
-<div class="col-md-4">
-
-<h5>Quick Links</h5>
-
-<p><a href="/" class="text-white text-decoration-none">Home</a></p>
-
-<p><a href="/dashboard" class="text-white text-decoration-none">Dashboard</a></p>
-
-<p><a href="/crop" class="text-white text-decoration-none">Crop</a></p>
-
-<p><a href="/weather" class="text-white text-decoration-none">Weather</a></p>
-
-</div>
-
-<div class="col-md-4">
-
-<h5>Contact</h5>
-
-<p>
-
-<i class="fa-solid fa-envelope"></i>
-
-agromonitor@gmail.com
-
-</p>
-
-<p>
-
-<i class="fa-solid fa-phone"></i>
-
-+91 9876543210
-
-</p>
-
-<p>
-
-<i class="fa-solid fa-location-dot"></i>
-
-Hingoli, Maharashtra
-
-</p>
-
-</div>
-
-</div>
-
-<hr>
-
-<p class="mb-0">
-
-© 2026 Agriculture Automatic Monitoring System |
-Developed using Flask & Bootstrap
-
-</p>
-
-</div>
-
-</footer>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>

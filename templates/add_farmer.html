@@ -1,0 +1,701 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}
+Add Farmer
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+
+body{
+
+    background:#eef5ef;
+
+}
+
+
+/* Main Page */
+
+.page{
+
+    width:100%;
+    min-height:100vh;
+    padding:40px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+
+
+/* Main Card */
+
+.form-card{
+
+    width:900px;
+
+    background:white;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+
+}
+
+
+
+/* Header */
+
+.header{
+
+    height:180px;
+
+    background:linear-gradient(135deg,#0f9d58,#43c76a);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+    color:white;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+
+
+.header h1{
+
+    font-size:36px;
+
+    font-weight:bold;
+
+}
+
+
+
+.header p{
+
+    margin-top:10px;
+
+    font-size:18px;
+
+}
+
+
+
+/* Form Body */
+
+.form-body{
+
+    padding:40px;
+
+}
+
+
+
+/* Photo Section */
+
+.photo-box{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-top:-70px;
+
+    margin-bottom:25px;
+
+}
+
+
+
+.photo-box img{
+
+    width:220px;
+
+    height:180px;
+
+    border-radius:20px;
+
+    border:6px solid white;
+
+    object-fit:cover;
+
+    background:#e8f5e9;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+    transition:.3s;
+
+}
+
+
+
+.photo-box img:hover{
+
+    transform:scale(1.05);
+
+}
+
+
+
+/* Upload Button */
+
+.upload-btn{
+
+    text-align:center;
+
+}
+
+
+
+.upload-btn label{
+
+    background:#198754;
+
+    color:white;
+
+    padding:12px 25px;
+
+    border-radius:30px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+}
+
+
+
+input[type=file]{
+
+    display:none;
+
+}
+
+
+
+/* Input Row */
+
+.row{
+
+    display:flex;
+
+    gap:20px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.col{
+
+    flex:1;
+
+}
+
+
+
+label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:bold;
+
+    color:#198754;
+
+}
+
+
+
+input{
+
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #ccc;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+}
+
+
+
+input:focus{
+
+    outline:none;
+
+    border-color:#198754;
+
+    box-shadow:0 0 10px rgba(25,135,84,.25);
+
+}
+
+
+</style>
+
+
+
+<div class="page">
+
+
+<div class="form-card">
+
+
+
+<div class="header">
+
+
+<h1>
+🌱 Add New Farmer
+</h1>
+
+
+<p>
+Agriculture Automatic Monitoring System
+</p>
+
+
+</div>
+
+
+
+<div class="form-body">
+
+
+
+<form method="POST" enctype="multipart/form-data">
+
+
+
+<div class="photo-box">
+
+
+<img
+id="preview"
+src="{{ url_for('static', filename='uploads/default.png') }}">
+
+
+
+</div>
+
+
+
+<div class="upload-btn">
+
+
+<label for="photo">
+
+📷 Upload Farmer Photo
+
+</label>
+
+
+<input
+type="file"
+id="photo"
+name="photo"
+accept="image/*">
+
+
+
+</div>
+
+
+<br><br>
+
+
+
+
+
+<div class="row">
+
+
+<div class="col">
+
+<label>
+👤 Full Name
+</label>
+
+<input
+type="text"
+name="name"
+placeholder="Enter Full Name"
+required>
+
+</div>
+
+
+
+<div class="col">
+
+<label>
+📱 Mobile Number
+</label>
+
+<input
+type="text"
+name="mobile"
+placeholder="Enter Mobile Number"
+required>
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="row">
+
+
+<div class="col">
+
+<label>
+🏡 Village
+</label>
+
+
+<input
+type="text"
+name="village"
+placeholder="Enter Village"
+required>
+
+
+</div>
+
+
+
+
+<div class="col">
+
+
+<label>
+👨 Username
+</label>
+
+
+<input
+type="text"
+name="username"
+placeholder="Create Username"
+required>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<div class="row">
+
+
+<div class="col">
+
+
+<label>
+🔒 Password
+</label>
+
+
+<input
+type="password"
+name="password"
+placeholder="Create Password"
+required>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="buttons">
+
+
+<button type="submit"
+class="save-btn">
+
+<i class="fa-solid fa-user-plus"></i>
+
+Add Farmer
+
+</button>
+
+
+
+<a href="/farmers"
+class="back-btn">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+Back
+
+</a>
+
+
+
+</div>
+
+
+
+
+</form>
+
+
+</div>
+
+
+
+
+
+<div class="footer">
+
+
+<h3>
+🌾 Agriculture Automatic Monitoring System
+</h3>
+
+
+<p>
+Manage Farmer Information Easily & Securely
+</p>
+
+
+</div>
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<style>
+
+
+.buttons{
+
+display:flex;
+
+justify-content:center;
+
+gap:20px;
+
+margin-top:35px;
+
+}
+
+
+
+
+.save-btn{
+
+
+background:linear-gradient(135deg,#198754,#28a745);
+
+color:white;
+
+border:none;
+
+padding:15px 35px;
+
+font-size:18px;
+
+font-weight:bold;
+
+border-radius:50px;
+
+cursor:pointer;
+
+}
+
+
+
+.back-btn{
+
+
+background:#6c757d;
+
+color:white;
+
+text-decoration:none;
+
+padding:15px 35px;
+
+border-radius:50px;
+
+font-size:18px;
+
+font-weight:bold;
+
+}
+
+
+
+.back-btn:hover{
+
+color:white;
+
+}
+
+
+
+
+.footer{
+
+
+background:#198754;
+
+padding:25px;
+
+text-align:center;
+
+color:white;
+
+
+}
+
+
+
+
+
+@media(max-width:768px){
+
+
+.row{
+
+flex-direction:column;
+
+}
+
+
+.form-card{
+
+width:100%;
+
+}
+
+
+.page{
+
+padding:15px;
+
+}
+
+
+}
+
+
+
+</style>
+
+
+
+
+
+<script>
+
+
+// Photo Preview
+
+document.getElementById("photo").onchange=function(e){
+
+
+const file=e.target.files[0];
+
+
+if(file){
+
+
+document.getElementById("preview").src=
+
+URL.createObjectURL(file);
+
+
+}
+
+
+}
+
+
+
+
+// Mobile Validation
+
+document.querySelector("form").onsubmit=function(){
+
+
+let mobile=document.getElementsByName("mobile")[0].value;
+
+
+if(mobile.length != 10){
+
+
+alert("Enter Valid 10 Digit Mobile Number");
+
+return false;
+
+
+}
+
+
+return true;
+
+
+}
+
+
+</script>
+
+
+
+{% endblock %}

@@ -1,112 +1,224 @@
 {% extends "baseofhtml.html" %}
 
-{% block title %}
-Edit Profile
-{% endblock %}
-
 {% block content %}
+
 <style>
 
-.edit-container{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:80vh;
+body{
+    background:#eef7e8;
 }
+
+
+.edit-container{
+
+    width:500px;
+    margin:40px auto;
+
+}
+
 
 .edit-card{
-    width:550px;
+
     background:white;
+
     padding:35px;
+
     border-radius:25px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+
+    box-shadow:0 10px 30px rgba(46,125,50,0.25);
+
 }
 
-.edit-card h1{
+
+
+.title{
+
     text-align:center;
-    color:#166534;
+
+    color:#2e7d32;
+
+    font-weight:800;
+
     margin-bottom:25px;
+
 }
 
-.input-group{
-    margin-bottom:15px;
+
+
+.profile-preview{
+
+    width:120px;
+
+    height:120px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:5px solid #43a047;
+
+    display:block;
+
+    margin:15px auto;
+
 }
 
-.input-group label{
+
+
+label{
+
     font-weight:bold;
+
+    color:#33691e;
+
+    margin-top:10px;
+
 }
 
-.input-group input{
-    width:100%;
+
+
+.form-control{
+
+    border-radius:12px;
+
     padding:12px;
-    border-radius:10px;
-    border:1px solid #ddd;
+
 }
 
-.btn{
+
+
+.update-btn{
+
     width:100%;
-    padding:14px;
-    background:#16a34a;
-    color:white;
+
+    margin-top:25px;
+
+    padding:13px;
+
     border:none;
-    border-radius:10px;
-    font-size:17px;
+
+    border-radius:25px;
+
+    background:#2e7d32;
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+}
+
+
+
+.update-btn:hover{
+
+    background:#1b5e20;
+
 }
 
 </style>
 
 
+
 <div class="edit-container">
+
 
 <div class="edit-card">
 
-<h1>✏️ Edit Farmer Profile</h1>
 
-<form method="POST" enctype="multipart/form-data">
-<div style="text-align:center;margin-bottom:20px;">
 
-<label for="photo" style="cursor:pointer;">
+<h2 class="title">
+✏️ Edit Farmer Profile
+</h2>
 
-<div class="profile-icon">
-<i class="fa-solid fa-camera"></i>
-</div>
 
-</label>
 
-<input type="file" id="photo" name="photo" accept=".png,.jpg,.jpeg" hidden>
 
-</div>
-<div class="input-group">
+<img src="{{ url_for('static', filename='uploads/' + farmer.photo) }}"
+class="profile-preview">
+
+
+
+
+
+<form method="POST"
+enctype="multipart/form-data">
+
+
+
 <label>Name</label>
-<input type="text" name="name" value="{{ farmer[1] }}">
-</div>
+
+<input type="text"
+name="name"
+class="form-control"
+value="{{ farmer.name }}"
+required>
 
 
-<div class="input-group">
+
+
 <label>Mobile</label>
-<input type="text" name="mobile" value="{{ farmer[2] }}">
-</div>
+
+<input type="text"
+name="mobile"
+class="form-control"
+value="{{ farmer.mobile }}"
+required>
 
 
-<div class="input-group">
+
+
+
 <label>Village</label>
-<input type="text" name="village" value="{{ farmer[3] }}">
-</div>
+
+<input type="text"
+name="village"
+class="form-control"
+value="{{ farmer.village }}"
+required>
 
 
-<div class="input-group">
+
+
+
 <label>Username</label>
-<input type="text" value="{{ farmer[4] }}" readonly>
-</div>
+
+<input type="text"
+name="username"
+class="form-control"
+value="{{ farmer.username }}"
+required>
 
 
-<button class="btn">
-Update Profile
+
+
+
+<label>Change Profile Photo</label>
+
+<input type="file"
+name="photo"
+class="form-control"
+accept="image/*">
+
+
+
+
+
+<button class="update-btn">
+
+💾 Update Farmer
+
 </button>
+
+
 
 </form>
 
+
+
 </div>
+
 
 </div>
 

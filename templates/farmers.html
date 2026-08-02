@@ -1,0 +1,354 @@
+{% extends "baseofhtml.html" %}
+
+{% block content %}
+
+<style>
+
+body{
+    background: #f5f1ff;
+}
+
+/* Main Card */
+.farmer-container{
+    margin-top:40px;
+}
+
+.title{
+    color:#6a1b9a;
+    font-weight:800;
+    text-align:center;
+    margin-bottom:30px;
+}
+
+
+/* Add Button */
+.add-btn{
+    background:linear-gradient(45deg,#6a1b9a,#9c27b0);
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:25px;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+.add-btn:hover{
+    background:#4a148c;
+    color:white;
+}
+
+
+/* Table Card */
+.farmer-card{
+
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 10px 30px rgba(106,27,154,0.2);
+
+}
+
+
+/* Table */
+
+.table thead{
+
+    background:#6a1b9a;
+    color:white;
+
+}
+
+
+.table tbody tr:hover{
+
+    background:#f3e5f5;
+    transform:scale(1.01);
+    transition:0.2s;
+
+}
+
+
+.table td{
+
+    vertical-align:middle;
+
+}
+
+
+/* Profile Image */
+
+.profile-img{
+
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #9c27b0;
+
+}
+
+
+/* Buttons */
+
+.edit-btn{
+
+    background:#ffb300;
+    color:white;
+    border-radius:20px;
+    padding:6px 15px;
+    text-decoration:none;
+
+}
+
+
+.delete-btn{
+
+    background:#d81b60;
+    color:white;
+    border-radius:20px;
+    padding:6px 15px;
+    text-decoration:none;
+
+}
+
+
+.edit-btn:hover,
+.delete-btn:hover{
+
+    color:white;
+    opacity:0.8;
+
+}
+.view-btn{
+
+    background:#7b1fa2;
+    color:white;
+    border-radius:20px;
+    padding:6px 15px;
+    text-decoration:none;
+
+}
+
+.view-btn:hover{
+
+    background:#4a148c;
+    color:white;
+
+}
+
+
+
+
+
+
+/* Empty */
+
+.empty{
+
+    color:#777;
+    font-size:18px;
+
+}
+
+</style>
+
+
+
+<div class="container farmer-container">
+
+
+<h2 class="title">
+👨‍🌾 All Farmers
+</h2>
+
+
+
+<div class="text-end mb-3">
+
+<a href="/add_farmer" class="add-btn">
+➕ Add Farmer
+</a>
+
+</div>
+<form method="GET" action="/farmers" class="row mb-3">
+
+    <div class="col-md-4">
+        <input type="text"
+               name="search"
+               class="form-control"
+               placeholder="🔍 Search by Name"
+               value="{{ request.args.get('search','') }}">
+    </div>
+
+    <div class="col-md-3">
+        <input type="text"
+               name="village"
+               class="form-control"
+               placeholder="🏡 Village"
+               value="{{ request.args.get('village','') }}">
+    </div>
+
+    <div class="col-md-3">
+        <select name="sort" class="form-select">
+            <option value="new">Newest First</option>
+            <option value="old">Oldest First</option>
+            <option value="az">Name A-Z</option>
+            <option value="za">Name Z-A</option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-success w-100">
+            Filter
+        </button>
+    </div>
+
+</form>
+
+
+
+<div class="farmer-card">
+
+
+<table class="table table-bordered text-center">
+
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Photo</th>
+<th>Name</th>
+<th>Mobile</th>
+<th>Village</th>
+<th>Username</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+{% for farmer in farmers %}
+
+
+<tr>
+
+<td>{{ loop.index }}</td>  
+
+
+<td>
+
+<img src="{{ url_for('static', filename='uploads/' + farmer.photo) }}"
+class="profile-img">
+
+</td>
+
+
+<td>{{ farmer.name }}</td>
+
+<td>{{ farmer.mobile }}</td>
+
+<td>{{ farmer.village }}</td>
+
+<td>{{ farmer.username }}</td>
+
+
+
+<td>
+
+<a href="/farmer_profile/{{ farmer.id }}" 
+class="view-btn">
+👀 View
+</a>
+
+
+<a href="/edit_farmer/{{ farmer.id }}" 
+class="edit-btn">
+✏️ Edit
+</a>
+
+
+<a href="/delete_farmer/{{ farmer.id }}"
+class="delete-btn"
+onclick="return confirm('Delete this farmer?')">
+🗑️ Delete
+</a>
+
+
+</td>
+
+
+</tr>
+
+
+{% else %}
+
+
+<tr>
+
+<td colspan="7" class="empty">
+No Farmers Found 🌱
+</td>
+
+</tr>
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+</table>
+<div class="text-center mt-4">
+
+{% if page > 1 %}
+<a href="{{ url_for('farmers',
+page=page-1,
+search=request.args.get('search'),
+village=request.args.get('village'),
+sort=request.args.get('sort')) }}"
+class="btn btn-success">
+⬅️ Previous
+</a>
+{% endif %}
+
+{% for p in range(1, total_pages+1) %}
+
+<a href="{{ url_for('farmers',
+page=p,
+search=request.args.get('search'),
+village=request.args.get('village'),
+sort=request.args.get('sort')) }}"
+class="btn {% if p==page %}btn-primary{% else %}btn-outline-primary{% endif %}">
+{{ p }}
+</a>
+
+{% endfor %}
+
+{% if page < total_pages %}
+<a href="{{ url_for('farmers',
+page=page+1,
+search=request.args.get('search'),
+village=request.args.get('village'),
+sort=request.args.get('sort')) }}"
+class="btn btn-success">
+Next ➡️
+</a>
+{% endif %}
+
+</div>
+</div>
+
+
+</div>
+
+
+{% endblock %}

@@ -1,49 +1,56 @@
 import sqlite3
+
 conn = sqlite3.connect("agriculture.db")
 cursor = conn.cursor()
 
+# -------------------------
+# Farmers
+# -------------------------
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS farmers(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
-      mobile TEXT,
-      village TEXT,
-      username TEXT,
-      password TEXT
-)
-  """)
-cursor.execute("""  
-CREATE TABLE IF NOT EXISTS  contact (                
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    email TEXT,
-    mobile TEXT,
-    subject TEXT,
-    message TEXT 
+    name TEXT NOT NULL,
+    mobile TEXT NOT NULL,
+    village TEXT NOT NULL,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    photo TEXT DEFAULT 'default.png'
 )
 """)
 
+# -------------------------
+# Crop
+# -------------------------
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS crop(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     crop_name TEXT,
     season TEXT
- )
+)
 """)
 
-
+# -------------------------
+# Sensor Record
+# -------------------------
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS sensor_record(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    temperature REAL,
-    humidity REAL,
-    soil_moisture REAL,
+    temperature TEXT,
+    humidity TEXT,
+    soil_moisture TEXT,
+    moisture TEXT,
     motor_status TEXT,
     irrigation_status TEXT,
+    start_time TEXT,
+    end_time TEXT,
+    duration TEXT,
     date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 """)
 
+# -------------------------
+# Irrigation Schedule
+# -------------------------
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS irrigation_schedule(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -53,31 +60,23 @@ CREATE TABLE IF NOT EXISTS irrigation_schedule(
     status TEXT
 )
 """)
-conn = sqlite3.connect("agriculture.db")
-cur = conn.cursor()
 
+# -------------------------
+# Feedback
+# -------------------------
 cursor.execute("""
-ALTER TABLE sensor_record
-ADD COLUMN du_ration  TEXT
-""")
-cursor.execute(""" 
 CREATE TABLE IF NOT EXISTS feedback(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-
     name TEXT,
-
     email TEXT,
-
     rating INTEGER,
-
     experience TEXT,
-
     message TEXT,
-
     feedback_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 """)
+
 conn.commit()
 conn.close()
 
-print("Database Created Successfully")
+print("✅ Database Created Successfully")

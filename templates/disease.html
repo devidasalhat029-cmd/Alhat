@@ -1,140 +1,85 @@
 {% extends "baseofhtml.html" %}
 
-{% block title %}
-Plant Disease Detection
-{% endblock %}
+{% block title %}AI Plant Disease Detection{% endblock %}
 
 {% block content %}
 
 <style>
 
-.container{
-    max-width:900px;
-    margin:30px auto;
+body{
+    background:#eef8ee;
 }
 
-.banner{
-    background:linear-gradient(135deg,#16a34a,#22c55e);
-    color:white;
-    padding:30px;
-    border-radius:20px;
-    text-align:center;
-    box-shadow:0 8px 20px rgba(0,0,0,.2);
-}
-
-.banner i{
-    font-size:70px;
-    margin-bottom:10px;
-}
-
-.upload-card{
-    margin-top:30px;
+.box{
+    width:450px;
+    margin:50px auto;
     background:white;
-    padding:30px;
+    padding:35px;
     border-radius:20px;
     text-align:center;
-    box-shadow:0 5px 15px rgba(0,0,0,.15);
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
 }
 
-.upload-card input[type=file]{
+h1{
+    color:#198754;
+    margin-bottom:25px;
+}
+
+input[type=file]{
     width:100%;
     padding:12px;
-    border:2px dashed #16a34a;
+    border:2px dashed #198754;
     border-radius:10px;
-    margin:20px 0;
     cursor:pointer;
+    margin:20px 0;
 }
 
-.btn-detect{
-    background:#16a34a;
-    color:white;
+button{
+    width:100%;
+    padding:15px;
     border:none;
-    padding:12px 30px;
     border-radius:10px;
+    background:#198754;
+    color:white;
     font-size:18px;
+    font-weight:bold;
     cursor:pointer;
     transition:.3s;
 }
 
-.btn-detect:hover{
-    background:#15803d;
+button:hover{
+    background:#146c43;
+    transform:scale(1.03);
 }
 
-.info{
-    margin-top:30px;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-}
-
-.box{
-    background:white;
-    border-radius:15px;
-    padding:20px;
-    text-align:center;
-    box-shadow:0 5px 12px rgba(0,0,0,.1);
-}
-
-.box i{
-    font-size:45px;
-    color:#16a34a;
-    margin-bottom:10px;
-}
-
-@media(max-width:768px){
-    .info{
-        grid-template-columns:1fr;
-    }
+img{
+    width:120px;
+    margin-bottom:15px;
 }
 
 </style>
 
-<div class="container">
+<div class="box">
 
-<div class="banner">
-    <i class="fas fa-leaf"></i>
-    <h2>Plant Disease Detection</h2>
-    <p>Upload a leaf image to identify plant diseases.</p>
-</div>
+<img src="{{ url_for('static', filename='images/leaf.png') }}">
 
-<div class="upload-card">
+<h1>🌿 AI Plant Disease Detection</h1>
 
-<form action="/predict_disease" method="POST" enctype="multipart/form-data">
+<form action="/disease" method="POST" enctype="multipart/form-data">
 
-<h3>Select Leaf Image</h3>
+<input
+type="file"
+name="leaf"
+accept="image/*"
+required>
 
-<input type="file" name="image" accept="image/*" required>
+<button type="submit">
 
-<button type="submit" class="btn-detect">
-<i class="fas fa-magnifying-glass"></i>
- Detect Disease
+🔍 Detect Disease
+
 </button>
 
 </form>
-
-</div>
-
-<div class="info">
-
-<div class="box">
-<i class="fas fa-camera"></i>
-<h4>Upload Image</h4>
-<p>Select a clear leaf image.</p>
-</div>
-
-<div class="box">
-<i class="fas fa-microchip"></i>
-<h4>AI Analysis</h4>
-<p>The AI model analyzes the uploaded image.</p>
-</div>
-
-<div class="box">
-<i class="fas fa-notes-medical"></i>
-<h4>Get Result</h4>
-<p>View disease name and treatment suggestions.</p>
-</div>
-
-</div>
 
 </div>
 

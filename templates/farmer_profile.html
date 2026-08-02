@@ -1,0 +1,348 @@
+{% extends "baseofhtml.html" %}
+
+{% block content %}
+
+<style>
+body{
+
+    margin:0;
+    font-family:Arial, sans-serif;
+
+    background:
+    linear-gradient(
+        rgba(0,80,0,0.25),
+        rgba(0,80,0,0.25)
+    ),
+    url("https://images.unsplash.com/photo-1500382017468-9049fed747ef");
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+
+}
+
+/* Profile Card */
+
+.profile-container{
+
+    width:430px;
+    margin:40px auto;
+
+    background:white;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 15px 35px rgba(46,125,50,0.35);
+
+}
+
+
+/* Top Cover Image */
+
+.cover{
+
+    height:200px;
+
+    background:
+    linear-gradient(
+        rgba(46,125,50,0.35),
+        rgba(46,125,50,0.35)
+    ),
+    url("https://images.unsplash.com/photo-1500937386664-56d1dfef3854");
+
+    background-size:cover;
+    background-position:center;
+
+}
+
+
+
+/* Farmer Photo */
+
+.profile-img{
+
+    width:160px;
+    height:160px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:6px solid white;
+
+    display:block;
+
+    margin:-80px auto 15px;
+
+}
+
+
+
+/* Name */
+
+.farmer-name{
+
+    text-align:center;
+
+    color:#1b5e20;
+
+    font-size:30px;
+
+    font-weight:800;
+
+}
+
+
+
+.badge{
+
+    text-align:center;
+
+    color:#558b2f;
+
+    font-size:17px;
+
+}
+
+
+
+/* Information */
+
+.info{
+
+    padding:25px;
+
+}
+
+
+
+.info-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    background:#f8fff5;
+
+    border-left:5px solid #43a047;
+
+    padding:15px;
+
+    margin-bottom:15px;
+
+    border-radius:18px;
+
+    color:#33691e;
+
+    font-size:17px;
+
+    box-shadow:0 5px 12px rgba(0,0,0,0.08);
+
+}
+
+
+
+.info-card i{
+
+    font-size:25px;
+
+    color:#2e7d32;
+
+}
+
+
+
+/* Buttons */
+
+.buttons{
+
+    text-align:center;
+
+    padding:20px;
+
+}
+
+
+
+.btn{
+
+    padding:12px 25px;
+
+    border-radius:30px;
+
+    color:white;
+
+    text-decoration:none;
+
+    margin:5px;
+
+    display:inline-block;
+
+    font-weight:bold;
+
+}
+
+
+
+.edit-btn{
+
+    background:#ef6c00;
+
+}
+
+
+
+.back-btn{
+
+    background:#2e7d32;
+
+}
+
+
+
+/* Footer */
+
+.footer{
+
+    background:#1b5e20;
+
+    color:white;
+
+    text-align:center;
+
+    padding:18px;
+
+    font-style:italic;
+
+}
+
+
+</style>
+
+
+
+<div class="profile-container">
+
+
+<div class="cover"></div>
+
+
+
+<img src="{{ url_for('static', filename='uploads/' + farmer.photo) }}"
+class="profile-img">
+
+
+
+<h2 class="farmer-name">
+{{ farmer.name }}
+</h2>
+
+
+
+<p class="badge">
+🌱 Smart Farmer | Agriculture Technology
+</p>
+
+
+
+
+<div class="info">
+
+
+<div class="info-card">
+
+<i class="fas fa-user"></i>
+
+<div>
+<b>Name</b><br>
+{{ farmer.name }}
+</div>
+
+</div>
+
+
+
+
+<div class="info-card">
+
+<i class="fas fa-phone"></i>
+
+<div>
+<b>Mobile</b><br>
+{{ farmer.mobile }}
+</div>
+
+</div>
+
+
+
+
+<div class="info-card">
+
+<i class="fas fa-location-dot"></i>
+
+<div>
+<b>Village</b><br>
+{{ farmer.village }}
+</div>
+
+</div>
+
+
+
+
+<div class="info-card">
+
+<i class="fas fa-id-card"></i>
+
+<div>
+<b>Username</b><br>
+{{ farmer.username }}
+</div>
+
+</div>
+
+
+
+</div>
+
+
+
+
+<div class="buttons">
+
+
+<a href="/edit_farmer/{{ farmer.id }}"
+class="btn edit-btn">
+✏️ Edit Profile
+</a>
+
+
+
+<a href="/farmers"
+class="btn back-btn">
+⬅️ Back
+</a>
+
+
+</div>
+
+
+
+<div class="footer">
+
+🌾 Healthy Soil • Healthy Crops • Happy Farmer 🌱
+
+</div>
+
+
+
+</div>
+
+
+{% endblock %}

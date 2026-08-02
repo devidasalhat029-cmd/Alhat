@@ -1,0 +1,1234 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}
+AI Crop Information
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* ================= PAGE ================= */
+
+.crop-ai-page{
+
+    min-height:90vh;
+
+    padding:25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f7edff,
+            #ffeaf5,
+            #ffffff
+        );
+}
+
+.crop-ai-container{
+
+    max-width:1150px;
+
+    margin:auto;
+}
+
+
+/* ================= HEADER ================= */
+
+.crop-ai-header{
+
+    text-align:center;
+
+    padding:20px 10px 25px;
+}
+
+.crop-ai-logo{
+
+    width:75px;
+    height:75px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    font-size:40px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7b2cbf,
+            #d63384,
+            #ff9ccc
+        );
+
+    box-shadow:
+        0 10px 25px
+        rgba(123,44,191,.25);
+
+    animation:float 3s ease-in-out infinite;
+}
+
+.crop-ai-header h1{
+
+    margin:15px 0 7px;
+
+    font-size:35px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #7b2cbf,
+            #d63384
+        );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.crop-ai-header p{
+
+    color:#765477;
+
+    font-size:16px;
+}
+
+
+/* ================= SEARCH CARD ================= */
+
+.search-card{
+
+    max-width:800px;
+
+    margin:0 auto 35px;
+
+    padding:20px;
+
+    background:
+        rgba(255,255,255,.88);
+
+    backdrop-filter:blur(15px);
+
+    border-radius:25px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(123,44,191,.15);
+
+    border:
+        1px solid
+        rgba(123,44,191,.10);
+}
+
+.search-form{
+
+    display:flex;
+
+    gap:10px;
+}
+
+.search-input{
+
+    flex:1;
+
+    padding:15px 20px;
+
+    border-radius:30px;
+
+    border:
+        1px solid
+        #e0cbed;
+
+    outline:none;
+
+    font-size:16px;
+
+    color:#4b3154;
+
+    background:#ffffff;
+
+    transition:.3s;
+}
+
+.search-input:focus{
+
+    border-color:#d63384;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(214,51,132,.10);
+}
+
+.search-btn{
+
+    border:none;
+
+    padding:
+        14px 25px;
+
+    border-radius:30px;
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7b2cbf,
+            #d63384
+        );
+
+    transition:.3s;
+
+    white-space:nowrap;
+}
+
+.search-btn:hover{
+
+    transform:
+        translateY(-2px)
+        scale(1.02);
+
+    box-shadow:
+        0 8px 20px
+        rgba(123,44,191,.25);
+}
+
+
+/* ================= ERROR ================= */
+
+.error-box{
+
+    max-width:800px;
+
+    margin:0 auto 25px;
+
+    padding:15px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    background:#ffe8ed;
+
+    color:#b4234d;
+
+    font-weight:bold;
+}
+
+
+/* ================= RESULT ================= */
+
+.result{
+
+    animation:
+        resultShow .7s ease;
+}
+
+@keyframes resultShow{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* ================= HERO ================= */
+
+.crop-hero{
+
+    display:grid;
+
+    grid-template-columns:
+        380px 1fr;
+
+    gap:25px;
+
+    margin-bottom:25px;
+}
+
+
+/* ================= IMAGE BOX ================= */
+
+.crop-image-box{
+
+    min-height:330px;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    position:relative;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ead8ff,
+            #ffdce9
+        );
+
+    box-shadow:
+        0 12px 30px
+        rgba(123,44,191,.18);
+}
+
+
+/* ================= CROP IMAGE ================= */
+
+.crop-image{
+
+    width:100%;
+
+    height:100%;
+
+    min-height:330px;
+
+    object-fit:cover;
+
+    display:block;
+
+    transition:
+        transform .5s ease;
+}
+
+.crop-image-box:hover .crop-image{
+
+    transform:scale(1.04);
+}
+
+
+/* ================= IMAGE OVERLAY ================= */
+
+.image-overlay{
+
+    position:absolute;
+
+    bottom:0;
+
+    left:0;
+
+    right:0;
+
+    padding:35px 20px 20px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(0,0,0,.75)
+        );
+}
+
+.image-overlay h2{
+
+    margin:0;
+
+    font-size:28px;
+}
+
+
+/* ================= NO IMAGE ================= */
+
+.no-image{
+
+    min-height:330px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    color:#765477;
+
+}
+
+.no-image-icon{
+
+    font-size:75px;
+
+    margin-bottom:10px;
+}
+
+
+/* ================= BASIC INFO ================= */
+
+.basic-info{
+
+    padding:28px;
+
+    border-radius:25px;
+
+    background:
+        rgba(255,255,255,.90);
+
+    box-shadow:
+        0 12px 30px
+        rgba(123,44,191,.12);
+
+    border:
+        1px solid
+        rgba(214,51,132,.08);
+}
+
+.basic-info h2{
+
+    margin-top:0;
+
+    color:#7b2cbf;
+
+    font-size:27px;
+}
+
+.basic-info p{
+
+    color:#674a6b;
+
+    line-height:1.8;
+
+    font-size:16px;
+}
+
+.ai-badge{
+
+    display:inline-block;
+
+    margin-top:10px;
+
+    padding:
+        8px 15px;
+
+    border-radius:20px;
+
+    color:#ffffff;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7b2cbf,
+            #d63384
+        );
+}
+
+
+/* ================= INFO GRID ================= */
+
+.info-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            1fr
+        );
+
+    gap:18px;
+
+    margin-top:25px;
+}
+
+
+/* ================= INFO CARD ================= */
+
+.info-card{
+
+    background:
+        rgba(255,255,255,.90);
+
+    border-radius:22px;
+
+    padding:21px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(123,44,191,.10);
+
+    border:
+        1px solid
+        rgba(214,51,132,.08);
+
+    transition:.3s;
+}
+
+.info-card:hover{
+
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 15px 30px
+        rgba(123,44,191,.16);
+}
+
+.info-icon{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f0ddff,
+            #ffe0ed
+        );
+
+    margin-bottom:11px;
+}
+
+.info-card h3{
+
+    margin:
+        5px 0 8px;
+
+    color:#7b2cbf;
+
+    font-size:18px;
+}
+
+.info-card p{
+
+    margin:0;
+
+    color:#5d4a60;
+
+    line-height:1.7;
+
+    white-space:pre-line;
+
+    font-size:15px;
+}
+
+
+/* ================= AI FARMING TIPS ================= */
+
+.ai-tip{
+
+    margin-top:25px;
+
+    padding:27px;
+
+    border-radius:25px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7b2cbf,
+            #d63384
+        );
+
+    box-shadow:
+        0 12px 30px
+        rgba(123,44,191,.22);
+}
+
+.ai-tip h2{
+
+    margin-top:0;
+
+    font-size:23px;
+}
+
+.ai-tip p{
+
+    line-height:1.8;
+
+    margin-bottom:0;
+}
+
+
+/* ================= EMPTY ================= */
+
+.empty{
+
+    text-align:center;
+
+    padding:45px 20px;
+
+    color:#765477;
+}
+
+.empty-icon{
+
+    font-size:65px;
+
+    animation:
+        float 3s ease-in-out infinite;
+}
+
+.empty h2{
+
+    color:#7b2cbf;
+
+    margin:10px 0;
+}
+
+.empty p{
+
+    font-size:15px;
+}
+
+
+/* ================= FLOAT ================= */
+
+@keyframes float{
+
+    0%{
+
+        transform:
+            translateY(0);
+
+    }
+
+    50%{
+
+        transform:
+            translateY(-8px);
+
+    }
+
+    100%{
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:750px){
+
+    .crop-ai-page{
+
+        padding:12px;
+
+    }
+
+    .crop-ai-header h1{
+
+        font-size:28px;
+
+    }
+
+    .search-form{
+
+        flex-direction:column;
+
+    }
+
+    .search-btn{
+
+        width:100%;
+
+    }
+
+    .crop-hero{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .crop-image-box{
+
+        min-height:260px;
+
+    }
+
+    .crop-image{
+
+        min-height:260px;
+
+    }
+
+    .info-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .basic-info{
+
+        padding:20px;
+
+    }
+
+}
+
+
+/* ================= SMALL MOBILE ================= */
+
+@media(max-width:450px){
+
+    .crop-ai-header h1{
+
+        font-size:25px;
+
+    }
+
+    .crop-ai-header p{
+
+        font-size:14px;
+
+    }
+
+    .search-card{
+
+        padding:15px;
+
+    }
+
+    .crop-image-box{
+
+        min-height:220px;
+
+    }
+
+    .crop-image{
+
+        min-height:220px;
+
+    }
+
+    .image-overlay h2{
+
+        font-size:23px;
+
+    }
+
+}
+
+</style>
+
+
+<div class="crop-ai-page">
+
+<div class="crop-ai-container">
+
+
+<!-- ================================================= -->
+<!-- HEADER -->
+<!-- ================================================= -->
+
+<div class="crop-ai-header">
+
+<div class="crop-ai-logo">
+🌱
+</div>
+
+<h1>
+AI Crop Information
+</h1>
+
+<p>
+Search any crop and get complete farming information instantly 🤖🌾
+</p>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- SEARCH -->
+<!-- ================================================= -->
+
+<div class="search-card">
+
+<form
+    method="POST"
+    class="search-form"
+>
+
+<input
+    type="text"
+    name="crop_name"
+    class="search-input"
+    placeholder="Enter crop name e.g. Tomato, Rice, Wheat..."
+    value="{{ crop_name }}"
+    required
+>
+
+<button
+    type="submit"
+    class="search-btn"
+>
+
+🔍 Ask AI
+
+</button>
+
+</form>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- RESULT -->
+<!-- ================================================= -->
+
+{% if crop_info %}
+
+
+<!-- ================================================= -->
+<!-- ERROR -->
+<!-- ================================================= -->
+
+{% if crop_info.error %}
+
+<div class="error-box">
+
+⚠️ {{ crop_info.error }}
+
+</div>
+
+
+{% else %}
+
+
+<div class="result">
+
+
+<!-- ================================================= -->
+<!-- CROP HERO -->
+<!-- ================================================= -->
+
+<div class="crop-hero">
+
+
+<!-- ================= IMAGE ================= -->
+
+<div class="crop-image-box">
+
+
+{% if image_url %}
+
+<img
+    class="crop-image"
+    src="{{ image_url }}"
+    alt="{{ crop_info.crop_name }}"
+>
+
+{% else %}
+
+<div class="no-image">
+
+<div class="no-image-icon">
+🌱
+</div>
+
+<strong>
+Crop image not available
+</strong>
+
+</div>
+
+{% endif %}
+
+
+<!-- IMAGE TITLE -->
+
+<div class="image-overlay">
+
+<h2>
+🌾 {{ crop_info.crop_name }}
+</h2>
+
+</div>
+
+
+</div>
+
+
+<!-- ================= BASIC INFORMATION ================= -->
+
+<div class="basic-info">
+
+<h2>
+
+🌱 {{ crop_info.crop_name }} Farming
+
+</h2>
+
+<p>
+
+Get complete AI-powered information about
+the selected crop including season, soil,
+water, irrigation, fertilizer, pests,
+diseases and farming practices.
+
+</p>
+
+<span class="ai-badge">
+
+🤖 AI Generated Agriculture Information
+
+</span>
+
+</div>
+
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- INFORMATION GRID -->
+<!-- ================================================= -->
+
+<div class="info-grid">
+
+
+<!-- SEASON -->
+
+<div class="info-card">
+
+<div class="info-icon">
+📅
+</div>
+
+<h3>
+Growing Season
+</h3>
+
+<p>
+{{ crop_info.season }}
+</p>
+
+</div>
+
+
+<!-- SOWING -->
+
+<div class="info-card">
+
+<div class="info-icon">
+🌱
+</div>
+
+<h3>
+Sowing Time
+</h3>
+
+<p>
+{{ crop_info.sowing_time }}
+</p>
+
+</div>
+
+
+<!-- HARVEST -->
+
+<div class="info-card">
+
+<div class="info-icon">
+🌾
+</div>
+
+<h3>
+Harvesting Time
+</h3>
+
+<p>
+{{ crop_info.harvesting_time }}
+</p>
+
+</div>
+
+
+<!-- TEMPERATURE -->
+
+<div class="info-card">
+
+<div class="info-icon">
+🌡️
+</div>
+
+<h3>
+Temperature
+</h3>
+
+<p>
+{{ crop_info.temperature }}
+</p>
+
+</div>
+
+
+<!-- SOIL -->
+
+<div class="info-card">
+
+<div class="info-icon">
+🌍
+</div>
+
+<h3>
+Suitable Soil
+</h3>
+
+<p>
+{{ crop_info.soil }}
+</p>
+
+</div>
+
+
+<!-- WATER -->
+
+<div class="info-card">
+
+<div class="info-icon">
+💧
+</div>
+
+<h3>
+Water Requirement
+</h3>
+
+<p>
+{{ crop_info.water_requirement }}
+</p>
+
+</div>
+
+
+<!-- IRRIGATION -->
+
+<div class="info-card">
+
+<div class="info-icon">
+🚿
+</div>
+
+<h3>
+Irrigation
+</h3>
+
+<p>
+{{ crop_info.irrigation }}
+</p>
+
+</div>
+
+
+<!-- FERTILIZER -->
+
+<div class="info-card">
+
+<div class="info-icon">
+🧪
+</div>
+
+<h3>
+Fertilizer / Nutrients
+</h3>
+
+<p>
+{{ crop_info.fertilizer }}
+</p>
+
+</div>
+
+
+<!-- GROWTH -->
+
+<div class="info-card">
+
+<div class="info-icon">
+⏳
+</div>
+
+<h3>
+Growth Duration
+</h3>
+
+<p>
+{{ crop_info.growth_duration }}
+</p>
+
+</div>
+
+
+<!-- PESTS -->
+
+<div class="info-card">
+
+<div class="info-icon">
+🐛
+</div>
+
+<h3>
+Common Pests
+</h3>
+
+<p>
+{{ crop_info.common_pests }}
+</p>
+
+</div>
+
+
+<!-- DISEASES -->
+
+<div class="info-card">
+
+<div class="info-icon">
+🦠
+</div>
+
+<h3>
+Common Diseases
+</h3>
+
+<p>
+{{ crop_info.common_diseases }}
+</p>
+
+</div>
+
+
+<!-- FARMING TIPS -->
+
+<div class="info-card">
+
+<div class="info-icon">
+💡
+</div>
+
+<h3>
+Farming Tips
+</h3>
+
+<p>
+{{ crop_info.farming_tips }}
+</p>
+
+</div>
+
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- AI RECOMMENDATION -->
+<!-- ================================================= -->
+
+<div class="ai-tip">
+
+<h2>
+🤖 AI Farming Recommendation
+</h2>
+
+<p>
+
+For <b>{{ crop_info.crop_name }}</b>,
+follow the recommended soil, irrigation,
+fertilizer and seasonal practices mentioned
+above. Always consider local soil and weather
+conditions before making farming decisions.
+
+</p>
+
+</div>
+
+
+</div>
+
+
+{% endif %}
+
+
+{% else %}
+
+
+<!-- ================================================= -->
+<!-- BEFORE SEARCH -->
+<!-- ================================================= -->
+
+<div class="search-card empty">
+
+<div class="empty-icon">
+🌾
+</div>
+
+<h2>
+Search a Crop
+</h2>
+
+<p>
+
+Type any crop name above and click
+<b>🔍 Ask AI</b>.
+
+</p>
+
+<p>
+
+Try:
+<b>Tomato</b> •
+<b>Rice</b> •
+<b>Wheat</b> •
+<b>Cotton</b> •
+<b>Soybean</b>
+
+</p>
+
+</div>
+
+
+{% endif %}
+
+
+</div>
+
+</div>
+
+
+{% endblock %}

@@ -6,437 +6,336 @@
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,purple,cyan);
-overflow-x:hidden;
-min-height:100vh;
+    background:linear-gradient(135deg,purple,cyan);
+    overflow-x:hidden;
+    min-height:100vh;
 }
-/* ===== ROSES ===== */
+
+/* ================= ROSES ================= */
 
 .leftFlower{
-position:fixed;
-bottom:40px;
-left:10px;
-font-size:70px;
-z-index:10;
+    position:fixed;
+    bottom:40px;
+    left:10px;
+    font-size:70px;
+    z-index:10;
 }
 
 .rightFlower{
-position:fixed;
-bottom:40px;
-right:10px;
-font-size:70px;
-z-index:10;
+    position:fixed;
+    bottom:40px;
+    right:10px;
+    font-size:70px;
+    z-index:10;
 }
 
 .rose-line{
-position:fixed;
-bottom:5px;
-left:0;
-width:100%;
-text-align:center;
-font-size:28px;
-white-space:nowrap;
-overflow:hidden;
-z-index:10;
+    position:fixed;
+    bottom:5px;
+    left:0;
+    width:100%;
+    text-align:center;
+    font-size:28px;
+    white-space:nowrap;
+    overflow:hidden;
+    z-index:10;
 }
 
 .grass{
-position:fixed;
-left:0;
-bottom:0;
-width:100%;
-height:40px;
-background:linear-gradient(#43a047,#2e7d32);
-z-index:1;
+    position:fixed;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:40px;
+    background:linear-gradient(#43a047,#2e7d32);
+    z-index:1;
 }
 
-/* ===== DASHBOARD ===== */
+/* ================= DASHBOARD ================= */
 
 .dashboard{
-max-width:1400px;
-margin:auto;
-padding:30px;
+    max-width:1400px;
+    margin:auto;
+    padding:30px;
 }
 
-/* ===== HEADER ===== */
+/* ================= HEADER ================= */
 
 .header{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-
-background:rgba(255,255,255,.25);
-backdrop-filter:blur(15px);
-
-padding:25px;
-
-border-radius:25px;
-
-box-shadow:0 15px 35px rgba(0,0,0,.18);
-
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,.25);
+    backdrop-filter:blur(15px);
+    padding:25px;
+    border-radius:25px;
+    box-shadow:0 15px 35px rgba(0,0,0,.18);
 }
 
 .title h1{
-
-font-size:36px;
-color:#fff;
-
+    font-size:36px;
+    color:#fff;
 }
 
 .title p{
-
-margin-top:8px;
-color:#fff;
-font-size:18px;
-
+    margin-top:8px;
+    color:#fff;
+    font-size:18px;
 }
+
 /* ================= QUICK ACCESS ================= */
 
 .quick-title{
-margin-top:35px;
-margin-bottom:20px;
-text-align:left;
+    margin-top:35px;
+    margin-bottom:20px;
+    text-align:left;
 }
 
 .quick-title h2{
-font-size:30px;
-color:#ffffff;
-font-weight:bold;
+    font-size:30px;
+    color:#ffffff;
+    font-weight:bold;
 }
 
 .quick-title p{
-font-size:16px;
-color:#eef7ee;
-margin-top:6px;
+    font-size:16px;
+    color:#eef7ee;
+    margin-top:6px;
 }
 
 .quick-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:20px;
-margin-bottom:40px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:20px;
+    margin-bottom:40px;
 }
 
 .quick-card{
-text-decoration:none;
-background:rgba(255,255,255,.22);
-backdrop-filter:blur(15px);
-border-radius:20px;
-padding:25px;
-text-align:center;
-box-shadow:0 10px 25px rgba(0,0,0,.18);
-transition:.4s;
-border-color: black(255, 255,255,.35);
+    text-decoration:none;
+    background:rgba(255,255,255,.22);
+    backdrop-filter:blur(15px);
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.18);
+    transition:.4s;
+    border:1px solid rgba(255,255,255,.35);
 }
 
 .quick-card:hover{
-transform:translateY(-10px) scale(1.05);
-background-color: blueviolet(255,255,255,.35);
-box-shadow:0 20px 40px rgba(0,0,0,.25);
+    transform:translateY(-10px) scale(1.05);
+    background:rgba(255,255,255,.35);
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
 }
 
 .quick-icon{
-font-size:55px;
-margin-bottom:15px;
-animation:floatIcon 3s ease-in-out infinite;
+    font-size:55px;
+    margin-bottom:15px;
+    animation:floatIcon 3s ease-in-out infinite;
 }
 
 .quick-card h3{
-font-size:22px;
-color: cyan;
-margin-bottom:8px;
+    font-size:22px;
+    color:#00ffff;
+    margin-bottom:8px;
 }
 
 .quick-card p{
-font-size:15px;
-color: blue;
+    font-size:15px;
+    color:#ffffff;
 }
 
 /* ================= SECTION TITLE ================= */
 
 .section-title{
-margin:35px 0 20px;
+    margin:35px 0 20px;
 }
 
 .section-title h2{
-color:#5e271b;
-font-size:30px;
+    color:#5e271b;
+    font-size:30px;
 }
 
 /* ================= GRID ================= */
 
 .grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:25px;
-margin-bottom:40px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+    margin-bottom:40px;
 }
 
 /* ================= CARD ================= */
 
 .card{
-background-color: #5e271b(255,255,255,.22);
-backdrop-filter:blur(15px);
-border-radius:25px;
-padding:25px;
-text-align:center;
-box-shadow:0 10px 30px rgba(0,0,0,.18);
-transition:.4s;
-border:1px solid rgba(255,255,255,.35);
+    background:rgba(255,255,255,.22);
+    backdrop-filter:blur(15px);
+    border-radius:25px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
+    transition:.4s;
+    border:1px solid rgba(255,255,255,.35);
 }
 
 .card:hover{
-transform:translateY(-10px);
-box-shadow:0 20px 40px rgba(0,0,0,.25);
+    transform:translateY(-10px);
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+    border:1px solid rgba(255,255,255,.7);
 }
 
 .card .icon{
-font-size:60px;
-margin-bottom:15px;
+    font-size:60px;
+    margin-bottom:15px;
 }
 
 .card h3{
-font-size:23px;
-color:#155724;
-margin-bottom:10px;
+    font-size:23px;
+    color:#155724;
+    margin-bottom:10px;
 }
 
 .card h1{
-font-size:38px;
-color:#0b7d3e;
-margin-bottom:10px;
+    font-size:38px;
+    color:#0b7d3e;
+    margin-bottom:10px;
 }
 
 .card p{
-font-size:15px;
-color:#555;
+    font-size:15px;
+    color:#555;
 }
 
-/* ================= PROGRESS ================= */
+/* ================= STATUS GRID ================= */
 
-.progress{
-width:100%;
-height:12px;
-background:#dcdcdc;
-border-radius:30px;
-overflow:hidden;
-margin-top:15px;
+.status-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+    gap:25px;
+    margin-top:30px;
+    margin-bottom:35px;
 }
 
-.progress-bar{
-height:100%;
-background:linear-gradient(90deg,#00c853,#64dd17);
-border-radius:30px;
-transition:.6s;
+/* ================= STATUS CARD ================= */
+
+.status-card{
+    background:rgba(255,255,255,.22);
+    backdrop-filter:blur(15px);
+    border-radius:25px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
+    border:1px solid rgba(255,255,255,.35);
+    transition:.4s;
+}
+
+.status-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+    border:1px solid rgba(255,255,255,.7);
+}
+
+.status-card h2{
+    color:#57153b;
+    margin-bottom:20px;
+}
+
+.weather-icon{
+    font-size:80px;
+    animation:floatIcon 3s infinite;
+}
+
+.motor{
+    font-size:40px;
+    font-weight:bold;
+    margin:20px 0;
+}
+
+.on{
+    color:#00c853;
+}
+
+.off{
+    color:#d50000;
+}
+
+/* ================= BUTTON ================= */
+
+.control-btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:14px 28px;
+    background:#2e7d32;
+    color:white;
+    text-decoration:none;
+    border-radius:30px;
+    font-size:17px;
+    transition:.4s;
+}
+
+.control-btn:hover{
+    background:#5e271b;
+    transform:scale(1.05);
+}
+
+/* ================= ACTIVITY ================= */
+
+.activity-card{
+    background:rgba(255,255,255,.22);
+    backdrop-filter:blur(15px);
+    border-radius:25px;
+    padding:30px;
+    margin-bottom:50px;
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
+    border:1px solid rgba(255,255,255,.35);
+    transition:.4s;
+}
+
+.activity-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+    border:1px solid rgba(255,255,255,.7);
+}
+
+.activity-card h2{
+    color:#57153b;
+    margin-bottom:20px;
+}
+
+.activity-card ul{
+    list-style:none;
+}
+
+.activity-card li{
+    background:rgba(255,255,255,.4);
+    margin:10px 0;
+    padding:12px 15px;
+    border-radius:12px;
+    color:#155724;
 }
 
 /* ================= FLOAT ICON ================= */
 
 @keyframes floatIcon{
 
-0%{
-transform:translateY(0px);
-}
+    0%{
+        transform:translateY(0px);
+    }
 
-50%{
-transform:translateY(-8px);
-}
+    50%{
+        transform:translateY(-8px);
+    }
 
-100%{
-transform:translateY(0px);
-}
-}
-
-/* ================= STATUS GRID ================= */
-
-.status-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
-gap:25px;
-margin-top:30px;
-margin-bottom:35px;
-}
-
-/* ================= STATUS CARD ================= */
-
-.status-card{
-
-background:rgba(255,255,255,.22);
-backdrop-filter:blur(15px);
-border-radius:25px;
-padding:30px;
-text-align:center;
-box-shadow:0 10px 30px rgba(0, 0, 0, 0.18);
-border:1px solid rgba(255, 255, 255, 0.35);
-transition:.4s;
-
-}
-
-.status-card:hover{
-
-transform:translateY(-10px);
-
-}
-
-.status-card h2{
-
-color:#57153b;
-margin-bottom:20px;
-
-}
-
-.weather-icon{
-
-font-size:80px;
-animation:floatIcon 3s infinite;
-
-}
-
-.motor{
-
-font-size:40px;
-font-weight:bold;
-margin:20px 0;
-
-}
-
-.on{
-
-color:#00c853;
-
-}
-
-.off{
-
-color:#d50000;
-
-}
-
-/* ================= BUTTON ================= */
-
-.control-btn{
-
-display:inline-block;
-margin-top:20px;
-padding:14px 28px;
-background:#2e7d32;
-color:white;
-text-decoration:none;
-border-radius:30px;
-font-size:17px;
-transition:.4s;
-
-}
-
-.control-btn:hover{
-
-background:#5e271b;
-transform:scale(1.05);
-
-}
-
-/* ================= ACTIVITY ================= */
-
-.activity-card{ 
-    
-background-color: #00c853(255, 255, 255, 0.22);
-backdrop-filter:blur(15px)
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media (max-width:992px){
-
-.header{
-flex-direction:column;
-gap:20px;
-text-align:center;
-}
-
-
-
-.quick-grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-.grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-.status-grid{
-grid-template-columns:1fr;
-}
-
-.assistant-card{
-flex-direction:column;
-text-align:center;
-}
-
-.robot{
-font-size:75px;
-}
-
-}
-
-/* ================= MOBILE ================= */
-
-@media (max-width:600px){
-
-.dashboard{
-padding:15px;
-}
-
-.title h1{
-font-size:24px;
-}
-
-.title p{
-font-size:15px;
-}
-
-.quick-grid{
-grid-template-columns:1fr;
-}
-
-.grid{
-grid-template-columns:1fr;
-}
-
-.card,
-.quick-card,
-.status-card,
-.activity-card{
-padding:18px;
-}
-
-.quick-icon{
-font-size:45px;
-}
-
-.card .icon{
-font-size:48px;
-}
-
-.weather-icon{
-font-size:60px;
-}
-
-.leftFlower,
-.rightFlower{
-display:none;
-}
-
-.rose-line{
-font-size:20px;
-}
+    100%{
+        transform:translateY(0px);
+    }
 
 }
 
@@ -444,101 +343,161 @@ font-size:20px;
 
 @keyframes fadeUp{
 
-0%{
-opacity:0;
-transform:translateY(50px);
-}
+    0%{
+        opacity:0;
+        transform:translateY(50px);
+    }
 
-100%{
-opacity:1;
-transform:translateY(0);
-}
+    100%{
+        opacity:1;
+        transform:translateY(0);
+    }
 
 }
 
 .quick-card,
 .card,
 .status-card,
-.activity-card,
-.assistant-card{
-
-animation:fadeUp .8s ease forwards;
-
+.activity-card{
+    animation:fadeUp .8s ease forwards;
 }
 
 /* ================= SCROLL BAR ================= */
 
 ::-webkit-scrollbar{
-width:10px;
+    width:10px;
 }
 
 ::-webkit-scrollbar-track{
-background:#c8c9ed;
+    background:#c8c9ed;
 }
 
 ::-webkit-scrollbar-thumb{
-background:#43a047;
-border-radius:10px;
+    background:#43a047;
+    border-radius:10px;
 }
 
 ::-webkit-scrollbar-thumb:hover{
-background:#2e7d32;
-}
-
-/* ================= FOOTER ================= */
-
-.footer{
-
-margin-top:40px;
-padding:20px;
-text-align:center;
-color:white;
-font-size:15px;
-
-}
-
-.footer a{
-
-color:#fff;
-text-decoration:none;
-font-weight:bold;
-
-}
-
-.footer a:hover{
-
-text-decoration:underline;
-
-}
-
-/* ================= GLASS HOVER ================= */
-
-.quick-card:hover,
-.card:hover,
-.status-card:hover,
-.activity-card:hover{
-
-border:1px solid rgba(255,255,255,.7);
-
+    background:#2e7d32;
 }
 
 /* ================= BUTTONS ================= */
 
 button,
-.control-btn,
-.ai-btn{
+.control-btn{
+    cursor:pointer;
+}
 
-cursor:pointer;
+/* ================= RESPONSIVE ================= */
 
+@media (max-width:992px){
+
+    .header{
+        flex-direction:column;
+        gap:20px;
+        text-align:center;
+    }
+
+    .quick-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .status-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width:600px){
+
+    .dashboard{
+        padding:15px;
+    }
+
+    .title h1{
+        font-size:24px;
+    }
+
+    .title p{
+        font-size:15px;
+    }
+
+    .quick-grid{
+        grid-template-columns:1fr;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .card,
+    .quick-card,
+    .status-card,
+    .activity-card{
+        padding:18px;
+    }
+
+    .quick-icon{
+        font-size:45px;
+    }
+
+    .card .icon{
+        font-size:48px;
+    }
+
+    .weather-icon{
+        font-size:60px;
+    }
+
+    .leftFlower,
+    .rightFlower{
+        display:none;
+    }
+
+    .rose-line{
+        font-size:20px;
+    }
+
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    margin-top:40px;
+    padding:20px;
+    text-align:center;
+    color:white;
+    font-size:15px;
+}
+
+.footer a{
+    color:#fff;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.footer a:hover{
+    text-decoration:underline;
 }
 
 </style>
 
 
+<!-- ================= FLOWERS ================= -->
+
 <div class="leftFlower">🌹</div>
 <div class="rightFlower">🌹</div>
 
+
 <div class="dashboard">
+
+<!-- ================= HEADER ================= -->
 
 <div class="header">
 
@@ -549,94 +508,160 @@ cursor:pointer;
 <p>Welcome {{ username }} 👋</p>
 
 </div>
+
 </div>
+
 
 <!-- ================= QUICK ACCESS ================= -->
 
 <div class="quick-title">
-    <h2>⚡ Quick Access</h2>
-    <p>Access all important modules quickly.</p>
+
+<h2>⚡ Quick Access</h2>
+
+<p>Access all important modules quickly.</p>
+
 </div>
+
 
 <div class="quick-grid">
 
-<a href="/farmer" class="quick-card">
+<a href="/farmers" class="quick-card">
+
 <div class="quick-icon">👨‍🌾</div>
+
 <h3>Farmers</h3>
+
 <p>Manage Farmers</p>
+
 </a>
 
-<a href="/crop" class="quick-card">
+
+<a href="/crop_ai" class="quick-card">
+
 <div class="quick-icon">🌾</div>
+
 <h3>Crops</h3>
+
 <p>Crop Details</p>
+
 </a>
+
 
 <a href="/motor" class="quick-card">
+
 <div class="quick-icon">🚰</div>
+
 <h3>Motor</h3>
+
 <p>Motor Control</p>
+
 </a>
+
 
 <a href="/weather" class="quick-card">
+
 <div class="quick-icon">☁️</div>
+
 <h3>Weather</h3>
+
 <p>Today's Weather</p>
+
 </a>
+
 
 <a href="/irrigation" class="quick-card">
+
 <div class="quick-icon">🌡️</div>
+
 <h3>Irrigation</h3>
+
 <p>Live Sensors</p>
+
 </a>
 
+
 <a href="/records" class="quick-card">
+
 <div class="quick-icon">📋</div>
+
 <h3>Records</h3>
+
 <p>View Reports</p>
+
 </a>
 
 </div>
+
 
 <!-- ================= LIVE STATUS ================= -->
 
 <div class="section-title">
+
 <h2>📊 Live Agriculture Status</h2>
+
 </div>
+
 
 <div class="grid">
 
 <div class="card">
+
 <div class="icon">👨‍🌾</div>
+
 <h3>Total Farmers</h3>
+
 <h1>{{ total_farmers }}</h1>
+
 <p>Registered Farmers</p>
+
 </div>
 
+
 <div class="card">
+
 <div class="icon">🌾</div>
+
 <h3>Total Crops</h3>
+
 <h1>{{ total_crops }}</h1>
+
 <p>Available Crops</p>
+
 </div>
 
+
 <div class="card">
+
 <div class="icon">🌡️</div>
+
 <h3>Temperature</h3>
-<h1 id="temp">{{ temperature }}°C</h1>
+
+<h1>{{ temperature }}°C</h1>
+
 <p>Current Temperature</p>
+
 </div>
+
 
 <div class="card">
+
 <div class="icon">💧</div>
+
 <h3>Humidity</h3>
-<h1 id="hum">{{ humidity }}%</h1>
+
+<h1>{{ humidity }}%</h1>
+
 <p>Air Humidity</p>
+
 </div>
 
-</div><!-- ================= WEATHER + MOTOR ================= -->
+</div>
+
+
+<!-- ================= WEATHER + MOTOR ================= -->
 
 <div class="status-grid">
+
 
 <div class="status-card">
 
@@ -646,15 +671,25 @@ cursor:pointer;
 
 <h1>Sunny</h1>
 
-<p>📍 Hingoli</p>
+<p>📍 {{ city }}</p>
 
-<p>Temperature :
-<b id="temp">{{ temperature }}°C</b></p>
+<p>
+Temperature :
+<b>{{ temperature }}°C</b>
+</p>
 
-<p>Humidity :
-<b id="hum">{{ humidity }}%</b></p>
+<p>
+Humidity :
+<b>{{ humidity }}%</b>
+</p>
+
+<p>
+💨 Wind :
+<b>{{ wind }}</b>
+</p>
 
 </div>
+
 
 <div class="status-card">
 
@@ -662,27 +697,30 @@ cursor:pointer;
 
 {% if motor_status %}
 
-<div class="motor on">🟢 ON</div>
+<div class="motor on">
+🟢 ON
+</div>
 
 <p>Water Pump is Running</p>
 
 {% else %}
 
-<div class="motor off">🔴 OFF</div>
+<div class="motor off">
+🔴 OFF
+</div>
 
 <p>Water Pump is OFF</p>
 
 {% endif %}
 
 <a href="/motor" class="control-btn">
-
 🚰 Open Motor Panel
-
 </a>
 
 </div>
 
 </div>
+
 
 <!-- ================= RECENT ACTIVITY ================= -->
 
@@ -705,7 +743,10 @@ cursor:pointer;
 <li>📋 Records Updated</li>
 
 </ul>
+
 </div>
+
+
 <!-- ================= ROSE GARDEN ================= -->
 
 <div class="rose-line">

@@ -1,159 +1,711 @@
 {% extends "baseofhtml.html" %}
-{% block title %}Analytics{% endblock %}
+
+{% block title %}
+Motor Analytics
+{% endblock %}
+
 {% block content %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
-.analytics-card{
-    border:none;
-    border-radius:18px;
-    color:white;
+
+.analytics-page{
+    min-height:90vh;
+    padding:30px;
+    background:linear-gradient(
+        135deg,
+        #f5eaff,
+        #ffe8f4,
+        #ffffff
+    );
+}
+
+.analytics-container{
+    max-width:1200px;
+    margin:auto;
+}
+
+/* HEADER */
+
+.analytics-header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.analytics-header h1{
+    font-size:36px;
+    background:linear-gradient(
+        90deg,
+        #7b2cbf,
+        #d63384
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.analytics-header p{
+    color:#765477;
+    font-size:16px;
+}
+
+
+/* SUMMARY */
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.summary-card{
     padding:25px;
     text-align:center;
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    border-radius:25px;
+
+    background:rgba(255,255,255,.90);
+
+    box-shadow:
+        0 10px 30px
+        rgba(123,44,191,.13);
+
+    border:1px solid
+        rgba(214,51,132,.10);
+
     transition:.3s;
 }
-.analytics-card:hover{
+
+.summary-card:hover{
     transform:translateY(-6px);
 }
-.on-card{
-    background:linear-gradient(135deg,#00c853,#43a047);
+
+.summary-icon{
+    font-size:40px;
 }
-.off-card{
-    background:linear-gradient(135deg,#ff5252,#d32f2f);
+
+.summary-card h3{
+    color:#6b2d77;
+    margin:10px 0;
 }
+
+.summary-card p{
+    color:#7b2cbf;
+    font-size:21px;
+    font-weight:bold;
+    margin:0;
+}
+
+
+/* GRAPH */
+
 .graph-card{
-    background:#fff;
-    border:none;
-    border-radius:18px;
-    padding:25px;
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    background:rgba(255,255,255,.93);
+    border-radius:28px;
+    padding:30px;
+    margin-bottom:30px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(123,44,191,.14);
 }
+
+.graph-card h2{
+    text-align:center;
+    color:#7b2cbf;
+    margin-top:0;
+}
+
+.graph-card p{
+    text-align:center;
+    color:#765477;
+}
+
+.chart-box{
+    position:relative;
+    width:100%;
+    height:350px;
+    margin-top:25px;
+}
+
+
+/* TIME BOX */
+
+.time-box{
+    display:flex;
+    justify-content:center;
+    gap:25px;
+    flex-wrap:wrap;
+    margin-top:25px;
+}
+
+.time-card{
+    padding:18px 30px;
+    border-radius:18px;
+    text-align:center;
+    min-width:200px;
+}
+
+.on-time{
+    background:#e8fff1;
+}
+
+.off-time{
+    background:#fff0f4;
+}
+
+.time-icon{
+    font-size:32px;
+}
+
+.time-title{
+    font-weight:bold;
+    color:#5b455f;
+}
+
+.on-value{
+    font-size:23px;
+    color:#00a84f;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.off-value{
+    font-size:23px;
+    color:#d6335c;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+
+/* TABLE */
+
 .table-card{
-    border:none;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    background:rgba(255,255,255,.93);
+    border-radius:28px;
+    padding:25px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(123,44,191,.12);
+
+    overflow-x:auto;
 }
-.table thead{
-    background:#198754;
+
+.table-card h2{
+    color:#7b2cbf;
+    margin-top:0;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th{
+    padding:14px;
     color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7b2cbf,
+            #d63384
+        );
 }
+
+td{
+    padding:14px;
+    text-align:center;
+
+    border-bottom:
+        1px solid #eeeeee;
+
+    color:#57435b;
+}
+
+tr:hover{
+    background:#fff5fb;
+}
+
+.status-on{
+    color:#00a84f;
+    font-weight:bold;
+}
+
+.status-off{
+    color:#d6335c;
+    font-weight:bold;
+}
+
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+    padding:40px;
+    color:#765477;
+}
+
+.empty-icon{
+    font-size:60px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+    .summary-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:550px){
+
+    .analytics-page{
+        padding:15px;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+    .analytics-header h1{
+        font-size:28px;
+    }
+
+    .graph-card{
+        padding:15px;
+    }
+
+    .chart-box{
+        height:280px;
+    }
+
+}
+
 </style>
 
-<div class="container mt-4">
-<div class="row g-4">
 
-<div class="col-md-6">
-<div class="analytics-card on-card">
-<h5>🟢 Motor ON</h5>
-<h1>{{ motor_on }}</h1>
-</div>
+<div class="analytics-page">
+
+<div class="analytics-container">
+
+
+<!-- HEADER -->
+
+<div class="analytics-header">
+
+<h1>
+📊 Motor Analytics
+</h1>
+
+<p>
+See how much time the motor was ON and OFF.
+</p>
+
 </div>
 
-<div class="col-md-6">
-<div class="analytics-card off-card">
-<h5>🔴 Motor OFF</h5>
-<h1>{{ motor_off }}</h1>
-</div>
+
+<!-- SUMMARY -->
+
+<div class="summary-grid">
+
+
+<div class="summary-card">
+
+<div class="summary-icon">
+🟢
 </div>
 
+<h3>
+Motor ON Events
+</h3>
+
+<p>
+{{ on_count }}
+</p>
+
 </div>
-<div class="col-md-12 mt-3">
-    <div class="analytics-card" style="background:linear-gradient(135deg,#2196F3,#00BCD4);">
-        <h5>⏱️ Total Motor Running Time</h5>
-        <h2>{{ total_time }}</h2>
-    </div>
+
+
+<div class="summary-card">
+
+<div class="summary-icon">
+🔴
 </div>
-<hr/>
-<div class="row mt-4">
-<div class="col-12">
+
+<h3>
+Motor OFF Events
+</h3>
+
+<p>
+{{ off_count }}
+</p>
+
+</div>
+
+
+<div class="summary-card">
+
+<div class="summary-icon">
+⏱️
+</div>
+
+<h3>
+Total ON Time
+</h3>
+
+<p>
+{{ total_on_time }}
+</p>
+
+</div>
+
+
+<div class="summary-card">
+
+<div class="summary-icon">
+⏸️
+</div>
+
+<h3>
+Total OFF Time
+</h3>
+
+<p>
+{{ total_off_time }}
+</p>
+
+</div>
+
+
+</div>
+
+
+<!-- GRAPH -->
+
 <div class="graph-card">
 
-<h4 class="text-center text-success mb-4">
-📊 Motor Analytics
-</h4>
+<h2>
+🚰 Motor ON vs OFF Time
+</h2>
 
-<canvas id="motorChart" height="100"></canvas>
+<p>
+Actual total motor ON and OFF duration
+</p>
+
+
+<div class="chart-box">
+
+<canvas id="motorChart"></canvas>
 
 </div>
-</div>
-</div>
-<div class="card table-card p-4 mt-4">
-<h4 class="text-success mb-3">🌱 Recent Sensor Records</h4>
 
-<div class="table-responsive">
-<hr/>
-<table class="table table-bordered table-hover">
+
+<!-- TIME DETAILS -->
+
+<div class="time-box">
+
+
+<div class="time-card on-time">
+
+<div class="time-icon">
+🟢
+</div>
+
+<div class="time-title">
+Motor ON Time
+</div>
+
+<div class="on-value">
+{{ total_on_time }}
+</div>
+
+</div>
+
+
+<div class="time-card off-time">
+
+<div class="time-icon">
+🔴
+</div>
+
+<div class="time-title">
+Motor OFF Time
+</div>
+
+<div class="off-value">
+{{ total_off_time }}
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- HISTORY -->
+
+<div class="table-card">
+
+<h2>
+📋 Motor Activity History
+</h2>
+
+
+{% if records %}
+
+<table>
+
 <thead>
+
 <tr>
-<th>Moisture</th>
-<th>Temperature</th>
-<th>Humidity</th>
-<th>Motor</th>
-<th>Irrigation</th>
-<th>Action</th>
+
+<th>
+Status
+</th>
+
+<th>
+Start Time
+</th>
+
+<th>
+End Time
+</th>
+
+<th>
+Duration
+</th>
+
 </tr>
+
 </thead>
 
+
 <tbody>
-{% for r in records %}
+
+{% for record in records %}
+
 <tr>
-<td>{{ r[0] }}</td>
-<td>{{ r[1] }}</td>
-<td>{{ r[2] }}</td>
-<td>{{ r[3] }}</td>
-<td>{{ r[4] }}</td>
+
 
 <td>
-<a href="/remove_record/{{ r[5] }}"
-class="btn btn-danger btn-sm"
-onclick="return confirm('Delete this record?')">
-🗑️ Remove
+
+{% if record["motor_status"] == "ON" %}
+
+<span class="status-on">
+🟢 ON
+</span>
+
+{% else %}
+
+<span class="status-off">
+🔴 OFF
+</span>
+
+{% endif %}
+
 </td>
 
+
+<td>
+{{ record["start_time"] or "-" }}
+</td>
+
+
+<td>
+{{ record["end_time"] or "-" }}
+</td>
+
+
+<td>
+{{ record["duration"] or "-" }}
+</td>
+
+
 </tr>
+
 {% endfor %}
+
 </tbody>
 
 </table>
+
+
+{% else %}
+
+
+<div class="empty">
+
+<div class="empty-icon">
+🚰
 </div>
+
+<h3>
+No Motor Records Yet
+</h3>
+
+<p>
+Start and stop the motor to see its timing.
+</p>
+
 </div>
+
+
+{% endif %}
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- CHART JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
 <script>
-new Chart(document.getElementById("motorChart"),{
-    type:"line",
-    data:{
-        labels: {{ graph_labels|safe }},
-        datasets:[{
-            label:"Motor Running Time (Seconds)",
-            data: {{ graph_data|safe }},
-            borderColor:"#00c853",
-            backgroundColor:"rgba(0,200,83,0.2)",
-            fill:true,
-            tension:0.4
-        }]
-    },
-    options:{
-        responsive:true,
-        plugins:{
-            legend:{
-                display:true
-            }
+
+const onMinutes =
+    {{ graph_on_minutes | default(0) }};
+
+const offMinutes =
+    {{ graph_off_minutes | default(0) }};
+
+
+const canvas =
+    document.getElementById("motorChart");
+
+
+if(canvas){
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    new Chart(ctx, {
+
+        type:"bar",
+
+        data:{
+
+            labels:[
+                "🟢 Motor ON",
+                "🔴 Motor OFF"
+            ],
+
+            datasets:[{
+
+                label:"Time in Minutes",
+
+                data:[
+                    onMinutes,
+                    offMinutes
+                ],
+
+                backgroundColor:[
+
+                    "rgba(0,200,83,0.75)",
+
+                    "rgba(214,51,92,0.75)"
+
+                ],
+
+                borderColor:[
+
+                    "#00a84f",
+
+                    "#d6335c"
+
+                ],
+
+                borderWidth:2,
+
+                borderRadius:12
+
+            }]
+
         },
-        scales:{
-            y:{
-                beginAtZero:true,
-                title:{
-                    display:true,
-                    text:"Seconds"
+
+
+        options:{
+
+            responsive:true,
+
+            maintainAspectRatio:false,
+
+            plugins:{
+
+                legend:{
+                    display:true
+                },
+
+                tooltip:{
+
+                    callbacks:{
+
+                        label:function(context){
+
+                            return (
+                                context.raw +
+                                " minutes"
+                            );
+
+                        }
+
+                    }
+
                 }
+
             },
-            x:{
-                title:{
-                    display:true,
-                    text:"Motor Runs"
+
+
+            scales:{
+
+                y:{
+
+                    beginAtZero:true,
+
+                    title:{
+
+                        display:true,
+
+                        text:"Time (Minutes)"
+
+                    }
+
+                },
+
+                x:{
+
+                    title:{
+
+                        display:true,
+
+                        text:"Motor Status"
+
+                    }
+
                 }
+
             }
+
         }
-    }
-});
+
+    });
+
+}
+
 </script>
+
+
 {% endblock %}

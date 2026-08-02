@@ -1,620 +1,977 @@
 {% extends "baseofhtml.html" %}
 
 {% block title %}
-AI Farmer Assistant
+AI Agriculture Assistant
 {% endblock %}
 
 {% block content %}
 
 <style>
 
-body{
-    background:#e8f5e9;
-    font-family:'Segoe UI', sans-serif;
+/* ================= PAGE ================= */
+
+.ai-page{
+    min-height:85vh;
+    padding:20px;
+    background:
+        linear-gradient(
+            135deg,
+            #f8edff,
+            #ffeaf5,
+            #ffffff
+        );
+}
+
+.ai-container{
+    max-width:900px;
+    margin:auto;
 }
 
 
-/* Main AI Card */
+/* ================= HEADER ================= */
 
-.ai-card{
-
-    width:90%;
-    max-width:850px;
-
-    margin:40px auto;
-
-    background:white;
-
-    border-radius:30px;
-
-    overflow:hidden;
-
-    box-shadow:
-    0 15px 35px rgba(0,0,0,0.18);
-
+.ai-top{
+    text-align:center;
+    padding:20px 10px;
 }
 
-
-/* Header */
-
-.ai-header{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:20px;
-
-    padding:25px;
+.ai-top h1{
+    margin:5px 0;
+    font-size:30px;
 
     background:
-    linear-gradient(135deg,#15803d,#22c55e);
+        linear-gradient(
+            90deg,
+            #7b2cbf,
+            #d63384
+        );
 
-    color:white;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
 
+.ai-top p{
+    color:#765477;
+    margin:5px;
+}
+
+.top-robot{
+    font-size:48px;
 }
 
 
-.robot-icon{
+/* ================= CHAT BOX ================= */
 
-    width:70px;
+.chat-box{
+    background:rgba(255,255,255,.80);
 
-    height:70px;
-
-    background:white;
-
-    color:#15803d;
-
-    border-radius:50%;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:40px;
-
-}
-
-
-.ai-header h2{
-
-    margin:0;
-
-    font-size:28px;
-
-}
-
-
-.ai-header p{
-
-    margin:5px 0 0;
-
-}
-
-
-
-/* Chat Area */
-
-.chat-area{
-
-    height:450px;
-
-    padding:25px;
-
-    overflow-y:auto;
-
-    background:#f7fff8;
-
-}
-
-
-
-/* AI Message */
-
-.ai-message{
-
-    width:75%;
-
-    background:white;
-
-    padding:18px;
-
-    border-radius:20px;
-
-    margin-bottom:20px;
-
-    box-shadow:
-    0 5px 15px rgba(0,0,0,0.1);
-
-    line-height:1.6;
-
-    animation:show .5s;
-
-}
-
-
-
-/* User Message */
-
-.user-message{
-
-    width:75%;
-
-    margin-left:auto;
-
-    background:#16a34a;
-
-    color:white;
-
-    padding:18px;
-
-    border-radius:20px;
-
-    margin-bottom:20px;
-
-    animation:show .5s;
-
-}
-
-
-
-/* Input Area */
-
-.input-area{
+    border-radius:25px;
 
     padding:20px;
 
-    background:white;
+    min-height:300px;
+    max-height:550px;
 
-    border-top:1px solid #ddd;
+    overflow-y:auto;
 
+    box-shadow:
+        0 12px 35px
+        rgba(123,44,191,.15);
+
+    border:
+        1px solid
+        rgba(123,44,191,.10);
 }
 
 
-.input-box{
+/* ================= CHAT ITEM ================= */
+
+.chat-item{
+    margin-bottom:25px;
+}
+
+
+/* ================= USER ================= */
+
+.user-message{
+    display:flex;
+    justify-content:flex-end;
+
+    margin-bottom:12px;
+}
+
+.user-bubble{
+
+    max-width:75%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7b2cbf,
+            #d63384
+        );
+
+    color:white;
+
+    padding:12px 17px;
+
+    border-radius:
+        20px
+        20px
+        5px
+        20px;
+
+    line-height:1.5;
+
+    box-shadow:
+        0 5px 15px
+        rgba(123,44,191,.20);
+}
+
+
+/* ================= AI ================= */
+
+.ai-message{
+    display:flex;
+    justify-content:flex-start;
+}
+
+.ai-bubble{
+
+    max-width:80%;
+
+    background:white;
+
+    padding:12px 15px;
+
+    border-radius:
+        20px
+        20px
+        20px
+        5px;
+
+    border-left:
+        3px solid
+        #d63384;
+
+    box-shadow:
+        0 5px 15px
+        rgba(214,51,132,.10);
+}
+
+
+/* ================= SMALL ROUND AI PHOTO ================= */
+
+.ai-header-mini{
 
     display:flex;
 
     align-items:center;
 
-    gap:10px;
+    gap:8px;
+
+    margin-bottom:7px;
+}
+
+
+/* छोटा गोल फोटो */
+
+.ai-avatar{
+
+    width:38px;
+    height:38px;
+
+    min-width:38px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7b2cbf,
+            #d63384,
+            #ff8fc7
+        );
+
+    border:
+        2px solid
+        white;
+
+    box-shadow:
+        0 4px 10px
+        rgba(123,44,191,.25);
 
 }
 
 
-.input-box input{
+/* ================= AI NAME ================= */
+
+.ai-name{
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    color:#7b2cbf;
+}
+
+
+/* ================= ANSWER ================= */
+
+.ai-answer{
+
+    margin-left:46px;
+
+    color:#4a3154;
+
+    font-size:15px;
+
+    line-height:1.7;
+
+    white-space:pre-line;
+
+    word-break:break-word;
+}
+
+
+/* ================= INPUT AREA ================= */
+
+.input-area{
+
+    margin-top:18px;
+
+    display:flex;
+
+    gap:10px;
+
+    align-items:center;
+}
+
+.input-wrapper{
 
     flex:1;
 
-    padding:15px 20px;
+    position:relative;
+}
 
-    border-radius:30px;
+.question-input{
 
-    border:1px solid #ccc;
+    width:100%;
+
+    padding:
+        15px
+        55px
+        15px
+        18px;
+
+    border:none;
 
     outline:none;
 
-    font-size:16px;
+    border-radius:30px;
 
+    background:white;
+
+    color:#4a3154;
+
+    font-size:15px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(123,44,191,.12);
+
+    border:
+        1px solid
+        #ead9f4;
+}
+
+.question-input:focus{
+
+    border-color:#d63384;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(214,51,132,.10);
 }
 
 
-
-/* Mic Button */
+/* ================= MIC ================= */
 
 .mic-btn{
 
-    width:55px;
+    position:absolute;
 
-    height:55px;
+    right:6px;
+    top:6px;
 
-    border:none;
-
-    border-radius:50%;
-
-    background:#2563eb;
-
-    color:white;
-
-    font-size:22px;
-
-    cursor:pointer;
-
-}
-
-
-
-/* Send Button */
-
-.send-btn{
-
-    width:55px;
-
-    height:55px;
+    width:42px;
+    height:42px;
 
     border:none;
 
     border-radius:50%;
 
-    background:#16a34a;
+    background:
+        linear-gradient(
+            135deg,
+            #f0d9ff,
+            #ffd9eb
+        );
 
-    color:white;
+    color:#7b2cbf;
 
-    font-size:22px;
+    font-size:19px;
 
     cursor:pointer;
 
+    transition:.3s;
 }
-
-
 
 .mic-btn:hover{
 
-    background:#1d4ed8;
+    transform:scale(1.08);
+
+}
+
+.mic-btn.listening{
+
+    background:#d63384;
+
+    color:white;
+
+    animation:
+        micPulse 1s infinite;
+}
+
+@keyframes micPulse{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.12);
+    }
+
+    100%{
+        transform:scale(1);
+    }
 
 }
 
 
-.send-btn:hover{
+/* ================= ASK BUTTON ================= */
 
-    background:#15803d;
+.ask-btn{
+
+    border:none;
+
+    padding:
+        14px
+        22px;
+
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7b2cbf,
+            #d63384
+        );
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 6px 15px
+        rgba(123,44,191,.20);
+
+    transition:.3s;
+}
+
+.ask-btn:hover{
+
+    transform:translateY(-2px);
 
 }
 
 
+/* ================= MIC STATUS ================= */
 
-/* Animation */
+#micStatus{
 
-@keyframes show{
+    text-align:center;
 
-from{
+    color:#9b4d89;
 
-opacity:0;
+    font-size:13px;
 
-transform:translateY(20px);
+    margin-top:8px;
+}
+
+
+/* ================= SUGGESTIONS ================= */
+
+.suggestions{
+
+    margin-top:20px;
+
+    text-align:center;
+}
+
+.suggestions h3{
+
+    color:#7b2cbf;
+
+    font-size:17px;
+
+    margin-bottom:10px;
+}
+
+.suggestion{
+
+    display:inline-block;
+
+    padding:
+        8px
+        13px;
+
+    margin:4px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f1ddff,
+            #ffe0ed
+        );
+
+    color:#703a77;
+
+    font-size:13px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.suggestion:hover{
+
+    transform:translateY(-2px);
 
 }
 
 
-to{
+/* ================= CLEAR ================= */
 
-opacity:1;
+.clear-area{
 
-transform:translateY(0);
+    text-align:center;
 
+    margin-top:18px;
 }
 
+.clear-btn{
+
+    display:inline-block;
+
+    padding:
+        9px
+        18px;
+
+    border-radius:22px;
+
+    text-decoration:none;
+
+    color:white;
+
+    font-size:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7b2cbf,
+            #d63384
+        );
 }
 
 
+/* ================= WELCOME ================= */
 
-/* Mobile */
+.welcome{
+
+    text-align:center;
+
+    padding:30px 15px;
+
+    color:#765477;
+}
+
+.welcome-icon{
+
+    font-size:45px;
+}
+
+.welcome h3{
+
+    color:#7b2cbf;
+}
+
+
+/* ================= MOBILE ================= */
 
 @media(max-width:600px){
 
-.ai-card{
+    .ai-page{
+        padding:10px;
+    }
 
-width:95%;
+    .ai-top h1{
+        font-size:24px;
+    }
+
+    .top-robot{
+        font-size:40px;
+    }
+
+    .chat-box{
+        padding:12px;
+    }
+
+    .user-bubble{
+        max-width:85%;
+        font-size:14px;
+    }
+
+    .ai-bubble{
+        max-width:88%;
+    }
+
+    .ai-answer{
+        margin-left:0;
+        margin-top:6px;
+    }
+
+    .input-area{
+        flex-direction:column;
+    }
+
+    .input-wrapper{
+        width:100%;
+    }
+
+    .ask-btn{
+        width:100%;
+    }
 
 }
 
 
-.ai-header h2{
+/* ================= SCROLL ================= */
 
-font-size:22px;
-
+.chat-box::-webkit-scrollbar{
+    width:7px;
 }
 
+.chat-box::-webkit-scrollbar-thumb{
 
-.chat-area{
+    background:
+        linear-gradient(
+            #7b2cbf,
+            #d63384
+        );
 
-height:400px;
-
-}
-
-
-.ai-message,
-.user-message{
-
-width:85%;
-
-}
-
+    border-radius:10px;
 }
 
 </style>
-<div class="ai-card">
-
-    <!-- Header -->
-    <div class="ai-header">
-
-        <div class="robot-icon">
-            🤖
-        </div>
-
-        <div>
-            <h2>AI Farmer Assistant</h2>
-            <p>🌱 Smart Farming With AI</p>
-        </div>
-
-    </div>
 
 
-    <!-- Chat Area -->
-    <div class="chat-area">
+<div class="ai-page">
+
+<div class="ai-container">
 
 
-        <div class="ai-message">
+<!-- ================= HEADER ================= -->
 
-            👋 Hello Farmer! <br><br>
+<div class="ai-top">
 
-            I can help you with:
-            
-        </div>
+<div class="top-robot">
+🤖🌱
+</div>
 
+<h1>
+AI Agriculture Assistant
+</h1>
 
-        {% if answer %}
+<p>
+Hello {{ username }} 👋 Ask me anything about farming.
+</p>
 
-
-        <div class="user-message">
-
-            👨‍🌾 {{ request.form.question }}
-
-        </div>
-
-
-        <div class="ai-message" id="answer">
-
-            🤖 {{ answer }}
-
-        </div>
+</div>
 
 
-        {% endif %}
+<!-- ================= CHAT ================= -->
+
+<div class="chat-box" id="chatBox">
 
 
-    </div>
+{% if chat_history %}
+
+{% for chat in chat_history %}
+
+<div class="chat-item">
 
 
+<!-- ================= USER MESSAGE ================= -->
 
-    <!-- Input Area -->
+<div class="user-message">
 
-    <div class="input-area">
+<div class="user-bubble">
 
-        <form method="POST">
+👩‍🌾 <b>You</b>
 
-            <div class="input-box">
+<br>
 
+{{ chat.question }}
 
-                <input 
-                type="text"
-                name="question"
-                placeholder="Ask your farming question..."
-                required>
+</div>
 
-
-                <button type="button" class="mic-btn">
-                    🎤
-                </button>
+</div>
 
 
-                <button type="submit" class="send-btn">
-                    ➤
-                </button>
+<!-- ================= AI MESSAGE ================= -->
+
+<div class="ai-message">
+
+<div class="ai-bubble">
 
 
-            </div>
+<!-- छोटा गोल फोटो + नाव -->
+
+<div class="ai-header-mini">
+
+<div class="ai-avatar">
+🌱
+</div>
+
+<div class="ai-name">
+🤖 AI Agriculture Assistant
+</div>
+
+</div>
 
 
-        </form>
+<!-- AI ANSWER -->
 
+<div class="ai-answer">
 
-    </div>
+{{ chat.answer }}
 
+</div>
 
 
 </div>
+
+</div>
+
+
+</div>
+
+{% endfor %}
+
+
+{% else %}
+
+
+<!-- ================= FIRST MESSAGE ================= -->
+
+<div class="welcome">
+
+<div class="welcome-icon">
+🤖🌱
+</div>
+
+<h3>
+Welcome to AI Agriculture Assistant
+</h3>
+
+<p>
+Ask me anything about crops, irrigation,
+soil, pests and farming.
+</p>
+
+</div>
+
+
+{% endif %}
+
+
+</div>
+
+
+<!-- ================= INPUT ================= -->
+
+<form
+    method="POST"
+    class="input-area"
+>
+
+
+<div class="input-wrapper">
+
+<input
+    type="text"
+    name="question"
+    id="questionInput"
+    class="question-input"
+    placeholder="Ask your farming question..."
+    autocomplete="off"
+    required
+>
+
+
+<button
+    type="button"
+    class="mic-btn"
+    id="micBtn"
+    title="Speak"
+>
+
+🎤
+
+</button>
+
+</div>
+
+
+<button
+    type="submit"
+    class="ask-btn"
+>
+
+Ask 🤖
+
+</button>
+
+
+</form>
+
+
+<div id="micStatus"></div>
+
+
+<!-- ================= SUGGESTIONS ================= -->
+
+<div class="suggestions">
+
+<h3>
+💡 Try asking
+</h3>
+
+
+<span
+class="suggestion"
+onclick="setQuestion('Which crop is suitable for this season?')"
+>
+🌾 Suitable crop?
+</span>
+
+
+<span
+class="suggestion"
+onclick="setQuestion('When should I irrigate my crop?')"
+>
+💧 Irrigation?
+</span>
+
+
+<span
+class="suggestion"
+onclick="setQuestion('How can I improve soil quality?')"
+>
+🌱 Soil quality?
+</span>
+
+
+<span
+class="suggestion"
+onclick="setQuestion('How can I manage crop pests?')"
+>
+🐛 Crop pests?
+</span>
+
+
+</div>
+
+
+<!-- ================= CLEAR ================= -->
+
+<div class="clear-area">
+
+<a
+href="/clear_ai_chat"
+class="clear-btn"
+onclick="return confirm('Clear all AI conversations?')"
+>
+
+🗑️ Clear Chat
+
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+
 <script>
 
+/* ================= ELEMENTS ================= */
 
-// =====================
-// 🎤 Voice Input (Mic)
-// =====================
+const micBtn =
+document.getElementById("micBtn");
 
+const input =
+document.getElementById("questionInput");
 
-const micBtn = document.querySelector(".mic-btn");
+const status =
+document.getElementById("micStatus");
 
-const inputBox = document.querySelector(
-    "input[name='question']"
-);
-
-
-if ("webkitSpeechRecognition" in window){
-
-
-const recognition = new webkitSpeechRecognition();
+const chatBox =
+document.getElementById("chatBox");
 
 
-recognition.lang = "en-IN";
+/* ================= AUTO SCROLL ================= */
 
-recognition.continuous = false;
+if(chatBox){
 
-recognition.interimResults = false;
-
-
-
-micBtn.onclick = function(){
-
-
-    recognition.start();
-
-    micBtn.innerHTML="🎙️";
-
-
-};
-
-
-
-recognition.onresult=function(event){
-
-
-    let voiceText =
-    event.results[0][0].transcript;
-
-
-    inputBox.value = voiceText;
-
-
-    micBtn.innerHTML="🎤";
-
-
-};
-
-
-
-recognition.onerror=function(){
-
-
-    micBtn.innerHTML="🎤";
-
-
-    alert("Voice recognition failed");
-
-
-};
-
+    chatBox.scrollTop =
+    chatBox.scrollHeight;
 
 }
 
 
+/* ================= SUGGESTION ================= */
 
+function setQuestion(text){
 
+    input.value = text;
 
-// =====================
-// 🔊 AI Voice Answer
-// =====================
-
-
-function speakAI(text){
-
-
-    let speech =
-    new SpeechSynthesisUtterance();
-
-
-    speech.text=text;
-
-
-    speech.lang="en-IN";
-
-
-    speech.rate=1;
-
-
-    speech.pitch=1;
-
-
-    speech.volume=1;
-
-
-
-    window.speechSynthesis.speak(speech);
-
+    input.focus();
 
 }
 
 
+/* ================= VOICE ================= */
 
-window.onload=function(){
+let recognition = null;
 
+if("webkitSpeechRecognition" in window){
 
-    let answer =
-    document.getElementById("answer");
+    recognition =
+    new webkitSpeechRecognition();
 
+    recognition.lang =
+    "en-IN";
 
-    if(answer){
+    recognition.continuous =
+    false;
 
-
-        speakAI(answer.innerText);
-
-
-    }
-
-
-};
-
+    recognition.interimResults =
+    false;
 
 
+    recognition.onstart =
+    function(){
+
+        micBtn.classList.add(
+            "listening"
+        );
+
+        status.innerText =
+        "🎤 Listening...";
+
+    };
 
 
-// =====================
-// ⌨️ Typing Animation
-// =====================
+    recognition.onresult =
+    function(event){
+
+        const text =
+        event.results[0][0].transcript;
+
+        input.value =
+        text;
+
+        status.innerText =
+        "✅ Question captured";
+
+    };
 
 
-const form =
-document.querySelector("form");
+    recognition.onerror =
+    function(){
+
+        status.innerText =
+        "❌ Mic error. Try again.";
+
+    };
 
 
-form.addEventListener(
-"submit",
-function(){
+    recognition.onend =
+    function(){
+
+        micBtn.classList.remove(
+            "listening"
+        );
+
+    };
 
 
-let chat =
-document.querySelector(".chat-area");
+    micBtn.onclick =
+    function(){
 
+        try{
 
+            recognition.start();
 
-let typing =
-document.createElement("div");
+        }
 
+        catch(error){
 
+            console.log(error);
 
-typing.className="ai-message";
+        }
 
+    };
 
-typing.id="typing";
+}
+else{
 
+    status.innerText =
+    "🎤 Voice input is not supported.";
 
-typing.innerHTML =
-"🤖 <i>AI is typing...</i>";
+    micBtn.disabled =
+    true;
 
-
-
-chat.appendChild(typing);
-
-
-
-chat.scrollTop =
-chat.scrollHeight;
-
-
-
-});
-
-
-
-
-
-
-// =====================
-// Auto Scroll
-// =====================
-
-
-let chatBox =
-document.querySelector(".chat-area");
-
-
-chatBox.scrollTop =
-chatBox.scrollHeight;
-
-
+}
 
 </script>
-
 
 {% endblock %}
