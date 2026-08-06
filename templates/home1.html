@@ -5,322 +5,1025 @@ Home
 {% endblock %}
 
 {% block content %}
+
 <style>
-    .hero{
-height:100vh;
-background:url("{{ url_for('static', filename='images/hero-bg.jpg') }}") center center/cover no-repeat;
-position:relative;
-display:flex;
-align-items:center;
-justify-content:center;
+
+/* ================= HOME PAGE ================= */
+
+.home-page{
+    background:#030504;
+    color:white;
+    min-height:100vh;
 }
+
+
+/* ================= HERO ================= */
+
+.hero{
+    height:100vh;
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(0,0,0,.88),
+            rgba(5,35,22,.72),
+            rgba(0,0,0,.90)
+        ),
+        url("{{ url_for('static', filename='images/hero-bg.jpg') }}")
+        center center/cover no-repeat;
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    animation:heroLight 8s ease-in-out infinite alternate;
+}
+
+
+@keyframes heroLight{
+
+    0%{
+        filter:brightness(.82);
+    }
+
+    50%{
+        filter:brightness(1);
+    }
+
+    100%{
+        filter:brightness(.88);
+    }
+
+}
+
 
 .hero-overlay{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.45);
-display:flex;
-align-items:center;
-justify-content:center;
+    position:absolute;
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0,255,150,.14),
+            transparent 50%
+        );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
+
 
 .hero-content{
-position:relative;
-z-index:2;
-text-align:center;
-color:white;
-padding:20px;
+
+    position:relative;
+    z-index:2;
+
+    text-align:center;
+
+    color:white;
+
+    padding:20px;
+
+    animation:
+        contentFloat 4s ease-in-out infinite alternate;
+
 }
+
+
+@keyframes contentFloat{
+
+    from{
+        transform:translateY(0);
+    }
+
+    to{
+        transform:translateY(-7px);
+    }
+
+}
+
+
+/* ================= TITLE ================= */
 
 .hero-title{
-font-size:60px;
-font-weight:bold;
-animation:float 3s ease-in-out infinite;
+
+    font-size:60px;
+
+    font-weight:800;
+
+    line-height:1.15;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #00ff9d,
+            #00d9ff,
+            #ffffff
+        );
+
+    background-size:300% auto;
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    animation:
+        titleColor 6s linear infinite;
+
 }
+
+
+@keyframes titleColor{
+
+    0%{
+        background-position:0% center;
+    }
+
+    50%{
+        background-position:100% center;
+    }
+
+    100%{
+        background-position:0% center;
+    }
+
+}
+
 
 .hero-text{
-font-size:22px;
-margin:20px 0;
-}
 
-.btn{
-transition:.3s;
-}
+    font-size:22px;
 
-.btn:hover{
-transform:translateY(-6px) scale(1.05);
-}
+    margin:25px 0;
 
-@keyframes float{
+    color:#e8fff5;
 
-0%{
-transform:translateY(0);
-}
-
-50%{
-transform:translateY(-10px);
-}
-
-100%{
-transform:translateY(0);
-}
+    text-shadow:
+        0 0 10px rgba(0,255,150,.25);
 
 }
+
+
+/* ================= HERO BUTTONS ================= */
+
+.hero-btn{
+
+    border-radius:30px;
+
+    padding:13px 30px;
+
+    font-weight:700;
+
+    transition:.4s;
+
+}
+
+
+.hero-btn:hover{
+
+    transform:
+        translateY(-6px)
+        scale(1.05);
+
+}
+
+
+.btn-start{
+
+    background:#00b86b;
+
+    border:none;
+
+    color:white;
+
+    box-shadow:
+        0 0 15px
+        rgba(0,255,150,.35);
+
+}
+
+
+.btn-start:hover{
+
+    background:#00ff9d;
+
+    color:#001b0e;
+
+    box-shadow:
+        0 0 20px #00ff9d,
+        0 0 40px
+        rgba(0,255,150,.4);
+
+}
+
+
+.btn-learn:hover{
+
+    background:white;
+
+    color:black;
+
+}
+
+
+/* ================= FEATURES ================= */
+
 .features-section{
-    background:linear-gradient(
-        rgba(0,0,0,0.55),
-        rgba(0,0,0,0.55)
-    ),
-    url("{{ url_for('static', filename='images/hero-bg.jpg') }}");
 
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
+    position:relative;
+
+    background:
+
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(0,255,150,.10),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(0,180,255,.09),
+            transparent 30%
+        ),
+
+        #030504;
+
+    padding:90px 0;
+
+    overflow:hidden;
+
+}
+
+
+.features-title{
+
+    color:white;
+
+    font-size:38px;
+
+    font-weight:800;
+
+    text-shadow:
+        0 0 12px
+        rgba(0,255,150,.35);
+
+}
+
+
+/* ================= FEATURE CARD ================= */
+
+.feature-card{
+
+    height:100%;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.10),
+            rgba(255,255,255,.025)
+        );
+
+    backdrop-filter:blur(15px);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:22px;
+
+    color:white;
+
+    transition:.5s;
+
+}
+
+
+.feature-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:200%;
+
+    height:200%;
+
+    left:-50%;
+
+    top:-50%;
+
+    background:
+        conic-gradient(
+            transparent,
+            rgba(0,255,150,.18),
+            transparent 30%
+        );
+
+    animation:
+        rotateGlow 7s linear infinite;
+
+    opacity:0;
+
+    transition:.4s;
+
+}
+
+
+@keyframes rotateGlow{
+
+    100%{
+        transform:rotate(360deg);
+    }
+
+}
+
+
+.feature-card:hover::before{
+
+    opacity:1;
+
+}
+
+
+.feature-card:hover{
+
+    transform:
+        translateY(-12px)
+        scale(1.02);
+
+    border-color:#00ff9d;
+
+    box-shadow:
+        0 0 20px
+        rgba(0,255,150,.25),
+
+        0 20px 45px
+        rgba(0,0,0,.55);
+
+}
+
+
+.feature-card .card-body{
+
+    position:relative;
+
+    z-index:2;
+
+    padding:30px 20px;
+
+}
+
+
+.feature-card h4{
+
+    color:white;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+
+.feature-card:hover h4{
+
+    color:#00ff9d;
+
+}
+
+
+.feature-card p{
+
+    color:#d2d2d2;
+
+    line-height:1.7;
+
+}
+
+
+/* ================= ICON ANIMATION ================= */
+
+.feature-card i{
+
+    transition:.5s;
+
+}
+
+
+.feature-card:hover i{
+
+    transform:
+        scale(1.2)
+        rotate(8deg);
+
+    filter:
+        drop-shadow(
+            0 0 12px
+            rgba(0,255,150,.7)
+        );
+
+}
+
+
+/* ================= STATISTICS ================= */
+
+.stats-section{
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #010201,
+            #071a10,
+            #010201
+        );
+
+    color:white;
 
     padding:80px 0;
+
+    border-top:
+        1px solid
+        rgba(0,255,150,.15);
+
 }
 
-.features-section h2,
-.features-section h4,
-.features-section p{
-    color:white;
+
+.stats-title{
+
+    font-size:35px;
+
+    font-weight:800;
+
+    text-shadow:
+        0 0 12px
+        rgba(0,255,150,.35);
+
 }
 
-.features-section .card{
-    background:rgba(255,255,255,0.12);
-    backdrop-filter:blur(10px);
-    border:none;
-    border-radius:20px;
-    color:white;
-    transition:.3s;
+
+.stat-box{
+
+    padding:25px;
+
+    transition:.4s;
+
 }
 
-.features-section .card:hover{
-    transform:translateY(-8px);
-    background:rgba(255,255,255,0.2);
+
+.stat-box:hover{
+
+    transform:
+        translateY(-10px)
+        scale(1.03);
+
 }
+
+
+.stat-box h1{
+
+    font-size:48px;
+
+    font-weight:800;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00ff9d,
+            #ffffff,
+            #00bfff,
+            #00ff9d
+        );
+
+    background-size:300% auto;
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    animation:
+        statColor 5s linear infinite;
+
+}
+
+
+@keyframes statColor{
+
+    0%{
+        background-position:0% center;
+    }
+
+    50%{
+        background-position:100% center;
+    }
+
+    100%{
+        background-position:0% center;
+    }
+
+}
+
+
+.stat-box p{
+
+    color:#cfcfcf;
+
+    font-size:17px;
+
+}
+
+
+/* ================= SMALL GLOW DOTS ================= */
+
+.glow-dot{
+
+    position:absolute;
+
+    width:6px;
+
+    height:6px;
+
+    border-radius:50%;
+
+    background:#00ff9d;
+
+    box-shadow:
+        0 0 10px #00ff9d,
+        0 0 20px #00ff9d;
+
+    animation:
+        dotMove 5s linear infinite;
+
+    opacity:.7;
+
+}
+
+
+.dot1{
+    left:10%;
+    top:20%;
+}
+
+.dot2{
+    left:80%;
+    top:30%;
+    animation-delay:1s;
+}
+
+.dot3{
+    left:30%;
+    top:70%;
+    animation-delay:2s;
+}
+
+.dot4{
+    left:90%;
+    top:75%;
+    animation-delay:3s;
+}
+
+
+@keyframes dotMove{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-30px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
+
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:768px){
+
+    .hero{
+
+        min-height:100vh;
+
+        height:auto;
+
+        padding:100px 15px;
+
+    }
+
+
+    .hero-title{
+
+        font-size:38px;
+
+    }
+
+
+    .hero-text{
+
+        font-size:18px;
+
+    }
+
+
+    .features-title{
+
+        font-size:30px;
+
+    }
+
+
+    .stat-box h1{
+
+        font-size:38px;
+
+    }
+
+}
+
 </style>
 
-<!-- Hero Section -->
-<section class="hero">
 
-<div class="hero-overlay">
+<!-- ================= HOME WRAPPER ================= -->
 
-<div class="hero-content">
+<div class="home-page">
 
-<h1 class="hero-title">
-🌾 Agriculture Automatic Monitoring System
-</h1>
 
-<p class="hero-text">
-Smart Farming with AI, IoT and Modern Technology
-</p>
+    <!-- GLOW EFFECTS -->
 
-<div class="mt-4">
+    <span class="glow-dot dot1"></span>
 
-<a href="/register" class="btn btn-success btn-lg me-3">
-Get Started
-</a>
+    <span class="glow-dot dot2"></span>
 
-<a href="/about" class="btn btn-outline-light btn-lg">
-Learn More
-</a>
+    <span class="glow-dot dot3"></span>
+
+    <span class="glow-dot dot4"></span>
+
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+
+        <div class="hero-overlay">
+
+            <div class="hero-content">
+
+                <h1 class="hero-title">
+
+                    🌾 Agriculture Automatic
+                    Monitoring System
+
+                </h1>
+
+
+                <p class="hero-text">
+
+                    Smart Farming with AI, IoT
+                    and Modern Technology
+
+                </p>
+
+
+                <div class="mt-4">
+
+                    <a
+                        href="/register"
+                        class="btn hero-btn btn-start me-3">
+
+                        🚀 Get Started
+
+                    </a>
+
+
+                    <a
+                        href="/about"
+                        class="btn btn-outline-light hero-btn btn-learn">
+
+                        ✨ Learn More
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= FEATURES ================= -->
+
+    <section class="features-section">
+
+        <div class="container py-5">
+
+
+            <h2 class="text-center features-title mb-5">
+
+                🌾 Our Smart Farming Features
+
+            </h2>
+
+
+            <div class="row g-4">
+
+
+                <!-- TEMPERATURE -->
+
+                <div class="col-md-4">
+
+                    <div class="card feature-card">
+
+                        <div class="card-body text-center">
+
+                            <i
+                                class="fa-solid fa-temperature-three-quarters fa-3x text-danger mb-3">
+                            </i>
+
+
+                            <h4>
+                                Temperature Monitoring
+                            </h4>
+
+
+                            <p>
+
+                                Monitor real-time temperature
+                                to maintain healthy crop growth.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SOIL MOISTURE -->
+
+                <div class="col-md-4">
+
+                    <div class="card feature-card">
+
+                        <div class="card-body text-center">
+
+                            <i
+                                class="fa-solid fa-droplet fa-3x text-info mb-3">
+                            </i>
+
+
+                            <h4>
+                                Soil Moisture
+                            </h4>
+
+
+                            <p>
+
+                                Check soil moisture levels
+                                continuously for efficient irrigation.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- WEATHER -->
+
+                <div class="col-md-4">
+
+                    <div class="card feature-card">
+
+                        <div class="card-body text-center">
+
+                            <i
+                                class="fa-solid fa-cloud-sun fa-3x text-warning mb-3">
+                            </i>
+
+
+                            <h4>
+                                Weather Forecast
+                            </h4>
+
+
+                            <p>
+
+                                Live weather information helps
+                                farmers make better decisions.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- IRRIGATION -->
+
+                <div class="col-md-4">
+
+                    <div class="card feature-card">
+
+                        <div class="card-body text-center">
+
+                            <i
+                                class="fa-solid fa-faucet-drip fa-3x text-primary mb-3">
+                            </i>
+
+
+                            <h4>
+                                Smart Irrigation
+                            </h4>
+
+
+                            <p>
+
+                                Automatic irrigation scheduling
+                                helps save water and improve productivity.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MOTOR -->
+
+                <div class="col-md-4">
+
+                    <div class="card feature-card">
+
+                        <div class="card-body text-center">
+
+                            <i
+                                class="fa-solid fa-gear fa-3x text-secondary mb-3">
+                            </i>
+
+
+                            <h4>
+                                Motor Control
+                            </h4>
+
+
+                            <p>
+
+                                Control water pump remotely
+                                and monitor motor activity instantly.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- AI -->
+
+                <div class="col-md-4">
+
+                    <div class="card feature-card">
+
+                        <div class="card-body text-center">
+
+                            <i
+                                class="fa-solid fa-robot fa-3x text-success mb-3">
+                            </i>
+
+
+                            <h4>
+                                AI Assistant
+                            </h4>
+
+
+                            <p>
+
+                                Get AI-powered farming advice
+                                and crop recommendations anytime.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <section class="stats-section">
+
+        <div class="container">
+
+            <h2 class="text-center stats-title mb-5">
+
+                📊 Project Statistics
+
+            </h2>
+
+
+            <div class="row text-center">
+
+
+                <div class="col-md-3 stat-box">
+
+                    <h1>
+                        150+
+                    </h1>
+
+                    <p>
+                        Registered Farmers
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-3 stat-box">
+
+                    <h1>
+                        50+
+                    </h1>
+
+                    <p>
+                        Crops
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-3 stat-box">
+
+                    <h1>
+                        2500 L
+                    </h1>
+
+                    <p>
+                        Water Saved
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-3 stat-box">
+
+                    <h1>
+                        24×7
+                    </h1>
+
+                    <p>
+                        Monitoring
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
 
 </div>
-
-</div>
-
-</div>
-
-</section><!-- ================= FEATURES ================= -->
-
-<section class="features-section">
-
-<div class="container py-5">
-
-<h2 class="text-center fw-bold text-white mb-5">
-🌾 Our Smart Farming Features
-</h2>
-
-<div class="row g-4">
-
-<div class="col-md-4">
-
-<div class="card feature-card h-100">
-
-<div class="card-body text-center">
-
-<i class="fa-solid fa-temperature-three-quarters fa-3x text-danger mb-3"></i>
-
-<h4>Temperature Monitoring</h4>
-
-<p>
-Monitor real-time temperature to maintain healthy crop growth.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-
-<div class="card feature-card h-100">
-
-<div class="card-body text-center">
-
-<i class="fa-solid fa-droplet fa-3x text-info mb-3"></i>
-
-<h4>Soil Moisture</h4>
-
-<p>
-Check soil moisture levels continuously for efficient irrigation.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-
-<div class="card feature-card h-100">
-
-<div class="card-body text-center">
-
-<i class="fa-solid fa-cloud-sun fa-3x text-warning mb-3"></i>
-
-<h4>Weather Forecast</h4>
-
-<p>
-Live weather information helps farmers make better decisions.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-
-<div class="card feature-card h-100">
-
-<div class="card-body text-center">
-
-<i class="fa-solid fa-faucet-drip fa-3x text-primary mb-3"></i>
-
-<h4>Smart Irrigation</h4>
-
-<p>
-Automatic irrigation scheduling helps save water and improve productivity.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-
-<div class="card feature-card h-100">
-
-<div class="card-body text-center">
-
-<i class="fa-solid fa-gear fa-3x text-secondary mb-3"></i>
-
-<h4>Motor Control</h4>
-
-<p>
-Control water pump remotely and monitor motor activity instantly.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-
-<div class="card feature-card h-100">
-
-<div class="card-body text-center">
-
-<i class="fa-solid fa-robot fa-3x text-success mb-3"></i>
-
-<h4>AI Assistant</h4>
-
-<p>
-Get AI-powered farming advice and crop recommendations anytime.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- ================= PROJECT STATISTICS ================= -->
-
-<section class="bg-success text-white py-5">
-    
-
-<div class="container">
-
-<h2 class="text-center mb-5">
-Project Statistics
-</h2>
-
-<div class="row text-center">
-
-<div class="col-md-3">
-
-<h1>150+</h1>
-
-<p>Registered Farmers</p>
-
-</div>
-
-<div class="col-md-3">
-
-<h1>50+</h1>
-
-<p>Crops</p>
-
-</div>
-
-<div class="col-md-3">
-
-<h1>2500 L</h1>
-
-<p>Water Saved</p>
-
-</div>
-
-<div class="col-md-3">
-
-<h1>24×7</h1>
-
-<p>Monitoring</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
 
 {% endblock %}

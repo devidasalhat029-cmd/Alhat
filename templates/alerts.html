@@ -315,12 +315,27 @@
     </div>
 
 
-    <a
-        href="{{ url_for('dashboard') }}"
-        class="back-btn"
-    >
-        ← Back to Dashboard
-    </a>
+    <!-- Role Based Dashboard Link -->
+
+    {% if session.get('role') == 'admin' %}
+
+        <a
+            href="{{ url_for('admin_dashboard') }}"
+            class="back-btn"
+        >
+            ← Back to Dashboard
+        </a>
+
+    {% else %}
+
+        <a
+            href="{{ url_for('farmer_dashboard') }}"
+            class="back-btn"
+        >
+            ← Back to Dashboard
+        </a>
+
+    {% endif %}
 
 
 </div>

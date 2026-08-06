@@ -1,0 +1,336 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}
+Add Crop
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.add-crop-page {
+    min-height: 90vh;
+    padding: 35px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f7edff,
+            #ffeaf5,
+            #ffffff
+        );
+}
+
+.add-crop-container {
+    max-width: 650px;
+    margin: auto;
+}
+
+.add-crop-card {
+    background: rgba(255,255,255,.95);
+    padding: 35px;
+    border-radius: 25px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(123,44,191,.15);
+
+    border: 1px solid rgba(123,44,191,.10);
+}
+
+.add-crop-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.add-crop-icon {
+    width: 75px;
+    height: 75px;
+
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 38px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7b2cbf,
+            #d63384
+        );
+
+    box-shadow:
+        0 10px 25px
+        rgba(123,44,191,.25);
+}
+
+.add-crop-header h1 {
+    color: #7b2cbf;
+    margin: 15px 0 5px;
+}
+
+.add-crop-header p {
+    color: #765477;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+
+    color: #4b3154;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 14px 16px;
+
+    border: 1px solid #e0cbed;
+    border-radius: 14px;
+
+    outline: none;
+
+    font-size: 15px;
+    color: #4b3154;
+
+    background: #fff;
+
+    transition: .3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #d63384;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(214,51,132,.10);
+}
+
+.button-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.add-btn,
+.back-btn {
+    flex: 1;
+
+    padding: 14px;
+
+    border-radius: 14px;
+
+    text-align: center;
+
+    font-weight: bold;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.add-btn {
+    border: none;
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7b2cbf,
+            #d63384
+        );
+}
+
+.back-btn {
+    color: #7b2cbf;
+
+    background: #f4eaff;
+
+    border: 1px solid #e2cef3;
+}
+
+.add-btn:hover,
+.back-btn:hover {
+    transform: translateY(-2px);
+}
+
+.error-message {
+    padding: 12px;
+    margin-bottom: 20px;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    color: #a61e4d;
+    background: #ffe5ed;
+}
+
+@media(max-width:600px) {
+
+    .add-crop-page {
+        padding: 20px 12px;
+    }
+
+    .add-crop-card {
+        padding: 22px;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+}
+
+</style>
+
+
+<div class="add-crop-page">
+
+    <div class="add-crop-container">
+
+        <div class="add-crop-card">
+
+            <!-- HEADER -->
+
+            <div class="add-crop-header">
+
+                <div class="add-crop-icon">
+                    🌱
+                </div>
+
+                <h1>
+                    Add New Crop
+                </h1>
+
+                <p>
+                    Add crop details to your farm management system.
+                </p>
+
+            </div>
+
+
+            <!-- ERROR -->
+
+            {% if error %}
+
+            <div class="error-message">
+                ⚠️ {{ error }}
+            </div>
+
+            {% endif %}
+
+
+            <!-- FORM -->
+
+            <form method="POST">
+
+
+                <!-- CROP NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        🌾 Crop Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="crop_name"
+                        placeholder="Enter crop name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CROP TYPE -->
+
+                <div class="form-group">
+
+                    <label>
+                        🌱 Crop Type
+                    </label>
+
+                    <select name="crop_type">
+
+                        <option value="">
+                            Select Crop Type
+                        </option>
+
+                        <option value="Kharif">
+                            Kharif
+                        </option>
+
+                        <option value="Rabi">
+                            Rabi
+                        </option>
+
+                        <option value="Zaid">
+                            Zaid
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SOWING DATE -->
+
+                <div class="form-group">
+
+                    <label>
+                        📅 Sowing Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="sowing_date"
+                    >
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="button-group">
+
+                    <a
+                        href="{{ url_for('crop') }}"
+                        class="back-btn"
+                    >
+                        ← Back
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="add-btn"
+                    >
+                        🌱 Add Crop
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

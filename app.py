@@ -1,585 +1,1542 @@
-from datetime import datetime                                                                                        # TO WORK WITH DATE AND TIME
-import random                                                                                                        #TO generate random  values 
-import json                                                                                                          #json data
-import sqlite3                                                                                                       #to connect and work with sqlite darabase
-from urllib import response                                                                                          #
-import requests                                                                                                      #to send HTTP request and get data from APIs
-import smtplib                                                                                                       # to send emails using SMPT
-from email.message import EmailMessage                                                                               #to create email messages
-import os                                                                                                            # to work with environment variables,files and floders
-import base64                                                                                                        #to encode and decode data using base644
-import mimetypes                                                                                                     #to identify the type of a file
-from werkzeug.utils import secure_filename                                                                           #to safely handels uploads files name
+from datetime import datetime
+import random
+import sqlite3
+import os
+import requests
 
-from flask import (                                                                                                  #to use Flask function
+from werkzeug.utils import secure_filename
+
+from flask import (
     Flask,
-    render_template, 
+    render_template,
     request,
-    redirect,                                                                                                        
+    redirect,
     session,
     flash,
     url_for
 )
-from flask_mail import Mail,Message                                                                                               #to send emails from flsk
-from math import ceil                                                                                                             #to round a number upward mainy used for panination
-from dotenv import load_dotenv                                                                                                    #to load variables from the .env files
-from groq import Groq                                                                                                             #to connect with groq ai api
-from openai import OpenAI                                                                                                         #to use  open ai api  such as open route
 
-# ----------------------------
-# Flask App
-# ----------------------------
+from flask_mail import Mail
+from math import ceil
+from dotenv import load_dotenv
+from groq import Groq
+from openai import OpenAI
 
-app = Flask(__name__)             #Create the flask application
-app.secret_key = "agrotech123"    #used to securely manages flask session
 
-# ----------------------------
-# Load Environment Variables
-# ----------------------------
+# ============================================================
+# FLASK APP
+# ============================================================
+
+app = Flask(__name__)
+app.secret_key = "agrotech123"
+
+# ============================================================
+# LOAD ENVIRONMENT VARIABLES
+# ============================================================
+
+# ============================================================
+# LOAD ENVIRONMENT VARIABLES
+# ============================================================
 
 load_dotenv()
 
+# AI clients
 groq_client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
 )
+
 openrouter_client = OpenAI(
     api_key=os.getenv("OPENROUTER_API_KEY"),
     base_url="https://openrouter.ai/api/v1"
 )
+
+
+OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
+print("ENV FILE LOADED")
+print("OPENWEATHER KEY:", bool(os.getenv("OPENWEATHER_API_KEY")))
 print("GROQ KEY:", bool(os.getenv("GROQ_API_KEY")))
 print("OPENROUTER KEY:", bool(os.getenv("OPENROUTER_API_KEY")))
 
-#----------------------------
-#for mail
-#----------------------------
 
-app.config["MAIL_SERVER"] = "smtp.gmail.com"        #Sets Gmails SMTP server 
-app.config["MAIL_PORT"] = 587                       #Sets the port for the SMTP server
-app.config["MAIL_USE_TLS"] = True                   #Enables secures TLS connection 
-app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")   #gets the username from .env files
-app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")   #get the password from .env files
-app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")  #sets default sender emails 
+# ============================================================
+# MAIL CONFIGURATION
+# ============================================================
 
-mail = Mail(app)      #initialize flask mails
-# ----------------------------
-# Upload Folder
-# ----------------------------
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
+app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
 
-UPLOAD_FOLDER = os.path.join(app.root_path, "static", "uploads")               #create the path for uploads files 
+# ============================================================
+# MAIL CONFIGURATION
+# ============================================================
 
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER                                    #Store the upload floder path in flask configuration
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
+app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
 
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)                                      #create the upload  if it does not exist
+mail = Mail(app)
 
-# ----------------------------
-# Database Connection
-# ----------------------------
+# ============================================================
+# UPLOAD FOLDER
+# ============================================================
 
-def connect():                                                                  #Defines a database connection function
+UPLOAD_FOLDER = os.path.join(
+    app.root_path,
+    "static",
+    "uploads"
+)
 
-    conn = sqlite3.connect("agriculture.db")                                   #connects to the sqlite database file named "agriculture.db"
-    conn.row_factory = sqlite3.Row                                             #Allows database rows to be accessed like dictionaries, enabling column access by name
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-    return conn                                                                #return the database connection 
+os.makedirs(
+    UPLOAD_FOLDER,
+    exist_ok=True
+)
 
-# ----------------------------
-# Home
-# ----------------------------
 
-@app.route("/")                                                                 #defines the home pages route
+# ============================================================
+# DATABASE CONNECTION
+# ============================================================
+
+def connect():
+
+    conn = sqlite3.connect("agriculture.db")
+
+    conn.row_factory = sqlite3.Row
+
+    return conn
+
+
+# ============================================================
+# DATABASE TABLES
+# ============================================================
+
+def setup_tables():
+
+    conn = connect()
+
+    # --------------------------------------------------------
+    # FARMERS
+    # --------------------------------------------------------
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS farmers(
+
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+            name TEXT NOT NULL,
+
+            mobile TEXT NOT NULL,
+
+            village TEXT NOT NULL,
+
+            username TEXT UNIQUE NOT NULL,
+
+            password TEXT NOT NULL,
+
+            role TEXT DEFAULT 'farmer',
+
+            photo TEXT DEFAULT 'default.png'
+        )
+    """)
+
+
+    # --------------------------------------------------------
+    # CROP
+    # --------------------------------------------------------
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS crop(
+
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+            crop_name TEXT NOT NULL,
+
+            crop_type TEXT,
+
+            sowing_date TEXT
+        )
+    """)
+
+
+    # --------------------------------------------------------
+    # SENSOR RECORD
+    # --------------------------------------------------------
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS sensor_record(
+
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+            temperature TEXT,
+
+            humidity TEXT,
+
+            moisture TEXT,
+
+            motor_status TEXT,
+
+            irrigation_status TEXT,
+
+            start_time TEXT,
+
+            end_time TEXT,
+
+            duration TEXT,
+
+            date_time TIMESTAMP
+                DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
+
+    # --------------------------------------------------------
+    # AUTOMATIC IRRIGATION
+    # --------------------------------------------------------
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS irrigation(
+
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+            farmer_id INTEGER,
+
+            crop_name TEXT,
+
+            moisture_threshold REAL,
+
+            duration INTEGER,
+
+            frequency INTEGER,
+
+            auto_irrigation TEXT DEFAULT 'OFF'
+        )
+    """)
+
+
+    conn.commit()
+
+    conn.close()
+
+
+setup_tables()
+
+
+# ============================================================
+# CREATE ADMIN ACCOUNT
+# ============================================================
+
+def create_admin():
+
+    conn = connect()
+
+    try:
+
+        admin = conn.execute("""
+            SELECT id
+            FROM farmers
+            WHERE username = ?
+        """, (
+            "admin",
+        )).fetchone()
+
+
+        if not admin:
+
+            conn.execute("""
+                INSERT INTO farmers
+                (
+                    name,
+                    mobile,
+                    village,
+                    username,
+                    password,
+                    role,
+                    photo
+                )
+
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                "Administrator",
+                "9999999999",
+                "Office",
+                "admin",
+                "admin123",
+                "admin",
+                "default.png"
+            ))
+
+            conn.commit()
+
+            print("Admin account created.")
+
+        else:
+
+            print("Admin account already exists.")
+
+
+    except sqlite3.OperationalError as e:
+
+        print("Admin error:", e)
+
+
+    finally:
+
+        conn.close()
+
+
+create_admin()
+
+
+# ============================================================
+# HOME
+# ============================================================
+
+@app.route("/")
 def home():
 
-    return render_template("home1.html")                                       #display home page function
+    return render_template(
+        "home1.html"
+    )
 
-# ----------------------------
-# About
-# ----------------------------
+
+# ============================================================
+# ABOUT
+# ============================================================
 
 @app.route("/about")
 def about():
 
-    return render_template("about.html")
-
-
-# ----------------------------
-# Farmer
-# ----------------------------
-
-
-@app.route("/farmers")
-def farmers():
-
-    page = request.args.get("page", 1, type=int)                      #gates the current panination  page number
-
-    if page < 1:                                                     #prevents negative or zero page numbers by setting the page to 1 if it is less than 1
-        page = 1
-
-    per_page = 10                                                  # Defines the number of records to display per page, set to 10 in this case.
-
-    search = request.args.get("search", "")                        # Retrieves the search query from the request's query parameters. If no search query is provided, it defaults to an empty string.
-    village = request.args.get("village", "")                       # Retrieves the village filter from the request's query parameters. If no village filter is provided, it defaults to an empty string.
-    sort = request.args.get("sort", "new")                          # Retrieves the sorting option from the request's query parameters. If no sorting option is provided, it defaults to "new".
-
-    conn = connect()                                                # Establishes a connection to the database 
-    cursor = conn.cursor()                                          # Creates a cursor object for executing SQL queries
-
-    # Base Query
-    where = " WHERE 1=1 "                                          # Initializes the WHERE clause
-    params = []                                                    # Initializes the list of parameters for the SQL query
-
-    if search:                                                     # Checks if a search query is provided
-        where += " AND name LIKE ? "                               # Adds a condition to the WHERE clause to filter farmers by name using a LIKE operator
-        params.append(f"%{search}%")                               # Appends the search query to the list of parameters, using wildcards for partial matching
-
-    if village:                                                   # Checks if a village filter is provided
-        where += " AND village LIKE ? "                           # Adds a condition to the WHERE clause to filter farmers by village using a LIKE operator
-        params.append(f"%{village}%")                             # Appends the village filter to the list of parameters, using wildcards for partial matching
-
-    # Total Records
-    cursor.execute(                                              # Executes the COUNT query to get the total number of records
-        "SELECT COUNT(*) FROM farmers" + where,                  # The query to count the total number of farmers based on the WHERE clause
-        params
-    )
-
-    total = cursor.fetchone()[0]                                 # Retrieves the total count of records from the query result
-
-    total_pages = max(1, ceil(total / per_page))                 # Calculates the total number of pages based on the total records and records per page, ensuring at least one page exists
-
-    if page > total_pages:                                       # Ensures that the current page number does not exceed the total number of pages. If it does, it sets the current page to the last page.
-        page = total_pages
-
-    offset = (page - 1) * per_page                               # Calculates the offset for the SQL query based on the current page number and records per page. This determines where to start fetching records for the current page.
-
-    # Sorting
-    order = " ORDER BY id DESC "                                # Initializes the ORDER BY clause for sorting the records. By default, it sorts by ID in descending order (newest first).
-
-    if sort == "old":                                           # Checks if the sorting option is set to "old" (oldest first)
-        order = " ORDER BY id ASC "
-
-    elif sort == "az":                                         # Checks if the sorting option is set to "az" (alphabetical order A-Z)
-        order = " ORDER BY name ASC "
-
-    elif sort == "za":                                        # Checks if the sorting option is set to "za" (alphabetical order Z-A)
-        order = " ORDER BY name DESC "
-
-    # Final Query
-    query = (                                                  # Constructs the final SQL query by combining the base query, WHERE clause, ORDER BY clause, and LIMIT/OFFSET for pagination.
-        "SELECT * FROM farmers"
-        + where
-        + order
-        + " LIMIT ? OFFSET ?"
-    )
-
-    final_params = params + [per_page, offset]                 # Combines the parameters for the WHERE clause with the LIMIT and OFFSET values for pagination.
-
-    cursor.execute(query, final_params)                         # Executes the final SQL query with the combined parameters to fetch the farmer records for the current page.
-
-    farmers = cursor.fetchall()                                  # Retrieves all the farmer records returned by the query and stores them in the `farmers` variable.
-
-    conn.close()                                                # Closes the database connection to free up resources.
-
-    return render_template(                                     # Renders the "farmers.html" template and passes the necessary data for display, including the list of farmers, current page number, and total pages for pagination.
-        "farmers.html",
-        farmers=farmers,
-        page=page,
-        total_pages=total_pages
-    )
-# ----------------------------
-# Farmer Profile
-# ----------------------------
-
-@app.route("/farmer_profile/<int:id>")                                   #Defines a route for displaying the profile of a specific farmer based on their ID. The <int:id> part indicates that the route expects an integer parameter named id.
-def farmer_profile(id):                                                  # Defines the function to handle the farmer profile route.
-
-    if "username" not in session:                                        # Checks if the user is logged in by verifying if "username" exists in the session. If not, it redirects the user to the login page.
-        return redirect("/login")
-
-    conn = connect()                                                     # Establishes a connection to the database.
-
-    farmer = conn.execute(                                               # Executes a SQL query to fetch the details of the farmer with the specified ID from the "farmers" table. The query uses a parameterized statement to prevent SQL injection.
-        "SELECT * FROM farmers WHERE id=?",                              
-        (id,)
-    ).fetchone()                                                        # Retrieves the first row of the result set, which contains the farmer's details, and stores it in the `farmer` variable.
-
-    conn.close()
-
     return render_template(
-        "farmer_profile.html",                                            # Renders the "farmer_profile.html" template and passes the farmer's details to it for display.
-        farmer=farmer
-    )
-    
-
-#----------------------------
-#For edit farmer profile
-#----------------------------
-@app.route("/edit_farmer/<int:id>", methods=["GET","POST"])              #Defines a route for editing the profile of a specific farmer based on their ID. The <int:id> part indicates that the route expects an integer parameter named id. The methods=["GET","POST"] part specifies that this route can handle both GET and POST requests.
-def edit_farmer(id):
-
-    conn = connect()                                                    # Establishes a connection to the database.
-    cursor = conn.cursor()                                              # Creates a cursor object for executing SQL queries.
-
-
-    if request.method == "POST":                                       # Checks if the request method is POST, indicating that the form has been submitted for updating the farmer's profile.
-
-        name = request.form["name"]                                    # Retrieves the updated name from the submitted form data.
-        mobile = request.form["mobile"]                                # Retrieves the updated mobile number from the submitted form data.
-        village = request.form["village"]                             # Retrieves the updated village from the submitted form data.
-        username = request.form["username"]                           # Retrieves the updated username from the submitted form data.
-
-
-        cursor.execute(                                               # Executes a SQL query to fetch the current photo filename of the farmer with the specified ID from the "farmers" table. This is done to retain the old photo if no new photo is uploaded.
-            "SELECT photo FROM farmers WHERE id=?",
-            (id,)
-        )
-
-        old_photo = cursor.fetchone()[0]                                # Retrieves the current photo filename from the query result and stores it in the `old_photo` variable.
-
-
-        photo = request.files["photo"]                                # Retrieves the uploaded photo file from the submitted form data.
-
-
-        if photo and photo.filename != "":                             # Checks if a new photo file has been uploaded (i.e., the file exists and has a filename). If so, it processes the new photo.
-
-            filename = secure_filename(photo.filename)                 # Sanitizes the uploaded photo's filename to ensure it is safe for use in the filesystem.
-
-            photo.save(                                                  # Saves the uploaded photo file to the specified upload folder on the server, using the sanitized filename. The file is saved in the "static/uploads/" directory.
-                "static/uploads/" + filename
-            )
-
-        else:                                                        # If no new photo is uploaded, it retains the old photo filename for the farmer's profile.
-
-            filename = old_photo
-
-
-
-        cursor.execute("""
-        UPDATE farmers                                             ## Executes a SQL query to update the farmer's profile information in the "farmers" table. The query uses parameterized statements to prevent SQL injection. It updates the name, mobile number, village, username, and photo filename for the farmer with the specified ID.
-        SET name=?,
-            mobile=?,
-            village=?,
-            username=?,
-            photo=?
-        WHERE id=?
-        """,
-        (
-            name,
-            mobile,
-            village,                                                      
-            username,
-            filename,
-            id
-        ))
-
-
-        conn.commit()                                       # Commits the changes made to the database, ensuring that the updated farmer profile information is saved permanently.
-        conn.close()                                         # Closes the database connection to free up resources.
-
-
-        return redirect("/farmers")                               # Redirects the user to the "/farmers" page after successfully updating the farmer's profile.
-
-
-
-    cursor.execute(
-        "SELECT * FROM farmers WHERE id=?",                    # Executes a SQL query to fetch the details of the farmer with the specified ID from the "farmers" table. This is done to populate the edit form with the current information of the farmer.
-        (id,)
+        "about.html"
     )
 
-    farmer = cursor.fetchone()                               # Retrieves the first row of the result set, which contains the farmer's details, and stores it in the `farmer` variable.
 
-    conn.close()                                            # Closes the database connection to free up resources.
+# ============================================================
+# LOGIN
+# ============================================================
 
-
-    return render_template(                                   # Renders the "edit_profile.html" template and passes the farmer's details to it for display in the edit form.
-        "edit_profile.html",
-        farmer=farmer
-    )
-# ----------------------------
-# DElETe
-# ----------------------------
-@app.route("/delete_farmer/<int:id>")                             #Defines a route for deleting a specific farmer based on their ID. The <int:id> part indicates that the route expects an integer parameter named id.
-def delete_farmer(id):
-
-    if "username" not in session:                                # Checks if the user is logged in by verifying if "username" exists in the session. If not, it redirects the user to the login page.
-        return redirect("/login")                                             
-
-    conn = connect()
-
-    conn.execute(
-        "DELETE FROM farmers WHERE id=?",                          # Executes a SQL query to delete the farmer with the specified ID from the "farmers" table. The query uses a parameterized statement to prevent SQL injection.
-        (id,)
-    )
-
-    conn.commit()
-    conn.close()
-
-    return redirect("/farmers")
-
-# ----------------------------
-# Add farmer 
-# ----------------------------
-@app.route("/add_farmer", methods=["GET", "POST"])                  #Defines a route for adding a new farmer to the system. The methods=["GET", "POST"] part specifies that this route can handle both GET and POST requests.
-def add_farmer():
-
-    if "username" not in session:                                 # Checks if the user is logged in by verifying if "username" exists in the session. If not, it redirects the user to the login page.
-        return redirect("/login")
-
-    if request.method == "POST":                                   # Checks if the request method is POST, indicating that the form has been submitted for adding a new farmer.
-
-        name = request.form["name"]           # Retrieves the name of the new farmer from the submitted form data.
-        mobile = request.form["mobile"]# Retrieves the mobile number of the new farmer from the submitted form data.
-        village = request.form["village"]# Retrieves the village of the new farmer from the submitted form data.
-        username = request.form["username"]# Retrieves the username of the new farmer from the submitted form data.
-        password = request.form["password"]# Retrieves the password of the new farmer from the submitted form data.
-
-        filename = "default.png"           # Sets a default filename for the farmer's photo in case no photo is uploaded.
-
-        photo = request.files.get("photo")       # Retrieves the uploaded photo file from the submitted form data. If no photo is uploaded, it will be None.
-
-        if photo and photo.filename != "":             # Checks if a new photo file has been uploaded (i.e., the file exists and has a filename). If so, it processes the new photo.
-            filename = secure_filename(photo.filename)        # Sanitizes the uploaded photo's filename to ensure it is safe for use in the filesystem.
-            photo.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))           # Saves the uploaded photo file to the specified upload folder on the server, using the sanitized filename. The file is saved in the "static/uploads/" directory.
-
-        conn = connect()
-
-        conn.execute("""
-        INSERT INTO farmers                                                    # Executes a SQL query to insert a new farmer's information into the "farmers" table. The query uses parameterized statements to prevent SQL injection. It inserts the name, mobile number, village, username, password, and photo filename for the new farmer.
-        (name, mobile, village, username, password, photo)
-        VALUES (?, ?, ?, ?, ?, ?)
-        """, (name, mobile, village, username, password, filename))
-
-        conn.commit()
-        conn.close()
-
-        return redirect("/farmers")
-
-    return render_template("add_farmer.html")                                  # Renders the "add_farmer.html" template, which contains the form for adding a new farmer. This is displayed when the request method is GET (i.e., when the user navigates to the add farmer page).
-
-# ----------------------------
-# Register
-# ----------------------------
-
-@app.route("/register", methods=["GET", "POST"])                            #Defines a route for user registration. The methods=["GET", "POST"] part specifies that this route can handle both GET and POST requests.
-def register():
-
-    if request.method == "POST":                                              # Checks if the request method is POST, indicating that the registration form has been submitted.
-
-        name = request.form["name"]                                          # Retrieves the name of the user from the submitted form data.,mobile = request.form["mobile"]                                          # Retrieves the mobile number of the user from the submitted form data.
-        mobile = request.form["mobile"]
-        village = request.form["village"]
-        username = request.form["username"]
-        password = request.form["password"]
-
-        # Photo
-        photo = request.files["photo"]             # Retrieves the uploaded photo file from the submitted form data. If no photo is uploaded, it will be None.
-
-        filename = "default.png"                # Sets a default filename for the user's photo in case no photo is uploaded.
-
-        if photo and photo.filename != "":              # Checks if a new photo file has been uploaded (i.e., the file exists and has a filename). If so, it processes the new photo.
-            filename = secure_filename(photo.filename)              # Sanitizes the uploaded photo's filename to ensure it is safe for use in the filesystem.
-            photo.save(os.path.join("static/uploads", filename))             # Saves the uploaded photo file to the specified upload folder on the server, using the sanitized filename. The file is saved in the "static/uploads/" directory.
-
-        conn = connect()
-        cursor = conn.cursor()
-
-        cursor.execute("SELECT * FROM farmers WHERE username = ?", (username,))                     # Executes a SQL query to check if the provided username already exists in the "farmers" table. The query uses a parameterized statement to prevent SQL injection.
-        user = cursor.fetchone()
-
-        if user:                              # If a user with the provided username already exists in the database, it means the username is taken. In this case, the function closes the database connection and returns a message indicating that the username already exists and prompts the user to choose another username.
-            conn.close()                    # Closes the database connection to free up resources.
-            return "Username already exists! Please choose another username."          
-
-        cursor.execute("""                                    
-        INSERT INTO farmers
-        (name, mobile, village, username, password, photo)
-        VALUES (?, ?, ?, ?, ?, ?)                                       # Executes a SQL query to insert the new user's information into the "farmers" table. The query uses parameterized statements to prevent SQL injection. It inserts the name, mobile number, village, username, password, and photo filename for the new user.
-        """, (name, mobile, village, username, password, filename))           
-
-        conn.commit()
-        conn.close()
-
-        return redirect("/login")
-
-    return render_template("register.html")
-
-
-
-# ----------------------------
-# Login
-# ----------------------------
-
-@app.route("/login", methods=["GET", "POST"])
+@app.route(
+    "/login",
+    methods=["GET", "POST"]
+)
 def login():
 
     if request.method == "POST":
 
-        username = request.form["username"]
-        password = request.form["password"]
+        username = request.form.get(
+            "username",
+            ""
+        ).strip()
+
+        password = request.form.get(
+            "password",
+            ""
+        ).strip()
+
 
         conn = connect()
 
-        cursor = conn.cursor()
-        user = cursor.execute("""
-        SELECT * FROM farmers
-        WHERE username=? AND password=?
-        """,
-        (username, password)).fetchone()
+        user = conn.execute("""
+            SELECT *
+            FROM farmers
+            WHERE username = ?
+            AND password = ?
+        """, (
+            username,
+            password
+        )).fetchone()
 
         conn.close()
 
+
         if user:
 
+            # Store session
             session["username"] = user["username"]
 
-            return redirect("/dashboard")
+            session["role"] = user["role"]
 
-        else:
-
-            flash("Invalid Username or Password", "danger")
-
-    return render_template("login.html")
+            session["farmer_id"] = user["id"]
 
 
-# ----------------------------
-# Motor ON
-# ----------------------------
+            # -----------------------------
+            # ADMIN
+            # -----------------------------
 
-@app.route("/motor/on")
-def motor_on():
+            if user["role"] == "admin":
 
-    session["motor_status"] = True
+                return redirect(
+                    url_for("admin_dashboard")
+                )
 
-    return redirect("/dashboard")
+
+            # -----------------------------
+            # FARMER
+            # -----------------------------
+
+            return redirect(
+                url_for("farmer_dashboard")
+            )
 
 
-# ----------------------------
-# Motor OFF
-# ----------------------------
+        flash(
+            "Invalid username or password!",
+            "danger"
+        )
 
-@app.route("/motor/off")
-def motor_off():
+        return redirect(
+            url_for("login")
+        )
 
-    session["motor_status"] = False
 
-    return redirect("/dashboard")
+    return render_template(
+        "login.html"
+    )
 
-# ----------------------------
-# Dashboard
-# ----------------------------
 
-@app.route("/dashboard")
-def dashboard():
+# ============================================================
+# REGISTER
+# ============================================================
+
+@app.route(
+    "/register",
+    methods=["GET", "POST"]
+)
+def register():
+
+    if request.method == "POST":
+
+        name = request.form.get(
+            "name",
+            ""
+        ).strip()
+
+        mobile = request.form.get(
+            "mobile",
+            ""
+        ).strip()
+
+        village = request.form.get(
+            "village",
+            ""
+        ).strip()
+
+        username = request.form.get(
+            "username",
+            ""
+        ).strip()
+
+        password = request.form.get(
+            "password",
+            ""
+        ).strip()
+
+
+        # Validation
+        if (
+            not name
+            or not mobile
+            or not village
+            or not username
+            or not password
+        ):
+
+            return render_template(
+                "register.html",
+                error="Please fill all fields."
+            )
+
+
+        # Photo
+        photo = request.files.get(
+            "photo"
+        )
+
+        filename = "default.png"
+
+
+        if photo and photo.filename:
+
+            filename = secure_filename(
+                photo.filename
+            )
+
+            photo.save(
+                os.path.join(
+                    app.config["UPLOAD_FOLDER"],
+                    filename
+                )
+            )
+
+
+        conn = connect()
+
+
+        try:
+
+            conn.execute("""
+                INSERT INTO farmers
+                (
+                    name,
+                    mobile,
+                    village,
+                    username,
+                    password,
+                    role,
+                    photo
+                )
+
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                name,
+                mobile,
+                village,
+                username,
+                password,
+                "farmer",
+                filename
+            ))
+
+            conn.commit()
+
+
+        except sqlite3.IntegrityError:
+
+            conn.close()
+
+            return render_template(
+                "register.html",
+                error="Username already exists."
+            )
+
+
+        conn.close()
+
+
+        flash(
+            "Registration successful! Please login.",
+            "success"
+        )
+
+        return redirect(
+            url_for("login")
+        )
+
+
+    return render_template(
+        "register.html"
+    )
+
+
+# ============================================================
+# ADMIN DASHBOARD
+# ============================================================
+
+@app.route("/admin_dashboard")
+def admin_dashboard():
 
     if "username" not in session:
-        return redirect("/login")
+
+        return redirect(
+            url_for("login")
+        )
+
+
+    if session.get("role") != "admin":
+
+        flash(
+            "Access denied! Admin only.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("farmer_dashboard")
+        )
+
 
     conn = connect()
 
-    total_farmers = conn.execute(
-        "SELECT COUNT(*) FROM farmers"
-    ).fetchone()[0]
 
-    total_crops = conn.execute(
-        "SELECT COUNT(*) FROM crop"
-    ).fetchone()[0]
+    # Total farmers
+    total_farmers = conn.execute("""
+        SELECT COUNT(*)
+        FROM farmers
+        WHERE role = 'farmer'
+    """).fetchone()[0]
+
+
+    # Total crops
+    total_crops = conn.execute("""
+        SELECT COUNT(*)
+        FROM crop
+    """).fetchone()[0]
+
+
+    # Total sensor records
+    total_records = conn.execute("""
+        SELECT COUNT(*)
+        FROM sensor_record
+    """).fetchone()[0]
+
+
+    # Motor ON count
+    motor_on_count = conn.execute("""
+        SELECT COUNT(*)
+        FROM sensor_record
+        WHERE motor_status = 'ON'
+    """).fetchone()[0]
+
 
     conn.close()
 
-    # Motor status
-    if "motor_status" not in session:
-        session["motor_status"] = False
-
-    # Dashboard weather data
-    weather = {
-        "temp": 28,
-        "humidity": 65,
-        "wind": 12,
-        "condition": "Sunny"
-    }
 
     return render_template(
-
-        "dashboard.html",
-
-        username=session["username"],
+        "admin_dashboard.html",
 
         total_farmers=total_farmers,
 
         total_crops=total_crops,
 
-        weather=weather,
+        total_records=total_records,
 
-        motor_status=session["motor_status"],
-
-        temperature=28,
-
-        humidity=65,
-
-        moisture=45,
-
-        city="Hingoli",
-
-        wind="12 km/h"
+        motor_on_count=motor_on_count
     )
+
+
+# ============================================================
+# FARMER DASHBOARD
+# ============================================================
+
+@app.route("/farmer_dashboard")
+def farmer_dashboard():
+
+    if "username" not in session:
+
+        return redirect(
+            url_for("login")
+        )
+
+
+    if session.get("role") != "farmer":
+
+        return redirect(
+            url_for("admin_dashboard")
+        )
+
+
+    farmer_id = session.get(
+        "farmer_id"
+    )
+
+
+    conn = connect()
+
+
+    farmer = conn.execute("""
+        SELECT *
+        FROM farmers
+        WHERE id = ?
+    """, (
+        farmer_id,
+    )).fetchone()
+
+
+    latest_record = conn.execute("""
+        SELECT *
+        FROM sensor_record
+        ORDER BY id DESC
+        LIMIT 1
+    """).fetchone()
+
+
+    irrigation = conn.execute("""
+        SELECT *
+        FROM irrigation
+        WHERE farmer_id = ?
+        ORDER BY id DESC
+        LIMIT 1
+    """, (
+        farmer_id,
+    )).fetchone()
+
+
+    conn.close()
+
+
+    return render_template(
+        "farmer_dashboard.html",
+
+        farmer=farmer,
+
+        latest_record=latest_record,
+
+        irrigation=irrigation
+    )
+
+
+# ============================================================
+# FARMERS LIST - ADMIN ONLY
+# ============================================================
+
+@app.route("/farmers")
+def farmers():
+
+    if "username" not in session:
+
+        return redirect(
+            url_for("login")
+        )
+
+
+    if session.get("role") != "admin":
+
+        flash(
+            "Only Admin can access Farmer Management.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("farmer_dashboard")
+        )
+
+
+    page = request.args.get(
+        "page",
+        1,
+        type=int
+    )
+
+
+    if page < 1:
+
+        page = 1
+
+
+    per_page = 10
+
+
+    search = request.args.get(
+        "search",
+        ""
+    ).strip()
+
+
+    village = request.args.get(
+        "village",
+        ""
+    ).strip()
+
+
+    sort = request.args.get(
+        "sort",
+        "new"
+    )
+
+
+    conn = connect()
+
+
+    where = """
+        WHERE role = 'farmer'
+    """
+
+    params = []
+
+
+    # Search
+    if search:
+
+        where += """
+            AND name LIKE ?
+        """
+
+        params.append(
+            f"%{search}%"
+        )
+
+
+    # Village
+    if village:
+
+        where += """
+            AND village LIKE ?
+        """
+
+        params.append(
+            f"%{village}%"
+        )
+
+
+    # Count
+    total = conn.execute(
+        "SELECT COUNT(*) FROM farmers "
+        + where,
+        params
+    ).fetchone()[0]
+
+
+    total_pages = max(
+        1,
+        ceil(total / per_page)
+    )
+
+
+    if page > total_pages:
+
+        page = total_pages
+
+
+    offset = (
+        page - 1
+    ) * per_page
+
+
+    # Sorting
+    order = """
+        ORDER BY id DESC
+    """
+
+
+    if sort == "old":
+
+        order = """
+            ORDER BY id ASC
+        """
+
+
+    elif sort == "az":
+
+        order = """
+            ORDER BY name ASC
+        """
+
+
+    elif sort == "za":
+
+        order = """
+            ORDER BY name DESC
+        """
+
+
+    # IMPORTANT:
+    # LIMIT ? OFFSET ? मध्ये space आहे.
+    query = (
+        "SELECT * FROM farmers "
+        + where
+        + " "
+        + order
+        + " LIMIT ? OFFSET ?"
+    )
+
+
+    final_params = (
+        params
+        + [
+            per_page,
+            offset
+        ]
+    )
+
+
+    farmers = conn.execute(
+        query,
+        final_params
+    ).fetchall()
+
+
+    conn.close()
+
+
+    return render_template(
+        "farmers.html",
+
+        farmers=farmers,
+
+        page=page,
+
+        total_pages=total_pages,
+
+        search=search,
+
+        village=village,
+
+        sort=sort
+    )
+
+
+# ============================================================
+# FARMER PROFILE
+# ============================================================
+
+@app.route(
+    "/farmer_profile/<int:id>"
+)
+def farmer_profile(id):
+
+    if "username" not in session:
+
+        return redirect(
+            url_for("login")
+        )
+
+
+    # Farmer can view only own profile
+    if session.get("role") == "farmer":
+
+        if session.get("farmer_id") != id:
+
+            flash(
+                "You can access only your own profile.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("farmer_dashboard")
+            )
+
+
+    conn = connect()
+
+
+    farmer = conn.execute("""
+        SELECT *
+        FROM farmers
+        WHERE id = ?
+    """, (
+        id,
+    )).fetchone()
+
+
+    conn.close()
+
+
+    if not farmer:
+
+        flash(
+            "Farmer not found.",
+            "danger"
+        )
+
+        if session.get("role") == "admin":
+
+            return redirect(
+                url_for("farmers")
+            )
+
+        return redirect(
+            url_for("farmer_dashboard")
+        )
+
+
+    return render_template(
+        "farmer_profile.html",
+        farmer=farmer
+    )
+
+
+# ============================================================
+# MY PROFILE
+# ============================================================
+
+@app.route("/my_profile")
+def my_profile():
+
+    if "username" not in session:
+
+        return redirect(
+            url_for("login")
+        )
+
+
+    farmer_id = session.get(
+        "farmer_id"
+    )
+
+
+    conn = connect()
+
+
+    farmer = conn.execute("""
+        SELECT *
+        FROM farmers
+        WHERE id = ?
+    """, (
+        farmer_id,
+    )).fetchone()
+
+
+    conn.close()
+
+
+    return render_template(
+        "farmer_profile.html",
+        farmer=farmer
+    )
+
+
+
+
+# ============================================================
+# EDIT FARMER - ADMIN ONLY
+# ============================================================
+
+# ============================================================
+# EDIT FARMER PROFILE
+# ADMIN + FARMER
+# ============================================================
+
+@app.route(
+    "/edit_farmer/<int:id>",
+    methods=["GET", "POST"]
+)
+def edit_farmer(id):
+
+    # --------------------------------------------------------
+    # LOGIN CHECK
+    # --------------------------------------------------------
+
+    if "username" not in session:
+
+        return redirect(
+            url_for("login")
+        )
+
+
+    # --------------------------------------------------------
+    # FARMER CAN EDIT ONLY OWN PROFILE
+    # ADMIN CAN EDIT ANY FARMER
+    # --------------------------------------------------------
+
+    if session.get("role") == "farmer":
+
+        if session.get("farmer_id") != id:
+
+            flash(
+                "You can edit only your own profile.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("farmer_dashboard")
+            )
+
+
+    # --------------------------------------------------------
+    # DATABASE
+    # --------------------------------------------------------
+
+    conn = connect()
+
+    cursor = conn.cursor()
+
+
+    # Get farmer
+    cursor.execute("""
+        SELECT *
+        FROM farmers
+        WHERE id = ?
+    """, (
+        id,
+    ))
+
+    farmer = cursor.fetchone()
+
+
+    if not farmer:
+
+        conn.close()
+
+        flash(
+            "Farmer not found!",
+            "danger"
+        )
+
+        if session.get("role") == "admin":
+
+            return redirect(
+                url_for("farmers")
+            )
+
+        return redirect(
+            url_for("farmer_dashboard")
+        )
+
+
+    # ========================================================
+    # POST - UPDATE PROFILE
+    # ========================================================
+
+    if request.method == "POST":
+
+        name = request.form.get(
+            "name",
+            ""
+        ).strip()
+
+        mobile = request.form.get(
+            "mobile",
+            ""
+        ).strip()
+
+        village = request.form.get(
+            "village",
+            ""
+        ).strip()
+
+        username = request.form.get(
+            "username",
+            ""
+        ).strip()
+
+
+        # ----------------------------------------------------
+        # OLD PHOTO
+        # ----------------------------------------------------
+
+        old_photo = farmer["photo"]
+
+
+        # ----------------------------------------------------
+        # NEW PHOTO
+        # ----------------------------------------------------
+
+        photo_file = request.files.get(
+            "photo"
+        )
+
+
+        if (
+            photo_file
+            and photo_file.filename != ""
+        ):
+
+            filename = secure_filename(
+                photo_file.filename
+            )
+
+            photo_file.save(
+                os.path.join(
+                    app.config["UPLOAD_FOLDER"],
+                    filename
+                )
+            )
+
+        else:
+
+            filename = old_photo
+
+
+        # ----------------------------------------------------
+        # UPDATE DATABASE
+        # ----------------------------------------------------
+
+        try:
+
+            cursor.execute("""
+                UPDATE farmers
+                SET
+                    name = ?,
+                    mobile = ?,
+                    village = ?,
+                    username = ?,
+                    photo = ?
+                WHERE id = ?
+            """, (
+                name,
+                mobile,
+                village,
+                username,
+                filename,
+                id
+            ))
+
+
+            conn.commit()
+
+
+        except sqlite3.IntegrityError:
+
+            conn.close()
+
+            flash(
+                "Username already exists!",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "edit_farmer",
+                    id=id
+                )
+            )
+
+
+        conn.close()
+
+
+        # ----------------------------------------------------
+        # UPDATE SESSION USERNAME
+        # ----------------------------------------------------
+
+        session["username"] = username
+
+
+        flash(
+            "Profile updated successfully!",
+            "success"
+        )
+
+
+        # ----------------------------------------------------
+        # BACK TO PROFILE
+        # ----------------------------------------------------
+
+        return redirect(
+            url_for(
+                "farmer_profile",
+                id=id
+            )
+        )
+
+
+    # ========================================================
+    # GET - SHOW EDIT PAGE
+    # ========================================================
+
+    conn.close()
+
+
+    return render_template(
+        "edit_profile.html",
+        farmer=farmer
+    )
+
+# ============================================================
+# DELETE FARMER - ADMIN ONLY
+# ============================================================
+
+@app.route("/delete_farmer/<int:id>")
+def delete_farmer(id):
+
+    if "username" not in session:
+
+        return redirect("/login")
+
+
+    if session.get("role") != "admin":
+
+        flash(
+            "Only Admin can delete farmers.",
+            "danger"
+        )
+
+        return redirect("/farmer_dashboard")
+
+
+    conn = connect()
+
+    conn.execute("""
+        DELETE FROM farmers
+        WHERE id = ?
+        AND role = 'farmer'
+    """, (
+        id,
+    ))
+
+    conn.commit()
+
+    conn.close()
+
+
+    flash(
+        "Farmer deleted successfully!",
+        "success"
+    )
+
+    return redirect("/farmers")
+
+
+# ============================================================
+# ADD FARMER - ADMIN ONLY
+# ============================================================
+
+@app.route(
+    "/add_farmer",
+    methods=["GET", "POST"]
+)
+def add_farmer():
+
+    if "username" not in session:
+
+        return redirect("/login")
+
+
+    if session.get("role") != "admin":
+
+        flash(
+            "Only Admin can add farmers.",
+            "danger"
+        )
+
+        return redirect("/farmer_dashboard")
+
+
+    if request.method == "POST":
+
+        name = request.form["name"]
+
+        mobile = request.form["mobile"]
+
+        village = request.form["village"]
+
+        username = request.form["username"]
+
+        password = request.form["password"]
+
+
+        # Every farmer added here gets farmer role
+        role = "farmer"
+
+
+        # Photo
+        photo = request.files.get(
+            "photo"
+        )
+
+        filename = "default.png"
+
+
+        if photo and photo.filename != "":
+
+            filename = secure_filename(
+                photo.filename
+            )
+
+            photo.save(
+                os.path.join(
+                    app.config["UPLOAD_FOLDER"],
+                    filename
+                )
+            )
+
+
+        conn = connect()
+
+
+        try:
+
+            conn.execute("""
+                INSERT INTO farmers
+                (
+                    name,
+                    mobile,
+                    village,
+                    username,
+                    password,
+                    photo,
+                    role
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                name,
+                mobile,
+                village,
+                username,
+                password,
+                filename,
+                role
+            ))
+
+
+            conn.commit()
+
+
+            flash(
+                "Farmer added successfully!",
+                "success"
+            )
+
+
+        except sqlite3.IntegrityError:
+
+            flash(
+                "Username already exists!",
+                "danger"
+            )
+
+
+        finally:
+
+            conn.close()
+
+
+        return redirect("/farmers")
+
+
+    return render_template(
+        "add_farmer.html"
+    )
+
+
+# ============================================================
+# CREATE ADMIN ACCOUNT
+# ============================================================
+# Run this function ONCE if you need an admin account.
+#
+# Username: admin
+# Password: admin123
+#
+# After creating the account, you can comment this function
+# if you want.
+# ============================================================
+
+def create_admin():
+
+    conn = connect()
+
+    try:
+
+        existing_admin = conn.execute("""
+            SELECT id
+            FROM farmers
+            WHERE username = ?
+        """, (
+            "admin",
+        )).fetchone()
+
+
+        if not existing_admin:
+
+            conn.execute("""
+                INSERT INTO farmers
+                (
+                    name,
+                    mobile,
+                    village,
+                    username,
+                    password,
+                    photo,
+                    role
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                "Admin",
+                "0000000000",
+                "Admin",
+                "admin",
+                "admin123",
+                "default.png",
+                "admin"
+            ))
+
+            conn.commit()
+
+            print("Admin account created.")
+
+        else:
+
+            print("Admin account already exists.")
+
+
+    except sqlite3.OperationalError as e:
+
+        print(
+            "Admin creation error:",
+            e
+        )
+
+
+    finally:
+
+        conn.close()
+
+
+# Create admin account
+create_admin()
+
+
 # ----------------------------
 # AI CROP INFORMATION
 # ----------------------------
 
-@app.route("/crop_ai", methods=["GET", "POST"])
-def crop_ai():
+# =========================================================
+# CROP MANAGEMENT
+# =========================================================
 
-    if "username" not in session:
-        return redirect("/login")
+@app.route("/crop", methods=["GET", "POST"])
+def crop():
+
+    crops = []
+
+    # Saved crops
+    try:
+        conn = sqlite3.connect("agriculture.db")
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            SELECT * FROM crop
+            ORDER BY id DESC
+        """)
+
+        crops = cursor.fetchall()
+
+        conn.close()
+
+    except Exception as e:
+        print("Crop DB Error:", e)
+
 
     crop_info = None
     crop_name = ""
     image_url = None
 
+
+    # AI SEARCH
     if request.method == "POST":
 
         crop_name = request.form.get("crop_name", "").strip()
 
         if crop_name:
 
-            prompt = f"""
-You are an expert agricultural advisor.
-
-Give accurate and practical information about this crop:
-{crop_name}
-
-Return ONLY valid JSON.
-
-Use exactly these keys:
-
-crop_name
-season
-sowing_time
-harvesting_time
-temperature
-soil
-water_requirement
-irrigation
-fertilizer
-growth_duration
-common_pests
-common_diseases
-farming_tips
-
-Rules:
-- Give simple information suitable for Indian farmers.
-- Keep each value short but useful.
-- Do not use markdown.
-- Do not use json.
-"""
-
             try:
 
-                # =========================
-                # AI INFORMATION
-                # =========================
+                prompt = f"""
+You are an agriculture expert.
+
+Give useful farming information about {crop_name}.
+
+Return ONLY valid JSON in exactly this format:
+
+{{
+    "crop_name": "{crop_name}",
+    "season": "...",
+    "sowing_time": "...",
+    "harvesting_time": "...",
+    "temperature": "...",
+    "soil": "...",
+    "water_requirement": "...",
+    "irrigation": "...",
+    "fertilizer": "...",
+    "growth_duration": "...",
+    "common_pests": "...",
+    "common_diseases": "...",
+    "farming_tips": "..."
+}}
+
+Give practical and simple information.
+"""
+
 
                 response = groq_client.chat.completions.create(
 
-                    model="llama-3.1-8b-instant",
+                    model="llama-3.3-70b-versatile",
 
                     messages=[
                         {
@@ -588,155 +1545,298 @@ Rules:
                         }
                     ],
 
-                    temperature=0.3,
-                    max_tokens=1000
+                    temperature=0.3
                 )
+
 
                 ai_text = response.choices[0].message.content.strip()
 
-                ai_text = ai_text.replace("json", "")
-                ai_text = ai_text.replace("```", "")
-                ai_text = ai_text.strip()
+
+                # Remove markdown JSON if AI adds it
+                if ai_text.startswith(""):
+                    ai_text = ai_text.replace("json", "")
+                    ai_text = ai_text.replace("```", "")
+                    ai_text = ai_text.strip()
+
+
+                import json
 
                 crop_info = json.loads(ai_text)
 
 
-                # =========================
-                # AUTOMATIC CROP IMAGE
-                # =========================
-
-                try:
-
-                    search_name = crop_info.get(
-                        "crop_name",
-                        crop_name
-                    )
-
-                    image_api = (
-                        "https://commons.wikimedia.org/"
-                        "w/api.php"
-                    )
-
-                    image_params = {
-
-                        "action": "query",
-
-                        "generator": "search",
-
-                        "gsrsearch":
-                            f"{search_name} crop agriculture",
-
-                        "gsrnamespace": 6,
-
-                        "gsrlimit": 5,
-
-                        "prop": "imageinfo",
-
-                        "iiprop": "url",
-
-                        "format": "json"
-                    }
-
-                    image_response = requests.get(
-                        image_api,
-                        params=image_params,
-                        headers={
-                            "User-Agent":
-                            "AgroMonitor/1.0"
-                        },
-                        timeout=10
-                    )
-
-                    image_data = image_response.json()
-
-                    pages = image_data.get(
-                        "query",
-                        {}
-                    ).get(
-                        "pages",
-                        {}
-                    )
-
-                    if pages:
-
-                        first_page = next(
-                            iter(pages.values())
-                        )
-
-                        image_info = first_page.get(
-                            "imageinfo",
-                            []
-                        )
-
-                        if image_info:
-
-                            image_url = image_info[0].get(
-                                "url"
-                            )
-
-                except Exception as image_error:
-
-                    print(
-                        "CROP IMAGE ERROR:",
-                        image_error
-                    )
-
-                    image_url = None
-
-
-            except Exception as ai_error:
-
-                print(
-                    "AI CROP ERROR:",
-                    ai_error
+                # Simple crop image
+                image_url = (
+                    "https://images.unsplash.com/"
+                    "photo-1497250681960-ef046c08a56e"
+                    "?auto=format&fit=crop&w=900&q=80"
                 )
 
-                crop_info = {
 
-                    "error":
-                    "AI service is temporarily unavailable. Please try again."
+            except Exception as e:
+
+                print("AI CROP ERROR:", e)
+
+                crop_info = {
+                    "error": "AI information could not be generated right now."
                 }
 
 
     return render_template(
-
         "crop_ai.html",
-
+        crops=crops,
         crop_info=crop_info,
-
         crop_name=crop_name,
-
         image_url=image_url
     )
+
+
+# =========================================================
+# ADD CROP
+# =========================================================
+
+@app.route("/add_crop", methods=["GET", "POST"])
+def add_crop():
+
+    if "username" not in session:
+        return redirect("/login")
+
+    if request.method == "POST":
+
+        crop_name = request.form.get("crop_name", "").strip()
+        crop_type = request.form.get("crop_type", "").strip()
+        sowing_date = request.form.get("sowing_date", "").strip()
+
+        if not crop_name:
+            return render_template(
+                "add_crop.html",
+                error="Please enter crop name."
+            )
+
+        conn = sqlite3.connect("agriculture.db")
+
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS crop (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                crop_name TEXT NOT NULL,
+                crop_type TEXT,
+                sowing_date TEXT
+            )
+        """)
+
+        cursor.execute("""
+            INSERT INTO crop
+            (crop_name, crop_type, sowing_date)
+            VALUES (?, ?, ?)
+        """, (
+            crop_name,
+            crop_type,
+            sowing_date
+        ))
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/crop")
+
+    return render_template("add_crop.html")
+
+
+# =========================================================
+# EDIT CROP
+# =========================================================
+
+@app.route("/edit_crop/<int:id>", methods=["GET", "POST"])
+def edit_crop(id):
+
+    if "username" not in session:
+        return redirect("/login")
+
+    conn = sqlite3.connect("agriculture.db")
+    conn.row_factory = sqlite3.Row
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM crop
+        WHERE id = ?
+    """, (id,))
+
+    crop_data = cursor.fetchone()
+
+    if crop_data is None:
+
+        conn.close()
+
+        return "Crop not found", 404
+
+
+    if request.method == "POST":
+
+        crop_name = request.form.get(
+            "crop_name", ""
+        ).strip()
+
+        crop_type = request.form.get(
+            "crop_type", ""
+        ).strip()
+
+        sowing_date = request.form.get(
+            "sowing_date", ""
+        ).strip()
+
+
+        cursor.execute("""
+            UPDATE crop
+
+            SET
+                crop_name = ?,
+                crop_type = ?,
+                sowing_date = ?
+
+            WHERE id = ?
+        """, (
+            crop_name,
+            crop_type,
+            sowing_date,
+            id
+        ))
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/crop")
+
+
+    conn.close()
+
+    return render_template(
+        "edit_crop.html",
+        crop=crop_data
+    )
+
+
+# =========================================================
+# DELETE CROP
+# =========================================================
+
+@app.route("/delete_crop/<int:id>")
+def delete_crop(id):
+
+    if "username" not in session:
+        return redirect("/login")
+
+    conn = sqlite3.connect("agriculture.db")
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        DELETE FROM crop
+        WHERE id = ?
+    """, (id,))
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/crop")
 # ----------------------------
 # Weather
 # ----------------------------
-
-@app.route("/weather")
+@app.route("/weather", methods=["GET", "POST"])
 def weather():
 
-    API_KEY = os.getenv("API_KEY")
-    city = "Hingoli"
+    city = request.form.get("city", "").strip() if request.method == "POST" else request.args.get("city", "Hingoli").strip()
 
-    url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
+    if not city:
+        city = "Hingoli"
 
-    response = requests.get(url)
-    data = response.json()
+    api_key = os.getenv("OPENWEATHER_API_KEY")
 
-    weather_data = {
-        "city": data["name"],
-        "temperature": round(data["main"]["temp"]),
-        "humidity": data["main"]["humidity"],
-        "wind": data["wind"]["speed"],
-        "condition": data["weather"][0]["description"],
-        "icon": data["weather"][0]["icon"]
+    print("WEATHER CITY:", city)
+    print("WEATHER KEY LOADED:", bool(api_key))
+
+    if not api_key:
+        return render_template(
+            "weather.html",
+            error="OpenWeather API key is not configured.",
+            weather=None,
+            forecast=[]
+        )
+
+    url = "https://api.openweathermap.org/data/2.5/weather"
+
+    params = {
+        "q": city,
+        "appid": api_key,
+        "units": "metric"
     }
 
-    return render_template(
-        "weather.html",
-        weather=weather_data
-    )
+    try:
 
+        response = requests.get(
+            url,
+            params=params,
+            timeout=10
+        )
+
+        print("WEATHER STATUS:", response.status_code)
+        print("WEATHER RESPONSE:", response.text[:500])
+
+        data = response.json()
+
+        if response.status_code != 200:
+
+            return render_template(
+                "weather.html",
+                error=data.get("message", "Weather data not found."),
+                weather=None,
+                forecast=[]
+            )
+
+        weather = {
+            "city": data["name"],
+            "country": data["sys"]["country"],
+            "temperature": round(data["main"]["temp"]),
+            "feels_like": round(data["main"]["feels_like"]),
+            "temp_min": round(data["main"]["temp_min"]),
+            "temp_max": round(data["main"]["temp_max"]),
+            "humidity": data["main"]["humidity"],
+            "pressure": data["main"]["pressure"],
+            "wind": round(data["wind"]["speed"] * 3.6, 1),
+            "wind_direction": data["wind"].get("deg", 0),
+            "visibility": round(data.get("visibility", 0) / 1000, 1),
+            "condition": data["weather"][0]["description"].title(),
+            "icon": data["weather"][0]["icon"],
+            "lat": data["coord"]["lat"],
+            "lon": data["coord"]["lon"],
+            "sunrise": datetime.fromtimestamp(
+                data["sys"]["sunrise"]
+            ).strftime("%I:%M %p"),
+            "sunset": datetime.fromtimestamp(
+                data["sys"]["sunset"]
+            ).strftime("%I:%M %p"),
+            "rain_chance": 0
+        }
+
+        return render_template(
+            "weather.html",
+            weather=weather,
+            forecast=[],
+            error=None
+        )
+
+    except Exception as e:
+
+        print("WEATHER ERROR:", repr(e))
+
+        return render_template(
+            "weather.html",
+            weather=None,
+            forecast=[],
+            error=str(e)
+        )
 
 # ----------------------------
 # Motor Control
@@ -749,7 +1849,7 @@ def motor():
 
     if request.method == "POST":
 
-        action = request.form["action"]
+        action = request.form.get("action")
 
         moisture = f"{random.randint(40,80)}%"
         temperature = f"{random.randint(25,35)}°C"
@@ -931,121 +2031,142 @@ def clean_record(record_id):
     conn.close()
 
     return redirect(url_for("analytics"))
-# ----------------------------
-# Irrigation
-# ----------------------------
-
-@app.route("/irrigation", methods=["GET", "POST"])
+# ============================================================
+#  IRRIGATION
+# ============================================================
+@app.route("/irrigation")
 def irrigation():
 
-    if "username" not in session:
-        return redirect("/login")
+    conn = sqlite3.connect("agriculture.db")
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
 
-    conn = connect()
+    # =====================================================
+    # LATEST SOIL MOISTURE
+    # =====================================================
 
-    if request.method == "POST":
-
-        crop_name = request.form["crop_name"]
-        water_time = request.form["water_time"]
-        duration = request.form["duration"]
-
-        conn.execute("""
-        INSERT INTO irrigation_schedule
-        (crop_name, water_time, duration, status)
-        VALUES(?,?,?,?)
-        """,
-        (
-            crop_name,
-            water_time,
-            duration,
-            "Scheduled"
-        ))
-
-        conn.commit()
-
-    records = conn.execute("""
-        SELECT *
-        FROM irrigation_schedule
+    cur.execute("""
+        SELECT moisture
+        FROM sensor_record
+        WHERE moisture IS NOT NULL
+          AND TRIM(moisture) != ''
         ORDER BY id DESC
-    """).fetchall()
+        LIMIT 1
+    """)
+
+    moisture_row = cur.fetchone()
+
+    if moisture_row:
+
+        try:
+            soil_moisture = float(moisture_row["moisture"])
+        except:
+            soil_moisture = 0
+
+    else:
+        soil_moisture = 0
+
+
+    # =====================================================
+    # ALL MOTOR ON EVENTS
+    # =====================================================
+
+    cur.execute("""
+        SELECT id, motor_status, date_time
+        FROM sensor_record
+        WHERE UPPER(TRIM(motor_status)) = 'ON'
+        ORDER BY id ASC
+    """)
+
+    motor_records = cur.fetchall()
+
+
+    total_count = len(motor_records)
+
+    morning_count = 0
+    evening_count = 0
+
+
+    # =====================================================
+    # COUNT MORNING / EVENING
+    # =====================================================
+
+    for row in motor_records:
+
+        date_value = row["date_time"]
+
+        if not date_value:
+            continue
+
+        try:
+
+            date_value = str(date_value).strip()
+
+            dt = datetime.strptime(
+                date_value,
+                "%Y-%m-%d %H:%M:%S"
+            )
+
+            hour = dt.hour
+
+
+            # 5 AM - 11:59 AM
+            if 5 <= hour < 12:
+
+                morning_count += 1
+
+
+            # 5 PM - 11:59 PM
+            elif 17 <= hour <= 23:
+
+                evening_count += 1
+
+
+        except Exception as e:
+
+            print("Date parsing error:", date_value, e)
+
+
+    # =====================================================
+    # LATEST MOTOR STATUS
+    # =====================================================
+
+    cur.execute("""
+        SELECT motor_status
+        FROM sensor_record
+        ORDER BY id DESC
+        LIMIT 1
+    """)
+
+    motor_row = cur.fetchone()
+
+    if motor_row and motor_row["motor_status"]:
+
+        motor_status = str(
+            motor_row["motor_status"]
+        ).strip().upper()
+
+    else:
+
+        motor_status = "OFF"
+
 
     conn.close()
+
 
     return render_template(
         "irrigation.html",
-        records=records
+
+        soil_moisture=soil_moisture,
+
+        total_count=total_count,
+
+        morning_count=morning_count,
+
+        evening_count=evening_count,
+
+        motor_status=motor_status
     )
-
-
-# ----------------------------
-# Edit Irrigation
-# ----------------------------
-
-@app.route("/edit_irrigation/<int:id>", methods=["GET","POST"])
-def edit_irrigation(id):
-
-    conn = connect()
-
-    if request.method == "POST":
-
-        crop_name = request.form["crop_name"]
-        water_time = request.form["water_time"]
-        duration = request.form["duration"]
-
-        conn.execute("""
-        UPDATE irrigation_schedule
-        SET crop_name=?,
-            water_time=?,
-            duration=?
-        WHERE id=?
-        """,
-        (
-            crop_name,
-            water_time,
-            duration,
-            id
-        ))
-
-        conn.commit()
-        conn.close()
-
-        flash("Schedule Updated Successfully!", "success")
-
-        return redirect("/irrigation")
-
-    data = conn.execute(
-        "SELECT * FROM irrigation_schedule WHERE id=?",
-        (id,)
-    ).fetchone()
-
-    conn.close()
-
-    return render_template(
-        "edit_irrigation.html",
-        data=data
-    )
-
-
-# ----------------------------
-# Delete Irrigation
-# ----------------------------
-
-@app.route("/delete_irrigation/<int:id>")
-def delete_irrigation(id):
-
-    conn = connect()
-
-    conn.execute(
-        "DELETE FROM irrigation_schedule WHERE id=?",
-        (id,)
-    )
-
-    conn.commit()
-    conn.close()
-
-    flash("Schedule Deleted Successfully!", "success")
-    return redirect("/irrigation")
-
 # -------------------------
 # MOTOR ANALYTICS
 # ----------------------------
@@ -1299,88 +2420,73 @@ def ai_tips():
         "ai_tips.html",
         username=session["username"],
         advice=advice
-    )# ----------------------------
+    )
+# ----------------------------
 # AI Assistant
 # ----------------------------
 
-@app.route("/ai_assistant", methods=["GET", "POST"])
-def ai_assistant():
-
+@app.route("/ai")
+def ai():
     if "username" not in session:
         return redirect("/login")
 
-    # Chat history
-    chat_history = session.get("ai_chat_history", [])
+    return render_template("ai.html")
 
-    if request.method == "POST":
 
-        question = request.form.get("question", "").strip()
+@app.route("/ai_chat", methods=["POST"])
+def ai_chat():
 
-        if question:
+    if "username" not in session:
+        return {"reply": "Please login first."}, 401
 
-            prompt = f"""
-You are an intelligent Agriculture AI Assistant.
+    data = request.get_json()
+    user_message = data.get("message", "").strip()
 
-Farmer Name:
-{session["username"]}
+    if not user_message:
+        return {"reply": "Please enter a message."}
 
-Farmer's Question:
-{question}
+    try:
 
-Give a clear, practical and easy-to-understand answer.
+        response = groq_client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {
+                    "role": "system",
+                    "content": """
+You are AgroTech AI, an intelligent agricultural assistant.
 
-Rules:
-- Answer in simple language.
-- Keep the answer useful for farming.
-- Give steps when necessary.
-- Do not make the answer unnecessarily long.
+Help farmers with:
+- Crop management
+- Crop diseases
+- Irrigation
+- Soil moisture
+- Weather
+- Fertilizer guidance
+- Smart farming
+- Farm monitoring
+
+Give clear, simple and useful answers.
 """
+                },
+                {
+                    "role": "user",
+                    "content": user_message
+                }
+            ],
+            temperature=0.5
+        )
 
-            try:
+        reply = response.choices[0].message.content
 
-                response = groq_client.chat.completions.create(
-                    model="llama-3.1-8b-instant",
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": "You are a helpful Agriculture AI Assistant."
-                        },
-                        {
-                            "role": "user",
-                            "content": prompt
-                        }
-                    ],
-                    temperature=0.7,
-                    max_tokens=300
-                )
+        return {"reply": reply}
 
-                answer = response.choices[0].message.content
+    except Exception as e:
 
-            except Exception as e:
+        print("AI ERROR:", e)
 
-                print("AI ASSISTANT ERROR:", e)
-
-                answer = "AI Assistant is currently unavailable."
-
-            # Save conversation
-            chat_history.append({
-                "question": question,
-                "answer": answer
-            })
-
-            # Keep latest 20 conversations
-            chat_history = chat_history[-20:]
-
-            session["ai_chat_history"] = chat_history
-            session.modified = True
-
-    return render_template(
-        "ai_assistant.html",
-        username=session["username"],
-        chat_history=chat_history
-    )
-
-
+        return {
+            "reply": "AI service is currently unavailable. Please check your API key and internet connection."
+        }, 500
 # ----------------------------
 # Clear AI Chat
 # ----------------------------
@@ -1393,7 +2499,7 @@ def clear_ai_chat():
 
     session.pop("ai_chat_history", None)
 
-    return redirect("/ai_assistant")
+    return redirect("/ai")
 # ----------------------------
 # Disease Detection
 # ----------------------------
@@ -1774,6 +2880,149 @@ def alerts():
         alerts=alerts_list,
         record=record
     )
+# ============================================================
+# AI DISEASE DETECTION
+# ============================================================
+# ============================================================
+# AI DISEASE DETECTION
+# ============================================================
+
+@app.route("/ai_disease", methods=["GET", "POST"])
+def ai_disease():
+
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    result = None
+    error = None
+
+    if request.method == "POST":
+
+        crop_name = request.form.get("crop_name", "").strip()
+        symptoms = request.form.get("symptoms", "").strip()
+        photo = request.files.get("leaf_image")
+
+        # --------------------------------------------
+        # VALIDATION
+        # --------------------------------------------
+
+        if not crop_name:
+            error = "Please select a crop."
+
+        elif not photo or photo.filename == "":
+            error = "Please upload a leaf image."
+
+        else:
+
+            try:
+
+                # ------------------------------------
+                # SAVE IMAGE
+                # ------------------------------------
+
+                filename = secure_filename(photo.filename)
+
+                filepath = os.path.join(
+                    app.config["UPLOAD_FOLDER"],
+                    filename
+                )
+
+                photo.save(filepath)
+
+
+                # ------------------------------------
+                # AI PROMPT
+                # ------------------------------------
+
+                prompt = f"""
+You are an agriculture assistant.
+
+Crop: {crop_name}
+
+Farmer observed symptoms:
+{symptoms if symptoms else "No symptoms provided."}
+
+Provide a preliminary crop-health analysis.
+
+Give the answer in this format:
+
+🌿 Crop:
+{crop_name}
+
+🦠 Possible Disease:
+<disease name or Healthy>
+
+📊 Confidence:
+<Low / Medium / High>
+
+🔍 Symptoms:
+<short explanation>
+
+原因 / Cause:
+<short explanation>
+
+💊 Suggested Care:
+<basic safe care suggestion>
+
+🛡️ Prevention:
+<short prevention suggestion>
+
+⚠️ Note:
+This is an AI-based preliminary assessment and should not replace advice from an agricultural expert.
+"""
+
+                # ------------------------------------
+                # OPENROUTER
+                # ------------------------------------
+
+                response = openrouter_client.chat.completions.create(
+
+                    model="openai/gpt-4o-mini",
+
+                    messages=[
+                        {
+                            "role": "user",
+                            "content": prompt
+                        }
+                    ],
+
+                    temperature=0.2,
+
+                    max_tokens=600
+                )
+
+
+                # ------------------------------------
+                # GET RESULT
+                # ------------------------------------
+
+                result = response.choices[0].message.content
+
+
+                if not result:
+
+                    error = "AI returned an empty result."
+
+
+            except Exception as e:
+
+                print("================================")
+                print("AI DISEASE ERROR:")
+                print(str(e))
+                print("================================")
+
+                error = (
+                    "AI analysis failed. "
+                    "Please check your OpenRouter API key "
+                    "and try again."
+                )
+
+
+    return render_template(
+        "ai_disease.html",
+        result=result,
+        error=error
+    )
 # ----------------------------
 # Logout
 # ----------------------------
@@ -1787,6 +3036,18 @@ def logout():
 
     return redirect("/")
 
+@app.route("/check_sensor_table")
+def check_sensor_table():
+
+    conn = sqlite3.connect("agriculture.db")
+    cur = conn.cursor()
+
+    cur.execute("PRAGMA table_info(sensor_record)")
+    columns = cur.fetchall()
+
+    conn.close()
+
+    return "<pre>" + str(columns) + "</pre>"
 
 # ----------------------------
 # Run Application

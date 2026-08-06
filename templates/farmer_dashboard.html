@@ -930,7 +930,7 @@ Farmer Profile | AgroTech
 
         <!-- SMART IRRIGATION -->
 
-        <a href="{{ url_for('automatic_irrigation') }}" class="access-card">
+        <a href="{{ url_for('irrigation') }}" class="access-card">
 
             <div class="access-icon">
                 💧
@@ -1020,27 +1020,6 @@ Farmer Profile | AgroTech
         </a>
 
 
-        <!-- DISEASE AI -->
-
-        <a href="#" class="access-card">
-
-            <div class="access-icon">
-                🧬
-            </div>
-
-            <h3>
-                AI Disease Detection
-            </h3>
-
-            <p>
-                Detect possible crop diseases using AI technology.
-            </p>
-
-            <span class="access-arrow">
-                →
-            </span>
-
-        </a>
 
 
         <!-- SMART ALERTS -->
@@ -1133,6 +1112,56 @@ Farmer Profile | AgroTech
             </span>
 
         </a>
+        
+        <!-- DISEASE AI -->
+
+        <a href="{{ url_for('ai_disease') }}" style="
+                    text-decoration:none;
+                    display:block;
+                ">
+
+                    <div style="
+                        background:linear-gradient(135deg,#173b24,#2e7d32);
+                        color:white;
+                        padding:22px;
+                        border-radius:22px;
+                        box-shadow:0 12px 28px rgba(46,125,50,.20);
+                        transition:.25s;
+                    ">
+
+                        <div style="
+                            font-size:30px;
+                            margin-bottom:10px;
+                        ">
+                            🤖
+                        </div>
+
+                        <div style="
+                            font-size:19px;
+                            font-weight:800;
+                        ">
+                            AI Disease Detection
+                        </div>
+
+                        <div style="
+                            margin-top:6px;
+                            opacity:.8;
+                            font-size:13px;
+                        ">
+                            Upload leaf image & analyze crop health
+                        </div>
+
+                        <div style="
+                            margin-top:16px;
+                            font-weight:700;
+                            font-size:13px;
+                        ">
+                            Start AI Analysis →
+                        </div>
+
+            </div>
+
+        </a>
 
 
     </div>
@@ -1160,7 +1189,7 @@ Farmer Profile | AgroTech
 
         </div>
 
-        <a href="{{ url_for('ai_assistant') }}" class="ai-button">
+        <a href="{{ url_for('ai') }}" class="ai-button">
             Open AI Assistant →
         </a>
 

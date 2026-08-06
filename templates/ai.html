@@ -1,0 +1,889 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}AgroTech AI{% endblock %}
+
+{% block content %}
+
+<style>
+.ai-page{
+    min-height:calc(100vh - 70px);
+    background:
+        radial-gradient(circle at 10% 10%,rgba(168,85,247,.12),transparent 25%),
+        radial-gradient(circle at 90% 20%,rgba(236,72,153,.10),transparent 25%),
+        #f8f7fc;
+    padding:20px;
+}
+
+.ai-container{
+    max-width:1250px;
+    height:calc(100vh - 115px);
+    min-height:600px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:270px 1fr;
+    background:#fff;
+    border:1px solid #eee7f5;
+    border-radius:24px;
+    overflow:hidden;
+    box-shadow:0 20px 60px rgba(45,20,70,.12);
+}
+
+/* SIDEBAR */
+
+.ai-sidebar{
+    background:linear-gradient(180deg,#21142d,#321642);
+    color:white;
+    padding:20px 15px;
+    display:flex;
+    flex-direction:column;
+}
+
+.ai-brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:8px;
+    margin-bottom:20px;
+}
+
+.ai-logo{
+    width:45px;
+    height:45px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#a855f7,#ec4899);
+    font-size:23px;
+    box-shadow:0 0 20px rgba(236,72,153,.3);
+}
+
+.ai-brand h2{
+    margin:0;
+    font-size:17px;
+}
+
+.ai-brand small{
+    color:#cfc0d9;
+    font-size:11px;
+}
+
+.new-chat{
+    border:1px solid rgba(255,255,255,.15);
+    background:rgba(255,255,255,.08);
+    color:white;
+    border-radius:12px;
+    padding:12px;
+    cursor:pointer;
+    font-weight:700;
+    text-align:left;
+    transition:.25s;
+}
+
+.new-chat:hover{
+    background:linear-gradient(135deg,#9333ea,#db2777);
+}
+
+.history-title{
+    margin:25px 8px 10px;
+    color:#b9a8c5;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.chat-history{
+    flex:1;
+    overflow-y:auto;
+}
+
+.history-item{
+    padding:11px;
+    border-radius:10px;
+    margin-bottom:5px;
+    color:#e8dfee;
+    font-size:13px;
+    cursor:pointer;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.history-item:hover{
+    background:rgba(255,255,255,.08);
+}
+
+.clear-btn{
+    border:0;
+    background:rgba(255,255,255,.07);
+    color:#e9dff0;
+    padding:11px;
+    border-radius:11px;
+    cursor:pointer;
+    margin-top:12px;
+}
+
+.clear-btn:hover{
+    background:#9f1239;
+}
+
+/* MAIN */
+
+.ai-main{
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+}
+
+.ai-topbar{
+    height:72px;
+    padding:0 25px;
+    border-bottom:1px solid #eee8f3;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.ai-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.ai-title-icon{
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#f3e8ff,#fce7f3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+}
+
+.ai-title h3{
+    margin:0;
+    color:#25192d;
+    font-size:17px;
+}
+
+.ai-title p{
+    margin:3px 0 0;
+    font-size:11px;
+    color:#8b8190;
+}
+
+.online{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    color:#16a34a;
+    font-size:12px;
+    font-weight:700;
+}
+
+.online-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#22c55e;
+    box-shadow:0 0 9px #22c55e;
+}
+
+/* CHAT */
+
+.chat-area{
+    flex:1;
+    overflow-y:auto;
+    padding:30px;
+}
+
+.welcome{
+    max-width:700px;
+    margin:50px auto 25px;
+    text-align:center;
+}
+
+.welcome-icon{
+    width:75px;
+    height:75px;
+    margin:auto;
+    border-radius:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#9333ea,#ec4899);
+    font-size:38px;
+    box-shadow:0 12px 35px rgba(147,51,234,.25);
+}
+
+.welcome h1{
+    margin:18px 0 8px;
+    color:#201728;
+    font-size:28px;
+}
+
+.welcome p{
+    color:#8a8190;
+    font-size:14px;
+}
+
+.quick-prompts{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    max-width:650px;
+    margin:25px auto;
+}
+
+.quick-btn{
+    padding:13px;
+    border-radius:13px;
+    border:1px solid #eee5f5;
+    background:#fff;
+    color:#4b3a55;
+    text-align:left;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.quick-btn:hover{
+    border-color:#c084fc;
+    transform:translateY(-2px);
+    box-shadow:0 7px 20px rgba(124,58,237,.08);
+}
+
+/* MESSAGES */
+
+.message{
+    display:flex;
+    gap:12px;
+    margin-bottom:22px;
+    max-width:850px;
+}
+
+.message.user{
+    margin-left:auto;
+    flex-direction:row-reverse;
+}
+
+.avatar{
+    width:36px;
+    height:36px;
+    flex-shrink:0;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#f3e8ff;
+}
+
+.user .avatar{
+    background:linear-gradient(135deg,#9333ea,#ec4899);
+    color:white;
+}
+
+.bubble{
+    padding:13px 16px;
+    border-radius:16px;
+    background:#f8f6fa;
+    color:#33283b;
+    font-size:14px;
+    line-height:1.6;
+    max-width:700px;
+}
+
+.user .bubble{
+    background:linear-gradient(135deg,#7c3aed,#a855f7);
+    color:white;
+    border-bottom-right-radius:5px;
+}
+
+.ai .bubble{
+    border-bottom-left-radius:5px;
+}
+
+.copy-btn{
+    margin-top:8px;
+    border:0;
+    background:transparent;
+    color:#8b5cf6;
+    cursor:pointer;
+    font-size:11px;
+}
+
+/* INPUT */
+
+.input-section{
+    padding:15px 22px 20px;
+    border-top:1px solid #eee8f3;
+}
+
+.input-box{
+    max-width:900px;
+    margin:auto;
+    border:1px solid #ddd4e5;
+    border-radius:17px;
+    padding:8px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:white;
+    box-shadow:0 7px 25px rgba(40,20,60,.07);
+}
+
+.input-box textarea{
+    flex:1;
+    border:0;
+    outline:none;
+    resize:none;
+    padding:10px;
+    font-family:inherit;
+    font-size:14px;
+    max-height:100px;
+}
+
+.input-btn{
+    width:40px;
+    height:40px;
+    border:0;
+    border-radius:12px;
+    background:#f5f0f8;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.send-btn{
+    background:linear-gradient(135deg,#9333ea,#ec4899);
+    color:white;
+}
+
+.ai-note{
+    text-align:center;
+    margin-top:7px;
+    font-size:10px;
+    color:#a39aa9;
+}
+
+/* TYPING */
+
+.typing{
+    display:flex;
+    gap:4px;
+    padding:5px;
+}
+
+.typing span{
+    width:6px;
+    height:6px;
+    background:#a855f7;
+    border-radius:50%;
+    animation:typing 1s infinite;
+}
+
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.3s}
+
+@keyframes typing{
+    0%,60%,100%{transform:translateY(0)}
+    30%{transform:translateY(-5px)}
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .ai-page{
+        padding:8px;
+    }
+
+    .ai-container{
+        grid-template-columns:1fr;
+        height:calc(100vh - 85px);
+    }
+
+    .ai-sidebar{
+        display:none;
+    }
+
+    .chat-area{
+        padding:18px 12px;
+    }
+
+    .welcome{
+        margin:25px auto;
+    }
+
+    .welcome h1{
+        font-size:23px;
+    }
+
+    .quick-prompts{
+        grid-template-columns:1fr;
+    }
+
+    .ai-topbar{
+        padding:0 15px;
+    }
+
+    .online{
+        display:none;
+    }
+}
+</style>
+
+
+<div class="ai-page">
+
+<div class="ai-container">
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="ai-sidebar">
+
+    <div class="ai-brand">
+
+        <div class="ai-logo">🤖</div>
+
+        <div>
+            <h2>AgroTech AI</h2>
+            <small>Smart Farming Assistant</small>
+        </div>
+
+    </div>
+
+
+    <button class="new-chat" onclick="newChat()">
+        ＋ New Chat
+    </button>
+
+
+    <div class="history-title">
+        Chat History
+    </div>
+
+
+    <div class="chat-history" id="chatHistory">
+        <div class="history-item">
+            🌱 Crop Assistant
+        </div>
+    </div>
+
+
+    <button class="clear-btn" onclick="clearChat()">
+        🗑️ Clear Chat
+    </button>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="ai-main">
+
+
+    <div class="ai-topbar">
+
+        <div class="ai-title">
+
+            <div class="ai-title-icon">
+                🤖
+            </div>
+
+            <div>
+                <h3>AgroTech AI Assistant</h3>
+                <p>Intelligent farming support</p>
+            </div>
+
+        </div>
+
+
+        <div class="online">
+
+            <span class="online-dot"></span>
+
+            AI Online
+
+        </div>
+
+    </div>
+
+
+    <!-- CHAT AREA -->
+
+    <div class="chat-area" id="chatArea">
+
+        <div class="welcome" id="welcome">
+
+            <div class="welcome-icon">
+                🌱
+            </div>
+
+            <h1>
+                Hello, Farmer! 👋
+            </h1>
+
+            <p>
+                Ask me anything about your crops,
+                irrigation, weather and smart farming.
+            </p>
+
+        </div>
+
+
+        <div class="quick-prompts" id="quickPrompts">
+
+            <button class="quick-btn"
+                    onclick="askQuestion('How can I improve my crop growth?')">
+                🌱 How can I improve my crop growth?
+            </button>
+
+            <button class="quick-btn"
+                    onclick="askQuestion('When should I irrigate my crop?')">
+                💧 When should I irrigate my crop?
+            </button>
+
+            <button class="quick-btn"
+                    onclick="askQuestion('What are common crop diseases?')">
+                🦠 What are common crop diseases?
+            </button>
+
+            <button class="quick-btn"
+                    onclick="askQuestion('Give me smart farming tips')">
+                🤖 Give me smart farming tips
+            </button>
+
+        </div>
+
+
+        <div id="messages"></div>
+
+    </div>
+
+
+    <!-- INPUT -->
+
+    <div class="input-section">
+
+        <div class="input-box">
+
+            <button class="input-btn"
+                    title="Image upload">
+                📎
+            </button>
+
+            <textarea
+                id="messageInput"
+                rows="1"
+                placeholder="Ask AgroTech AI..."
+                onkeydown="handleEnter(event)"
+            ></textarea>
+
+            <button class="input-btn">
+                🎤
+            </button>
+
+            <button
+                class="input-btn send-btn"
+                onclick="sendMessage()">
+                ➤
+            </button>
+
+        </div>
+
+        <div class="ai-note">
+            AgroTech AI can provide farming guidance. Always verify important agricultural decisions locally.
+        </div>
+
+    </div>
+
+</main>
+
+</div>
+
+</div>
+
+
+<script>
+
+let messages = [];
+
+
+// ===========================================
+// SEND MESSAGE
+// ===========================================
+
+function sendMessage(){
+
+    const input =
+        document.getElementById("messageInput");
+
+    const text =
+        input.value.trim();
+
+    if(!text) return;
+
+    askQuestion(text);
+
+    input.value = "";
+
+}
+
+
+// ===========================================
+// ASK QUESTION
+// ===========================================
+
+function askQuestion(text){
+
+    document.getElementById("welcome").style.display="none";
+    document.getElementById("quickPrompts").style.display="none";
+
+    addMessage("user",text);
+
+    showTyping();
+
+    /*
+       Flask AI endpoint
+    */
+
+    fetch("/ai_chat",{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+            message:text
+        })
+
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        removeTyping();
+
+        if(data.reply){
+
+            addMessage("ai",data.reply);
+
+        }else{
+
+            addMessage(
+                "ai",
+                "Sorry, मला आत्ता response मिळाला नाही."
+            );
+
+        }
+
+    })
+
+    .catch(error => {
+
+        removeTyping();
+
+        addMessage(
+            "ai",
+            "⚠️ AI service connect झाली नाही. Flask server किंवा API key तपासा."
+        );
+
+    });
+
+}
+
+
+// ===========================================
+// ADD MESSAGE
+// ===========================================
+
+function addMessage(type,text){
+
+    const container =
+        document.getElementById("messages");
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message " + type;
+
+    const avatar =
+        type === "user" ? "👤" : "🤖";
+
+    message.innerHTML = `
+
+        <div class="avatar">
+            ${avatar}
+        </div>
+
+        <div>
+
+            <div class="bubble">
+                ${escapeHTML(text)}
+            </div>
+
+            ${
+                type === "ai"
+                ?
+                `<button class="copy-btn"
+                         onclick="copyText(this)">
+                    📋 Copy
+                 </button>`
+                :
+                ""
+            }
+
+        </div>
+    `;
+
+    container.appendChild(message);
+
+    document.getElementById("chatArea").scrollTop =
+        document.getElementById("chatArea").scrollHeight;
+
+}
+
+
+// ===========================================
+// TYPING
+// ===========================================
+
+function showTyping(){
+
+    const container =
+        document.getElementById("messages");
+
+    const typing =
+        document.createElement("div");
+
+    typing.id="typing";
+
+    typing.className="message ai";
+
+    typing.innerHTML=`
+
+        <div class="avatar">
+            🤖
+        </div>
+
+        <div class="bubble">
+
+            <div class="typing">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </div>
+    `;
+
+    container.appendChild(typing);
+
+}
+
+
+function removeTyping(){
+
+    const typing =
+        document.getElementById("typing");
+
+    if(typing)
+        typing.remove();
+
+}
+
+
+// ===========================================
+// NEW CHAT
+// ===========================================
+
+function newChat(){
+
+    document.getElementById("messages").innerHTML="";
+
+    document.getElementById("welcome").style.display="block";
+
+    document.getElementById("quickPrompts").style.display="grid";
+
+    document.getElementById("messageInput").value="";
+
+}
+
+
+// ===========================================
+// CLEAR CHAT
+// ===========================================
+
+function clearChat(){
+
+    if(confirm("Clear current chat?")){
+
+        document.getElementById("messages").innerHTML="";
+
+        document.getElementById("welcome").style.display="block";
+
+        document.getElementById("quickPrompts").style.display="grid";
+
+    }
+
+}
+
+
+// ===========================================
+// ENTER KEY
+// ===========================================
+
+function handleEnter(event){
+
+    if(event.key === "Enter" && !event.shiftKey){
+
+        event.preventDefault();
+
+        sendMessage();
+
+    }
+
+}
+
+
+// ===========================================
+// COPY
+// ===========================================
+
+function copyText(button){
+
+    const text =
+        button.previousElementSibling.innerText;
+
+    navigator.clipboard.writeText(text);
+
+    button.innerText="✓ Copied";
+
+    setTimeout(()=>{
+        button.innerText="📋 Copy";
+    },1500);
+
+}
+
+
+// ===========================================
+// HTML ESCAPE
+// ===========================================
+
+function escapeHTML(text){
+
+    const div=document.createElement("div");
+
+    div.innerText=text;
+
+    return div.innerHTML;
+
+}
+
+</script>
+
+{% endblock %}
