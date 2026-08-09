@@ -1,0 +1,2065 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}
+AgriNevo | Complete Project Guide
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   AGRINEVO — COMPLETE PROJECT GUIDE
+   PREMIUM VIOLET • PINK • BLUE • WHITE
+========================================================= */
+
+.guide-page{
+    min-height:100vh;
+    padding:35px;
+    color:#241b3d;
+    background:
+        radial-gradient(circle at 5% 5%, rgba(139,92,246,.18), transparent 28%),
+        radial-gradient(circle at 95% 10%, rgba(236,72,153,.15), transparent 25%),
+        radial-gradient(circle at 50% 100%, rgba(59,130,246,.10), transparent 30%),
+        linear-gradient(135deg,#faf7ff,#f5f3ff,#fff7fb);
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.guide-hero{
+    position:relative;
+    overflow:hidden;
+    padding:50px 40px;
+    border-radius:30px;
+    color:white;
+    margin-bottom:30px;
+    background:linear-gradient(135deg,#312e81,#6d28d9,#7c3aed,#db2777);
+    box-shadow:0 20px 50px rgba(76,29,149,.28);
+}
+
+.guide-hero:before{
+    content:"AGRINEVO";
+    position:absolute;
+    right:-30px;
+    bottom:-35px;
+    font-size:90px;
+    font-weight:900;
+    letter-spacing:8px;
+    opacity:.08;
+    transform:rotate(-8deg);
+}
+
+.guide-hero:after{
+    content:"";
+    position:absolute;
+    width:260px;
+    height:260px;
+    right:-100px;
+    top:-100px;
+    border-radius:50%;
+    background:rgba(255,255,255,.08);
+}
+
+.guide-hero h1{
+    position:relative;
+    z-index:2;
+    font-size:44px;
+    margin:0 0 12px;
+    font-weight:900;
+}
+
+.guide-hero p{
+    position:relative;
+    z-index:2;
+    max-width:950px;
+    font-size:16px;
+    line-height:1.9;
+    opacity:.96;
+}
+
+.hero-badges{
+    position:relative;
+    z-index:2;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:25px;
+}
+
+.hero-badges span{
+    padding:10px 16px;
+    border-radius:50px;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.28);
+    backdrop-filter:blur(10px);
+    font-size:13px;
+    font-weight:600;
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro-box{
+    background:rgba(255,255,255,.96);
+    border-radius:24px;
+    padding:28px;
+    margin-bottom:30px;
+    border:1px solid #eadcff;
+    box-shadow:0 12px 32px rgba(76,29,149,.08);
+}
+
+.intro-box h2{
+    margin-top:0;
+    color:#5b21b6;
+    font-size:27px;
+}
+
+.intro-box p{
+    line-height:1.85;
+    color:#51475d;
+}
+
+/* =========================================================
+   HIGHLIGHT GRID
+========================================================= */
+
+.highlight-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:16px;
+    margin:25px 0 35px;
+}
+
+.highlight{
+    background:white;
+    padding:22px;
+    border-radius:20px;
+    border:1px solid #eadcff;
+    box-shadow:0 8px 24px rgba(76,29,149,.07);
+    transition:.3s;
+}
+
+.highlight:hover{
+    transform:translateY(-5px);
+}
+
+.highlight-icon{
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.highlight h4{
+    margin:0 0 7px;
+    color:#4c1d95;
+}
+
+.highlight p{
+    margin:0;
+    color:#71677e;
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title{
+    text-align:center;
+    margin:50px 0 28px;
+}
+
+.section-title h2{
+    color:#4c1d95;
+    font-size:31px;
+    margin-bottom:8px;
+}
+
+.section-title p{
+    color:#71677e;
+    font-size:14px;
+}
+
+/* =========================================================
+   WORKFLOW
+========================================================= */
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:15px;
+    margin:25px 0 35px;
+}
+
+.flow-card{
+    position:relative;
+    background:white;
+    padding:22px 15px;
+    border-radius:21px;
+    text-align:center;
+    border:1px solid #eadcff;
+    box-shadow:0 8px 22px rgba(76,29,149,.07);
+    transition:.3s;
+}
+
+.flow-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 32px rgba(76,29,149,.14);
+}
+
+.flow-number{
+    width:45px;
+    height:45px;
+    margin:auto auto 12px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-weight:800;
+    background:linear-gradient(135deg,#7c3aed,#db2777);
+}
+
+.flow-card h4{
+    margin:5px 0;
+    color:#4c1d95;
+}
+
+.flow-card p{
+    margin:0;
+    font-size:13px;
+    color:#6b6177;
+    line-height:1.5;
+}
+
+/* =========================================================
+   ARCHITECTURE
+========================================================= */
+
+.architecture{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+    margin-top:25px;
+}
+
+.arch-box{
+    background:white;
+    border-radius:22px;
+    padding:24px;
+    border:1px solid #eadcff;
+    box-shadow:0 10px 25px rgba(76,29,149,.07);
+}
+
+.arch-box h3{
+    color:#5b21b6;
+    margin-top:0;
+}
+
+.arch-box p,
+.arch-box li{
+    color:#554b60;
+    font-size:13.5px;
+    line-height:1.7;
+}
+
+.arch-box ul{
+    padding-left:20px;
+}
+
+/* =========================================================
+   MODULE GRID
+========================================================= */
+
+.module-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(310px,1fr));
+    gap:23px;
+}
+
+/* =========================================================
+   MODULE CARD
+========================================================= */
+
+.module-card{
+    position:relative;
+    background:rgba(255,255,255,.97);
+    border:1px solid #eadcff;
+    border-radius:25px;
+    padding:26px;
+    overflow:hidden;
+    box-shadow:0 12px 30px rgba(76,29,149,.08);
+    transition:.3s;
+}
+
+.module-card:hover{
+    transform:translateY(-7px);
+    box-shadow:0 20px 42px rgba(76,29,149,.15);
+}
+
+.module-card:after{
+    content:"AGRINEVO";
+    position:absolute;
+    right:-35px;
+    bottom:8px;
+    font-size:34px;
+    font-weight:900;
+    color:#7c3aed;
+    opacity:.035;
+    transform:rotate(-15deg);
+}
+
+.module-icon{
+    width:60px;
+    height:60px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:27px;
+    color:white;
+    background:linear-gradient(135deg,#6d28d9,#db2777);
+    box-shadow:0 8px 20px rgba(109,40,217,.2);
+}
+
+.module-card h3{
+    color:#4c1d95;
+    margin:17px 0 9px;
+    font-size:21px;
+}
+
+.purpose{
+    color:#5f566a;
+    line-height:1.75;
+    font-size:14px;
+}
+
+.how-box{
+    margin-top:18px;
+    padding:18px;
+    border-radius:17px;
+    background:linear-gradient(135deg,#faf5ff,#fff1f7);
+    border-left:4px solid #7c3aed;
+}
+
+.how-box strong{
+    color:#be185d;
+}
+
+.steps{
+    margin:12px 0 0;
+    padding-left:20px;
+}
+
+.steps li{
+    margin:8px 0;
+    font-size:13.5px;
+    line-height:1.6;
+    color:#463b50;
+}
+
+.info-row{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.info-box{
+    padding:13px 15px;
+    border-radius:14px;
+    background:#f7f4ff;
+    border:1px solid #ebe4ff;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.info-box b{
+    color:#5b21b6;
+}
+
+.output-box{
+    margin-top:15px;
+    padding:14px 15px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#f5f3ff,#fff1f7);
+    color:#4c1d95;
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* =========================================================
+   DATABASE
+========================================================= */
+
+.database-box{
+    margin-top:30px;
+    background:white;
+    border-radius:24px;
+    padding:28px;
+    border:1px solid #eadcff;
+    box-shadow:0 10px 30px rgba(76,29,149,.08);
+}
+
+.database-box h3{
+    color:#5b21b6;
+    margin-top:0;
+}
+
+.db-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:18px;
+    overflow:hidden;
+}
+
+.db-table th{
+    background:linear-gradient(135deg,#5b21b6,#7c3aed);
+    color:white;
+    padding:13px;
+    text-align:left;
+    font-size:13px;
+}
+
+.db-table td{
+    padding:13px;
+    border-bottom:1px solid #eee8fa;
+    color:#51475d;
+    font-size:13px;
+}
+
+.db-table tr:hover td{
+    background:#faf7ff;
+}
+
+/* =========================================================
+   TECH STACK
+========================================================= */
+
+.tech-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:16px;
+}
+
+.tech{
+    background:white;
+    padding:22px;
+    border-radius:20px;
+    text-align:center;
+    border:1px solid #eadcff;
+    box-shadow:0 8px 22px rgba(76,29,149,.07);
+    transition:.3s;
+}
+
+.tech:hover{
+    transform:translateY(-5px);
+}
+
+.tech i{
+    font-size:30px;
+    color:#7c3aed;
+}
+
+.tech h4{
+    margin:10px 0 5px;
+    color:#4c1d95;
+}
+
+.tech p{
+    margin:0;
+    color:#71677e;
+    font-size:12px;
+}
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+.security-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:17px;
+}
+
+.security-card{
+    background:white;
+    padding:22px;
+    border-radius:20px;
+    border:1px solid #eadcff;
+    box-shadow:0 8px 22px rgba(76,29,149,.06);
+}
+
+.security-card h4{
+    color:#5b21b6;
+    margin-top:0;
+}
+
+.security-card p{
+    color:#5d5365;
+    font-size:13px;
+    line-height:1.7;
+}
+
+/* =========================================================
+   VIVA
+========================================================= */
+
+.viva-box{
+    margin-top:38px;
+    padding:32px;
+    border-radius:27px;
+    color:white;
+    background:linear-gradient(135deg,#312e81,#6d28d9,#be185d);
+    box-shadow:0 15px 38px rgba(76,29,149,.23);
+}
+
+.viva-box h2{
+    margin-top:0;
+    font-size:27px;
+}
+
+.viva-box p{
+    line-height:1.85;
+    opacity:.96;
+}
+
+/* =========================================================
+   FUTURE SCOPE
+========================================================= */
+
+.future-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+}
+
+.future-card{
+    background:white;
+    padding:21px;
+    border-radius:19px;
+    border:1px solid #eadcff;
+    box-shadow:0 8px 22px rgba(76,29,149,.07);
+}
+
+.future-card h4{
+    color:#4c1d95;
+    margin-top:0;
+}
+
+.future-card p{
+    color:#63596c;
+    font-size:13px;
+    line-height:1.65;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:700px){
+
+    .guide-page{
+        padding:17px;
+    }
+
+    .guide-hero{
+        padding:32px 22px;
+    }
+
+    .guide-hero h1{
+        font-size:30px;
+    }
+
+    .guide-hero p{
+        font-size:14px;
+    }
+
+    .module-grid{
+        grid-template-columns:1fr;
+    }
+
+    .section-title h2{
+        font-size:26px;
+    }
+
+    .db-table{
+        display:block;
+        overflow-x:auto;
+    }
+}
+
+</style>
+
+
+<div class="guide-page">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="guide-hero">
+
+    <h1>🌱 AgriNevo Project Guide</h1>
+
+    <p>
+        <b>AgriNevo</b> is a smart, web-based Agriculture Automatic
+        Monitoring System designed to centralize important farming
+        operations into a single digital platform. The system combines
+        farmer management, crop management, weather monitoring,
+        sensor monitoring, irrigation scheduling, motor control,
+        activity records, analytics and AI-assisted features.
+    </p>
+
+    <p>
+        The main objective of AgriNevo is to reduce manual effort,
+        improve farm monitoring, organize agricultural data and help
+        farmers make better decisions using real-time information
+        and historical records.
+    </p>
+
+    <div class="hero-badges">
+        <span>🌾 Smart Farming</span>
+        <span>🌦️ Weather Monitoring</span>
+        <span>🌡️ Sensor Monitoring</span>
+        <span>💧 Smart Irrigation</span>
+        <span>🚰 Motor Control</span>
+        <span>📊 Analytics</span>
+        <span>🤖 AI Assisted</span>
+        <span>🔐 Role Based Access</span>
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     PROJECT INTRODUCTION
+========================================================= -->
+
+<section class="intro-box">
+
+    <h2>💡 1. What is AgriNevo?</h2>
+
+    <p>
+        AgriNevo is an Agriculture Automatic Monitoring System developed
+        to provide farmers with a centralized platform for managing
+        farming-related information and activities.
+    </p>
+
+    <p>
+        In traditional farming, information such as crop details,
+        irrigation schedules, weather conditions, motor activity and
+        previous farming records may be maintained separately.
+        AgriNevo brings these activities together in one system.
+    </p>
+
+    <p>
+        The application follows a web-based architecture where the
+        frontend provides the user interface, the Flask backend
+        handles application logic, SQLite stores structured data,
+        external APIs provide weather information, and JavaScript
+        components such as Chart.js are used for visualization.
+    </p>
+
+    <p>
+        The system can also be extended in the future with real IoT
+        sensors, automatic irrigation hardware, advanced AI models,
+        mobile notifications and intelligent crop recommendations.
+    </p>
+
+</section>
+
+
+<!-- =========================================================
+     PROJECT OBJECTIVES
+========================================================= -->
+
+<div class="section-title">
+
+    <h2>🎯 2. Project Objectives</h2>
+
+    <p>What AgriNevo is designed to achieve</p>
+
+</div>
+
+<div class="highlight-grid">
+
+    <div class="highlight">
+        <div class="highlight-icon">🌾</div>
+        <h4>Centralized Farming</h4>
+        <p>
+            Manage important farming information from one integrated
+            web platform.
+        </p>
+    </div>
+
+    <div class="highlight">
+        <div class="highlight-icon">📡</div>
+        <h4>Farm Monitoring</h4>
+        <p>
+            Monitor environmental and operational information related
+            to the farm.
+        </p>
+    </div>
+
+    <div class="highlight">
+        <div class="highlight-icon">💧</div>
+        <h4>Irrigation Planning</h4>
+        <p>
+            Organize irrigation activities using schedules and
+            monitoring information.
+        </p>
+    </div>
+
+    <div class="highlight">
+        <div class="highlight-icon">📊</div>
+        <h4>Data Analytics</h4>
+        <p>
+            Convert stored records into charts, statistics and useful
+            observations.
+        </p>
+    </div>
+
+    <div class="highlight">
+        <div class="highlight-icon">🤖</div>
+        <h4>AI Assistance</h4>
+        <p>
+            Provide an architecture that can support AI-based
+            agricultural features.
+        </p>
+    </div>
+
+    <div class="highlight">
+        <div class="highlight-icon">🔐</div>
+        <h4>Secure Access</h4>
+        <p>
+            Separate farmer and administrator functionality using
+            role-based access.
+        </p>
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     SYSTEM WORKFLOW
+========================================================= -->
+
+<div class="section-title">
+
+    <h2>🔄 3. Complete System Workflow</h2>
+
+    <p>
+        How information moves through the AgriNevo system
+    </p>
+
+</div>
+
+<div class="workflow">
+
+    <div class="flow-card">
+        <div class="flow-number">1</div>
+        <h4>Register</h4>
+        <p>
+            Farmer creates an account and provides required details.
+        </p>
+    </div>
+
+    <div class="flow-card">
+        <div class="flow-number">2</div>
+        <h4>Login</h4>
+        <p>
+            Credentials are verified and a user session is created.
+        </p>
+    </div>
+
+    <div class="flow-card">
+        <div class="flow-number">3</div>
+        <h4>Dashboard</h4>
+        <p>
+            Important farm information is presented in one place.
+        </p>
+    </div>
+
+    <div class="flow-card">
+        <div class="flow-number">4</div>
+        <h4>Monitor</h4>
+        <p>
+            Weather, sensor and operational information is monitored.
+        </p>
+    </div>
+
+    <div class="flow-card">
+        <div class="flow-number">5</div>
+        <h4>Plan</h4>
+        <p>
+            Irrigation schedules and farming activities are planned.
+        </p>
+    </div>
+
+    <div class="flow-card">
+        <div class="flow-number">6</div>
+        <h4>Control</h4>
+        <p>
+            Motor or pump operations can be managed through the system.
+        </p>
+    </div>
+
+    <div class="flow-card">
+        <div class="flow-number">7</div>
+        <h4>Store</h4>
+        <p>
+            Important activities and records are stored in the database.
+        </p>
+    </div>
+
+    <div class="flow-card">
+        <div class="flow-number">8</div>
+        <h4>Analyze</h4>
+        <p>
+            Historical information is converted into useful analytics.
+        </p>
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     SYSTEM ARCHITECTURE
+========================================================= -->
+
+<div class="section-title">
+
+    <h2>🏗️ 4. System Architecture</h2>
+
+    <p>Major layers of the AgriNevo application</p>
+
+</div>
+
+<div class="architecture">
+
+    <div class="arch-box">
+
+        <h3>🎨 Presentation Layer</h3>
+
+        <p>
+            This layer is responsible for the user interface and
+            interaction.
+        </p>
+
+        <ul>
+            <li>HTML templates</li>
+            <li>CSS styling</li>
+            <li>Responsive layouts</li>
+            <li>JavaScript</li>
+            <li>Chart.js visualizations</li>
+        </ul>
+
+    </div>
+
+
+    <div class="arch-box">
+
+        <h3>⚙️ Application Layer</h3>
+
+        <p>
+            Flask works as the application server and handles the
+            main business logic.
+        </p>
+
+        <ul>
+            <li>Routes</li>
+            <li>Form processing</li>
+            <li>Session management</li>
+            <li>Validation</li>
+            <li>Business logic</li>
+        </ul>
+
+    </div>
+
+
+    <div class="arch-box">
+
+        <h3>🗄️ Data Layer</h3>
+
+        <p>
+            SQLite provides persistent storage for structured
+            application data.
+        </p>
+
+        <ul>
+            <li>Farmer information</li>
+            <li>Crop records</li>
+            <li>Sensor records</li>
+            <li>Irrigation schedules</li>
+            <li>Motor activity</li>
+        </ul>
+
+    </div>
+
+
+    <div class="arch-box">
+
+        <h3>🌐 External Services</h3>
+
+        <p>
+            External services can provide additional information and
+            intelligent capabilities.
+        </p>
+
+        <ul>
+            <li>Weather API</li>
+            <li>AI services</li>
+            <li>Future IoT devices</li>
+            <li>Notification services</li>
+        </ul>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     MODULES
+========================================================= -->
+
+<div class="section-title">
+
+    <h2>🧩 5. Detailed System Modules</h2>
+
+    <p>
+        Complete explanation of every major AgriNevo module
+    </p>
+
+</div>
+
+
+<div class="module-grid">
+
+<!-- =====================================================
+     MODULE 1
+====================================================== -->
+
+<div class="module-card">
+
+    <div class="module-icon">👤</div>
+
+    <h3>1. Farmer Registration & Login</h3>
+
+    <p class="purpose">
+        This module provides the entry point to the system. It allows
+        a farmer to create an account and later access the application
+        using valid login credentials.
+    </p>
+
+    <div class="how-box">
+
+        <strong>⚙️ How It Works</strong>
+
+        <ol class="steps">
+            <li>The farmer opens the registration page.</li>
+            <li>Required information is entered into the registration form.</li>
+            <li>The Flask backend receives the submitted form data.</li>
+            <li>Input information is validated before processing.</li>
+            <li>The farmer record is stored in the SQLite database.</li>
+            <li>During login, the entered credentials are checked against stored data.</li>
+            <li>After successful authentication, a user session is created.</li>
+            <li>The user is redirected to the appropriate dashboard.</li>
+        </ol>
+
+    </div>
+
+    <div class="info-row">
+
+        <div class="info-box">
+            <b>Input:</b> Username, password and farmer information.
+        </div>
+
+        <div class="info-box">
+            <b>Processing:</b> Flask validates and authenticates the user.
+        </div>
+
+        <div class="info-box">
+            <b>Storage:</b> Farmer information is maintained in the database.
+        </div>
+
+    </div>
+
+    <div class="output-box">
+        ✅ <b>Output:</b> Registered farmer with authenticated system access.
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODULE 2
+====================================================== -->
+
+<div class="module-card">
+
+    <div class="module-icon">🧑‍🌾</div>
+
+    <h3>2. Farmer Profile Management</h3>
+
+    <p class="purpose">
+        The Farmer Profile module provides a personalized area where
+        the logged-in farmer can view and manage profile information.
+    </p>
+
+    <div class="how-box">
+
+        <strong>⚙️ How It Works</strong>
+
+        <ol class="steps">
+            <li>The system identifies the currently logged-in farmer.</li>
+            <li>Farmer information is retrieved from the database.</li>
+            <li>The information is displayed through a profile template.</li>
+            <li>The farmer can edit permitted profile information.</li>
+            <li>Updated information is submitted to the Flask backend.</li>
+            <li>The database record is updated.</li>
+            <li>The latest information is displayed on the profile page.</li>
+        </ol>
+
+    </div>
+
+    <div class="info-row">
+
+        <div class="info-box">
+            <b>Input:</b> Profile details and optional profile image.
+        </div>
+
+        <div class="info-box">
+            <b>Processing:</b> Flask retrieves and updates farmer records.
+        </div>
+
+        <div class="info-box">
+            <b>Storage:</b> Farmer profile information is stored in SQLite.
+        </div>
+
+    </div>
+
+    <div class="output-box">
+        ✅ <b>Output:</b> Personalized digital farmer profile.
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODULE 3
+====================================================== -->
+
+<div class="module-card">
+
+    <div class="module-icon">📊</div>
+
+    <h3>3. Smart Dashboard</h3>
+
+    <p class="purpose">
+        The dashboard acts as the central control center of AgriNevo.
+        It summarizes the most important farm information so that the
+        farmer does not need to open every module separately.
+    </p>
+
+    <div class="how-box">
+
+        <strong>⚙️ How It Works</strong>
+
+        <ol class="steps">
+            <li>The authenticated user opens the dashboard.</li>
+            <li>Flask collects required information from the database and services.</li>
+            <li>Crop information is prepared for display.</li>
+            <li>Weather information can be displayed.</li>
+            <li>Motor status and irrigation information can be summarized.</li>
+            <li>Quick action cards provide navigation to important modules.</li>
+            <li>The dashboard presents the information using responsive cards.</li>
+        </ol>
+
+    </div>
+
+    <div class="output-box">
+        ✅ <b>Output:</b> A complete overview of the current farm system.
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODULE 4
+====================================================== -->
+
+<div class="module-card">
+
+    <div class="module-icon">🌾</div>
+
+    <h3>4. Crop Management</h3>
+
+    <p class="purpose">
+        Crop Management works as a digital crop register. It allows
+        the farmer to maintain organized information about crops instead
+        of relying completely on manual records.
+    </p>
+
+    <div class="how-box">
+
+        <strong>⚙️ How It Works</strong>
+
+        <ol class="steps">
+            <li>The farmer opens the Crop Management page.</li>
+            <li>Crop-related information is entered.</li>
+            <li>Flask receives and validates the submitted information.</li>
+            <li>A new crop record is inserted into SQLite.</li>
+            <li>Stored crops are retrieved and displayed in the crop list.</li>
+            <li>The farmer can edit an existing crop record.</li>
+            <li>Unwanted records can be deleted when required.</li>
+        </ol>
+
+    </div>
+
+    <div class="info-row">
+
+        <div class="info-box">
+            <b>Input:</b> Crop name and related crop information.
+        </div>
+
+        <div class="info-box">
+            <b>Processing:</b> Flask performs CRUD operations.
+        </div>
+
+        <div class="info-box">
+            <b>Database:</b> Crop records are stored in SQLite.
+        </div>
+
+    </div>
+
+    <div class="output-box">
+        ✅ <b>Output:</b> Organized digital crop management system.
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODULE 5
+====================================================== -->
+
+<div class="module-card">
+
+    <div class="module-icon">🌡️</div>
+
+    <h3>5. Sensor Monitoring</h3>
+
+    <p class="purpose">
+        Sensor Monitoring is designed to monitor important agricultural
+        parameters such as temperature, humidity and soil moisture.
+        These parameters are useful for understanding the current
+        environmental condition of the farm.
+    </p>
+
+    <div class="how-box">
+
+        <strong>⚙️ How It Works</strong>
+
+        <ol class="steps">
+            <li>Sensor values are received by the application.</li>
+            <li>The backend processes the received values.</li>
+            <li>Values can be stored as monitoring records.</li>
+            <li>The latest readings can be displayed on the monitoring page.</li>
+            <li>Historical readings can be used for analysis.</li>
+            <li>Threshold conditions can be used to generate alerts.</li>
+            <li>In a future IoT implementation, physical sensors can provide live readings.</li>
+        </ol>
+
+    </div>
+
+    <div class="info-row">
+
+        <div class="info-box">
+            <b>Parameters:</b> Temperature, humidity and soil moisture.
+        </div>
+
+        <div class="info-box">
+            <b>Processing:</b> Backend receives, validates and prepares sensor data.
+        </div>
+
+        <div class="info-box">
+            <b>Future:</b> Real IoT sensors can be connected to the system.
+        </div>
+
+    </div>
+
+    <div class="output-box">
+        ✅ <b>Output:</b> Environmental condition monitoring and historical data.
+    </div>
+
+</div>
+<!-- =====================================================
+     MODULE 6
+====================================================== -->
+
+<div class="module-card">
+
+    <div class="module-icon">🌦️</div>
+
+    <h3>6. Weather Information</h3>
+
+    <p class="purpose">
+        The Weather module connects AgriNevo with an external weather
+        service so that users can view current weather information
+        without leaving the application.
+    </p>
+
+    <div class="how-box">
+
+        <strong>⚙️ How It Works</strong>
+
+        <ol class="steps">
+            <li>The user selects or opens the weather section.</li>
+            <li>Flask sends a request to the configured weather API.</li>
+            <li>The external service processes the request.</li>
+            <li>A JSON response is received.</li>
+            <li>The backend extracts required weather values.</li>
+            <li>Information such as temperature, humidity and weather description is prepared.</li>
+            <li>The values are displayed through responsive weather cards.</li>
+        </ol>
+
+    </div>
+
+    <div class="info-row">
+
+        <div class="info-box">
+            <b>Source:</b> External Weather API.
+        </div>
+
+        <div class="info-box">
+            <b>Format:</b> JSON response.
+        </div>
+
+        <div class="info-box">
+            <b>Display:</b> Temperature, humidity and weather condition.
+        </div>
+
+    </div>
+
+    <div class="output-box">
+        ✅ <b>Output:</b> Current weather information inside the farming system.
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODULE 7
+====================================================== -->
+
+<div class="module-card">
+
+    <div class="module-icon">💧</div>
+
+    <h3>7. Irrigation Scheduling</h3>
+
+    <p class="purpose">
+        The Irrigation Scheduling module helps organize when irrigation
+        should start, when it should end and how long the irrigation
+        activity should continue.
+    </p>
+
+    <div class="how-box">
+
+        <strong>⚙️ How It Works</strong>
+
+        <ol class="steps">
+            <li>The farmer opens the irrigation scheduling section.</li>
+            <li>A crop or farming activity is selected.</li>
+            <li>Start time and end time or duration are entered.</li>
+            <li>The Flask backend validates the schedule information.</li>
+            <li>The schedule is stored in the irrigation schedule table.</li>
+            <li>Saved schedules are retrieved and displayed.</li>
+            <li>The schedule can be used as a reference for motor operation.</li>
+        </ol>
+
+    </div>
+
+    <div class="output-box">
+        ✅ <b>Output:</b> Organized irrigation timetable for farm activities.
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODULE 8
+====================================================== -->
+
+<div class="module-card">
+
+    <div class="module-icon">🚰</div>
+
+    <h3>8. Motor / Pump Control</h3>
+
+    <p class="purpose">
+        This module manages the ON/OFF state of the irrigation motor
+        or pump and maintains an activity record for later analysis.
+    </p>
+
+    <div class="how-box">
+
+        <strong>⚙️ How It Works</strong>
+
+        <ol class="steps">
+            <li>The farmer selects the ON or OFF control.</li>
+            <li>The browser sends a request to the Flask route.</li>
+            <li>The backend processes the requested motor state.</li>
+            <li>The current state is updated in the application.</li>
+            <li>The activity is recorded with relevant timing information.</li>
+            <li>The dashboard can show the latest motor status.</li>
+            <li>Motor records can later be used for analytics.</li>
+        </ol>
+
+    </div>
+
+    <div class="info-row">
+
+        <div class="info-box">
+            <b>Input:</b> Motor ON/OFF command.
+        </div>
+
+        <div class="info-box">
+            <b>Backend:</b> Flask motor-control routes.
+        </div>
+
+        <div class="info-box">
+            <b>Record:</b> Motor state, time and related activity information.
+        </div>
+
+    </div>
+
+    <div class="output-box">
+        ✅ <b>Output:</b> Motor status and recorded irrigation activity.
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODULE 9
+====================================================== -->
+
+<div class="module-card">
+
+    <div class="module-icon">📡</div>
+
+    <h3>9. Live Farm Monitoring</h3>
+
+    <p class="purpose">
+        Live Farm Monitoring provides a consolidated view of important
+        farm conditions and operational states from one screen.
+    </p>
+
+    <div class="how-box">
+
+        <strong>⚙️ How It Works</strong>
+
+        <ol class="steps">
+            <li>The backend retrieves the latest available farm information.</li>
+            <li>Current sensor information is prepared.</li>
+            <li>Motor status is collected.</li>
+            <li>Weather information can be included.</li>
+            <li>Irrigation information can be displayed.</li>
+            <li>The data is presented using live-style monitoring cards.</li>
+        </ol>
+
+    </div>
+
+    <div class="output-box">
+        ✅ <b>Output:</b> Consolidated farm monitoring screen.
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODULE 10
+====================================================== -->
+
+<div class="module-card">
+
+    <div class="module-icon">📜</div>
+
+    <h3>10. Records & History</h3>
+
+    <p class="purpose">
+        The Records module maintains historical information about
+        farming activities. Historical records are important because
+        they allow users to review what happened previously.
+    </p>
+
+    <div class="how-box">
+
+        <strong>⚙️ How It Works</strong>
+
+        <ol class="steps">
+            <li>An activity occurs within the application.</li>
+            <li>The backend captures relevant information.</li>
+            <li>Date and time information can be associated with the activity.</li>
+            <li>The record is stored in the database.</li>
+            <li>The Records page retrieves previous entries.</li>
+            <li>The farmer can review historical activities.</li>
+            <li>Selected records can be removed when required.</li>
+        </ol>
+
+    </div>
+
+    <div class="output-box">
+        ✅ <b>Output:</b> Digital history of farm activities.
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODULE 11
+====================================================== -->
+
+<div class="module-card">
+
+    <div class="module-icon">📈</div>
+
+    <h3>11. Analytics & Reports</h3>
+
+    <p class="purpose">
+        Analytics converts stored farm activity into meaningful
+        statistics and visual representations. This makes large
+        amounts of historical data easier to understand.
+    </p>
+
+    <div class="how-box">
+
+        <strong>⚙️ How It Works</strong>
+
+        <ol class="steps">
+            <li>The Flask backend retrieves relevant database records.</li>
+            <li>Records are filtered and processed.</li>
+            <li>Motor ON/OFF counts can be calculated.</li>
+            <li>Duration and other statistics can be derived.</li>
+            <li>The processed values are passed to the template.</li>
+            <li>JavaScript and Chart.js convert the values into graphs.</li>
+            <li>The farmer can visually understand historical activity.</li>
+        </ol>
+
+    </div>
+
+    <div class="info-row">
+
+        <div class="info-box">
+            <b>Backend:</b> Flask + database queries.
+        </div>
+
+        <div class="info-box">
+            <b>Processing:</b> Counts, duration and statistical calculations.
+        </div>
+
+        <div class="info-box">
+            <b>Frontend:</b> Chart.js visualizations.
+        </div>
+
+    </div>
+
+    <div class="output-box">
+        ✅ <b>Output:</b> Charts, statistics and meaningful farming insights.
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODULE 12
+====================================================== -->
+
+<div class="module-card">
+
+    <div class="module-icon">🔔</div>
+
+    <h3>12. Alerts & Notifications</h3>
+
+    <p class="purpose">
+        The Alerts module is designed to notify the farmer when an
+        important condition requires attention.
+    </p>
+
+    <div class="how-box">
+
+        <strong>⚙️ How It Works</strong>
+
+        <ol class="steps">
+            <li>A threshold or condition is defined.</li>
+            <li>The system receives or reads the current value.</li>
+            <li>The current value is compared with the defined condition.</li>
+            <li>If the condition is satisfied, an alert is generated.</li>
+            <li>The alert can be displayed on the dashboard or notification section.</li>
+            <li>Future versions can send mobile or email notifications.</li>
+        </ol>
+
+    </div>
+
+    <div class="output-box">
+        ✅ <b>Output:</b> Timely warnings, reminders and farming notifications.
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODULE 13
+====================================================== -->
+
+<div class="module-card">
+
+    <div class="module-icon">🤖</div>
+
+    <h3>13. AI-Assisted Disease Detection</h3>
+
+    <p class="purpose">
+        The AI Disease Detection module is designed to assist farmers
+        in identifying possible crop or plant diseases from uploaded
+        leaf or crop images.
+    </p>
+
+    <div class="how-box">
+
+        <strong>⚙️ How It Works</strong>
+
+        <ol class="steps">
+            <li>The farmer uploads a crop or leaf image.</li>
+            <li>Flask receives and validates the uploaded file.</li>
+            <li>The image is prepared for AI analysis.</li>
+            <li>An AI model or AI service analyzes visual patterns.</li>
+            <li>The system receives a predicted or possible disease indication.</li>
+            <li>The result is returned to the user interface.</li>
+            <li>The farmer can use the result as an initial indication and take appropriate agricultural action.</li>
+        </ol>
+
+    </div>
+
+    <div class="info-row">
+
+        <div class="info-box">
+            <b>Input:</b> Leaf or crop image.
+        </div>
+
+        <div class="info-box">
+            <b>Processing:</b> Image analysis using an AI model/service.
+        </div>
+
+        <div class="info-box">
+            <b>Output:</b> Possible disease classification or indication.
+        </div>
+
+    </div>
+
+    <div class="output-box">
+        🤖 <b>Important:</b> AI results should be treated as assistance, not as a guaranteed agricultural diagnosis.
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODULE 14
+====================================================== -->
+
+<div class="module-card">
+
+    <div class="module-icon">🛡️</div>
+
+    <h3>14. Admin Module & Role-Based Access</h3>
+
+    <p class="purpose">
+        The Admin module provides separate access for system-level
+        management. Role-based access helps prevent normal users from
+        accessing administrator-only functionality.
+    </p>
+
+    <div class="how-box">
+
+        <strong>⚙️ How It Works</strong>
+
+        <ol class="steps">
+            <li>A user logs into the system.</li>
+            <li>The backend identifies the user's role.</li>
+            <li>The role is checked before protected pages are opened.</li>
+            <li>An administrator can access administrator functionality.</li>
+            <li>A normal farmer is redirected to the farmer dashboard.</li>
+            <li>Unauthorized access to restricted routes can be blocked.</li>
+        </ol>
+
+    </div>
+
+    <div class="output-box">
+        ✅ <b>Output:</b> Separate and controlled Admin and Farmer access.
+    </div>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================================================
+     DATABASE
+========================================================= -->
+
+<div class="section-title">
+
+    <h2>🗄️ 6. Database Structure</h2>
+
+    <p>
+        SQLite is used to store the application's structured information.
+    </p>
+
+</div>
+
+<div class="database-box">
+
+    <h3>📚 Main Data Categories</h3>
+
+    <p>
+        The database acts as the persistent storage layer of AgriNevo.
+        Instead of losing information when the application closes,
+        important records can be stored and retrieved whenever required.
+    </p>
+
+    <table class="db-table">
+
+        <tr>
+            <th>Data Category</th>
+            <th>Purpose</th>
+            <th>Example Information</th>
+        </tr>
+
+        <tr>
+            <td><b>Farmers</b></td>
+            <td>Stores farmer account and profile information.</td>
+            <td>Name, username, profile information, role</td>
+        </tr>
+
+        <tr>
+            <td><b>Crops</b></td>
+            <td>Maintains digital crop records.</td>
+            <td>Crop name and related details</td>
+        </tr>
+
+        <tr>
+            <td><b>Sensor Records</b></td>
+            <td>Stores monitoring values and activity information.</td>
+            <td>Temperature, humidity, moisture, timing</td>
+        </tr>
+
+        <tr>
+            <td><b>Irrigation Schedule</b></td>
+            <td>Stores planned irrigation activities.</td>
+            <td>Crop, start time, end time, duration</td>
+        </tr>
+
+        <tr>
+            <td><b>Motor Activity</b></td>
+            <td>Maintains motor operation history.</td>
+            <td>ON/OFF state, time, duration</td>
+        </tr>
+
+    </table>
+
+</div>
+<!-- =========================================================
+     TECHNOLOGY STACK
+========================================================= -->
+
+<div class="section-title">
+
+    <h2>🛠️ 7. Technologies Used</h2>
+
+    <p>
+        Technology stack used to build the AgriNevo platform
+    </p>
+
+</div>
+
+<div class="tech-grid">
+
+    <div class="tech">
+        <i class="fab fa-python"></i>
+        <h4>Python</h4>
+        <p>Core programming language and backend logic.</p>
+    </div>
+
+    <div class="tech">
+        <i class="fas fa-flask"></i>
+        <h4>Flask</h4>
+        <p>Web framework for routes and application logic.</p>
+    </div>
+
+    <div class="tech">
+        <i class="fas fa-database"></i>
+        <h4>SQLite</h4>
+        <p>Lightweight relational database.</p>
+    </div>
+
+    <div class="tech">
+        <i class="fab fa-html5"></i>
+        <h4>HTML5</h4>
+        <p>Structure of the web pages.</p>
+    </div>
+
+    <div class="tech">
+        <i class="fab fa-css3-alt"></i>
+        <h4>CSS3</h4>
+        <p>Design, layout and responsive styling.</p>
+    </div>
+
+    <div class="tech">
+        <i class="fab fa-js"></i>
+        <h4>JavaScript</h4>
+        <p>Frontend interaction and dynamic behavior.</p>
+    </div>
+
+    <div class="tech">
+        <i class="fas fa-chart-bar"></i>
+        <h4>Chart.js</h4>
+        <p>Charts and analytics visualization.</p>
+    </div>
+
+    <div class="tech">
+        <i class="fas fa-cloud-sun"></i>
+        <h4>Weather API</h4>
+        <p>External weather information.</p>
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     SECURITY
+========================================================= -->
+
+<div class="section-title">
+
+    <h2>🔐 8. Security & Access Control</h2>
+
+    <p>
+        Basic security mechanisms used in the application architecture
+    </p>
+
+</div>
+
+<div class="security-grid">
+
+    <div class="security-card">
+
+        <h4>🔑 Authentication</h4>
+
+        <p>
+            Users must provide valid login credentials before accessing
+            protected application areas.
+        </p>
+
+    </div>
+
+    <div class="security-card">
+
+        <h4>👥 Role-Based Access</h4>
+
+        <p>
+            Different roles such as Administrator and Farmer can be
+            assigned different levels of application access.
+        </p>
+
+    </div>
+
+    <div class="security-card">
+
+        <h4>🧠 Session Management</h4>
+
+        <p>
+            Flask sessions can be used to remember the authenticated
+            user while navigating between protected pages.
+        </p>
+
+    </div>
+
+    <div class="security-card">
+
+        <h4>🛡️ Route Protection</h4>
+
+        <p>
+            Backend checks can prevent unauthorized users from opening
+            restricted routes.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     BENEFITS
+========================================================= -->
+
+<div class="section-title">
+
+    <h2>✨ 9. Benefits of AgriNevo</h2>
+
+    <p>
+        Practical advantages of the proposed system
+    </p>
+
+</div>
+
+<div class="highlight-grid">
+
+    <div class="highlight">
+        <div class="highlight-icon">📱</div>
+        <h4>Centralized Platform</h4>
+        <p>
+            Multiple farming functions are available from one system.
+        </p>
+    </div>
+
+    <div class="highlight">
+        <div class="highlight-icon">⏱️</div>
+        <h4>Time Saving</h4>
+        <p>
+            Digital records reduce repetitive manual record keeping.
+        </p>
+    </div>
+
+    <div class="highlight">
+        <div class="highlight-icon">📊</div>
+        <h4>Better Understanding</h4>
+        <p>
+            Charts make historical activity easier to understand.
+        </p>
+    </div>
+
+    <div class="highlight">
+        <div class="highlight-icon">💧</div>
+        <h4>Irrigation Management</h4>
+        <p>
+            Irrigation activities can be planned and monitored more systematically.
+        </p>
+    </div>
+
+    <div class="highlight">
+        <div class="highlight-icon">🌦️</div>
+        <h4>Weather Awareness</h4>
+        <p>
+            Weather information is available directly inside the application.
+        </p>
+    </div>
+
+    <div class="highlight">
+        <div class="highlight-icon">📜</div>
+        <h4>Historical Records</h4>
+        <p>
+            Previous farming activities can be reviewed when required.
+        </p>
+    </div>
+
+</div>
+<!-- =========================================================
+     VIVA EXPLANATION
+========================================================= -->
+
+<section class="viva-box">
+
+    <h2>🎤 10. How to Explain AgriNevo in Viva</h2>
+
+    <p>
+        <b>
+            “AgriNevo is an Agriculture Automatic Monitoring System
+            developed using Python Flask, SQLite, HTML, CSS and
+            JavaScript. The main objective of the system is to provide
+            a centralized platform for managing important farming
+            activities.”
+        </b>
+    </p>
+
+    <p>
+        <b>
+            “The system includes farmer registration and login,
+            farmer profile management, crop management, weather
+            monitoring, sensor monitoring, irrigation scheduling,
+            motor control, live farm monitoring, records and history,
+            analytics and role-based Admin and Farmer access.”
+        </b>
+    </p>
+
+    <p>
+        <b>
+            “Flask is used as the backend framework. SQLite is used
+            for storing application data. External weather services
+            provide weather information, while Chart.js is used to
+            display analytical data in graphical form.”
+        </b>
+    </p>
+
+    <p>
+        <b>
+            “The system can be further extended by integrating real
+            IoT sensors, automatic irrigation, advanced AI disease
+            detection, notifications, crop recommendation and
+            voice-controlled farming features.”
+        </b>
+    </p>
+
+</section>
+
+
+<!-- =========================================================
+     FUTURE SCOPE
+========================================================= -->
+
+<div class="section-title">
+
+    <h2>🚀 11. Future Scope</h2>
+
+    <p>
+        Possible improvements and advanced features
+    </p>
+
+</div>
+
+<div class="future-grid">
+
+    <div class="future-card">
+
+        <h4>📡 Real IoT Sensors</h4>
+
+        <p>
+            Physical sensors can be connected to continuously collect
+            soil moisture, temperature, humidity and other environmental
+            parameters.
+        </p>
+
+    </div>
+
+    <div class="future-card">
+
+        <h4>💧 Automatic Irrigation</h4>
+
+        <p>
+            Soil moisture readings can be combined with predefined
+            thresholds to automatically control irrigation equipment.
+        </p>
+
+    </div>
+
+    <div class="future-card">
+
+        <h4>🤖 Advanced AI</h4>
+
+        <p>
+            Machine learning and computer vision models can be used
+            for disease identification and agricultural recommendations.
+        </p>
+
+    </div>
+
+    <div class="future-card">
+
+        <h4>🌧️ Rainfall Prediction</h4>
+
+        <p>
+            Weather data and prediction models can help farmers plan
+            irrigation and other activities.
+        </p>
+
+    </div>
+
+    <div class="future-card">
+
+        <h4>🔔 Mobile Notifications</h4>
+
+        <p>
+            Important alerts can be delivered through mobile,
+            email or push notification systems.
+        </p>
+
+    </div>
+
+    <div class="future-card">
+
+        <h4>🎙️ Voice Assistant</h4>
+
+        <p>
+            Voice commands can be introduced to provide hands-free
+            access to selected farming functions.
+        </p>
+
+    </div>
+
+    <div class="future-card">
+
+        <h4>🌱 Crop Recommendation</h4>
+
+        <p>
+            Soil, weather and historical information can be combined
+            to provide intelligent crop recommendations.
+        </p>
+
+    </div>
+
+    <div class="future-card">
+
+        <h4>📈 Advanced Analytics</h4>
+
+        <p>
+            More detailed reports can be created using historical
+            sensor, irrigation and crop data.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     FINAL PROJECT SUMMARY
+========================================================= -->
+
+<section class="intro-box" style="margin-top:35px;">
+
+    <h2>🏆 12. Final Project Summary</h2>
+
+    <p>
+        AgriNevo demonstrates how web technologies can be applied to
+        agriculture to create a centralized digital farming platform.
+        Instead of treating crop management, weather monitoring,
+        irrigation, motor operation and farm records as completely
+        separate activities, the system brings them together through
+        a common interface.
+    </p>
+
+    <p>
+        The combination of Flask, SQLite, frontend technologies,
+        external APIs, analytics and AI-ready architecture makes
+        AgriNevo suitable as a foundation for a larger smart farming
+        solution.
+    </p>
+
+    <p>
+        The ultimate goal is to make agricultural monitoring more
+        organized, data-driven and easier to manage while providing
+        a clear path toward future IoT and AI integration.
+    </p>
+
+</section>
+
+
+</div>
+
+{% endblock %}

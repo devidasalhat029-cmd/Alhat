@@ -1,1184 +1,1516 @@
 {% extends "baseofhtml.html" %}
 
 {% block title %}
-Farmer Profile | AgroTech
+AgriNova | Smart Agriculture Management System
 {% endblock %}
-
 
 {% block content %}
 
 <style>
 
 /* =========================================================
-   FARMER PROFILE PAGE
+   AGRINOVA — LIGHT BLUE • CYAN • GREEN • WHITE
+   PREMIUM SMART AGRICULTURE THEME
 ========================================================= */
 
-.profile-page {
-    padding: 25px;
-    min-height: 100vh;
+.home-page{
+    min-height:100vh;
+    color:#183b3b;
+
     background:
-        radial-gradient(circle at 10% 10%, rgba(139,92,246,.10), transparent 28%),
-        radial-gradient(circle at 90% 20%, rgba(236,72,153,.08), transparent 28%),
-        #f8f7fc;
+        radial-gradient(circle at 5% 10%, rgba(14,165,233,.12), transparent 28%),
+        radial-gradient(circle at 95% 15%, rgba(16,185,129,.12), transparent 28%),
+        radial-gradient(circle at 50% 80%, rgba(34,197,94,.08), transparent 30%),
+        #f8fffc;
+
+    overflow:hidden;
 }
 
 
 /* =========================================================
-   HEADER
+   MOVING WELCOME BAR
 ========================================================= */
 
-.profile-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    gap: 20px;
-}
+.home-marquee{
+    width:100%;
+    overflow:hidden;
 
-.profile-title h1 {
-    margin: 0;
-    font-size: 30px;
-    font-weight: 800;
-    color: #171321;
-}
-
-.profile-title p {
-    margin-top: 6px;
-    color: #777184;
-    font-size: 14px;
-}
-
-.profile-badge {
-    padding: 9px 16px;
-    border-radius: 30px;
-    background: #fff;
-    border: 1px solid #eadff5;
-    color: #7c3aed;
-    font-weight: 700;
-    font-size: 13px;
-    box-shadow: 0 6px 20px rgba(88,45,120,.07);
-}
-
-
-/* =========================================================
-   MAIN PROFILE CARD
-========================================================= */
-
-.profile-main-card {
-    background: #ffffff;
-    border-radius: 24px;
-    border: 1px solid #eee7f5;
-    box-shadow: 0 18px 50px rgba(44,24,68,.10);
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: 290px 1fr;
-    margin-bottom: 28px;
-}
-
-
-/* =========================================================
-   LEFT PROFILE
-========================================================= */
-
-.profile-left {
-    padding: 35px 25px;
-    text-align: center;
     background:
         linear-gradient(
-            145deg,
-            #ffffff 0%,
-            #faf5ff 55%,
-            #fff1f8 100%
+            90deg,
+            #075985,
+            #0284c7,
+            #0891b2,
+            #0f766e,
+            #059669,
+            #16a34a,
+            #075985
         );
-    border-right: 1px solid #eee7f5;
-}
 
-.profile-photo-wrapper {
-    width: 135px;
-    height: 135px;
-    margin: 0 auto 18px;
-    padding: 5px;
-    border-radius: 50%;
-    background: linear-gradient(
-        135deg,
-        #7c3aed,
-        #ec4899,
-        #a855f7
-    );
+    background-size:400% 100%;
+
+    animation:marqueeBg 9s linear infinite;
+
+    padding:13px 0;
+
     box-shadow:
-        0 10px 30px rgba(124,58,237,.25),
-        0 0 0 8px rgba(124,58,237,.06);
+        0 6px 25px rgba(14,116,144,.22);
+
+    position:relative;
+    z-index:10;
 }
 
-.profile-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 4px solid white;
+@keyframes marqueeBg{
+    0%{
+        background-position:0% 50%;
+    }
+
+    100%{
+        background-position:400% 50%;
+    }
 }
 
-.profile-left h2 {
-    margin: 12px 0 5px;
-    color: #191522;
-    font-size: 22px;
-    font-weight: 800;
+.home-marquee-track{
+    width:max-content;
+
+    display:flex;
+    align-items:center;
+
+    animation:homeMarquee 25s linear infinite;
 }
 
-.profile-role {
-    color: #7c3aed;
-    font-weight: 700;
-    font-size: 13px;
+.home-marquee span{
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    padding:0 42px;
+
+    color:white;
+
+    font-size:13px;
+    font-weight:800;
+
+    letter-spacing:.5px;
+
+    white-space:nowrap;
 }
 
-.profile-id {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 6px 12px;
-    background: #f3edff;
-    border-radius: 20px;
-    color: #6d28d9;
-    font-size: 12px;
-    font-weight: 700;
+.home-marquee span i{
+    font-size:15px;
+
+    color:#d1fae5;
+
+    filter:
+        drop-shadow(0 0 6px rgba(255,255,255,.6));
 }
 
-.active-status {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    margin-top: 18px;
-    color: #16a34a;
-    font-size: 13px;
-    font-weight: 700;
-}
+@keyframes homeMarquee{
+    0%{
+        transform:translateX(0);
+    }
 
-.status-dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: #22c55e;
-    box-shadow: 0 0 10px rgba(34,197,94,.7);
-}
-
-
-/* =========================================================
-   PROFILE INFORMATION
-========================================================= */
-
-.profile-right {
-    padding: 30px;
-}
-
-.info-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 22px;
-}
-
-.info-heading h3 {
-    margin: 0;
-    font-size: 18px;
-    color: #21182b;
-}
-
-.info-heading span {
-    font-size: 12px;
-    color: #8b8493;
-}
-
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-}
-
-.info-box {
-    padding: 17px;
-    border-radius: 15px;
-    background: #faf9fc;
-    border: 1px solid #eee9f3;
-    transition: .25s ease;
-}
-
-.info-box:hover {
-    transform: translateY(-2px);
-    border-color: #d8b4fe;
-    box-shadow: 0 8px 22px rgba(124,58,237,.08);
-}
-
-.info-label {
-    font-size: 11px;
-    color: #9991a1;
-    text-transform: uppercase;
-    letter-spacing: .7px;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-
-.info-value {
-    font-size: 15px;
-    color: #27202f;
-    font-weight: 700;
-    word-break: break-word;
-}
-
-.info-icon {
-    float: right;
-    font-size: 19px;
+    100%{
+        transform:translateX(-50%);
+    }
 }
 
 
 /* =========================================================
-   QUICK STATS
+   HERO
 ========================================================= */
 
-.stats-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin-top: 22px;
-}
+.hero{
+    min-height:88vh;
 
-.stat-card {
-    background: #fff;
-    border: 1px solid #eee7f5;
-    border-radius: 16px;
-    padding: 18px;
-    box-shadow: 0 7px 25px rgba(40,20,60,.06);
-}
+    position:relative;
 
-.stat-icon {
-    font-size: 23px;
-    margin-bottom: 8px;
-}
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-.stat-title {
-    color: #9991a1;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
+    overflow:hidden;
 
-.stat-value {
-    color: #201728;
-    font-size: 17px;
-    font-weight: 800;
-    margin-top: 4px;
-}
+    background:
+        linear-gradient(
+            125deg,
+            rgba(7,89,133,.78),
+            rgba(2,132,199,.68),
+            rgba(8,145,178,.58),
+            rgba(5,150,105,.52),
+            rgba(22,163,74,.42)
+        ),
 
+        url("{{ url_for('static', filename='images/hero-bg.jpg') }}")
 
-/* =========================================================
-   ACCESS SECTION
-========================================================= */
+        center center/cover no-repeat;
 
-.access-section {
-    margin-top: 30px;
-}
+    border-bottom-left-radius:45px;
+    border-bottom-right-radius:45px;
 
-.section-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.section-heading h2 {
-    margin: 0;
-    font-size: 21px;
-    color: #201728;
-}
-
-.section-heading p {
-    margin: 4px 0 0;
-    color: #88818f;
-    font-size: 13px;
-}
-
-.access-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-}
-
-
-/* =========================================================
-   ACCESS CARD
-========================================================= */
-
-.access-card {
-    position: relative;
-    text-decoration: none;
-    background: #fff;
-    border: 1px solid #eee7f5;
-    border-radius: 18px;
-    padding: 21px;
-    min-height: 145px;
-    overflow: hidden;
-    transition: .3s ease;
-    box-shadow: 0 7px 25px rgba(40,20,60,.06);
-}
-
-.access-card::before {
-    content: "";
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    right: -30px;
-    top: -30px;
-    border-radius: 50%;
-    background: rgba(168,85,247,.08);
-}
-
-.access-card:hover {
-    transform: translateY(-6px);
-    border-color: #c084fc;
     box-shadow:
-        0 15px 35px rgba(124,58,237,.14),
-        0 0 18px rgba(236,72,153,.05);
-}
-
-.access-icon {
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 13px;
-    background: linear-gradient(
-        135deg,
-        #f3e8ff,
-        #fce7f3
-    );
-    font-size: 22px;
-    margin-bottom: 13px;
-}
-
-.access-card h3 {
-    margin: 0;
-    color: #21182b;
-    font-size: 15px;
-    font-weight: 800;
-}
-
-.access-card p {
-    margin: 7px 0 0;
-    color: #8b8493;
-    font-size: 12px;
-    line-height: 1.5;
-}
-
-.access-arrow {
-    position: absolute;
-    right: 17px;
-    bottom: 17px;
-    color: #9333ea;
-    font-size: 18px;
+        0 20px 60px rgba(14,116,144,.20);
 }
 
 
 /* =========================================================
-   FEATURED AI CARD
+   HERO LIGHT
 ========================================================= */
 
-.ai-card {
-    margin-top: 22px;
-    border-radius: 21px;
-    padding: 24px;
+.hero::before{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(255,255,255,.30),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 10% 80%,
+            rgba(56,189,248,.20),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 75%,
+            rgba(34,197,94,.20),
+            transparent 30%
+        );
+}
+
+
+/* =========================================================
+   MOVING BOTTOM LINE
+========================================================= */
+
+.hero::after{
+    content:"";
+
+    position:absolute;
+
+    bottom:0;
+    left:-30%;
+
+    width:160%;
+    height:4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #38bdf8,
+            #06b6d4,
+            #14b8a6,
+            #22c55e,
+            #38bdf8,
+            transparent
+        );
+
+    box-shadow:
+        0 0 20px rgba(34,197,94,.65);
+
+    animation:heroLine 5s linear infinite;
+}
+
+@keyframes heroLine{
+    from{
+        transform:translateX(-20%);
+    }
+
+    to{
+        transform:translateX(20%);
+    }
+}
+
+
+/* =========================================================
+   HERO OVERLAY
+========================================================= */
+
+.hero-overlay{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:30px;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+
+    width:min(920px,100%);
+
+    text-align:center;
+
+    padding:48px 35px;
+
+    border-radius:32px;
+
     background:
         linear-gradient(
             135deg,
-            #20142d,
-            #3b1d56,
-            #541c48
+            rgba(255,255,255,.25),
+            rgba(255,255,255,.12)
         );
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+
+    border:1px solid rgba(255,255,255,.50);
+
+    backdrop-filter:blur(18px);
+
     box-shadow:
-        0 18px 40px rgba(45,20,60,.22);
-    overflow: hidden;
-    position: relative;
+        0 25px 75px rgba(0,60,70,.25),
+
+        inset 0 1px 0 rgba(255,255,255,.30);
+
+    animation:heroFloat 4s ease-in-out infinite alternate;
 }
 
-.ai-card::after {
-    content: "";
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    right: -70px;
-    top: -80px;
-    background: rgba(236,72,153,.15);
-}
+@keyframes heroFloat{
+    from{
+        transform:translateY(0);
+    }
 
-.ai-left {
-    position: relative;
-    z-index: 2;
-}
-
-.ai-label {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 20px;
-    background: rgba(255,255,255,.12);
-    color: #f5d0fe;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-}
-
-.ai-card h2 {
-    margin: 0;
-    font-size: 21px;
-}
-
-.ai-card p {
-    margin: 7px 0 0;
-    color: #d8cbe1;
-    font-size: 13px;
-}
-
-.ai-button {
-    position: relative;
-    z-index: 2;
-    text-decoration: none;
-    background: linear-gradient(
-        135deg,
-        #a855f7,
-        #ec4899
-    );
-    color: white;
-    padding: 12px 18px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 800;
-    white-space: nowrap;
-    box-shadow: 0 7px 20px rgba(236,72,153,.25);
+    to{
+        transform:translateY(-6px);
+    }
 }
 
 
 /* =========================================================
-   FOOTER NOTE
+   HERO BADGE
 ========================================================= */
 
-.profile-footer {
-    margin-top: 25px;
-    text-align: center;
-    color: #9a929f;
-    font-size: 12px;
+.hero-badge{
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:9px 18px;
+
+    margin-bottom:20px;
+
+    border-radius:50px;
+
+    color:#ffffff;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(14,165,233,.25),
+            rgba(20,184,166,.25),
+            rgba(34,197,94,.25)
+        );
+
+    border:1px solid rgba(255,255,255,.45);
+
+    font-size:11px;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.10);
+}
+
+.hero-badge i{
+    color:#d1fae5;
+
+    filter:
+        drop-shadow(0 0 7px rgba(255,255,255,.7));
 }
 
 
 /* =========================================================
-   RESPONSIVE
+   HERO TITLE
 ========================================================= */
 
-@media(max-width: 1100px) {
+.hero-title{
+    margin:0;
 
-    .access-grid {
-        grid-template-columns: repeat(3, 1fr);
+    font-size:54px;
+
+    line-height:1.12;
+
+    font-weight:900;
+
+    color:white;
+
+    text-shadow:
+        0 5px 25px rgba(0,60,70,.35);
+}
+
+.hero-title .brand{
+    display:block;
+
+    font-size:20px;
+
+    margin-bottom:10px;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    color:#d1fae5;
+}
+
+.hero-title .main-title{
+    display:block;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #cffafe,
+            #a7f3d0,
+            #bbf7d0,
+            #ecfeff,
+            #ffffff
+        );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    background-clip:text;
+
+    background-size:300% auto;
+
+    animation:titleShine 7s linear infinite;
+}
+
+@keyframes titleShine{
+    0%{
+        background-position:0% center;
     }
 
-    .stats-row {
-        grid-template-columns: repeat(2, 1fr);
+    100%{
+        background-position:300% center;
     }
 }
 
-@media(max-width: 850px) {
 
-    .profile-main-card {
-        grid-template-columns: 1fr;
+/* =========================================================
+   HERO TEXT
+========================================================= */
+
+.hero-text{
+    max-width:720px;
+
+    margin:22px auto 30px;
+
+    color:#ffffff;
+
+    font-size:18px;
+
+    line-height:1.75;
+
+    text-shadow:
+        0 2px 12px rgba(0,50,60,.35);
+}
+
+
+/* =========================================================
+   HERO BUTTONS
+========================================================= */
+
+.hero-buttons{
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:13px;
+
+    flex-wrap:wrap;
+}
+
+.hero-btn{
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    padding:13px 24px;
+
+    border-radius:14px;
+
+    font-weight:800;
+
+    text-decoration:none;
+
+    transition:.35s;
+}
+
+
+/* =========================================================
+   GET STARTED
+========================================================= */
+
+.btn-start{
+    color:#ffffff;
+
+    border:none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0284c7,
+            #0891b2,
+            #0f766e,
+            #16a34a
+        );
+
+    box-shadow:
+        0 10px 30px rgba(5,150,105,.32);
+}
+
+.btn-start:hover{
+    color:white;
+
+    transform:
+        translateY(-4px)
+        scale(1.03);
+
+    box-shadow:
+        0 15px 40px rgba(5,150,105,.40);
+}
+
+
+/* =========================================================
+   EXPLORE
+========================================================= */
+
+.btn-learn{
+    color:white;
+
+    border:1px solid rgba(255,255,255,.70);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(14,165,233,.18),
+            rgba(20,184,166,.18),
+            rgba(34,197,94,.18)
+        );
+
+    backdrop-filter:blur(10px);
+}
+
+.btn-learn:hover{
+    color:#047857;
+
+    background:white;
+
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.12);
+}
+
+
+/* =========================================================
+   FEATURES SECTION
+========================================================= */
+
+.features-section{
+    padding:85px 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f8fffc,
+            #ffffff,
+            #f0fdfa,
+            #f0f9ff
+        );
+}
+
+
+/* =========================================================
+   SECTION HEADING
+========================================================= */
+
+.section-heading{
+    text-align:center;
+
+    margin-bottom:45px;
+}
+
+.mini-title{
+    display:inline-block;
+
+    padding:7px 15px;
+
+    border-radius:50px;
+
+    color:#047857;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ecfeff,
+            #ecfdf5,
+            #f0fdfa
+        );
+
+    border:1px solid rgba(5,150,105,.12);
+
+    font-size:10px;
+
+    font-weight:900;
+
+    letter-spacing:1.5px;
+}
+
+.features-title{
+    margin:13px 0 10px;
+
+    font-size:37px;
+
+    font-weight:900;
+
+    color:#164e63;
+}
+
+.section-subtitle{
+    max-width:650px;
+
+    margin:auto;
+
+    color:#607b7b;
+
+    line-height:1.7;
+
+    font-size:15px;
+}
+
+.features-title::after{
+    content:"";
+
+    display:block;
+
+    width:100px;
+
+    height:4px;
+
+    margin:13px auto 0;
+
+    border-radius:50px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0284c7,
+            #0891b2,
+            #0f766e,
+            #10b981,
+            #22c55e
+        );
+
+    box-shadow:
+        0 3px 12px rgba(16,185,129,.25);
+}
+
+
+/* =========================================================
+   FEATURE CARD
+========================================================= */
+
+.feature-card{
+    height:100%;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:22px;
+
+    border:1px solid rgba(5,150,105,.13);
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #fafffd,
+            #f8fdff
+        );
+
+    box-shadow:
+        0 12px 35px rgba(14,116,144,.08);
+
+    transition:.4s;
+}
+
+.feature-card::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0284c7,
+            #0891b2,
+            #0f766e,
+            #10b981,
+            #22c55e
+        );
+}
+
+.feature-card::after{
+    content:"";
+
+    position:absolute;
+
+    width:120px;
+    height:120px;
+
+    right:-55px;
+    bottom:-55px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(16,185,129,.10),
+            transparent 70%
+        );
+}
+
+.feature-card:hover{
+    transform:translateY(-9px);
+
+    box-shadow:
+        0 20px 48px rgba(14,116,144,.16);
+
+    border-color:
+        rgba(5,150,105,.30);
+}
+
+.feature-card .card-body{
+    padding:32px 22px;
+}
+
+.feature-icon{
+    width:65px;
+    height:65px;
+
+    margin:0 auto 17px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:18px;
+
+    font-size:28px;
+
+    transition:.4s;
+}
+
+.feature-card:hover .feature-icon{
+    transform:
+        translateY(-4px)
+        scale(1.08);
+
+    box-shadow:
+        0 8px 20px rgba(14,165,233,.12);
+}
+
+.feature-card h4{
+    color:#164e63;
+
+    font-weight:850;
+
+    font-size:18px;
+
+    margin-bottom:10px;
+}
+
+.feature-card p{
+    color:#607b7b;
+
+    line-height:1.7;
+
+    margin:0;
+}
+
+
+/* =========================================================
+   DIFFERENT ICON COLORS
+========================================================= */
+
+.feature-card:nth-child(1) .feature-icon{
+    color:#0284c7;
+    background:#eff6ff;
+}
+
+.feature-card:nth-child(2) .feature-icon{
+    color:#0891b2;
+    background:#ecfeff;
+}
+
+.feature-card:nth-child(3) .feature-icon{
+    color:#0f766e;
+    background:#f0fdfa;
+}
+
+.feature-card:nth-child(4) .feature-icon{
+    color:#059669;
+    background:#ecfdf5;
+}
+
+.feature-card:nth-child(5) .feature-icon{
+    color:#16a34a;
+    background:#f0fdf4;
+}
+
+.feature-card:nth-child(6) .feature-icon{
+    color:#0284c7;
+    background:#f0f9ff;
+}
+
+
+/* =========================================================
+   HOW AGRINOVA HELPS
+========================================================= */
+
+.help-section{
+    padding:80px 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ecfeff,
+            #f0fdfa,
+            #ecfdf5,
+            #f0f9ff
+        );
+
+    border-top:
+        1px solid rgba(5,150,105,.10);
+}
+
+.help-card{
+    height:100%;
+
+    padding:28px 22px;
+
+    border-radius:20px;
+
+    background:
+        rgba(255,255,255,.90);
+
+    border:1px solid rgba(5,150,105,.12);
+
+    box-shadow:
+        0 12px 32px rgba(14,116,144,.08);
+
+    transition:.35s;
+}
+
+.help-card:hover{
+    transform:translateY(-7px);
+
+    box-shadow:
+        0 18px 40px rgba(14,116,144,.15);
+}
+
+.help-number{
+    width:45px;
+    height:45px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:14px;
+
+    color:white;
+
+    font-weight:900;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0284c7,
+            #0891b2,
+            #0f766e,
+            #16a34a
+        );
+
+    margin-bottom:16px;
+
+    box-shadow:
+        0 7px 18px rgba(5,150,105,.22);
+}
+
+.help-card h4{
+    color:#164e63;
+
+    font-weight:850;
+}
+
+.help-card p{
+    color:#607b7b;
+
+    line-height:1.7;
+
+    margin:0;
+}
+
+
+/* =========================================================
+   FINAL CTA
+========================================================= */
+
+.cta-section{
+    padding:75px 20px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #075985,
+            #0284c7,
+            #0891b2,
+            #0f766e,
+            #059669,
+            #16a34a
+        );
+
+    background-size:250% 250%;
+
+    animation:ctaGradient 10s ease infinite;
+
+    color:white;
+}
+
+@keyframes ctaGradient{
+    0%{
+        background-position:0% 50%;
     }
 
-    .profile-left {
-        border-right: none;
-        border-bottom: 1px solid #eee7f5;
+    50%{
+        background-position:100% 50%;
     }
 
-    .access-grid {
-        grid-template-columns: repeat(2, 1fr);
+    100%{
+        background-position:0% 50%;
     }
 }
 
-@media(max-width: 600px) {
+.cta-section h2{
+    font-size:34px;
 
-    .profile-page {
-        padding: 15px;
+    font-weight:900;
+
+    margin-bottom:12px;
+}
+
+.cta-section p{
+    max-width:650px;
+
+    margin:0 auto 25px;
+
+    color:#ecfeff;
+
+    line-height:1.7;
+}
+
+.cta-btn{
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:13px 25px;
+
+    border-radius:14px;
+
+    background:white;
+
+    color:#047857;
+
+    font-weight:850;
+
+    text-decoration:none;
+
+    transition:.35s;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.12);
+}
+
+.cta-btn:hover{
+    color:#0284c7;
+
+    transform:
+        translateY(-4px)
+        scale(1.03);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.18);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:768px){
+
+    .home-marquee span{
+        padding:0 25px;
+
+        font-size:11px;
     }
 
-    .profile-header {
-        align-items: flex-start;
-        flex-direction: column;
+    .hero{
+        min-height:88vh;
+
+        border-radius:
+            0 0 30px 30px;
     }
 
-    .profile-title h1 {
-        font-size: 24px;
+    .hero-overlay{
+        padding:18px;
     }
 
-    .profile-right {
-        padding: 20px;
+    .hero-content{
+        padding:32px 18px;
+
+        border-radius:24px;
     }
 
-    .info-grid {
-        grid-template-columns: 1fr;
+    .hero-title{
+        font-size:35px;
     }
 
-    .stats-row {
-        grid-template-columns: 1fr 1fr;
+    .hero-title .brand{
+        font-size:15px;
     }
 
-    .access-grid {
-        grid-template-columns: 1fr;
+    .hero-text{
+        font-size:15px;
+
+        line-height:1.65;
     }
 
-    .ai-card {
-        align-items: flex-start;
-        flex-direction: column;
+    .hero-btn{
+        width:100%;
+
+        max-width:250px;
     }
 
-    .ai-button {
-        width: 100%;
-        text-align: center;
-        box-sizing: border-box;
+    .features-section,
+    .help-section{
+        padding:60px 0;
+    }
+
+    .features-title{
+        font-size:29px;
+    }
+
+    .section-subtitle{
+        padding:0 15px;
+    }
+
+    .cta-section h2{
+        font-size:28px;
     }
 }
 
 </style>
 
-
-<div class="profile-page">
-
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
-    <div class="profile-header">
-
-        <div class="profile-title">
-
-            <h1>👨‍🌾 Farmer Profile</h1>
-
-            <p>
-                Welcome to your AgroTech farming workspace
-            </p>
-
-        </div>
-
-        <div class="profile-badge">
-            🌱 AgroTech Farmer
-        </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         MAIN PROFILE CARD
-    ====================================================== -->
-
-    <div class="profile-main-card">
-
-
-        <!-- LEFT SIDE -->
-
-        <div class="profile-left">
-
-            <div class="profile-photo-wrapper">
-
-                {% if farmer.photo %}
-
-                    <img
-                        src="{{ url_for('static', filename='uploads/' ~ farmer.photo) }}"
-                        class="profile-photo"
-                        alt="Farmer Photo"
-                    >
-
-                {% else %}
-
-                    <img
-                        src="{{ url_for('static', filename='uploads/default.png') }}"
-                        class="profile-photo"
-                        alt="Default Farmer"
-                    >
-
-                {% endif %}
-
-            </div>
-
-
-            <h2>
-                {{ farmer.name }}
-            </h2>
-
-            <div class="profile-role">
-                🌾 Registered Farmer
-            </div>
-
-            <div class="profile-id">
-                FARMER ID #{{ farmer.id }}
-            </div>
-
-            <div class="active-status">
-
-                <span class="status-dot"></span>
-
-                Account Active
-
-            </div>
-
-        </div>
-
-
-        <!-- RIGHT SIDE -->
-
-        <div class="profile-right">
-
-            <div class="info-heading">
-
-                <div>
-
-                    <h3>Personal Information</h3>
-
-                    <span>
-                        Your registered farmer details
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="info-grid">
-
-
-                <div class="info-box">
-
-                    <div class="info-label">
-                        Full Name
-                    </div>
-
-                    <div class="info-value">
-
-                        {{ farmer.name }}
-
-                        <span class="info-icon">👤</span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="info-box">
-
-                    <div class="info-label">
-                        Mobile Number
-                    </div>
-
-                    <div class="info-value">
-
-                        {{ farmer.mobile }}
-
-                        <span class="info-icon">📱</span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="info-box">
-
-                    <div class="info-label">
-                        Village
-                    </div>
-
-                    <div class="info-value">
-
-                        {{ farmer.village }}
-
-                        <span class="info-icon">📍</span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="info-box">
-
-                    <div class="info-label">
-                        Username
-                    </div>
-
-                    <div class="info-value">
-
-                        {{ farmer.username }}
-
-                        <span class="info-icon">🔐</span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="info-box">
-
-                    <div class="info-label">
-                        User Role
-                    </div>
-
-                    <div class="info-value">
-
-                        {{ farmer.role|capitalize }}
-
-                        <span class="info-icon">🛡️</span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="info-box">
-
-                    <div class="info-label">
-                        Farm Status
-                    </div>
-
-                    <div class="info-value">
-
-                        Active & Monitoring
-
-                        <span class="info-icon">🌱</span>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-
-            <!-- STATS -->
-
-            <div class="stats-row">
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        🌡️
-                    </div>
-
-                    <div class="stat-title">
-                        Farm
-                    </div>
-
-                    <div class="stat-value">
-                        Monitoring
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        💧
-                    </div>
-
-                    <div class="stat-title">
-                        Irrigation
-                    </div>
-
-                    <div class="stat-value">
-                        Smart
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        ⚙️
-                    </div>
-
-                    <div class="stat-title">
-                        Motor
-                    </div>
-
-                    <div class="stat-value">
-                        Control
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        🤖
-                    </div>
-
-                    <div class="stat-title">
-                        AI
-                    </div>
-
-                    <div class="stat-value">
-                        Enabled
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-<!-- =====================================================
-     ACCESS SECTION
+<!-- =========================================================
+     HOME PAGE
+========================================================= --><div class="home-page"><!-- =====================================================
+     MOVING WELCOME BAR
 ====================================================== -->
 
-<div class="access-section">
-
-    <div class="section-heading">
-
-        <div>
-            <h2>⚡ Your Farming Access</h2>
-
-            <p>
-                Tools and services available in your account
-            </p>
-        </div>
-
-    </div>
-
-
-    <div class="access-grid">
-
-
-        <!-- LIVE FARM -->
-
-        <a href="{{ url_for('motor') }}" class="access-card">
-
-            <div class="access-icon">
-                🌡️
-            </div>
-
-            <h3>
-                Live Farm
-            </h3>
-
-            <p>
-                Monitor your farm and irrigation activity in real time.
-            </p>
-
-            <span class="access-arrow">
-                →
-            </span>
-
-        </a>
-
-
-        <!-- WEATHER -->
-
-        <a href="{{ url_for('weather') }}" class="access-card">
-
-            <div class="access-icon">
-                🌤️
-            </div>
-
-            <h3>
-                Weather
-            </h3>
-
-            <p>
-                Check current weather conditions for better farming.
-            </p>
-
-            <span class="access-arrow">
-                →
-            </span>
-
-        </a>
-
-
-        <!-- FARM RECORDS -->
-
-        <a href="{{ url_for('records') }}" class="access-card">
-
-            <div class="access-icon">
-                📊
-            </div>
-
-            <h3>
-                Farm Records
-            </h3>
-
-            <p>
-                View motor, sensor and irrigation history.
-            </p>
-
-            <span class="access-arrow">
-                →
-            </span>
-
-        </a>
-
-
-        <!-- SMART IRRIGATION -->
-
-        <a href="{{ url_for('automatic_irrigation') }}" class="access-card">
-
-            <div class="access-icon">
-                💧
-            </div>
-
-            <h3>
-                Smart Irrigation
-            </h3>
-
-            <p>
-                Configure automatic irrigation according to soil moisture.
-            </p>
-
-            <span class="access-arrow">
-                →
-            </span>
-
-        </a>
-
-
-        <!-- MOTOR CONTROL -->
-
-        <a href="{{ url_for('motor') }}" class="access-card">
-
-            <div class="access-icon">
-                ⚙️
-            </div>
-
-            <h3>
-                Motor Control
-            </h3>
-
-            <p>
-                Control and monitor your irrigation motor.
-            </p>
-
-            <span class="access-arrow">
-                →
-            </span>
-
-        </a>
-
-
-        <!-- CROP MANAGEMENT -->
-
-        <a href="{{ url_for('crop') }}" class="access-card">
-
-            <div class="access-icon">
-                🌱
-            </div>
-
-            <h3>
-                Crop Management
-            </h3>
-
-            <p>
-                Manage crops and view useful crop information.
-            </p>
-
-            <span class="access-arrow">
-                →
-            </span>
-
-        </a>
-
-
-        <!-- My Profile -->
-
-        <a href="{{ url_for('my_profile') }}" class="access-card">
-
-            <div class="access-icon">
-                👤
-            </div>
-
-            <h3>
-                My Profile
-            </h3>
-
-            <p>
-                Manage your profile and view personalized farming insights.
-            </p>
-
-            <span class="access-arrow">
-                →
-            </span>
-
-        </a>
-
-
-        <!-- DISEASE AI -->
-
-        <a href="#" class="access-card">
-
-            <div class="access-icon">
-                🧬
-            </div>
-
-            <h3>
-                AI Disease Detection
-            </h3>
-
-            <p>
-                Detect possible crop diseases using AI technology.
-            </p>
-
-            <span class="access-arrow">
-                →
-            </span>
-
-        </a>
-
-
-        <!-- SMART ALERTS -->
-
-        <a href="#" class="access-card">
-
-            <div class="access-icon">
-                🔔
-            </div>
-
-            <h3>
-                Smart Alerts
-            </h3>
-
-            <p>
-                Get important alerts about your farm and irrigation.
-            </p>
-
-            <span class="access-arrow">
-                →
-            </span>
-
-        </a>
-
-
-        <!-- SENSOR MONITORING -->
-
-        <a href="{{ url_for('records') }}" class="access-card">
-
-            <div class="access-icon">
-                📡
-            </div>
-
-            <h3>
-                Sensor Monitoring
-            </h3>
-
-            <p>
-                Monitor temperature, humidity and soil moisture data.
-            </p>
-
-            <span class="access-arrow">
-                →
-            </span>
-
-        </a>
-
-
-        <!-- FEEDBACK -->
-
-        <a href="#" class="access-card">
-
-            <div class="access-icon">
-                💬
-            </div>
-
-            <h3>
-                Feedback
-            </h3>
-
-            <p>
-                Share your experience and suggestions with AgroTech.
-            </p>
-
-            <span class="access-arrow">
-                →
-            </span>
-
-        </a>
-
-
-        <!-- CONTACT SUPPORT -->
-
-        <a href="#" class="access-card">
-
-            <div class="access-icon">
-                📞
-            </div>
-
-            <h3>
-                Contact Support
-            </h3>
-
-            <p>
-                Get help and support whenever you need it.
-            </p>
-
-            <span class="access-arrow">
-                →
-            </span>
-
-        </a>
-
-
-    </div>
-
-
-    <!-- =====================================================
-         AI FEATURED CARD
-    ====================================================== -->
-
-    <div class="ai-card">
-
-        <div class="ai-left">
-
-            <span class="ai-label">
-                AI POWERED FARMING
-            </span>
-
-            <h2>
-                🤖 Smart Farming Assistant
-            </h2>
-
-            <p>
-                Use intelligent technology to make better farming decisions.
-            </p>
-
-        </div>
-
-        <a href="{{ url_for('ai_assistant') }}" class="ai-button">
-            Open AI Assistant →
-        </a>
-
-    </div>
-
-
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
-
-    <div class="profile-footer">
-
-        🌱 AgroTech Smart Farming System
-        &nbsp; • &nbsp;
-        Smart • Simple • Sustainable
+<div class="home-marquee">
+
+    <div class="home-marquee-track">
+
+        <span>
+            <i class="fa-solid fa-leaf"></i>
+            Welcome to AgriSense — Agriculture Automatic Monitoring System
+        </span>
+
+        <span>
+            <i class="fa-solid fa-seedling"></i>
+            Smart Farming • Better Monitoring • Better Management
+        </span>
+
+        <span>
+            <i class="fa-solid fa-tractor"></i>
+            Technology for Smarter and More Efficient Farming
+        </span>
+
+        <span>
+            <i class="fa-solid fa-leaf"></i>
+            Welcome to AgriSense — Agriculture Automatic Monitoring System
+        </span>
+
+        <span>
+            <i class="fa-solid fa-seedling"></i>
+            Smart Farming • Better Monitoring • Better Management
+        </span>
+
+        <span>
+            <i class="fa-solid fa-tractor"></i>
+            Technology for Smarter and More Efficient Farming
+        </span>
 
     </div>
 
 </div>
+
+
+<!-- =====================================================
+     HERO
+====================================================== -->
+
+<section class="hero">
+
+    <div class="hero-overlay">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+
+                <i class="fa-solid fa-satellite-dish"></i>
+
+                SMART FARMING • DIGITAL AGRICULTURE
+
+            </div>
+
+
+            <h1 class="hero-title">
+
+                <span class="brand">
+                    🌱 AgriSense
+                </span>
+
+                <span class="main-title">
+                    Agriculture Automatic<br>
+                    Monitoring System
+                </span>
+
+            </h1>
+
+
+            <p class="hero-text">
+
+                A smart farming platform to monitor farm conditions,
+                manage crops, check weather, control irrigation and
+                make better farming decisions from one place.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a
+                    href="{{ url_for('register') }}"
+                    class="hero-btn btn-start">
+
+                    <i class="fa-solid fa-rocket"></i>
+                    Get Started
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('about') }}"
+                    class="hero-btn btn-learn">
+
+                    <i class="fa-solid fa-circle-info"></i>
+                    Explore AgriSense
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SMART FEATURES
+====================================================== -->
+
+<section class="features-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="mini-title">
+                AGRISENSE SMART MODULES
+            </span>
+
+            <h2 class="features-title">
+                Everything Your Farm Needs
+            </h2>
+
+            <p class="section-subtitle">
+
+                AgriSense brings essential farming tools together
+                in one simple, organized and intelligent platform.
+
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- 1 -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="card-body text-center">
+
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-temperature-three-quarters"></i>
+                        </div>
+
+                        <h4>
+                            Temperature Monitoring
+                        </h4>
+
+                        <p>
+                            Monitor temperature conditions
+                            to understand the environment
+                            around your crops.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- 2 -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="card-body text-center">
+
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-droplet"></i>
+                        </div>
+
+                        <h4>
+                            Soil Moisture Monitoring
+                        </h4>
+
+                        <p>
+                            Keep track of soil moisture
+                            and make better irrigation
+                            decisions.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- 3 -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="card-body text-center">
+
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-cloud-sun"></i>
+                        </div>
+
+                        <h4>
+                            Live Weather
+                        </h4>
+
+                        <p>
+                            Check weather information
+                            and plan farming activities
+                            more effectively.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- 4 -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="card-body text-center">
+
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-faucet-drip"></i>
+                        </div>
+
+                        <h4>
+                            Smart Irrigation
+                        </h4>
+
+                        <p>
+                            Manage irrigation schedules
+                            and use water efficiently
+                            for your farm.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- 5 -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="card-body text-center">
+
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-gears"></i>
+                        </div>
+
+                        <h4>
+                            Motor Control
+                        </h4>
+
+                        <p>
+                            Manage pump activity and
+                            keep track of motor operations
+                            through your farming system.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- 6 -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="card-body text-center">
+
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+
+                        <h4>
+                            AI Farming Assistant
+                        </h4>
+
+                        <p>
+                            Get useful AI-based farming
+                            guidance and support while
+                            managing your farm.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     HOW AGRISENSE HELPS
+====================================================== -->
+
+<section class="help-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="mini-title">
+                SIMPLE FARM MANAGEMENT
+            </span>
+
+            <h2 class="features-title">
+                How AgriSense Helps Farmers
+            </h2>
+
+            <p class="section-subtitle">
+
+                Manage important farming activities
+                from one smart and organized platform.
+
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <div class="col-md-4">
+
+                <div class="help-card">
+
+                    <div class="help-number">
+                        01
+                    </div>
+
+                    <h4>
+                        Monitor
+                    </h4>
+
+                    <p>
+                        Track temperature, humidity and
+                        soil moisture to understand current
+                        farm conditions.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="help-card">
+
+                    <div class="help-number">
+                        02
+                    </div>
+
+                    <h4>
+                        Manage
+                    </h4>
+
+                    <p>
+                        Manage crops, irrigation schedules,
+                        motor operations and important
+                        farming activities.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="help-card">
+
+                    <div class="help-number">
+                        03
+                    </div>
+
+                    <h4>
+                        Decide Smarter
+                    </h4>
+
+                    <p>
+                        Use weather information, records,
+                        analytics and AI-based guidance
+                        for better farming decisions.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FINAL CTA
+====================================================== -->
+
+<section class="cta-section">
+
+    <h2>
+        🌱 Start Your Smart Farming Journey
+    </h2>
+
+    <p>
+        Bring your farm management, monitoring and
+        smart farming tools together with AgriSense.
+    </p>
+
+    <a
+        href="{{ url_for('register') }}"
+        class="cta-btn">
+
+        <i class="fa-solid fa-user-plus"></i>
+
+        Create Farmer Account
+
+    </a>
+
+</section>
+
 
 {% endblock %}

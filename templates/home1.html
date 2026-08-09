@@ -1,101 +1,333 @@
 {% extends "baseofhtml.html" %}
 
 {% block title %}
-Home
+AgriNova | Intelligent Farm Monitoring & Management
 {% endblock %}
 
 {% block content %}
 
 <style>
 
-/* ================= HOME PAGE ================= */
+/* =========================================================
+   AGRINOVA
+   DARK • BLUE • VIOLET • CYAN • PINK
+   PREMIUM INTELLIGENT AGRICULTURE UI
+========================================================= */
 
 .home-page{
-    background:#030504;
-    color:white;
     min-height:100vh;
+
+    color:#f8fafc;
+
+    background:
+        radial-gradient(
+            circle at 5% 10%,
+            rgba(37,99,235,.16),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 95% 15%,
+            rgba(168,85,247,.16),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 50% 85%,
+            rgba(14,165,233,.10),
+            transparent 30%
+        ),
+
+        #070914;
+
+    overflow:hidden;
 }
 
 
-/* ================= HERO ================= */
+/* =========================================================
+   MOVING WELCOME BAR
+========================================================= */
 
-.hero{
-    height:100vh;
+.home-marquee{
+
+    width:100%;
+
+    overflow:hidden;
 
     background:
         linear-gradient(
-            120deg,
-            rgba(0,0,0,.88),
-            rgba(5,35,22,.72),
-            rgba(0,0,0,.90)
-        ),
-        url("{{ url_for('static', filename='images/hero-bg.jpg') }}")
-        center center/cover no-repeat;
+            90deg,
+            #0f172a,
+            #1d4ed8,
+            #4338ca,
+            #7c3aed,
+            #db2777,
+            #2563eb,
+            #0f172a
+        );
+
+    background-size:400% 100%;
+
+    animation:marqueeBg 9s linear infinite;
+
+    padding:13px 0;
+
+    box-shadow:
+        0 6px 30px rgba(37,99,235,.30);
+
+    position:relative;
+
+    z-index:10;
+}
+
+
+@keyframes marqueeBg{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    100%{
+        background-position:400% 50%;
+    }
+
+}
+
+
+.home-marquee-track{
+
+    width:max-content;
+
+    display:flex;
+
+    align-items:center;
+
+    animation:
+        homeMarquee 25s linear infinite;
+}
+
+
+.home-marquee span{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    padding:0 42px;
+
+    color:#ffffff;
+
+    font-size:13px;
+
+    font-weight:800;
+
+    letter-spacing:.5px;
+
+    white-space:nowrap;
+}
+
+
+.home-marquee span i{
+
+    font-size:15px;
+
+    color:#93c5fd;
+
+    filter:
+        drop-shadow(0 0 7px rgba(96,165,250,.9));
+}
+
+
+@keyframes homeMarquee{
+
+    0%{
+        transform:translateX(0);
+    }
+
+    100%{
+        transform:translateX(-50%);
+    }
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    min-height:88vh;
 
     position:relative;
 
     display:flex;
+
     align-items:center;
+
     justify-content:center;
 
     overflow:hidden;
 
-    animation:heroLight 8s ease-in-out infinite alternate;
+    background:
+
+        linear-gradient(
+            125deg,
+            rgba(2,6,23,.90),
+            rgba(15,23,42,.80),
+            rgba(30,27,75,.72),
+            rgba(49,46,129,.58),
+            rgba(88,28,135,.46)
+        ),
+
+        url("{{ url_for('static', filename='images/hero-bg.jpg') }}")
+
+        center center/cover no-repeat;
+
+    border-bottom-left-radius:45px;
+
+    border-bottom-right-radius:45px;
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.45);
 }
 
 
-@keyframes heroLight{
+/* =========================================================
+   HERO LIGHT EFFECTS
+========================================================= */
 
-    0%{
-        filter:brightness(.82);
-    }
+.hero::before{
 
-    50%{
-        filter:brightness(1);
-    }
+    content:"";
 
-    100%{
-        filter:brightness(.88);
-    }
-
-}
-
-
-.hero-overlay{
     position:absolute;
+
     inset:0;
 
     background:
-        radial-gradient(
-            circle at center,
-            rgba(0,255,150,.14),
-            transparent 50%
-        );
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(129,140,248,.18),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 15% 75%,
+            rgba(14,165,233,.18),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(236,72,153,.16),
+            transparent 28%
+        );
 }
 
+
+/* =========================================================
+   MOVING BOTTOM LIGHT
+========================================================= */
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:0;
+
+    left:-30%;
+
+    width:160%;
+
+    height:4px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            #38bdf8,
+            #6366f1,
+            #a855f7,
+            #ec4899,
+            #38bdf8,
+            transparent
+        );
+
+    box-shadow:
+        0 0 22px rgba(99,102,241,.85);
+
+    animation:
+        heroLine 5s linear infinite;
+}
+
+
+@keyframes heroLine{
+
+    from{
+        transform:translateX(-20%);
+    }
+
+    to{
+        transform:translateX(20%);
+    }
+
+}
+
+
+/* =========================================================
+   HERO OVERLAY
+========================================================= */
+
+.hero-overlay{
+
+    position:relative;
+
+    z-index:2;
+
+    width:100%;
+
+    min-height:88vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:40px 25px;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+   NO CARD / NO BOX
+========================================================= */
 
 .hero-content{
 
     position:relative;
-    z-index:2;
+
+    z-index:3;
+
+    width:min(1000px,100%);
 
     text-align:center;
 
-    color:white;
-
-    padding:20px;
+    padding:40px 25px;
 
     animation:
-        contentFloat 4s ease-in-out infinite alternate;
-
+        heroFloat 4s ease-in-out infinite alternate;
 }
 
 
-@keyframes contentFloat{
+@keyframes heroFloat{
 
     from{
         transform:translateY(0);
@@ -108,175 +340,465 @@ Home
 }
 
 
-/* ================= TITLE ================= */
+/* =========================================================
+   SMALL TOP BADGE
+========================================================= */
 
-.hero-title{
+.hero-badge{
 
-    font-size:60px;
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    padding:9px 18px;
+
+    margin-bottom:24px;
+
+    border-radius:50px;
+
+    color:#dbeafe;
+
+    background:
+        rgba(15,23,42,.60);
+
+    border:
+        1px solid rgba(96,165,250,.35);
+
+    font-size:11px;
 
     font-weight:800;
 
-    line-height:1.15;
+    letter-spacing:1.5px;
+
+    box-shadow:
+
+        0 0 20px rgba(59,130,246,.12),
+
+        inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+
+.hero-badge i{
+
+    color:#38bdf8;
+
+    filter:
+        drop-shadow(0 0 8px rgba(56,189,248,.8));
+}
+
+
+/* =========================================================
+   BRAND NAME
+========================================================= */
+
+.hero-title .brand{
+
+    display:block;
+
+    font-size:20px;
+
+    margin-bottom:14px;
+
+    letter-spacing:5px;
+
+    text-transform:uppercase;
+
+    font-weight:900;
+
+    color:#93c5fd;
+
+    text-shadow:
+        0 0 20px rgba(59,130,246,.55);
+}
+
+
+/* =========================================================
+   MAIN PROJECT TITLE
+========================================================= */
+
+.hero-title{
+
+    margin:0;
+
+    line-height:1.05;
+
+    font-weight:950;
+
+    color:white;
+
+    text-shadow:
+        0 8px 35px rgba(0,0,0,.65);
+}
+
+
+.hero-title .main-title{
+
+    display:block;
+
+    font-size:clamp(42px,6vw,76px);
+
+    font-weight:950;
+
+    letter-spacing:-2px;
 
     background:
+
         linear-gradient(
             90deg,
             #ffffff,
-            #00ff9d,
-            #00d9ff,
+            #bfdbfe,
+            #93c5fd,
+            #c4b5fd,
+            #e9d5ff,
+            #fbcfe8,
             #ffffff
         );
-
-    background-size:300% auto;
 
     -webkit-background-clip:text;
 
     -webkit-text-fill-color:transparent;
 
-    animation:
-        titleColor 6s linear infinite;
+    background-clip:text;
 
+    background-size:300% auto;
+
+    animation:
+        titleShine 7s linear infinite;
 }
 
 
-@keyframes titleColor{
+@keyframes titleShine{
 
     0%{
         background-position:0% center;
     }
 
-    50%{
-        background-position:100% center;
-    }
-
     100%{
-        background-position:0% center;
+        background-position:300% center;
     }
 
 }
 
+
+/* =========================================================
+   TITLE UNDERLINE
+========================================================= */
+
+.title-line{
+
+    width:170px;
+
+    height:4px;
+
+    margin:22px auto 0;
+
+    border-radius:50px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #38bdf8,
+            #6366f1,
+            #a855f7,
+            #ec4899
+        );
+
+    box-shadow:
+
+        0 0 10px rgba(99,102,241,.8),
+
+        0 0 25px rgba(236,72,153,.35);
+
+    animation:
+        linePulse 3s ease-in-out infinite alternate;
+}
+
+
+@keyframes linePulse{
+
+    from{
+        transform:scaleX(.75);
+        opacity:.7;
+    }
+
+    to{
+        transform:scaleX(1.15);
+        opacity:1;
+    }
+
+}
+
+
+/* =========================================================
+   HERO TEXT
+========================================================= */
 
 .hero-text{
 
-    font-size:22px;
+    max-width:760px;
 
-    margin:25px 0;
+    margin:28px auto 32px;
 
-    color:#e8fff5;
+    color:#cbd5e1;
+
+    font-size:18px;
+
+    line-height:1.8;
 
     text-shadow:
-        0 0 10px rgba(0,255,150,.25);
-
+        0 2px 15px rgba(0,0,0,.55);
 }
 
 
-/* ================= HERO BUTTONS ================= */
+/* =========================================================
+   HERO BUTTONS
+========================================================= */
+
+.hero-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:14px;
+
+    flex-wrap:wrap;
+}
+
 
 .hero-btn{
 
-    border-radius:30px;
+    display:inline-flex;
 
-    padding:13px 30px;
+    align-items:center;
 
-    font-weight:700;
+    justify-content:center;
 
-    transition:.4s;
+    gap:9px;
 
+    padding:14px 26px;
+
+    border-radius:14px;
+
+    font-weight:850;
+
+    text-decoration:none;
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
 }
 
 
-.hero-btn:hover{
-
-    transform:
-        translateY(-6px)
-        scale(1.05);
-
-}
-
+/* =========================================================
+   GET STARTED
+========================================================= */
 
 .btn-start{
 
-    background:#00b86b;
-
-    border:none;
-
     color:white;
 
-    box-shadow:
-        0 0 15px
-        rgba(0,255,150,.35);
+    border:1px solid rgba(255,255,255,.12);
 
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5,
+            #7c3aed,
+            #db2777
+        );
+
+    box-shadow:
+
+        0 10px 35px rgba(79,70,229,.35),
+
+        0 0 20px rgba(99,102,241,.15);
 }
 
 
 .btn-start:hover{
 
-    background:#00ff9d;
+    color:white;
 
-    color:#001b0e;
+    transform:
+        translateY(-4px)
+        scale(1.03);
 
     box-shadow:
-        0 0 20px #00ff9d,
-        0 0 40px
-        rgba(0,255,150,.4);
 
+        0 16px 45px rgba(236,72,153,.35),
+
+        0 0 25px rgba(99,102,241,.25);
+}
+
+
+/* =========================================================
+   EXPLORE
+========================================================= */
+
+.btn-learn{
+
+    color:#e2e8f0;
+
+    border:
+        1px solid rgba(148,163,184,.35);
+
+    background:
+        rgba(15,23,42,.62);
+
+    backdrop-filter:
+        blur(10px);
 }
 
 
 .btn-learn:hover{
 
-    background:white;
+    color:#312e81;
 
-    color:black;
+    background:#ffffff;
 
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.35);
 }
 
 
-/* ================= FEATURES ================= */
+/* =========================================================
+   FEATURES SECTION
+========================================================= */
 
 .features-section{
 
-    position:relative;
+    padding:90px 0;
 
     background:
 
         radial-gradient(
-            circle at 15% 20%,
-            rgba(0,255,150,.10),
+            circle at 10% 20%,
+            rgba(37,99,235,.08),
             transparent 30%
         ),
 
         radial-gradient(
-            circle at 85% 80%,
-            rgba(0,180,255,.09),
+            circle at 90% 80%,
+            rgba(168,85,247,.08),
             transparent 30%
         ),
 
-        #030504;
+        #080a14;
+}
 
-    padding:90px 0;
 
-    overflow:hidden;
+/* =========================================================
+   SECTION HEADING
+========================================================= */
 
+.section-heading{
+
+    text-align:center;
+
+    margin-bottom:48px;
+}
+
+
+.mini-title{
+
+    display:inline-block;
+
+    padding:8px 16px;
+
+    border-radius:50px;
+
+    color:#93c5fd;
+
+    background:
+        rgba(30,41,59,.65);
+
+    border:
+        1px solid rgba(96,165,250,.22);
+
+    font-size:10px;
+
+    font-weight:900;
+
+    letter-spacing:1.8px;
+
+    box-shadow:
+        0 0 20px rgba(37,99,235,.08);
 }
 
 
 .features-title{
 
-    color:white;
+    margin:16px 0 10px;
 
-    font-size:38px;
+    font-size:40px;
 
-    font-weight:800;
+    font-weight:950;
 
-    text-shadow:
-        0 0 12px
-        rgba(0,255,150,.35);
+    color:#f8fafc;
 
+    letter-spacing:-.7px;
 }
 
 
-/* ================= FEATURE CARD ================= */
+.section-subtitle{
+
+    max-width:680px;
+
+    margin:auto;
+
+    color:#94a3b8;
+
+    line-height:1.75;
+
+    font-size:15px;
+}
+
+
+.features-title::after{
+
+    content:"";
+
+    display:block;
+
+    width:110px;
+
+    height:4px;
+
+    margin:15px auto 0;
+
+    border-radius:50px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #38bdf8,
+            #6366f1,
+            #a855f7,
+            #ec4899
+        );
+
+    box-shadow:
+        0 0 14px rgba(99,102,241,.55);
+}
+
+
+/* =========================================================
+   FEATURE CARD
+========================================================= */
 
 .feature-card{
 
@@ -286,25 +808,24 @@ Home
 
     overflow:hidden;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.10),
-            rgba(255,255,255,.025)
-        );
-
-    backdrop-filter:blur(15px);
-
-    border:
-        1px solid
-        rgba(255,255,255,.12);
-
     border-radius:22px;
 
-    color:white;
+    border:
+        1px solid rgba(148,163,184,.12);
 
-    transition:.5s;
+    background:
 
+        linear-gradient(
+            145deg,
+            rgba(15,23,42,.96),
+            rgba(17,24,39,.92)
+        );
+
+    box-shadow:
+
+        0 15px 40px rgba(0,0,0,.28);
+
+    transition:.4s;
 }
 
 
@@ -314,342 +835,533 @@ Home
 
     position:absolute;
 
-    width:200%;
+    top:0;
 
-    height:200%;
+    left:0;
 
-    left:-50%;
+    width:100%;
 
-    top:-50%;
+    height:3px;
 
     background:
-        conic-gradient(
-            transparent,
-            rgba(0,255,150,.18),
-            transparent 30%
+
+        linear-gradient(
+            90deg,
+            #38bdf8,
+            #6366f1,
+            #a855f7,
+            #ec4899
         );
-
-    animation:
-        rotateGlow 7s linear infinite;
-
-    opacity:0;
-
-    transition:.4s;
-
 }
 
 
-@keyframes rotateGlow{
+.feature-card::after{
 
-    100%{
-        transform:rotate(360deg);
-    }
+    content:"";
 
-}
+    position:absolute;
 
+    width:150px;
 
-.feature-card:hover::before{
+    height:150px;
 
-    opacity:1;
+    right:-70px;
 
+    bottom:-70px;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(99,102,241,.13),
+            transparent 70%
+        );
 }
 
 
 .feature-card:hover{
 
     transform:
-        translateY(-12px)
-        scale(1.02);
+        translateY(-10px);
 
-    border-color:#00ff9d;
+    border-color:
+        rgba(129,140,248,.35);
 
     box-shadow:
-        0 0 20px
-        rgba(0,255,150,.25),
 
-        0 20px 45px
-        rgba(0,0,0,.55);
+        0 25px 55px rgba(0,0,0,.40),
 
+        0 0 25px rgba(79,70,229,.10);
 }
 
 
 .feature-card .card-body{
 
-    position:relative;
+    padding:34px 23px;
+}
 
-    z-index:2;
 
-    padding:30px 20px;
+.feature-icon{
 
+    width:68px;
+
+    height:68px;
+
+    margin:0 auto 18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:19px;
+
+    font-size:28px;
+
+    transition:.4s;
+
+    background:
+        rgba(30,41,59,.75);
+
+    border:
+        1px solid rgba(148,163,184,.12);
+}
+
+
+.feature-card:hover .feature-icon{
+
+    transform:
+        translateY(-5px)
+        scale(1.08);
+
+    box-shadow:
+        0 10px 25px rgba(99,102,241,.18);
 }
 
 
 .feature-card h4{
 
-    color:white;
+    color:#f8fafc;
 
-    font-weight:700;
+    font-weight:850;
 
-    transition:.3s;
+    font-size:18px;
 
-}
-
-
-.feature-card:hover h4{
-
-    color:#00ff9d;
-
+    margin-bottom:10px;
 }
 
 
 .feature-card p{
 
-    color:#d2d2d2;
+    color:#94a3b8;
 
-    line-height:1.7;
+    line-height:1.75;
 
+    margin:0;
 }
 
 
-/* ================= ICON ANIMATION ================= */
+/* =========================================================
+   ICON COLORS
+========================================================= */
 
-.feature-card i{
+.feature-card:nth-child(1) .feature-icon{
 
-    transition:.5s;
+    color:#38bdf8;
 
+    background:
+        rgba(14,165,233,.10);
 }
 
 
-.feature-card:hover i{
+.feature-card:nth-child(2) .feature-icon{
 
-    transform:
-        scale(1.2)
-        rotate(8deg);
+    color:#22d3ee;
 
-    filter:
-        drop-shadow(
-            0 0 12px
-            rgba(0,255,150,.7)
-        );
-
+    background:
+        rgba(6,182,212,.10);
 }
 
 
-/* ================= STATISTICS ================= */
+.feature-card:nth-child(3) .feature-icon{
 
-.stats-section{
+    color:#818cf8;
+
+    background:
+        rgba(99,102,241,.10);
+}
+
+
+.feature-card:nth-child(4) .feature-icon{
+
+    color:#a78bfa;
+
+    background:
+        rgba(139,92,246,.10);
+}
+
+
+.feature-card:nth-child(5) .feature-icon{
+
+    color:#c084fc;
+
+    background:
+        rgba(168,85,247,.10);
+}
+
+
+.feature-card:nth-child(6) .feature-icon{
+
+    color:#f472b6;
+
+    background:
+        rgba(236,72,153,.10);
+}
+
+
+/* =========================================================
+   HOW AGRINOVA HELPS
+========================================================= */
+
+.help-section{
+
+    padding:85px 0;
 
     background:
 
         linear-gradient(
             135deg,
-            #010201,
-            #071a10,
-            #010201
+            #080a14,
+            #0b1020,
+            #0e0b1d,
+            #080a14
         );
+
+    border-top:
+        1px solid rgba(99,102,241,.10);
+}
+
+
+.help-card{
+
+    height:100%;
+
+    padding:30px 23px;
+
+    border-radius:21px;
+
+    background:
+        rgba(15,23,42,.75);
+
+    border:
+        1px solid rgba(148,163,184,.12);
+
+    box-shadow:
+        0 14px 35px rgba(0,0,0,.25);
+
+    transition:.35s;
+}
+
+
+.help-card:hover{
+
+    transform:
+        translateY(-8px);
+
+    border-color:
+        rgba(129,140,248,.30);
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.38);
+}
+
+
+.help-number{
+
+    width:47px;
+
+    height:47px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:14px;
 
     color:white;
 
-    padding:80px 0;
-
-    border-top:
-        1px solid
-        rgba(0,255,150,.15);
-
-}
-
-
-.stats-title{
-
-    font-size:35px;
-
-    font-weight:800;
-
-    text-shadow:
-        0 0 12px
-        rgba(0,255,150,.35);
-
-}
-
-
-.stat-box{
-
-    padding:25px;
-
-    transition:.4s;
-
-}
-
-
-.stat-box:hover{
-
-    transform:
-        translateY(-10px)
-        scale(1.03);
-
-}
-
-
-.stat-box h1{
-
-    font-size:48px;
-
-    font-weight:800;
+    font-weight:900;
 
     background:
+
         linear-gradient(
-            90deg,
-            #00ff9d,
-            #ffffff,
-            #00bfff,
-            #00ff9d
+            135deg,
+            #2563eb,
+            #6366f1,
+            #8b5cf6,
+            #ec4899
         );
 
-    background-size:300% auto;
+    margin-bottom:17px;
 
-    -webkit-background-clip:text;
+    box-shadow:
+        0 8px 22px rgba(99,102,241,.25);
+}
 
-    -webkit-text-fill-color:transparent;
+
+.help-card h4{
+
+    color:#f8fafc;
+
+    font-weight:850;
+}
+
+
+.help-card p{
+
+    color:#94a3b8;
+
+    line-height:1.75;
+
+    margin:0;
+}
+
+
+/* =========================================================
+   FINAL CTA
+========================================================= */
+
+.cta-section{
+
+    padding:85px 20px;
+
+    text-align:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #111827,
+            #312e81,
+            #4338ca,
+            #6d28d9,
+            #9d174d
+        );
+
+    background-size:250% 250%;
 
     animation:
-        statColor 5s linear infinite;
+        ctaGradient 10s ease infinite;
 
+    color:white;
 }
 
 
-@keyframes statColor{
+.cta-section::before{
 
-    0%{
-        background-position:0% center;
-    }
-
-    50%{
-        background-position:100% center;
-    }
-
-    100%{
-        background-position:0% center;
-    }
-
-}
-
-
-.stat-box p{
-
-    color:#cfcfcf;
-
-    font-size:17px;
-
-}
-
-
-/* ================= SMALL GLOW DOTS ================= */
-
-.glow-dot{
+    content:"";
 
     position:absolute;
 
-    width:6px;
+    inset:0;
 
-    height:6px;
+    background:
 
-    border-radius:50%;
-
-    background:#00ff9d;
-
-    box-shadow:
-        0 0 10px #00ff9d,
-        0 0 20px #00ff9d;
-
-    animation:
-        dotMove 5s linear infinite;
-
-    opacity:.7;
-
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255,255,255,.12),
+            transparent 40%
+        );
 }
 
 
-.dot1{
-    left:10%;
-    top:20%;
-}
-
-.dot2{
-    left:80%;
-    top:30%;
-    animation-delay:1s;
-}
-
-.dot3{
-    left:30%;
-    top:70%;
-    animation-delay:2s;
-}
-
-.dot4{
-    left:90%;
-    top:75%;
-    animation-delay:3s;
-}
-
-
-@keyframes dotMove{
+@keyframes ctaGradient{
 
     0%{
-        transform:translateY(0);
+        background-position:0% 50%;
     }
 
     50%{
-        transform:translateY(-30px);
+        background-position:100% 50%;
     }
 
     100%{
-        transform:translateY(0);
+        background-position:0% 50%;
     }
 
 }
 
 
-/* ================= MOBILE ================= */
+.cta-section h2{
+
+    position:relative;
+
+    font-size:36px;
+
+    font-weight:950;
+
+    margin-bottom:13px;
+}
+
+
+.cta-section p{
+
+    position:relative;
+
+    max-width:680px;
+
+    margin:0 auto 27px;
+
+    color:#e2e8f0;
+
+    line-height:1.75;
+}
+
+
+.cta-btn{
+
+    position:relative;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:14px 27px;
+
+    border-radius:14px;
+
+    background:white;
+
+    color:#4338ca;
+
+    font-weight:900;
+
+    text-decoration:none;
+
+    transition:.35s;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.25);
+}
+
+
+.cta-btn:hover{
+
+    color:#db2777;
+
+    transform:
+        translateY(-4px)
+        scale(1.03);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.35);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media(max-width:768px){
 
-    .hero{
+    .home-marquee span{
 
-        min-height:100vh;
+        padding:0 25px;
 
-        height:auto;
-
-        padding:100px 15px;
-
+        font-size:11px;
     }
 
 
-    .hero-title{
+    .hero{
 
-        font-size:38px;
+        min-height:88vh;
 
+        border-radius:
+            0 0 30px 30px;
+    }
+
+
+    .hero-overlay{
+
+        min-height:88vh;
+
+        padding:20px 15px;
+    }
+
+
+    .hero-content{
+
+        padding:30px 10px;
+    }
+
+
+    .hero-title .brand{
+
+        font-size:15px;
+
+        letter-spacing:3px;
+    }
+
+
+    .hero-title .main-title{
+
+        font-size:39px;
+
+        letter-spacing:-1px;
     }
 
 
     .hero-text{
 
-        font-size:18px;
+        font-size:15px;
 
+        line-height:1.7;
+
+        padding:0 8px;
+    }
+
+
+    .hero-btn{
+
+        width:100%;
+
+        max-width:260px;
+    }
+
+
+    .features-section,
+    .help-section{
+
+        padding:65px 0;
     }
 
 
     .features-title{
 
         font-size:30px;
-
     }
 
 
-    .stat-box h1{
+    .section-subtitle{
 
-        font-size:38px;
+        padding:0 18px;
+    }
 
+
+    .cta-section h2{
+
+        font-size:29px;
     }
 
 }
@@ -657,373 +1369,616 @@ Home
 </style>
 
 
-<!-- ================= HOME WRAPPER ================= -->
+<!-- =========================================================
+     HOME PAGE
+========================================================= -->
 
 <div class="home-page">
 
 
-    <!-- GLOW EFFECTS -->
+<!-- =====================================================
+     MOVING WELCOME BAR
+====================================================== -->
 
-    <span class="glow-dot dot1"></span>
+<div class="home-marquee">
 
-    <span class="glow-dot dot2"></span>
+    <div class="home-marquee-track">
 
-    <span class="glow-dot dot3"></span>
+        <span>
+            <i class="fa-solid fa-leaf"></i>
+            Welcome to AgriNova — Intelligent Farm Monitoring & Management
+        </span>
 
-    <span class="glow-dot dot4"></span>
+        <span>
+            <i class="fa-solid fa-seedling"></i>
+            Smart Farming • Live Monitoring • Intelligent Management
+        </span>
+
+        <span>
+            <i class="fa-solid fa-satellite-dish"></i>
+            Connected Technology for Modern Agriculture
+        </span>
+
+        <span>
+            <i class="fa-solid fa-leaf"></i>
+            Welcome to AgriNova — Intelligent Farm Monitoring & Management
+        </span>
+
+        <span>
+            <i class="fa-solid fa-seedling"></i>
+            Smart Farming • Live Monitoring • Intelligent Management
+        </span>
+
+        <span>
+            <i class="fa-solid fa-satellite-dish"></i>
+            Connected Technology for Modern Agriculture
+        </span>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+     HERO
+====================================================== -->
+
+<section class="hero">
+
+    <div class="hero-overlay">
+
+        <div class="hero-content">
 
 
+            <div class="hero-badge">
 
-    <!-- ================= HERO ================= -->
+                <i class="fa-solid fa-microchip"></i>
 
-    <section class="hero">
-
-        <div class="hero-overlay">
-
-            <div class="hero-content">
-
-                <h1 class="hero-title">
-
-                    🌾 Agriculture Automatic
-                    Monitoring System
-
-                </h1>
-
-
-                <p class="hero-text">
-
-                    Smart Farming with AI, IoT
-                    and Modern Technology
-
-                </p>
-
-
-                <div class="mt-4">
-
-                    <a
-                        href="/register"
-                        class="btn hero-btn btn-start me-3">
-
-                        🚀 Get Started
-
-                    </a>
-
-
-                    <a
-                        href="/about"
-                        class="btn btn-outline-light hero-btn btn-learn">
-
-                        ✨ Learn More
-
-                    </a>
-
-                </div>
+                INTELLIGENT FARMING • DIGITAL AGRICULTURE
 
             </div>
 
+
+            <h1 class="hero-title">
+
+
+                <span class="brand">
+
+                    🌱 AGRINOVA
+
+                </span>
+
+
+                <span class="main-title">
+
+                    Intelligent Farm<br>
+                    Monitoring & Management
+
+                </span>
+
+
+                <div class="title-line"></div>
+
+
+            </h1>
+
+
+            <p class="hero-text">
+
+                A next-generation smart agriculture platform designed
+                to monitor farm conditions, manage crops, track weather,
+                control irrigation and transform farming data into
+                smarter decisions.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+
+                <a
+                    href="{{ url_for('register') }}"
+                    class="hero-btn btn-start">
+
+                    <i class="fa-solid fa-rocket"></i>
+
+                    Get Started
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('about') }}"
+                    class="hero-btn btn-learn">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    Explore AgriNova
+
+                </a>
+
+
+            </div>
+
+
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
+<!-- =====================================================
+     SMART FEATURES
+====================================================== -->
 
-    <!-- ================= FEATURES ================= -->
+<section class="features-section">
 
-    <section class="features-section">
-
-        <div class="container py-5">
+    <div class="container">
 
 
-            <h2 class="text-center features-title mb-5">
+        <div class="section-heading">
 
-                🌾 Our Smart Farming Features
+
+            <span class="mini-title">
+
+                AGRINOVA INTELLIGENT MODULES
+
+            </span>
+
+
+            <h2 class="features-title">
+
+                Everything Your Farm Needs
 
             </h2>
 
 
-            <div class="row g-4">
+            <p class="section-subtitle">
 
+                One connected platform to monitor,
+                manage and understand your farming
+                activities with greater clarity.
 
-                <!-- TEMPERATURE -->
+            </p>
 
-                <div class="col-md-4">
-
-                    <div class="card feature-card">
-
-                        <div class="card-body text-center">
-
-                            <i
-                                class="fa-solid fa-temperature-three-quarters fa-3x text-danger mb-3">
-                            </i>
-
-
-                            <h4>
-                                Temperature Monitoring
-                            </h4>
-
-
-                            <p>
-
-                                Monitor real-time temperature
-                                to maintain healthy crop growth.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- SOIL MOISTURE -->
-
-                <div class="col-md-4">
-
-                    <div class="card feature-card">
-
-                        <div class="card-body text-center">
-
-                            <i
-                                class="fa-solid fa-droplet fa-3x text-info mb-3">
-                            </i>
-
-
-                            <h4>
-                                Soil Moisture
-                            </h4>
-
-
-                            <p>
-
-                                Check soil moisture levels
-                                continuously for efficient irrigation.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- WEATHER -->
-
-                <div class="col-md-4">
-
-                    <div class="card feature-card">
-
-                        <div class="card-body text-center">
-
-                            <i
-                                class="fa-solid fa-cloud-sun fa-3x text-warning mb-3">
-                            </i>
-
-
-                            <h4>
-                                Weather Forecast
-                            </h4>
-
-
-                            <p>
-
-                                Live weather information helps
-                                farmers make better decisions.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- IRRIGATION -->
-
-                <div class="col-md-4">
-
-                    <div class="card feature-card">
-
-                        <div class="card-body text-center">
-
-                            <i
-                                class="fa-solid fa-faucet-drip fa-3x text-primary mb-3">
-                            </i>
-
-
-                            <h4>
-                                Smart Irrigation
-                            </h4>
-
-
-                            <p>
-
-                                Automatic irrigation scheduling
-                                helps save water and improve productivity.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- MOTOR -->
-
-                <div class="col-md-4">
-
-                    <div class="card feature-card">
-
-                        <div class="card-body text-center">
-
-                            <i
-                                class="fa-solid fa-gear fa-3x text-secondary mb-3">
-                            </i>
-
-
-                            <h4>
-                                Motor Control
-                            </h4>
-
-
-                            <p>
-
-                                Control water pump remotely
-                                and monitor motor activity instantly.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- AI -->
-
-                <div class="col-md-4">
-
-                    <div class="card feature-card">
-
-                        <div class="card-body text-center">
-
-                            <i
-                                class="fa-solid fa-robot fa-3x text-success mb-3">
-                            </i>
-
-
-                            <h4>
-                                AI Assistant
-                            </h4>
-
-
-                            <p>
-
-                                Get AI-powered farming advice
-                                and crop recommendations anytime.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-            </div>
 
         </div>
 
-    </section>
+
+        <div class="row g-4">
 
 
+            <!-- =================================================
+                 FEATURE 1
+            ================================================== -->
 
-    <!-- ================= STATISTICS ================= -->
+            <div class="col-md-4">
 
-    <section class="stats-section">
+                <div class="feature-card">
 
-        <div class="container">
+                    <div class="card-body text-center">
 
-            <h2 class="text-center stats-title mb-5">
+                        <div class="feature-icon">
 
-                📊 Project Statistics
+                            <i class="fa-solid fa-seedling"></i>
+
+                        </div>
+
+
+                        <h4>
+
+                            Crop Management
+
+                        </h4>
+
+
+                        <p>
+
+                            Organize crop information,
+                            monitor farming activities and
+                            manage important crop details.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FEATURE 2
+            ================================================== -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="card-body text-center">
+
+                        <div class="feature-icon">
+
+                            <i class="fa-solid fa-microchip"></i>
+
+                        </div>
+
+
+                        <h4>
+
+                            Smart Sensor Monitoring
+
+                        </h4>
+
+
+                        <p>
+
+                            Monitor temperature, humidity
+                            and soil moisture to understand
+                            changing farm conditions.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FEATURE 3
+            ================================================== -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="card-body text-center">
+
+                        <div class="feature-icon">
+
+                            <i class="fa-solid fa-cloud-sun"></i>
+
+                        </div>
+
+
+                        <h4>
+
+                            Live Weather Insights
+
+                        </h4>
+
+
+                        <p>
+
+                            Access weather information and
+                            environmental conditions to support
+                            better farming planning.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FEATURE 4
+            ================================================== -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="card-body text-center">
+
+                        <div class="feature-icon">
+
+                            <i class="fa-solid fa-droplet"></i>
+
+                        </div>
+
+
+                        <h4>
+
+                            Smart Irrigation
+
+                        </h4>
+
+
+                        <p>
+
+                            Manage irrigation activities and
+                            support efficient water usage
+                            for healthier crop management.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FEATURE 5
+            ================================================== -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="card-body text-center">
+
+                        <div class="feature-icon">
+
+                            <i class="fa-solid fa-chart-line"></i>
+
+                        </div>
+
+
+                        <h4>
+
+                            Farm Analytics
+
+                        </h4>
+
+
+                        <p>
+
+                            Understand farming records,
+                            activities and trends through
+                            meaningful analytics.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FEATURE 6
+            ================================================== -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="card-body text-center">
+
+                        <div class="feature-icon">
+
+                            <i class="fa-solid fa-bell"></i>
+
+                        </div>
+
+
+                        <h4>
+
+                            Intelligent Alerts
+
+                        </h4>
+
+
+                        <p>
+
+                            Stay informed about important
+                            farming activities and changing
+                            monitoring conditions.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     HOW AGRINOVA HELPS
+====================================================== -->
+
+<section class="help-section">
+
+    <div class="container">
+
+
+        <div class="section-heading">
+
+
+            <span class="mini-title">
+
+                HOW AGRINOVA WORKS
+
+            </span>
+
+
+            <h2 class="features-title">
+
+                Monitor. Manage. Decide.
 
             </h2>
 
 
-            <div class="row text-center">
+            <p class="section-subtitle">
 
+                A simple digital workflow that connects
+                important farming activities in one place.
 
-                <div class="col-md-3 stat-box">
+            </p>
 
-                    <h1>
-                        150+
-                    </h1>
-
-                    <p>
-                        Registered Farmers
-                    </p>
-
-                </div>
-
-
-                <div class="col-md-3 stat-box">
-
-                    <h1>
-                        50+
-                    </h1>
-
-                    <p>
-                        Crops
-                    </p>
-
-                </div>
-
-
-                <div class="col-md-3 stat-box">
-
-                    <h1>
-                        2500 L
-                    </h1>
-
-                    <p>
-                        Water Saved
-                    </p>
-
-                </div>
-
-
-                <div class="col-md-3 stat-box">
-
-                    <h1>
-                        24×7
-                    </h1>
-
-                    <p>
-                        Monitoring
-                    </p>
-
-                </div>
-
-
-            </div>
 
         </div>
 
-    </section>
+
+        <div class="row g-4">
+
+
+            <!-- STEP 01 -->
+
+            <div class="col-md-4">
+
+                <div class="help-card">
+
+
+                    <div class="help-number">
+
+                        01
+
+                    </div>
+
+
+                    <h4>
+
+                        Monitor
+
+                    </h4>
+
+
+                    <p>
+
+                        Monitor farm conditions such as
+                        temperature, humidity and soil
+                        moisture through the system.
+
+                    </p>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- STEP 02 -->
+
+            <div class="col-md-4">
+
+                <div class="help-card">
+
+
+                    <div class="help-number">
+
+                        02
+
+                    </div>
+
+
+                    <h4>
+
+                        Manage
+
+                    </h4>
+
+
+                    <p>
+
+                        Manage crops, irrigation, weather
+                        information and farming records
+                        from one connected platform.
+
+                    </p>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- STEP 03 -->
+
+            <div class="col-md-4">
+
+                <div class="help-card">
+
+
+                    <div class="help-number">
+
+                        03
+
+                    </div>
+
+
+                    <h4>
+
+                        Decide Smarter
+
+                    </h4>
+
+
+                    <p>
+
+                        Use organized information and
+                        analytics to support more informed
+                        farming decisions.
+
+                    </p>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FINAL CTA
+====================================================== -->
+
+<section class="cta-section">
+
+
+    <h2>
+
+        Build a Smarter Farm with AgriNova
+
+    </h2>
+
+
+    <p>
+
+        Bring monitoring, crop management, weather,
+        irrigation and farm analytics together in
+        one intelligent agriculture platform.
+
+    </p>
+
+
+    <a
+        href="{{ url_for('register') }}"
+        class="cta-btn">
+
+        <i class="fa-solid fa-user-plus"></i>
+
+        Create Farmer Account
+
+    </a>
+
+
+</section>
 
 
 </div>
+
 
 {% endblock %}

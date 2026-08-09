@@ -1,618 +1,1743 @@
 {% extends "baseofhtml.html" %}
 
 {% block title %}
-Irrigation Monitoring
+AgriNavo | Smart Irrigation
 {% endblock %}
 
 {% block content %}
 
 <style>
 
+/* =========================================================
+   AGRINAVO — SMART IRRIGATION
+   LIGHT • GREEN • TEAL • BLUE
+========================================================= */
+
 .irrigation-page{
-    min-height:90vh;
-    padding:30px;
-    background:linear-gradient(135deg,#f5f0ff,#fff0f7,#eef7ff);
+
+    min-height:100vh;
+
+    margin:-28px;
+
+    padding:45px 0 80px;
+
+    color:#183126;
+
+    background:
+        radial-gradient(
+            circle at 5% 5%,
+            rgba(34,197,94,.10),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 95% 10%,
+            rgba(14,165,233,.10),
+            transparent 25%
+        ),
+        linear-gradient(
+            180deg,
+            #f7fcf9,
+            #ffffff,
+            #f3fbf8
+        );
 }
+
 
 .irrigation-container{
-    max-width:1150px;
+
+    width:min(1180px,92%);
+
     margin:auto;
+
 }
 
-/* HEADER */
+
+/* =========================================================
+   TOP HEADER
+========================================================= */
 
 .irrigation-header{
-    background:linear-gradient(135deg,#6d28d9,#9333ea,#db2777);
-    color:white;
-    border-radius:28px;
-    padding:35px;
-    margin-bottom:28px;
-    box-shadow:0 15px 35px rgba(109,40,217,.22);
+
     display:flex;
+
+    align-items:flex-end;
+
     justify-content:space-between;
-    align-items:center;
-    gap:20px;
+
+    gap:25px;
+
+    margin-bottom:30px;
+
 }
 
-.header-left h1{
+
+.eyebrow{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 14px;
+
+    border-radius:50px;
+
+    background:#e9f9ef;
+
+    border:1px solid #d3f1dd;
+
+    color:#168044;
+
+    font-size:10px;
+
+    font-weight:900;
+
+    letter-spacing:1.5px;
+
+}
+
+
+.eyebrow i{
+
+    color:#16a34a;
+
+}
+
+
+.page-title{
+
+    margin:14px 0 8px;
+
+    font-size:44px;
+
+    line-height:1.1;
+
+    font-weight:900;
+
+    letter-spacing:-1.5px;
+
+    color:#173b2a;
+
+}
+
+
+.page-title span{
+
+    background:
+        linear-gradient(
+            90deg,
+            #15803d,
+            #0f9f6e,
+            #0891b2,
+            #2563eb
+        );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    background-clip:text;
+
+}
+
+
+.page-subtitle{
+
+    max-width:690px;
+
     margin:0;
-    font-size:34px;
+
+    color:#6b7d73;
+
+    font-size:14px;
+
+    line-height:1.8;
+
 }
 
-.header-left p{
-    margin:10px 0 0;
-    opacity:.9;
-}
 
-.irrigation-icon{
-    width:90px;
-    height:90px;
-    border-radius:25px;
+.system-status{
+
     display:flex;
+
     align-items:center;
-    justify-content:center;
-    background:rgba(255,255,255,.18);
-    font-size:48px;
-}
 
-/* STATUS */
+    gap:9px;
 
-.status-card{
+    padding:11px 16px;
+
     background:white;
-    border-radius:22px;
-    padding:20px 25px;
-    margin-bottom:25px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    border:1px solid #dcece3;
+
+    border-radius:13px;
+
+    color:#197044;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    box-shadow:
+        0 7px 22px rgba(22,101,52,.07);
+
 }
 
-.status-left{
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
 
 .status-dot{
-    width:15px;
-    height:15px;
+
+    width:9px;
+
+    height:9px;
+
     border-radius:50%;
-}
 
-.status-dot.on{
     background:#22c55e;
-    box-shadow:0 0 12px rgba(34,197,94,.6);
+
+    box-shadow:
+        0 0 0 5px rgba(34,197,94,.12);
+
 }
 
-.status-dot.off{
-    background:#ef4444;
-    box-shadow:0 0 12px rgba(239,68,68,.4);
-}
 
-.status-text h3{
-    margin:0;
-    color:#29202e;
-}
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
 
-.status-text p{
-    margin:4px 0 0;
-    color:#777;
-}
+.summary-grid{
 
-.status-badge{
-    padding:8px 16px;
-    border-radius:20px;
-    font-size:13px;
-    font-weight:bold;
-}
-
-.status-badge.on{
-    background:#dcfce7;
-    color:#15803d;
-}
-
-.status-badge.off{
-    background:#fee2e2;
-    color:#b91c1c;
-}
-
-/* STATS */
-
-.stats-grid{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-    margin-bottom:30px;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:16px;
+
+    margin-bottom:32px;
+
 }
 
-.stat-card{
-    background:white;
-    border-radius:22px;
-    padding:25px;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+.summary-card{
+
     position:relative;
+
     overflow:hidden;
+
+    padding:20px;
+
+    background:white;
+
+    border:1px solid #e1eee6;
+
+    border-radius:18px;
+
+    box-shadow:
+        0 10px 30px rgba(23,83,48,.07);
+
+    transition:.3s;
+
 }
 
-.stat-icon{
-    width:55px;
-    height:55px;
-    border-radius:16px;
+
+.summary-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+        0 17px 35px rgba(23,83,48,.12);
+
+}
+
+
+.summary-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:90px;
+
+    height:90px;
+
+    right:-35px;
+
+    bottom:-40px;
+
+    border-radius:50%;
+
+    background:
+        rgba(34,197,94,.07);
+
+}
+
+
+.summary-icon{
+
+    width:43px;
+
+    height:43px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
-    font-size:28px;
-    background:#f3e8ff;
-    margin-bottom:15px;
+
+    border-radius:13px;
+
+    margin-bottom:13px;
+
+    font-size:18px;
+
+    background:#edf9f1;
+
+    color:#16a34a;
+
 }
 
-.stat-card h2{
-    margin:0;
-    font-size:34px;
-    color:#6d28d9;
+
+.summary-card:nth-child(2)
+.summary-icon{
+
+    color:#0891b2;
+
+    background:#ecfeff;
+
 }
 
-.stat-card p{
-    margin:5px 0 0;
-    color:#777;
-}
 
-/* SOIL MOISTURE */
+.summary-card:nth-child(3)
+.summary-icon{
 
-.moisture-value{
-    font-size:34px;
-    font-weight:bold;
     color:#2563eb;
+
+    background:#eff6ff;
+
 }
+
+
+.summary-card:nth-child(4)
+.summary-icon{
+
+    color:#ca8a04;
+
+    background:#fefce8;
+
+}
+
+
+.summary-value{
+
+    display:block;
+
+    color:#173b2a;
+
+    font-size:24px;
+
+    font-weight:900;
+
+}
+
+
+.summary-label{
+
+    color:#7b8b82;
+
+    font-size:11px;
+
+    font-weight:600;
+
+}
+
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.main-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1.15fr .85fr;
+
+    gap:20px;
+
+}
+
+
+/* =========================================================
+   PANEL
+========================================================= */
+
+.panel{
+
+    background:
+        rgba(255,255,255,.94);
+
+    border:1px solid #deebe4;
+
+    border-radius:22px;
+
+    padding:25px;
+
+    box-shadow:
+        0 12px 35px rgba(25,75,48,.07);
+
+}
+
+
+.panel-heading{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+}
+
+
+.panel-title{
+
+    margin:0;
+
+    color:#193c2b;
+
+    font-size:19px;
+
+    font-weight:900;
+
+}
+
+
+.panel-subtitle{
+
+    margin:5px 0 0;
+
+    color:#839087;
+
+    font-size:11px;
+
+}
+
+
+.panel-heading > i{
+
+    width:40px;
+
+    height:40px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:#effaf3;
+
+    color:#16a34a;
+
+}
+
+
+/* =========================================================
+   MOTOR STATUS AREA
+========================================================= */
+
+.motor-status-box{
+
+    padding:20px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f0fdf4,
+            #f8fffb
+        );
+
+    border:1px solid #d7f0df;
+
+    margin-bottom:20px;
+
+}
+
+
+.motor-status-top{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+}
+
+
+.motor-status-label{
+
+    color:#718078;
+
+    font-size:11px;
+
+    font-weight:700;
+
+}
+
+
+.motor-status{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#15803d;
+
+    font-size:15px;
+
+    font-weight:900;
+
+}
+
+
+.motor-indicator{
+
+    width:11px;
+
+    height:11px;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    box-shadow:
+        0 0 0 5px rgba(34,197,94,.13);
+
+}
+
+
+.motor-message{
+
+    margin:9px 0 0;
+
+    color:#607269;
+
+    font-size:12px;
+
+}
+
+
+/* =========================================================
+   MOISTURE VISUAL
+========================================================= */
+
+.moisture-area{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:28px;
+
+    padding:22px 5px;
+
+}
+
+
+.moisture-circle{
+
+    flex:0 0 145px;
+
+    width:145px;
+
+    height:145px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            white 56%,
+            transparent 57%
+        ),
+        conic-gradient(
+            #16a34a 0deg 245deg,
+            #e4f1e8 245deg 360deg
+        );
+
+    box-shadow:
+        0 10px 28px rgba(22,101,52,.10);
+
+}
+
+
+.moisture-circle i{
+
+    color:#0891b2;
+
+    font-size:20px;
+
+    margin-bottom:4px;
+
+}
+
+
+.moisture-circle strong{
+
+    color:#173b2a;
+
+    font-size:25px;
+
+    font-weight:900;
+
+}
+
+
+.moisture-circle span{
+
+    color:#7a8981;
+
+    font-size:10px;
+
+}
+
+
+.moisture-info{
+
+    flex:1;
+
+}
+
+
+.moisture-info h3{
+
+    margin:0 0 8px;
+
+    color:#234534;
+
+    font-size:16px;
+
+    font-weight:850;
+
+}
+
+
+.moisture-info p{
+
+    margin:0 0 13px;
+
+    color:#7a8981;
+
+    font-size:11px;
+
+    line-height:1.7;
+
+}
+
 
 .moisture-bar{
-    width:100%;
-    height:10px;
-    background:#e5e7eb;
-    border-radius:20px;
+
+    height:8px;
+
     overflow:hidden;
-    margin-top:15px;
+
+    border-radius:50px;
+
+    background:#e8f1eb;
+
 }
 
-.moisture-fill{
+
+.moisture-progress{
+
+    width:68%;
+
     height:100%;
-    border-radius:20px;
-    background:linear-gradient(90deg,#06b6d4,#2563eb);
-    transition:width .5s ease;
+
+    border-radius:50px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #16a34a,
+            #10b981,
+            #0891b2
+        );
+
 }
 
-/* SCHEDULE */
 
-.schedule-card{
-    background:white;
-    border-radius:25px;
-    padding:28px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
+/* =========================================================
+   MOTOR BUTTONS
+========================================================= */
 
-.schedule-title{
-    display:flex;
-    align-items:center;
+.control-buttons{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
     gap:12px;
-    margin-bottom:25px;
+
 }
 
-.schedule-title h2{
-    margin:0;
-    color:#29202e;
+
+.motor-btn{
+
+    padding:13px;
+
+    border:none;
+
+    border-radius:12px;
+
+    color:white;
+
+    font-size:12px;
+
+    font-weight:850;
+
+    transition:.3s;
+
 }
 
-.schedule-title span{
-    color:#777;
-    font-size:14px;
+
+.motor-on{
+
+    background:
+        linear-gradient(
+            135deg,
+            #15803d,
+            #16a34a,
+            #10b981
+        );
+
+    box-shadow:
+        0 7px 20px rgba(22,163,74,.18);
+
 }
 
-/* ROW */
+
+.motor-off{
+
+    background:
+        linear-gradient(
+            135deg,
+            #475569,
+            #64748b
+        );
+
+}
+
+
+.motor-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.14);
+
+}
+
+
+/* =========================================================
+   SCHEDULE FORM
+========================================================= */
+
+.form-group{
+
+    margin-bottom:14px;
+
+}
+
+
+.form-label{
+
+    display:block;
+
+    margin-bottom:6px;
+
+    color:#53655c;
+
+    font-size:11px;
+
+    font-weight:800;
+
+}
+
+
+.irrigation-page .form-control,
+.irrigation-page .form-select{
+
+    background:#fbfdfc !important;
+
+    color:#24392d !important;
+
+    border:1px solid #dbe8e0 !important;
+
+    border-radius:11px;
+
+    padding:10px 12px;
+
+    font-size:12px;
+
+}
+
+
+.irrigation-page .form-control:focus,
+.irrigation-page .form-select:focus{
+
+    border-color:#22a866 !important;
+
+    box-shadow:
+        0 0 0 4px rgba(34,168,102,.10) !important;
+
+}
+
+
+.schedule-btn{
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:12px;
+
+    color:white;
+
+    font-size:12px;
+
+    font-weight:850;
+
+    background:
+        linear-gradient(
+            135deg,
+            #15803d,
+            #10b981,
+            #0891b2
+        );
+
+    transition:.3s;
+
+}
+
+
+.schedule-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(16,185,129,.20);
+
+}
+
+
+/* =========================================================
+   IRRIGATION SCHEDULE
+========================================================= */
+
+.schedule-panel{
+
+    margin-top:20px;
+
+}
+
 
 .schedule-row{
+
     display:grid;
-    grid-template-columns:80px 1fr 100px;
+
+    grid-template-columns:
+        45px 1fr auto;
+
     align-items:center;
-    gap:20px;
-    padding:20px;
-    border-radius:18px;
-    margin-bottom:15px;
-    background:#faf8ff;
-    border:1px solid #eee7ff;
+
+    gap:14px;
+
+    padding:15px 0;
+
+    border-bottom:1px solid #edf1ee;
+
 }
+
+
+.schedule-row:last-child{
+
+    border-bottom:none;
+
+}
+
 
 .schedule-icon{
-    width:60px;
-    height:60px;
-    border-radius:18px;
+
+    width:40px;
+
+    height:40px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
-    font-size:30px;
-    background:#ede9fe;
+
+    border-radius:12px;
+
+    background:#effaf3;
+
+    color:#16a34a;
+
 }
 
-.schedule-info h3{
-    margin:0 0 5px;
-    color:#4c1d95;
-}
 
-.schedule-info p{
-    margin:0;
-    color:#777;
-    font-size:14px;
-}
+.schedule-info strong{
 
-.count-badge{
-    text-align:center;
-    background:#2563eb;
-    color:white;
-    padding:12px 10px;
-    border-radius:15px;
-}
-
-.count-badge strong{
     display:block;
-    font-size:24px;
+
+    color:#294536;
+
+    font-size:13px;
+
+    font-weight:850;
+
 }
 
-.count-badge span{
+
+.schedule-info span{
+
+    color:#87938d;
+
+    font-size:10px;
+
+}
+
+
+.schedule-badge{
+
+    padding:6px 9px;
+
+    border-radius:50px;
+
+    background:#eaf8ef;
+
+    color:#168044;
+
+    font-size:9px;
+
+    font-weight:850;
+
+}
+
+
+/* =========================================================
+   TIPS
+========================================================= */
+
+.tips-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+    margin-top:20px;
+
+}
+
+
+.tip-card{
+
+    padding:20px;
+
+    border-radius:17px;
+
+    background:white;
+
+    border:1px solid #e1eee6;
+
+    box-shadow:
+        0 9px 25px rgba(23,83,48,.05);
+
+}
+
+
+.tip-icon{
+
+    width:38px;
+
+    height:38px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:#effaf3;
+
+    color:#16a34a;
+
+    margin-bottom:12px;
+
+}
+
+
+.tip-card h4{
+
+    margin:0 0 6px;
+
+    color:#284535;
+
+    font-size:13px;
+
+    font-weight:850;
+
+}
+
+
+.tip-card p{
+
+    margin:0;
+
+    color:#7c8982;
+
     font-size:11px;
-    opacity:.9;
-}
 
-/* INFO */
-
-.info-box{
-    margin-top:25px;
-    padding:22px;
-    border-radius:20px;
-    background:linear-gradient(135deg,#eff6ff,#f5f3ff);
-    border:1px solid #e0e7ff;
-}
-
-.info-box h3{
-    margin-top:0;
-    color:#4c1d95;
-}
-
-.info-box p{
-    margin-bottom:0;
-    color:#555;
     line-height:1.7;
-}
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-    .stats-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
 
 }
 
-@media(max-width:750px){
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:950px){
 
     .irrigation-page{
-        padding:12px;
+
+        margin:-18px -13px;
+
     }
+
 
     .irrigation-header{
-        padding:25px;
-        flex-direction:column;
-        text-align:center;
-    }
 
-    .header-left h1{
-        font-size:27px;
-    }
-
-    .stats-grid{
-        grid-template-columns:1fr;
-    }
-
-    .status-card{
         align-items:flex-start;
-        gap:10px;
+
+        flex-direction:column;
+
     }
 
-    .schedule-row{
-        grid-template-columns:60px 1fr;
+
+    .summary-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
     }
 
-    .count-badge{
-        grid-column:2;
-        width:90px;
+
+    .main-grid{
+
+        grid-template-columns:1fr;
+
     }
 
 }
 
-</style>
+
+@media(max-width:600px){
+
+    .page-title{
+
+        font-size:32px;
+
+    }
 
 
-<div class="irrigation-page">
+    .summary-grid{
 
-<div class="irrigation-container">
+        grid-template-columns:1fr 1fr;
+
+    }
 
 
-<!-- HEADER -->
+    .moisture-area{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+
+    .control-buttons{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .tips-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .schedule-row{
+
+        grid-template-columns:
+            40px 1fr;
+
+    }
+
+
+    .schedule-badge{
+
+        grid-column:2;
+
+        justify-self:start;
+
+    }
+
+}
+
+</style><div class="irrigation-page"><div class="irrigation-container"><!-- =====================================================
+     HEADER
+====================================================== -->
 
 <div class="irrigation-header">
 
-    <div class="header-left">
+    <div>
 
-        <h1>
-            💧 Irrigation Monitoring Dashboard
+        <div class="eyebrow">
+
+            <i class="fa-solid fa-droplet"></i>
+
+            AGRINAVO • SMART WATER MANAGEMENT
+
+        </div>
+
+
+        <h1 class="page-title">
+
+            Smart <span>Irrigation</span>
+
         </h1>
 
-        <p>
-            Monitor irrigation activity, soil moisture and motor usage
+
+        <p class="page-subtitle">
+
+            Monitor your motor, track soil moisture and
+            manage irrigation schedules from one simple
+            farming workspace.
+
         </p>
 
     </div>
 
-    <div class="irrigation-icon">
-        💦
+
+    <div class="system-status">
+
+        <span class="status-dot"></span>
+
+        Irrigation System Online
+
     </div>
 
 </div>
 
 
-<!-- MOTOR STATUS -->
 
-<div class="status-card">
+<!-- =====================================================
+     SUMMARY
+====================================================== -->
 
-    <div class="status-left">
+<div class="summary-grid">
 
-        <div class="status-dot
-        {% if motor_status == 'ON' %}
-            on
-        {% else %}
-            off
-        {% endif %}
-        "></div>
 
-        <div class="status-text">
+    <div class="summary-card">
 
-            <h3>
-                Irrigation System Status
-            </h3>
+        <div class="summary-icon">
 
-            <p>
-                Latest motor activity from sensor records
+            <i class="fa-solid fa-droplet"></i>
+
+        </div>
+
+        <span class="summary-value">
+            68%
+        </span>
+
+        <span class="summary-label">
+            Soil Moisture
+        </span>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="summary-icon">
+
+            <i class="fa-solid fa-power-off"></i>
+
+        </div>
+
+        <span class="summary-value">
+            Ready
+        </span>
+
+        <span class="summary-label">
+            Motor Status
+        </span>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="summary-icon">
+
+            <i class="fa-solid fa-clock"></i>
+
+        </div>
+
+        <span class="summary-value">
+            00:00
+        </span>
+
+        <span class="summary-label">
+            Today's Runtime
+        </span>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="summary-icon">
+
+            <i class="fa-solid fa-calendar-check"></i>
+
+        </div>
+
+        <span class="summary-value">
+            03
+        </span>
+
+        <span class="summary-label">
+            Scheduled Cycles
+        </span>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+====================================================== -->
+
+<div class="main-grid">
+<!-- =================================================
+         MOTOR + MOISTURE
+    ================================================== -->
+
+    <div class="panel">
+
+        <div class="panel-heading">
+
+            <div>
+
+                <h2 class="panel-title">
+                    Motor & Irrigation Status
+                </h2>
+
+                <p class="panel-subtitle">
+                    Live overview of your irrigation system
+                </p>
+
+            </div>
+
+            <i class="fa-solid fa-gauge-high"></i>
+
+        </div>
+
+
+        <!-- MOTOR STATUS -->
+
+        <div class="motor-status-box">
+
+            <div class="motor-status-top">
+
+                <span class="motor-status-label">
+                    CURRENT MOTOR STATUS
+                </span>
+
+                <div class="motor-status">
+
+                    <span class="motor-indicator"></span>
+
+                    READY
+
+                </div>
+
+            </div>
+
+
+            <p class="motor-message">
+
+                Motor is currently ready. Start irrigation
+                when the crop requires watering.
+
             </p>
 
         </div>
 
-    </div>
+
+        <!-- MOISTURE -->
+
+        <div class="moisture-area">
+
+            <div class="moisture-circle">
+
+                <i class="fa-solid fa-droplet"></i>
+
+                <strong>68%</strong>
+
+                <span>Moisture</span>
+
+            </div>
 
 
-    {% if motor_status == 'ON' %}
+            <div class="moisture-info">
 
-        <div class="status-badge on">
-            ● MOTOR ON
+                <h3>
+                    Soil Moisture Level
+                </h3>
+
+                <p>
+
+                    Current soil moisture indicates that
+                    the field is moderately hydrated.
+
+                </p>
+
+
+                <div class="moisture-bar">
+
+                    <div class="moisture-progress"></div>
+
+                </div>
+
+            </div>
+
         </div>
 
-    {% else %}
 
-        <div class="status-badge off">
-            ● MOTOR OFF
-        </div>
+        <!-- MOTOR CONTROLS -->
 
-    {% endif %}
+        <div class="control-buttons">
 
-</div>
+            <a
+                href="{{ url_for('motor') }}"
+                class="motor-btn motor-on text-decoration-none text-center"
+            >
+
+                <i class="fa-solid fa-play"></i>
+
+                Start Motor
+
+            </a>
 
 
-<!-- STATISTICS -->
+            <a
+                href="{{ url_for('motor') }}"
+                class="motor-btn motor-off text-decoration-none text-center"
+            >
 
-<div class="stats-grid">
+                <i class="fa-solid fa-stop"></i>
 
+                Stop Motor
 
-<!-- SOIL MOISTURE -->
+            </a>
 
-<div class="stat-card">
-
-    <div class="stat-icon">
-        🌱
-    </div>
-
-    <div class="moisture-value">
-        {{ soil_moisture }}%
-    </div>
-
-    <p>
-        Latest Soil Moisture
-    </p>
-
-    <div class="moisture-bar">
-
-        <div class="moisture-fill"
-             style="width:{{ soil_moisture }}%;">
         </div>
 
     </div>
 
-</div>
 
 
-<!-- TOTAL -->
+    <!-- =================================================
+         SCHEDULE
+    ================================================== -->
 
-<div class="stat-card">
+    <div class="panel">
 
-    <div class="stat-icon">
-        💧
-    </div>
+        <div class="panel-heading">
 
-    <h2>
-        {{ total_count }}
-    </h2>
+            <div>
 
-    <p>
-        Total Irrigation Events
-    </p>
+                <h2 class="panel-title">
+                    Irrigation Schedule
+                </h2>
 
-</div>
+                <p class="panel-subtitle">
+                    Plan your watering cycle
+                </p>
 
+            </div>
 
-<!-- MORNING -->
+            <i class="fa-solid fa-calendar-days"></i>
 
-<div class="stat-card">
-
-    <div class="stat-icon">
-        🌅
-    </div>
-
-    <h2>
-        {{ morning_count }}
-    </h2>
-
-    <p>
-        Morning Events
-    </p>
-
-</div>
-
-
-<!-- EVENING -->
-
-<div class="stat-card">
-
-    <div class="stat-icon">
-        🌆
-    </div>
-
-    <h2>
-        {{ evening_count }}
-    </h2>
-
-    <p>
-        Evening Events
-    </p>
-
-</div>
-
-
-</div>
-
-
-<!-- ACTIVITY SUMMARY -->
-
-<div class="schedule-card">
-
-    <div class="schedule-title">
-
-        <div style="font-size:30px;">
-            📊
         </div>
+
+
+        <form
+            action="{{ url_for('irrigation') }}"
+            method="POST"
+        >
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Crop
+                </label>
+
+                <select
+                    name="crop"
+                    class="form-select"
+                    required
+                >
+
+                    <option value="">
+                        Select crop
+                    </option>
+
+                    <option value="Wheat">
+                        Wheat
+                    </option>
+
+                    <option value="Cotton">
+                        Cotton
+                    </option>
+
+                    <option value="Soybean">
+                        Soybean
+                    </option>
+
+                    <option value="Tomato">
+                        Tomato
+                    </option>
+
+                    <option value="Onion">
+                        Onion
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    name="date"
+                    class="form-control"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Start Time
+                </label>
+
+                <input
+                    type="time"
+                    name="start_time"
+                    class="form-control"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Irrigation Duration
+                </label>
+
+                <select
+                    name="duration"
+                    class="form-select"
+                    required
+                >
+
+                    <option value="">
+                        Select duration
+                    </option>
+
+                    <option value="15">
+                        15 Minutes
+                    </option>
+
+                    <option value="30">
+                        30 Minutes
+                    </option>
+
+                    <option value="45">
+                        45 Minutes
+                    </option>
+
+                    <option value="60">
+                        60 Minutes
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="schedule-btn"
+            >
+
+                <i class="fa-solid fa-calendar-plus"></i>
+
+                Save Irrigation Schedule
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     UPCOMING SCHEDULES
+====================================================== -->
+
+<div class="panel schedule-panel">
+
+    <div class="panel-heading">
 
         <div>
 
-            <h2>
-                Irrigation Activity Summary
+            <h2 class="panel-title">
+                Upcoming Irrigation
             </h2>
 
-            <span>
-                Irrigation events recorded when the motor is ON
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <!-- MORNING -->
-
-    <div class="schedule-row">
-
-        <div class="schedule-icon">
-            🌅
-        </div>
-
-        <div class="schedule-info">
-
-            <h3>
-                Morning Irrigation
-            </h3>
-
-            <p>
-                Motor ON events recorded during morning hours.
+            <p class="panel-subtitle">
+                Your planned watering activities
             </p>
 
         </div>
 
-        <div class="count-badge">
-
-            <strong>
-                {{ morning_count }}
-            </strong>
-
-            <span>
-                TIMES
-            </span>
-
-        </div>
+        <i class="fa-solid fa-list-check"></i>
 
     </div>
 
-
-    <!-- EVENING -->
 
     <div class="schedule-row">
 
         <div class="schedule-icon">
-            🌆
+
+            <i class="fa-solid fa-seedling"></i>
+
         </div>
 
         <div class="schedule-info">
 
-            <h3>
-                Evening Irrigation
-            </h3>
-
-            <p>
-                Motor ON events recorded during evening hours.
-            </p>
-
-        </div>
-
-        <div class="count-badge">
-
             <strong>
-                {{ evening_count }}
+                Wheat Field
             </strong>
 
             <span>
-                TIMES
+                Tomorrow • 06:30 AM • 30 Minutes
             </span>
 
         </div>
 
+        <span class="schedule-badge">
+            Scheduled
+        </span>
+
     </div>
 
 
-    <!-- INFORMATION -->
+    <div class="schedule-row">
 
-    <div class="info-box">
+        <div class="schedule-icon">
 
-        <h3>
-            💡 Irrigation Monitoring
-        </h3>
+            <i class="fa-solid fa-seedling"></i>
+
+        </div>
+
+        <div class="schedule-info">
+
+            <strong>
+                Cotton Field
+            </strong>
+
+            <span>
+                Tomorrow • 07:15 AM • 45 Minutes
+            </span>
+
+        </div>
+
+        <span class="schedule-badge">
+            Scheduled
+        </span>
+
+    </div>
+
+
+    <div class="schedule-row">
+
+        <div class="schedule-icon">
+
+            <i class="fa-solid fa-seedling"></i>
+
+        </div>
+
+        <div class="schedule-info">
+
+            <strong>
+                Tomato Field
+            </strong>
+
+            <span>
+                12 Aug • 06:00 AM • 30 Minutes
+            </span>
+
+        </div>
+
+        <span class="schedule-badge">
+            Planned
+        </span>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     SMART TIPS
+====================================================== -->
+
+<div class="tips-grid">
+
+
+    <div class="tip-card">
+
+        <div class="tip-icon">
+
+            <i class="fa-solid fa-droplet"></i>
+
+        </div>
+
+        <h4>
+            Check Soil Moisture
+        </h4>
 
         <p>
-            Soil moisture is taken from the latest available
-            sensor record. Irrigation counts are calculated from
-            records where the motor status is ON.
+
+            Monitor moisture before starting the
+            irrigation motor.
+
         </p>
 
     </div>
 
-</div>
+
+    <div class="tip-card">
+
+        <div class="tip-icon">
+
+            <i class="fa-solid fa-clock"></i>
+
+        </div>
+
+        <h4>
+            Follow Schedule
+        </h4>
+
+        <p>
+
+            Plan watering cycles according to your
+            crop and field requirements.
+
+        </p>
+
+    </div>
+
+
+    <div class="tip-card">
+
+        <div class="tip-icon">
+
+            <i class="fa-solid fa-leaf"></i>
+
+        </div>
+
+        <h4>
+            Save Water
+        </h4>
+
+        <p>
+
+            Use soil moisture information to avoid
+            unnecessary irrigation.
+
+        </p>
+
+    </div>
+
 
 </div>
-
-</div>
-
 {% endblock %}

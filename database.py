@@ -175,6 +175,7 @@ CREATE TABLE IF NOT EXISTS feedback(
 """)
 
 
+
 # =========================================================
 # DEFAULT ADMIN
 # =========================================================
@@ -219,6 +220,23 @@ if admin is None:
         "default.png"
 
     ))
+
+
+# =========================================================
+# FEEDBACK TABLE
+# =========================================================
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS feedback (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    rating INTEGER NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+""")
+
 
 
 # =========================================================

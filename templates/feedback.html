@@ -1,50 +1,389 @@
 {% extends "baseofhtml.html" %}
 
-{% block title %}Feedback{% endblock %}
+{% block title %}
+AgriNavo | Feedback
+{% endblock %}
 
 {% block content %}
 
 <style>
 
-body{
-    background:linear-gradient(135deg,#e8f5e9,#f1f8e9);
+/* =========================================================
+   AGRINAVO FEEDBACK
+   PURPLE • VIOLET • PINK • WHITE
+========================================================= */
+
+.feedback-page{
+
+    min-height:100vh;
+
+    margin:-28px;
+
+    padding:55px 15px 80px;
+
+    background:
+
+        radial-gradient(
+            circle at 5% 5%,
+            rgba(124,58,237,.13),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 95% 10%,
+            rgba(236,72,153,.12),
+            transparent 27%
+        ),
+
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(59,130,246,.08),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            180deg,
+            #faf8ff,
+            #ffffff,
+            #f8f5ff
+        );
+
 }
 
-/* Feedback Box */
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.feedback-container{
+
+    width:min(1050px,94%);
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        .85fr 1.15fr;
+
+    gap:28px;
+
+    align-items:stretch;
+
+}
+
+
+/* =========================================================
+   LEFT INFO
+========================================================= */
+
+.feedback-info{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:40px 32px;
+
+    border-radius:28px;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #312e81,
+            #5b21b6,
+            #7c3aed,
+            #a21caf,
+            #db2777
+        );
+
+    box-shadow:
+        0 22px 55px rgba(91,33,182,.25);
+
+}
+
+
+.feedback-info::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:220px;
+
+    height:220px;
+
+    right:-90px;
+
+    top:-80px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.09);
+
+}
+
+
+.feedback-info::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+
+    height:180px;
+
+    left:-80px;
+
+    bottom:-80px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.08);
+
+}
+
+
+.feedback-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 14px;
+
+    border-radius:50px;
+
+    background:
+        rgba(255,255,255,.14);
+
+    border:
+        1px solid rgba(255,255,255,.25);
+
+    font-size:10px;
+
+    font-weight:900;
+
+    letter-spacing:1.2px;
+
+}
+
+
+.feedback-info h1{
+
+    position:relative;
+
+    z-index:2;
+
+    margin:22px 0 15px;
+
+    font-size:38px;
+
+    line-height:1.15;
+
+    font-weight:900;
+
+}
+
+
+.feedback-info h1 span{
+
+    color:#f5d0fe;
+
+}
+
+
+.feedback-info > p{
+
+    position:relative;
+
+    z-index:2;
+
+    color:#f5eaff;
+
+    font-size:14px;
+
+    line-height:1.8;
+
+    margin-bottom:28px;
+
+}
+
+
+/* =========================================================
+   BENEFITS
+========================================================= */
+
+.feedback-benefit{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    gap:13px;
+
+    align-items:flex-start;
+
+    margin:18px 0;
+
+}
+
+
+.feedback-benefit-icon{
+
+    flex:0 0 40px;
+
+    width:40px;
+
+    height:40px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.15);
+
+    border:
+        1px solid rgba(255,255,255,.18);
+
+}
+
+
+.feedback-benefit strong{
+
+    display:block;
+
+    margin-bottom:3px;
+
+    font-size:13px;
+
+}
+
+
+.feedback-benefit span{
+
+    color:#eadcff;
+
+    font-size:11px;
+
+    line-height:1.5;
+
+}
+
+
+/* =========================================================
+   FORM CARD
+========================================================= */
 
 .feedback-box{
 
-    width:90%;
-    max-width:600px;
-    margin:50px auto;
-    background:white;
     padding:35px;
-    border-radius:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.15);
+
+    background:
+        rgba(255,255,255,.96);
+
+    border:
+        1px solid rgba(124,58,237,.13);
+
+    border-radius:28px;
+
+    box-shadow:
+        0 20px 55px rgba(91,33,182,.10);
 
 }
 
 
-.feedback-box h1{
+.form-heading{
 
-    text-align:center;
-    color:#198754;
     margin-bottom:25px;
 
 }
 
 
+.form-heading .mini{
+
+    display:inline-block;
+
+    padding:7px 13px;
+
+    border-radius:50px;
+
+    color:#6d28d9;
+
+    background:#f3e8ff;
+
+    font-size:9px;
+
+    font-weight:900;
+
+    letter-spacing:1.3px;
+
+}
+
+
+.form-heading h2{
+
+    margin:13px 0 6px;
+
+    color:#31245c;
+
+    font-size:25px;
+
+    font-weight:900;
+
+}
+
+
+.form-heading p{
+
+    margin:0;
+
+    color:#80788d;
+
+    font-size:12px;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
 .input-box{
 
-    margin-bottom:20px;
+    margin-bottom:18px;
 
 }
 
 
 .input-box label{
 
-    font-weight:bold;
-    color:#198754;
+    display:block;
+
+    margin-bottom:7px;
+
+    color:#49366f;
+
+    font-size:12px;
+
+    font-weight:800;
 
 }
 
@@ -53,12 +392,40 @@ body{
 .input-box textarea{
 
     width:100%;
-    padding:14px;
-    margin-top:8px;
-    border-radius:12px;
-    border:2px solid #d8e8d8;
+
+    padding:12px 14px;
+
+    border:
+        1px solid #e4dff0;
+
+    border-radius:13px;
+
     outline:none;
-    font-size:16px;
+
+    background:#fcfbff;
+
+    color:#302644;
+
+    font-size:13px;
+
+    transition:.25s;
+
+}
+
+
+.input-box textarea{
+
+    resize:vertical;
+
+    min-height:125px;
+
+}
+
+
+.input-box input::placeholder,
+.input-box textarea::placeholder{
+
+    color:#aaa2b6;
 
 }
 
@@ -66,259 +433,793 @@ body{
 .input-box input:focus,
 .input-box textarea:focus{
 
-    border-color:#198754;
+    border-color:#8b5cf6;
+
+    background:white;
+
+    box-shadow:
+        0 0 0 4px rgba(139,92,246,.10);
 
 }
 
 
+/* =========================================================
+   RATING
+========================================================= */
 
-button{
+.rating-title{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:#49366f;
+
+    font-size:12px;
+
+    font-weight:800;
+
+}
+
+
+.rating{
+
+    display:flex;
+
+    flex-direction:row-reverse;
+
+    justify-content:flex-end;
+
+    gap:5px;
+
+    margin-bottom:18px;
+
+}
+
+
+.rating input{
+
+    display:none;
+
+}
+
+
+.rating label{
+
+    cursor:pointer;
+
+    font-size:28px;
+
+    color:#ddd6e8;
+
+    transition:.2s;
+
+}
+
+
+.rating label:hover,
+.rating label:hover ~ label,
+.rating input:checked ~ label{
+
+    color:#f59e0b;
+
+    transform:
+        scale(1.08);
+
+}
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+.submit-btn{
 
     width:100%;
-    padding:15px;
+
+    padding:14px;
+
     border:none;
-    border-radius:15px;
-    background:#198754;
+
+    border-radius:14px;
+
     color:white;
-    font-size:18px;
-    font-weight:bold;
+
+    font-size:13px;
+
+    font-weight:900;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed,
+            #a855f7,
+            #db2777
+        );
+
+    box-shadow:
+        0 10px 28px rgba(124,58,237,.22);
+
     cursor:pointer;
+
     transition:.3s;
 
 }
 
 
-button:hover{
+.submit-btn:hover{
 
-    background:#146c43;
-    transform:scale(1.03);
+    transform:
+        translateY(-3px);
 
-}
-
-
-
-/* Thank You Modal */
-
-
-.modal{
-
-display:none;
-position:fixed;
-z-index:1000;
-left:0;
-top:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
+    box-shadow:
+        0 15px 35px rgba(124,58,237,.30);
 
 }
 
 
+.submit-btn i{
 
-.modal-content{
-
-background:white;
-width:350px;
-margin:15% auto;
-padding:35px;
-border-radius:25px;
-text-align:center;
-animation:popup .4s;
+    margin-right:7px;
 
 }
 
 
+/* =========================================================
+   SMALL NOTE
+========================================================= */
 
-@keyframes popup{
+.feedback-note{
 
-from{
-transform:scale(0);
-}
+    text-align:center;
 
-to{
-transform:scale(1);
-}
+    margin-top:14px;
 
-}
+    color:#938b9d;
 
-
-
-.modal-content h2{
-
-color:#198754;
-font-size:30px;
+    font-size:10px;
 
 }
 
 
-.modal-content p{
+/* =========================================================
+   THANK YOU MODAL
+========================================================= */
 
-font-size:18px;
+.feedback-modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:99999;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+        rgba(35,20,65,.45);
+
+    backdrop-filter:
+        blur(7px);
 
 }
 
 
+.feedback-modal-content{
 
-.emoji{
+    width:min(390px,100%);
 
-font-size:50px;
+    padding:35px 28px;
+
+    text-align:center;
+
+    background:white;
+
+    border:1px solid #eadfff;
+
+    border-radius:25px;
+
+    box-shadow:
+        0 25px 70px rgba(49,46,129,.25);
+
+    animation:
+        feedbackPopup .35s ease;
+
+}
+
+
+@keyframes feedbackPopup{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(20px)
+            scale(.92);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+.success-icon{
+
+    width:70px;
+
+    height:70px;
+
+    margin:0 auto 17px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    color:white;
+
+    font-size:30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #db2777
+        );
+
+    box-shadow:
+        0 10px 25px rgba(124,58,237,.25);
+
+}
+
+
+.feedback-modal-content h2{
+
+    margin-bottom:8px;
+
+    color:#4c1d95;
+
+    font-size:25px;
+
+    font-weight:900;
+
+}
+
+
+.feedback-modal-content p{
+
+    margin:0;
+
+    color:#777080;
+
+    font-size:12px;
+
+    line-height:1.7;
 
 }
 
 
 .close-btn{
 
-margin-top:20px;
-background:#198754;
-padding:12px 30px;
-border-radius:15px;
-color:white;
-display:inline-block;
-cursor:pointer;
+    margin-top:22px;
+
+    padding:10px 28px;
+
+    border:none;
+
+    border-radius:12px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #8b5cf6,
+            #db2777
+        );
+
+    font-weight:800;
+
+    cursor:pointer;
 
 }
 
 
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:850px){
+
+    .feedback-page{
+
+        margin:-18px -13px;
+
+    }
+
+
+    .feedback-container{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .feedback-info{
+
+        padding:30px 25px;
+
+    }
+
+
+    .feedback-info h1{
+
+        font-size:32px;
+
+    }
+
+}
+
+
+@media(max-width:500px){
+
+    .feedback-box{
+
+        padding:25px 18px;
+
+        border-radius:22px;
+
+    }
+
+
+    .feedback-info{
+
+        border-radius:22px;
+
+    }
+
+}
+
 </style>
 
 
+<div class="feedback-page">
 
-<div class="feedback-box">
-
-
-<h1>
-🌱 Agro Monitor Feedback
-</h1>
+<div class="feedback-container">
 
 
+    <!-- =====================================================
+         LEFT INFORMATION
+    ====================================================== -->
 
-<form action="/feedback" method="POST" onsubmit="showPopup()">
+    <section class="feedback-info">
+
+        <div class="feedback-badge">
+
+            <i class="fa-solid fa-heart"></i>
+
+            YOUR VOICE MATTERS
+
+        </div>
 
 
-<div class="input-box">
+        <h1>
 
-<label>
-👤 Name
-</label>
+            Help us make
+            <span>AgriNavo</span>
+            better.
 
-<input 
-type="text"
-name="name"
-placeholder="Enter your name"
-required>
+        </h1>
+
+
+        <p>
+
+            Your feedback helps us improve smart farming,
+            irrigation, crop monitoring, AI tools and the
+            overall AgriNavo experience.
+
+        </p>
+
+
+        <div class="feedback-benefit">
+
+            <div class="feedback-benefit-icon">
+
+                <i class="fa-solid fa-lightbulb"></i>
+
+            </div>
+
+            <div>
+
+                <strong>
+                    Share your ideas
+                </strong>
+
+                <span>
+                    Tell us what we can improve.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="feedback-benefit">
+
+            <div class="feedback-benefit-icon">
+
+                <i class="fa-solid fa-star"></i>
+
+            </div>
+
+            <div>
+
+                <strong>
+                    Rate your experience
+                </strong>
+
+                <span>
+                    Give us a rating from 1 to 5 stars.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="feedback-benefit">
+
+            <div class="feedback-benefit-icon">
+
+                <i class="fa-solid fa-seedling"></i>
+
+            </div>
+
+            <div>
+
+                <strong>
+                    Grow AgriNavo
+                </strong>
+
+                <span>
+                    Every suggestion helps the platform grow.
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FEEDBACK FORM
+    ====================================================== -->
+
+    <section class="feedback-box">
+
+
+        <div class="form-heading">
+
+            <span class="mini">
+                AGRINAVO FEEDBACK CENTER
+            </span>
+
+            <h2>
+                How was your experience?
+            </h2>
+
+            <p>
+                We would love to hear what you think about
+                our smart agriculture platform.
+            </p>
+
+        </div>
+
+
+        <form
+            action="{{ url_for('feedback') }}"
+            method="POST"
+            onsubmit="showFeedbackPopup();"
+        >
+
+
+            <!-- NAME -->
+
+            <div class="input-box">
+
+                <label>
+
+                    <i class="fa-solid fa-user"></i>
+
+                    Name
+
+                </label>
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter your name"
+                    required
+                >
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="input-box">
+
+                <label>
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    Email
+
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
+
+
+            <!-- RATING -->
+
+            <div>
+
+                <span class="rating-title">
+
+                    <i class="fa-solid fa-star"></i>
+
+                    Your Rating
+
+                </span>
+
+
+                <div class="rating">
+
+                    <input
+                        type="radio"
+                        id="star5"
+                        name="rating"
+                        value="5"
+                        required
+                    >
+
+                    <label for="star5">
+                        ★
+                    </label>
+
+
+                    <input
+                        type="radio"
+                        id="star4"
+                        name="rating"
+                        value="4"
+                    >
+
+                    <label for="star4">
+                        ★
+                    </label>
+
+
+                    <input
+                        type="radio"
+                        id="star3"
+                        name="rating"
+                        value="3"
+                    >
+
+                    <label for="star3">
+                        ★
+                    </label>
+
+
+                    <input
+                        type="radio"
+                        id="star2"
+                        name="rating"
+                        value="2"
+                    >
+
+                    <label for="star2">
+                        ★
+                    </label>
+
+
+                    <input
+                        type="radio"
+                        id="star1"
+                        name="rating"
+                        value="1"
+                    >
+
+                    <label for="star1">
+                        ★
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div class="input-box">
+
+                <label>
+
+                    <i class="fa-solid fa-comment-dots"></i>
+
+                    Feedback
+
+                </label>
+
+                <textarea
+                    name="message"
+                    rows="5"
+                    placeholder="Write your feedback, suggestion or experience..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="submit-btn"
+            >
+
+                <i class="fa-solid fa-paper-plane"></i>
+
+                Submit Feedback
+
+            </button>
+
+
+            <div class="feedback-note">
+
+                🌱 Your feedback helps us build a better
+                smart farming platform.
+
+            </div>
+
+
+        </form>
+
+    </section>
+
+</div>
 
 </div>
 
 
 
-<div class="input-box">
+<!-- =====================================================
+     THANK YOU POPUP
+====================================================== -->
 
-<label>
-📧 Email
-</label>
+<div
+    id="feedbackModal"
+    class="feedback-modal"
+>
 
-<input 
-type="email"
-name="email"
-placeholder="Enter email"
-required>
-
-</div>
+    <div class="feedback-modal-content">
 
 
+        <div class="success-icon">
 
-<div class="input-box">
+            <i class="fa-solid fa-check"></i>
 
-<label>
-💬 Feedback
-</label>
-
-
-<textarea
-name="message"
-rows="5"
-placeholder="Write your feedback..."
-required></textarea>
+        </div>
 
 
-</div>
+        <h2>
+            Thank You! 🎉
+        </h2>
 
 
+        <p>
 
-<button type="submit">
+            Your feedback has been received successfully.
 
-🚀 Submit Feedback
+            <br>
 
-</button>
+            We really appreciate your valuable suggestion
+            for AgriNavo. 🌱💜
 
-
-
-</form>
-
-
-</div>
+        </p>
 
 
+        <button
+            type="button"
+            class="close-btn"
+            onclick="closeFeedbackPopup()"
+        >
 
-<!-- Thank You Popup -->
+            Continue
 
-
-<div id="thankModal" class="modal">
-
-
-<div class="modal-content">
-
-
-<div class="emoji">
-🎉🎉
-</div>
+        </button>
 
 
-<h2>
-Thank You!
-</h2>
-
-
-<p>
-Your feedback has been submitted successfully.
-<br>
-We appreciate your valuable suggestion 🌱
-</p>
-
-
-<div class="close-btn"
-onclick="closePopup()">
-
-OK
+    </div>
 
 </div>
-
-
-</div>
-
-
-</div>
-
 
 
 
 <script>
 
+/* =========================================================
+   FEEDBACK POPUP
+========================================================= */
 
-function showPopup(){
+function showFeedbackPopup(){
 
-document.getElementById("thankModal").style.display="block";
+    document
+        .getElementById("feedbackModal")
+        .style.display = "flex";
+
+}
+
+
+function closeFeedbackPopup(){
+
+    document
+        .getElementById("feedbackModal")
+        .style.display = "none";
 
 }
 
 
+/* Close when clicking outside */
 
-function closePopup(){
+document
+    .getElementById("feedbackModal")
+    .addEventListener(
+        "click",
+        function(event){
 
-document.getElementById("thankModal").style.display="none";
+            if(
+                event.target === this
+            ){
 
-}
+                closeFeedbackPopup();
 
+            }
+
+        }
+    );
 
 </script>
 

@@ -1,0 +1,338 @@
+{% extends "baseofhtml.html" %}
+
+{% block content %}
+
+<style>
+    .schemes-page {
+        padding: 30px;
+        max-width: 1250px;
+        margin: auto;
+    }
+
+    .schemes-hero {
+        padding: 35px;
+        border-radius: 25px;
+        margin-bottom: 30px;
+        background: linear-gradient(135deg, #17101f, #0d0b12);
+        border: 1px solid #54235b;
+        box-shadow: 0 10px 35px rgba(0,0,0,.25);
+    }
+
+    .schemes-hero h1 {
+        color: #ff67b5;
+        font-size: 34px;
+        margin-bottom: 8px;
+    }
+
+    .schemes-hero p {
+        color: #aaa;
+        line-height: 1.6;
+    }
+
+    .scheme-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+    }
+
+    .scheme-card {
+        background: #121218;
+        border: 1px solid #302035;
+        border-radius: 22px;
+        overflow: hidden;
+        transition: .3s ease;
+    }
+
+    .scheme-card:hover {
+        transform: translateY(-5px);
+        border-color: #ff55a7;
+        box-shadow: 0 12px 35px rgba(255, 70, 160, .12);
+    }
+
+    .scheme-top {
+        padding: 23px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        cursor: pointer;
+    }
+
+    .scheme-icon {
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+        border-radius: 17px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 30px;
+
+        background: #24152a;
+        border: 1px solid #55305d;
+    }
+
+    .scheme-title {
+        flex: 1;
+    }
+
+    .scheme-title h2 {
+        color: #ff70b7;
+        font-size: 19px;
+        margin-bottom: 7px;
+    }
+
+    .category {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        background: #26162e;
+        color: #d28cff;
+        font-size: 11px;
+    }
+
+    .arrow {
+        color: #ff70b7;
+        font-size: 20px;
+        transition: .3s;
+    }
+
+    .scheme-card.active .arrow {
+        transform: rotate(180deg);
+    }
+
+    /* EXTEND AREA */
+
+    .scheme-details {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 23px;
+
+        transition:
+            max-height .45s ease,
+            padding .35s ease;
+    }
+
+    .scheme-card.active .scheme-details {
+        max-height: 500px;
+        padding: 0 23px 25px;
+    }
+
+    .scheme-line {
+        height: 1px;
+        background: #302035;
+        margin-bottom: 20px;
+    }
+
+    .detail {
+        margin-bottom: 18px;
+    }
+
+    .detail h3 {
+        color: #ff91c9;
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    .detail p {
+        color: #bbb;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .official-btn {
+        display: inline-block;
+        text-decoration: none;
+        padding: 11px 17px;
+        border-radius: 11px;
+
+        background: linear-gradient(
+            135deg,
+            #ff4fa3,
+            #c45cff
+        );
+
+        color: white;
+        font-size: 13px;
+        font-weight: bold;
+
+        transition: .25s;
+    }
+
+    .official-btn:hover {
+        transform: scale(1.03);
+        box-shadow: 0 7px 25px rgba(255,70,170,.25);
+    }
+
+    .scheme-note {
+        text-align: center;
+        color: #666;
+        font-size: 12px;
+        margin-top: 35px;
+    }
+
+    @media(max-width:600px) {
+
+        .schemes-page {
+            padding: 18px;
+        }
+
+        .schemes-hero {
+            padding: 25px 20px;
+        }
+
+        .schemes-hero h1 {
+            font-size: 27px;
+        }
+
+        .scheme-top {
+            padding: 18px;
+        }
+
+        .scheme-title h2 {
+            font-size: 16px;
+        }
+    }
+</style>
+
+
+<div class="schemes-page">
+
+    <!-- HEADER -->
+
+    <div class="schemes-hero">
+
+        <h1>🌾 Government Farmer Schemes</h1>
+
+        <p>
+            Explore government schemes and assistance
+            available for farmers.
+            Click on a scheme to view more information.
+        </p>
+
+    </div>
+
+
+    <!-- SCHEME CARDS -->
+
+    <div class="scheme-grid">
+
+        {% for scheme in schemes %}
+
+        <div class="scheme-card">
+
+            <!-- TOP -->
+
+            <div
+                class="scheme-top"
+                onclick="toggleScheme(this)"
+            >
+
+                <div class="scheme-icon">
+                    {{ scheme.icon }}
+                </div>
+
+                <div class="scheme-title">
+
+                    <h2>
+                        {{ scheme.name }}
+                    </h2>
+
+                    <span class="category">
+                        {{ scheme.category }}
+                    </span>
+
+                </div>
+
+                <div class="arrow">
+                    ▼
+                </div>
+
+            </div>
+
+
+            <!-- EXTENDED CONTENT -->
+
+            <div class="scheme-details">
+
+                <div class="scheme-line"></div>
+
+
+                <div class="detail">
+
+                    <h3>💰 Benefit</h3>
+
+                    <p>
+                        {{ scheme.benefit }}
+                    </p>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <h3>✅ Eligibility</h3>
+
+                    <p>
+                        {{ scheme.eligibility }}
+                    </p>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <h3>🌐 Official Information</h3>
+
+                    <p>
+                        Check the latest eligibility,
+                        documents and application process
+                        on the official government website.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="{{ scheme.official }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="official-btn"
+                >
+                    🌐 Visit Official Website →
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <div class="scheme-note">
+
+        Information should be verified on the
+        official government portal before applying.
+
+    </div>
+
+</div>
+
+
+<script>
+
+function toggleScheme(element) {
+
+    const card =
+        element.closest(".scheme-card");
+
+    card.classList.toggle("active");
+
+}
+
+</script>
+
+{% endblock %}

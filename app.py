@@ -3,7 +3,7 @@ import random
 import sqlite3
 import os
 import requests
-
+from flask_mail import Message
 from werkzeug.utils import secure_filename
 
 from flask import (
@@ -56,18 +56,6 @@ print("ENV FILE LOADED")
 print("OPENWEATHER KEY:", bool(os.getenv("OPENWEATHER_API_KEY")))
 print("GROQ KEY:", bool(os.getenv("GROQ_API_KEY")))
 print("OPENROUTER KEY:", bool(os.getenv("OPENROUTER_API_KEY")))
-
-
-# ============================================================
-# MAIL CONFIGURATION
-# ============================================================
-
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_PORT"] = 587
-app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
-app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
-app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
 
 # ============================================================
 # MAIL CONFIGURATION
@@ -218,6 +206,43 @@ def setup_tables():
             auto_irrigation TEXT DEFAULT 'OFF'
         )
     """)
+# --------------------------------------------------------
+# FEEDBACK
+# --------------------------------------------------------
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS feedback(
+
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+            name TEXT NOT NULL,
+
+            email TEXT NOT NULL,
+
+            rating INTEGER DEFAULT 5,
+
+            message TEXT NOT NULL,
+
+            created_at TIMESTAMP
+                DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
+
+    # --------------------------------------------------------
+    # FIX OLD FEEDBACK TABLE
+    # --------------------------------------------------------
+
+    try:
+
+        conn.execute("""
+            ALTER TABLE feedback
+            ADD COLUMN created_at
+            TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        """)
+
+    except sqlite3.OperationalError:
+        pass
 
 
     conn.commit()
@@ -225,7 +250,9 @@ def setup_tables():
     conn.close()
 
 
-setup_tables()
+setup_tables()    
+
+
 
 
 # ============================================================
@@ -301,8 +328,23 @@ create_admin()
 @app.route("/")
 def home():
 
+    farmer = None
+
+    if "username" in session:
+
+        conn = sqlite3.connect("agriculture.db")
+        conn.row_factory = sqlite3.Row
+
+        farmer = conn.execute(
+            "SELECT * FROM farmers WHERE username = ?",
+            (session["username"],)
+        ).fetchone()
+
+        conn.close()
+
     return render_template(
-        "home1.html"
+        "home1.html",
+        farmer=farmer
     )
 
 
@@ -533,14 +575,17 @@ def register():
     return render_template(
         "register.html"
     )
-
-
 # ============================================================
 # ADMIN DASHBOARD
+# FARMERS + CROPS + SENSOR + MOTOR + FEEDBACK
 # ============================================================
 
 @app.route("/admin_dashboard")
 def admin_dashboard():
+
+    # --------------------------------------------------------
+    # LOGIN CHECK
+    # --------------------------------------------------------
 
     if "username" not in session:
 
@@ -548,6 +593,10 @@ def admin_dashboard():
             url_for("login")
         )
 
+
+    # --------------------------------------------------------
+    # ADMIN CHECK
+    # --------------------------------------------------------
 
     if session.get("role") != "admin":
 
@@ -561,10 +610,17 @@ def admin_dashboard():
         )
 
 
+    # --------------------------------------------------------
+    # DATABASE
+    # --------------------------------------------------------
+
     conn = connect()
 
 
-    # Total farmers
+    # ========================================================
+    # FARMERS
+    # ========================================================
+
     total_farmers = conn.execute("""
         SELECT COUNT(*)
         FROM farmers
@@ -572,21 +628,30 @@ def admin_dashboard():
     """).fetchone()[0]
 
 
-    # Total crops
+    # ========================================================
+    # CROPS
+    # ========================================================
+
     total_crops = conn.execute("""
         SELECT COUNT(*)
         FROM crop
     """).fetchone()[0]
 
 
-    # Total sensor records
+    # ========================================================
+    # SENSOR RECORDS
+    # ========================================================
+
     total_records = conn.execute("""
         SELECT COUNT(*)
         FROM sensor_record
     """).fetchone()[0]
 
 
-    # Motor ON count
+    # ========================================================
+    # MOTOR ON COUNT
+    # ========================================================
+
     motor_on_count = conn.execute("""
         SELECT COUNT(*)
         FROM sensor_record
@@ -594,11 +659,92 @@ def admin_dashboard():
     """).fetchone()[0]
 
 
+    # ========================================================
+    # FEEDBACK COUNT
+    # ========================================================
+
+    total_feedback = conn.execute("""
+        SELECT COUNT(*)
+        FROM feedback
+    """).fetchone()[0]
+
+
+    # ========================================================
+    # AVERAGE RATING
+    # ========================================================
+
+    average_rating = conn.execute("""
+        SELECT AVG(rating)
+        FROM feedback
+    """).fetchone()[0]
+
+
+    if average_rating is None:
+
+        average_rating = 0
+
+
+    # ========================================================
+    # 5 STAR FEEDBACK
+    # ========================================================
+
+    five_star = conn.execute("""
+        SELECT COUNT(*)
+        FROM feedback
+        WHERE rating = 5
+    """).fetchone()[0]
+
+
+    # ========================================================
+    # 4 STAR FEEDBACK
+    # ========================================================
+
+    four_star = conn.execute("""
+        SELECT COUNT(*)
+        FROM feedback
+        WHERE rating = 4
+    """).fetchone()[0]
+
+
+    # ========================================================
+    # RECENT FEEDBACK
+    # ========================================================
+
+    feedback_list = conn.execute("""
+        SELECT
+            id,
+            name,
+            email,
+            rating,
+            message,
+            feedback_date
+
+        FROM feedback
+
+        ORDER BY id DESC
+
+        LIMIT 10
+    """).fetchall()
+
+
+    # ========================================================
+    # CLOSE DATABASE
+    # ========================================================
+
     conn.close()
 
 
+    # ========================================================
+    # ADMIN DASHBOARD
+    # ========================================================
+
     return render_template(
+
         "admin_dashboard.html",
+
+        # -----------------------------
+        # EXISTING DATA
+        # -----------------------------
 
         total_farmers=total_farmers,
 
@@ -606,10 +752,27 @@ def admin_dashboard():
 
         total_records=total_records,
 
-        motor_on_count=motor_on_count
+        motor_on_count=motor_on_count,
+
+
+        # -----------------------------
+        # FEEDBACK DATA
+        # -----------------------------
+
+        total_feedback=total_feedback,
+
+        average_rating=round(
+            average_rating,
+            1
+        ),
+
+        five_star=five_star,
+
+        four_star=four_star,
+
+        feedback_list=feedback_list
+
     )
-
-
 # ============================================================
 # FARMER DASHBOARD
 # ============================================================
@@ -981,13 +1144,67 @@ def my_profile():
     )
 
 
+    # --------------------------------------------------------
+    # FARMER CAN EDIT ONLY OWN PROFILE
+    # ADMIN CAN EDIT ANY FARMER
+ # --------------------------------------------------------
+
+    if session.get("role") == "farmer":
+
+        if session.get("farmer_id") != id:
+
+            flash(
+                "You can edit only your own profile.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("farmer_dashboard")
+            )
 
 
-# ============================================================
-# EDIT FARMER - ADMIN ONLY
-# ============================================================
+    # --------------------------------------------------------
+    # DATABASE
+    # --------------------------------------------------------
 
-# ============================================================
+    conn = connect()
+
+    cursor = conn.cursor()
+
+
+    # Get farmer
+    cursor.execute("""
+        SELECT *
+        FROM farmers
+        WHERE id = ?
+    """, (
+        id,
+    ))
+
+    farmer = cursor.fetchone()
+
+
+    if not farmer:
+
+        conn.close()
+
+        flash(
+            "Farmer not found!",
+            "danger"
+        )
+
+        if session.get("role") == "admin":
+
+            return redirect(
+                url_for("farmers")
+            )
+
+        return redirect(
+            url_for("farmer_dashboard")
+        )
+
+
+    # ============================================================
 # EDIT FARMER PROFILE
 # ADMIN + FARMER
 # ============================================================
@@ -1383,8 +1600,6 @@ def add_farmer():
     return render_template(
         "add_farmer.html"
     )
-
-
 # ============================================================
 # CREATE ADMIN ACCOUNT
 # ============================================================
@@ -1460,11 +1675,6 @@ def create_admin():
 
 # Create admin account
 create_admin()
-
-
-# ----------------------------
-# AI CROP INFORMATION
-# ----------------------------
 
 # =========================================================
 # CROP MANAGEMENT
@@ -1741,37 +1951,89 @@ def delete_crop(id):
     conn.close()
 
     return redirect("/crop")
-# ----------------------------
-# Weather
-# ----------------------------
+# ============================================================
+# WEATHER MONITORING
+# MULTIPLE CITIES + DETAILS + DELETE
+# ============================================================
+
 @app.route("/weather", methods=["GET", "POST"])
 def weather():
 
-    city = request.form.get("city", "").strip() if request.method == "POST" else request.args.get("city", "Hingoli").strip()
+    # --------------------------------------------------------
+    # CITY
+    # --------------------------------------------------------
 
-    if not city:
-        city = "Hingoli"
+    if request.method == "POST":
 
-    api_key = os.getenv("OPENWEATHER_API_KEY")
+        city = request.form.get(
+            "city",
+            ""
+        ).strip()
 
-    print("WEATHER CITY:", city)
-    print("WEATHER KEY LOADED:", bool(api_key))
+    else:
+
+        city = request.args.get(
+            "city",
+            ""
+        ).strip()
+
+
+    api_key = os.getenv(
+        "OPENWEATHER_API_KEY"
+    )
+
+
+    # --------------------------------------------------------
+    # OLD WEATHER LIST
+    # --------------------------------------------------------
+
+    weather_list = session.get(
+        "weather_list",
+        []
+    )
+
 
     if not api_key:
+
         return render_template(
             "weather.html",
-            error="OpenWeather API key is not configured.",
             weather=None,
-            forecast=[]
+            weather_list=weather_list,
+            forecast=[],
+            error="OpenWeather API key is not configured."
         )
 
-    url = "https://api.openweathermap.org/data/2.5/weather"
+
+    # --------------------------------------------------------
+    # IF NO CITY
+    # --------------------------------------------------------
+
+    if not city:
+
+        return render_template(
+            "weather.html",
+            weather=None,
+            weather_list=weather_list,
+            forecast=[],
+            error=None
+        )
+
+
+    # --------------------------------------------------------
+    # API
+    # --------------------------------------------------------
+
+    url = (
+        "https://api.openweathermap.org/data/2.5/weather"
+    )
+
 
     params = {
         "q": city,
         "appid": api_key,
         "units": "metric"
     }
+
 
     try:
 
@@ -1781,63 +2043,258 @@ def weather():
             timeout=10
         )
 
-        print("WEATHER STATUS:", response.status_code)
-        print("WEATHER RESPONSE:", response.text[:500])
+
+        print(
+            "WEATHER STATUS:",
+            response.status_code
+        )
+
 
         data = response.json()
+
+
+        # ----------------------------------------------------
+        # ERROR
+        # ----------------------------------------------------
 
         if response.status_code != 200:
 
             return render_template(
                 "weather.html",
-                error=data.get("message", "Weather data not found."),
                 weather=None,
-                forecast=[]
+                weather_list=weather_list,
+                forecast=[],
+                error=data.get(
+                    "message",
+                    "Weather data not found."
+                )
             )
 
+
+        # ----------------------------------------------------
+        # WEATHER OBJECT
+        # ----------------------------------------------------
+
         weather = {
-            "city": data["name"],
-            "country": data["sys"]["country"],
-            "temperature": round(data["main"]["temp"]),
-            "feels_like": round(data["main"]["feels_like"]),
-            "temp_min": round(data["main"]["temp_min"]),
-            "temp_max": round(data["main"]["temp_max"]),
-            "humidity": data["main"]["humidity"],
-            "pressure": data["main"]["pressure"],
-            "wind": round(data["wind"]["speed"] * 3.6, 1),
-            "wind_direction": data["wind"].get("deg", 0),
-            "visibility": round(data.get("visibility", 0) / 1000, 1),
-            "condition": data["weather"][0]["description"].title(),
-            "icon": data["weather"][0]["icon"],
-            "lat": data["coord"]["lat"],
-            "lon": data["coord"]["lon"],
-            "sunrise": datetime.fromtimestamp(
-                data["sys"]["sunrise"]
-            ).strftime("%I:%M %p"),
-            "sunset": datetime.fromtimestamp(
-                data["sys"]["sunset"]
-            ).strftime("%I:%M %p"),
-            "rain_chance": 0
+
+            "city":
+                data["name"],
+
+            "country":
+                data["sys"]["country"],
+
+            "temperature":
+                round(
+                    data["main"]["temp"]
+                ),
+
+            "feels_like":
+                round(
+                    data["main"]["feels_like"]
+                ),
+
+            "temp_min":
+                round(
+                    data["main"]["temp_min"]
+                ),
+
+            "temp_max":
+                round(
+                    data["main"]["temp_max"]
+                ),
+
+            "humidity":
+                data["main"]["humidity"],
+
+            "pressure":
+                data["main"]["pressure"],
+
+            "wind":
+                round(
+                    data["wind"]["speed"] * 3.6,
+                    1
+                ),
+
+            "wind_direction":
+                data["wind"].get(
+                    "deg",
+                    0
+                ),
+
+            "visibility":
+                round(
+                    data.get(
+                        "visibility",
+                        0
+                    ) / 1000,
+                    1
+                ),
+
+            "condition":
+                data["weather"][0]["description"].title(),
+
+            "icon":
+                data["weather"][0]["icon"],
+
+            "lat":
+                data["coord"]["lat"],
+
+            "lon":
+                data["coord"]["lon"],
+
+            "sunrise":
+                datetime.fromtimestamp(
+                    data["sys"]["sunrise"]
+                ).strftime(
+                    "%I:%M %p"
+                ),
+
+            "sunset":
+                datetime.fromtimestamp(
+                    data["sys"]["sunset"]
+                ).strftime(
+                    "%I:%M %p"
+                ),
+
+            "rain_chance":
+                0
         }
 
+
+        # ----------------------------------------------------
+        # ADD / UPDATE CITY
+        # ----------------------------------------------------
+
+        existing_index = None
+
+
+        for i, old_city in enumerate(
+            weather_list
+        ):
+
+            if (
+                old_city.get("city", "").lower()
+                ==
+                weather["city"].lower()
+            ):
+
+                existing_index = i
+
+                break
+
+
+        if existing_index is not None:
+
+            # Update existing city
+            weather_list[
+                existing_index
+            ] = weather
+
+        else:
+
+            # Add new city
+            weather_list.append(
+                weather
+            )
+
+
+        # ----------------------------------------------------
+        # SAVE
+        # ----------------------------------------------------
+
+        session["weather_list"] = weather_list
+
+
+        # ----------------------------------------------------
+        # SHOW SELECTED CITY
+        # ----------------------------------------------------
+
         return render_template(
+
             "weather.html",
+
             weather=weather,
+
+            weather_list=weather_list,
+
             forecast=[],
+
             error=None
         )
 
+
     except Exception as e:
 
-        print("WEATHER ERROR:", repr(e))
+        print(
+            "WEATHER ERROR:",
+            repr(e)
+        )
+
 
         return render_template(
+
             "weather.html",
+
             weather=None,
+
+            weather_list=weather_list,
+
             forecast=[],
+
             error=str(e)
         )
 
+
+# ============================================================
+# DELETE WEATHER CITY
+# ============================================================
+
+@app.route(
+    "/weather/delete/<city>"
+)
+def delete_weather_city(city):
+
+    weather_list = session.get(
+        "weather_list",
+        []
+    )
+
+
+    # --------------------------------------------------------
+    # KEEP OTHER CITIES
+    # --------------------------------------------------------
+
+    weather_list = [
+
+        w
+
+        for w in weather_list
+
+        if w.get(
+            "city",
+            ""
+        ).lower()
+        != city.lower()
+
+    ]
+
+
+    # --------------------------------------------------------
+    # SAVE UPDATED LIST
+    # --------------------------------------------------------
+
+    session["weather_list"] = weather_list
+
+
+    flash(
+        f"{city} weather removed successfully!",
+        "success"
+    )
+
+
+    return redirect(
+        url_for("weather")
+    )
 # ----------------------------
 # Motor Control
 # ----------------------------
@@ -2031,142 +2488,200 @@ def clean_record(record_id):
     conn.close()
 
     return redirect(url_for("analytics"))
-# ============================================================
-#  IRRIGATION
-# ============================================================
-@app.route("/irrigation")
+
+
+# =========================================================
+# IRRIGATION PAGE
+# =========================================================
+
+@app.route("/irrigation", methods=["GET", "POST"])
 def irrigation():
 
-    conn = sqlite3.connect("agriculture.db")
-    conn.row_factory = sqlite3.Row
-    cur = conn.cursor()
+    # -----------------------------------------------------
+    # MOTOR STATUS
+    # -----------------------------------------------------
 
-    # =====================================================
-    # LATEST SOIL MOISTURE
-    # =====================================================
-
-    cur.execute("""
-        SELECT moisture
-        FROM sensor_record
-        WHERE moisture IS NOT NULL
-          AND TRIM(moisture) != ''
-        ORDER BY id DESC
-        LIMIT 1
-    """)
-
-    moisture_row = cur.fetchone()
-
-    if moisture_row:
-
-        try:
-            soil_moisture = float(moisture_row["moisture"])
-        except:
-            soil_moisture = 0
-
-    else:
-        soil_moisture = 0
+    motor_status = session.get("motor_status", "OFF")
 
 
-    # =====================================================
-    # ALL MOTOR ON EVENTS
-    # =====================================================
+    # -----------------------------------------------------
+    # SAVE IRRIGATION SCHEDULE
+    # -----------------------------------------------------
 
-    cur.execute("""
-        SELECT id, motor_status, date_time
-        FROM sensor_record
-        WHERE UPPER(TRIM(motor_status)) = 'ON'
-        ORDER BY id ASC
-    """)
+    if request.method == "POST":
 
-    motor_records = cur.fetchall()
+        crop = request.form.get("crop")
+        date = request.form.get("date")
+        start_time = request.form.get("start_time")
+        duration = request.form.get("duration")
 
 
-    total_count = len(motor_records)
+        # Basic validation
 
-    morning_count = 0
-    evening_count = 0
+        if not crop or not date or not start_time or not duration:
 
-
-    # =====================================================
-    # COUNT MORNING / EVENING
-    # =====================================================
-
-    for row in motor_records:
-
-        date_value = row["date_time"]
-
-        if not date_value:
-            continue
-
-        try:
-
-            date_value = str(date_value).strip()
-
-            dt = datetime.strptime(
-                date_value,
-                "%Y-%m-%d %H:%M:%S"
+            flash(
+                "Please fill all irrigation schedule fields.",
+                "warning"
             )
 
-            hour = dt.hour
+            return redirect(url_for("irrigation"))
 
 
-            # 5 AM - 11:59 AM
-            if 5 <= hour < 12:
+        try:
 
-                morning_count += 1
+            conn = connect()
 
-
-            # 5 PM - 11:59 PM
-            elif 17 <= hour <= 23:
-
-                evening_count += 1
+            cursor = conn.cursor()
 
 
-        except Exception as e:
+            # -------------------------------------------------
+            # SAVE SCHEDULE
+            # -------------------------------------------------
 
-            print("Date parsing error:", date_value, e)
+            cursor.execute("""
+                INSERT INTO irrigation_schedule
+                (
+                    crop,
+                    date,
+                    start_time,
+                    duration
+                )
+                VALUES (?, ?, ?, ?)
+            """, (
+                crop,
+                date,
+                start_time,
+                duration
+            ))
+
+
+            conn.commit()
+
+            conn.close()
+
+
+            flash(
+                "Irrigation schedule saved successfully.",
+                "success"
+            )
+
+
+        except sqlite3.Error as e:
+
+            print("IRRIGATION DATABASE ERROR:", e)
+
+            flash(
+                "Unable to save irrigation schedule.",
+                "danger"
+            )
+
+
+        return redirect(url_for("irrigation"))
 
 
     # =====================================================
-    # LATEST MOTOR STATUS
+    # GET SAVED SCHEDULES
     # =====================================================
 
-    cur.execute("""
-        SELECT motor_status
-        FROM sensor_record
-        ORDER BY id DESC
-        LIMIT 1
-    """)
+    schedules = []
 
-    motor_row = cur.fetchone()
+    try:
 
-    if motor_row and motor_row["motor_status"]:
+        conn = connect()
 
-        motor_status = str(
-            motor_row["motor_status"]
-        ).strip().upper()
-
-    else:
-
-        motor_status = "OFF"
+        cursor = conn.cursor()
 
 
-    conn.close()
+        cursor.execute("""
+            SELECT *
+            FROM irrigation_schedule
+            ORDER BY date ASC, start_time ASC
+        """)
 
+
+        schedules = cursor.fetchall()
+
+        conn.close()
+
+
+    except sqlite3.Error as e:
+
+        print("SCHEDULE LOAD ERROR:", e)
+
+
+    # =====================================================
+    # TODAY'S MOTOR RECORDS
+    # =====================================================
+
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    today_records = []
+
+    try:
+
+        conn = connect()
+
+        cursor = conn.cursor()
+
+
+        cursor.execute("""
+            SELECT *
+            FROM sensor_record
+            WHERE DATE(start_time) = ?
+            ORDER BY start_time DESC
+        """, (today,))
+
+
+        today_records = cursor.fetchall()
+
+        conn.close()
+
+
+    except sqlite3.Error as e:
+
+        print("MOTOR RECORD ERROR:", e)
+
+
+    # =====================================================
+    # CALCULATE TODAY'S RUNTIME
+    # =====================================================
+
+    total_runtime = 0
+
+
+    for record in today_records:
+
+        try:
+
+            duration = record["duration"]
+
+            if duration:
+
+                total_runtime += float(duration)
+
+        except:
+
+            pass
+
+
+    # =====================================================
+    # RENDER PAGE
+    # =====================================================
 
     return render_template(
         "irrigation.html",
 
-        soil_moisture=soil_moisture,
+        motor_status=motor_status,
 
-        total_count=total_count,
+        schedules=schedules,
 
-        morning_count=morning_count,
+        today_records=today_records,
 
-        evening_count=evening_count,
-
-        motor_status=motor_status
+        total_runtime=total_runtime
     )
+
+
 # -------------------------
 # MOTOR ANALYTICS
 # ----------------------------
@@ -2696,63 +3211,147 @@ Message:
 # Feedback
 # ----------------------------
 
-@app.route("/feedback", methods=["GET","POST"])
+# ============================================================
+# FEEDBACK
+# ============================================================
+
+@app.route("/feedback", methods=["GET", "POST"])
 def feedback():
 
-    if request.method == "POST":
+    # --------------------------------------------------------
+    # FEEDBACK PAGE
+    # --------------------------------------------------------
 
-        name = request.form["name"]
-        email = request.form["email"]
-        message = request.form["message"]
-
-
-        msg = Message(
-
-            subject="🌱 New Agro Monitor Feedback",
-
-            sender=os.getenv("MAIL_USERNAME"),
-
-            recipients=[
-                os.getenv("MAIL_USERNAME")
-            ]
-
-        )
-
-
-        msg.body = f"""
-
-        New Feedback Received
-
-        Name:
-        {name}
-
-
-        Email:
-        {email}
-
-
-        Feedback:
-
-        {message}
-
-
-        -------------------
-        Agro Monitor System
-        """
-
-
-
-        mail.send(msg)
-
-
+    if request.method == "GET":
 
         return render_template(
-            "feedback_success.html",
-            name=name
+            "feedback.html"
         )
 
 
-    return render_template("feedback.html")
+    # --------------------------------------------------------
+    # GET FORM DATA
+    # --------------------------------------------------------
+
+    name = request.form.get(
+        "name",
+        ""
+    ).strip()
+
+    email = request.form.get(
+        "email",
+        ""
+    ).strip()
+
+    message = request.form.get(
+        "message",
+        ""
+    ).strip()
+
+    rating = request.form.get(
+        "rating",
+        "5"
+    ).strip()
+
+
+    # --------------------------------------------------------
+    # VALIDATION
+    # --------------------------------------------------------
+
+    if not name or not email or not message:
+
+        flash(
+            "Please fill all feedback fields.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("feedback")
+        )
+
+
+    # --------------------------------------------------------
+    # RATING VALIDATION
+    # --------------------------------------------------------
+
+    try:
+
+        rating = int(rating)
+
+    except ValueError:
+
+        rating = 5
+
+
+    if rating < 1 or rating > 5:
+
+        rating = 5
+
+
+    # --------------------------------------------------------
+    # SAVE FEEDBACK TO DATABASE
+    # --------------------------------------------------------
+
+    conn = connect()
+
+    try:
+
+        conn.execute("""
+            INSERT INTO feedback
+            (
+                name,
+                email,
+                rating,
+                message
+            )
+
+            VALUES (?, ?, ?, ?)
+        """, (
+            name,
+            email,
+            rating,
+            message
+        ))
+
+        conn.commit()
+
+
+    except sqlite3.Error as e:
+
+        conn.rollback()
+
+        print(
+            "FEEDBACK DATABASE ERROR:",
+            e
+        )
+
+        conn.close()
+
+        flash(
+            "Unable to save feedback. Please try again.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("feedback")
+        )
+
+
+    conn.close()
+
+
+    # --------------------------------------------------------
+    # SUCCESS
+    # --------------------------------------------------------
+
+    flash(
+        "Thank you! Your feedback has been submitted successfully. 🌱",
+        "success"
+    )
+
+    return redirect(
+        url_for("feedback")
+    )
 @app.route("/alerts")
 def alerts():
 
@@ -2883,9 +3482,7 @@ def alerts():
 # ============================================================
 # AI DISEASE DETECTION
 # ============================================================
-# ============================================================
-# AI DISEASE DETECTION
-# ============================================================
+
 
 @app.route("/ai_disease", methods=["GET", "POST"])
 def ai_disease():
@@ -3048,6 +3645,68 @@ def check_sensor_table():
     conn.close()
 
     return "<pre>" + str(columns) + "</pre>"
+
+# ----------------------------
+#Schemes
+# ----------------------------
+
+@app.route('/schemes')
+def schemes():
+
+    schemes = [
+
+        {
+            "name": "PM-KISAN Samman Nidhi",
+            "icon": "🌾",
+            "category": "Farmer Income Support",
+
+            "benefit":
+                "Eligible farmers can receive financial support under PM-KISAN.",
+
+            "eligibility":
+                "Eligible landholding farmer families, subject to applicable government conditions.",
+
+            "official":
+                "https://pmkisan.gov.in/"
+        },
+
+        {
+            "name": "PMKSY – Per Drop More Crop",
+            "icon": "💧",
+            "category": "Irrigation",
+
+            "benefit":
+                "Support for efficient irrigation methods such as drip and sprinkler systems.",
+
+            "eligibility":
+                "Eligibility depends on applicable scheme guidelines and state implementation.",
+
+            "official":
+                "https://mahadbt.maharashtra.gov.in/"
+        },
+
+        {
+            "name": "Agricultural Mechanization Scheme",
+            "icon": "🚜",
+            "category": "Farm Machinery",
+
+            "benefit":
+                "Assistance related to eligible agricultural machinery and equipment.",
+
+            "eligibility":
+                "Eligibility and assistance depend on applicable government rules.",
+
+            "official":
+                "https://mahadbt.maharashtra.gov.in/"
+        }
+
+    ]
+
+    return render_template(
+        "schemes.html",
+        schemes=schemes
+    )    
+
 
 # ----------------------------
 # Run Application

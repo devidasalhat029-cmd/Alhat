@@ -1,142 +1,1317 @@
 {% extends "baseofhtml.html" %}
 
-{% block title %}About Project{% endblock %}
+{% block title %}
+AgriNavo | About
+{% endblock %}
 
 {% block content %}
 
 <style>
-.about-section{
-    background: linear-gradient(135deg,#0f5132,#198754);
-    color:white;
-    padding:80px 40px;
-    border-radius:25px;
-    margin-top:30px;
+
+/* =========================================================
+   AGRINAVO — ABOUT / EXPLORE
+   COMPLETELY DIFFERENT DARK PROFESSIONAL DESIGN
+========================================================= */
+
+.agrinavo-about{
+
+    min-height:100vh;
+
+    margin:-28px;
+
+    padding:0 0 80px;
+
+    color:#f8fafc;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(124,58,237,.13),
+            transparent 24%
+        ),
+        radial-gradient(
+            circle at 85% 60%,
+            rgba(37,99,235,.10),
+            transparent 25%
+        ),
+        #08090d;
+
 }
 
-.about-title{
-    font-size:55px;
-    font-weight:bold;
+
+/* =========================================================
+   TOP INTRO
+========================================================= */
+
+.about-intro{
+
+    max-width:1150px;
+
+    margin:auto;
+
+    padding:
+        85px 35px 70px;
+
+    border-bottom:
+        1px solid #24242d;
+
 }
 
-.about-subtitle{
-    font-size:22px;
-    opacity:0.9;
+
+.about-label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    color:#a78bfa;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
 }
 
-.info-section{
-    background:white;
-    padding:40px;
-    border-radius:20px;
-    margin-top:30px;
-    box-shadow:0 8px 25px rgba(0,0,0,0.12);
+
+.about-label::before{
+
+    content:"";
+
+    width:38px;
+
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6366f1,
+            #ec4899
+        );
+
 }
 
-.section-heading{
-    color:#198754;
-    font-weight:bold;
-    margin-bottom:15px;
-}
 
-.feature-item{
-    padding:12px 0;
-    border-bottom:1px solid #e9ecef;
-    font-size:18px;
-}
+.about-heading{
 
-.feature-item:last-child{
-    border-bottom:none;
-}
-
-.icon{
-    color:#198754;
-    margin-right:10px;
-}
-
-.mission-box{
-    background:#e8f5e9;
-    border-left:6px solid #198754;
-    padding:20px;
-    border-radius:12px;
     margin-top:20px;
+
+    max-width:850px;
+
+    font-size:58px;
+
+    line-height:1.08;
+
+    font-weight:900;
+
+    letter-spacing:-2px;
+
 }
 
-.explore-btn{
-    background:#198754;
+
+.about-heading span{
+
+    background:
+        linear-gradient(
+            90deg,
+            #818cf8,
+            #a78bfa,
+            #f0abfc
+        );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+}
+
+
+.about-description{
+
+    max-width:720px;
+
+    margin-top:24px;
+
+    color:#9b9ca8;
+
+    font-size:16px;
+
+    line-height:1.9;
+
+}
+
+
+/* =========================================================
+   CONTENT WRAPPER
+========================================================= */
+
+.about-container{
+
+    max-width:1150px;
+
+    margin:auto;
+
+    padding:0 35px;
+
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.about-block{
+
+    padding:75px 0;
+
+    border-bottom:
+        1px solid #202129;
+
+}
+
+
+.block-heading{
+
+    display:grid;
+
+    grid-template-columns:
+        280px 1fr;
+
+    gap:60px;
+
+}
+
+
+.block-title{
+
+    color:#ffffff;
+
+    font-size:26px;
+
+    font-weight:850;
+
+    margin:0;
+}
+
+
+.block-title small{
+
+    display:block;
+
+    margin-bottom:10px;
+
+    color:#6366f1;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    font-weight:800;
+
+}
+
+
+.block-text{
+
+    color:#a1a1ad;
+
+    font-size:14px;
+
+    line-height:1.9;
+
+    margin:0;
+
+}
+
+
+/* =========================================================
+   PURPOSE LIST
+========================================================= */
+
+.purpose-list{
+
+    margin-top:35px;
+
+    border-top:
+        1px solid #282832;
+
+}
+
+
+.purpose-item{
+
+    display:grid;
+
+    grid-template-columns:55px 1fr;
+
+    gap:20px;
+
+    padding:23px 0;
+
+    border-bottom:
+        1px solid #24242d;
+
+    transition:.3s;
+}
+
+
+.purpose-item:hover{
+
+    padding-left:10px;
+
+}
+
+
+.purpose-icon{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:#14151d;
+
+    border:1px solid #2b2c38;
+
+    color:#a78bfa;
+
+}
+
+
+.purpose-item:nth-child(2)
+.purpose-icon{
+
+    color:#60a5fa;
+
+}
+
+
+.purpose-item:nth-child(3)
+.purpose-icon{
+
+    color:#f472b6;
+
+}
+
+
+.purpose-item:nth-child(4)
+.purpose-icon{
+
+    color:#34d399;
+
+}
+
+
+.purpose-content h4{
+
+    margin:0 0 5px;
+
+    color:#f1f1f5;
+
+    font-size:15px;
+
+    font-weight:800;
+
+}
+
+
+.purpose-content p{
+
+    margin:0;
+
+    color:#858691;
+
+    font-size:13px;
+
+    line-height:1.7;
+
+}
+
+
+/* =========================================================
+   MODULES
+========================================================= */
+
+.module-list{
+
+    margin-top:35px;
+
+}
+
+
+.module-row{
+
+    display:grid;
+
+    grid-template-columns:
+        70px 1fr auto;
+
+    align-items:center;
+
+    gap:25px;
+
+    padding:23px 0;
+
+    border-bottom:
+        1px solid #24242d;
+
+    transition:.3s;
+}
+
+
+.module-row:hover{
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(99,102,241,.05),
+            transparent
+        );
+
+    padding-left:12px;
+
+}
+
+
+.module-number{
+
+    color:#555764;
+
+    font-size:12px;
+
+    font-weight:800;
+
+}
+
+
+.module-name{
+
+    color:#f4f4f6;
+
+    font-size:15px;
+
+    font-weight:750;
+
+}
+
+
+.module-info{
+
+    color:#777985;
+
+    font-size:12px;
+
+    text-align:right;
+
+}
+
+
+.module-arrow{
+
+    color:#8b5cf6;
+
+    font-size:12px;
+
+}
+
+
+/* =========================================================
+   TECHNOLOGY
+========================================================= */
+
+.tech-area{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:30px;
+
+}
+
+
+.tech{
+
+    padding:9px 15px;
+
+    border-radius:9px;
+
+    background:#111219;
+
+    border:1px solid #292b35;
+
+    color:#b6b7c2;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    transition:.3s;
+}
+
+
+.tech:hover{
+
     color:white;
-    padding:12px 30px;
-    border-radius:30px;
-    text-decoration:none;
-    font-weight:bold;
+
+    border-color:#6366f1;
+
+    transform:translateY(-2px);
+
 }
 
-.explore-btn:hover{
-    color:white;
+
+/* =========================================================
+   WORKFLOW
+========================================================= */
+
+.process{
+
+    margin-top:35px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    border-top:
+        1px solid #292a34;
+
+    border-bottom:
+        1px solid #292a34;
+
 }
-</style>
 
-<div class="container">
 
-    <div class="about-section text-center">
-        <h1 class="about-title">
-            <i class="fas fa-seedling"></i>
-            Agriculture Automatic Monitoring System
-        </h1>
+.process-step{
 
-        <p class="about-subtitle">
-            Smart Farming Through Technology & Automation
-        </p>
+    min-height:190px;
+
+    padding:28px 22px;
+
+    border-right:
+        1px solid #292a34;
+
+}
+
+
+.process-step:last-child{
+
+    border-right:none;
+
+}
+
+
+.process-number{
+
+    color:#6366f1;
+
+    font-size:11px;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+
+}
+
+
+.process-step h4{
+
+    margin:25px 0 10px;
+
+    color:#f5f5f7;
+
+    font-size:16px;
+
+    font-weight:800;
+
+}
+
+
+.process-step p{
+
+    color:#777985;
+
+    font-size:12px;
+
+    line-height:1.7;
+
+    margin:0;
+
+}
+
+
+/* =========================================================
+   CLOSING
+========================================================= */
+
+.about-ending{
+
+    padding:75px 0 20px;
+
+    text-align:center;
+
+}
+
+
+.about-ending-line{
+
+    width:60px;
+
+    height:3px;
+
+    margin:0 auto 25px;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6366f1,
+            #ec4899
+        );
+
+}
+
+
+.about-ending h2{
+
+    color:#ffffff;
+
+    font-size:28px;
+
+    font-weight:850;
+
+}
+
+
+.about-ending p{
+
+    max-width:650px;
+
+    margin:14px auto 0;
+
+    color:#80818d;
+
+    font-size:13px;
+
+    line-height:1.8;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:800px){
+
+    .agrinavo-about{
+
+        margin:-18px -13px;
+
+    }
+
+
+    .about-intro{
+
+        padding:
+            60px 22px 50px;
+
+    }
+
+
+    .about-container{
+
+        padding:0 22px;
+
+    }
+
+
+    .about-heading{
+
+        font-size:39px;
+
+        letter-spacing:-1px;
+
+    }
+
+
+    .block-heading{
+
+        grid-template-columns:1fr;
+
+        gap:20px;
+
+    }
+
+
+    .module-row{
+
+        grid-template-columns:
+            45px 1fr;
+
+        gap:15px;
+
+    }
+
+
+    .module-info{
+
+        display:none;
+
+    }
+
+
+    .process{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .process-step{
+
+        border-right:none;
+
+        border-bottom:
+            1px solid #292a34;
+
+    }
+
+
+    .process-step:last-child{
+
+        border-bottom:none;
+
+    }
+
+}
+
+</style><div class="agrinavo-about"><!-- =====================================================
+     INTRODUCTION
+====================================================== -->
+
+<section class="about-intro">
+
+    <div class="about-label">
+
+        AgriNavo
+
     </div>
 
-    <div class="info-section">
 
-        <h3 class="section-heading">
-            <i class="fas fa-info-circle icon"></i>
-            Project Overview
-        </h3>
+    <h1 class="about-heading">
 
-        <p>
-            Agriculture Automatic Monitoring System is a web-based application
-            designed to help farmers monitor crops, manage irrigation,
-            analyze farm data, and improve agricultural productivity using
-            modern technologies.
-        </p>
+        Technology that brings
+        <span>clarity to farming.</span>
 
-        <h3 class="section-heading mt-4">
-            <i class="fas fa-bullseye icon"></i>
-            Objectives
-        </h3>
+    </h1>
 
-        <div class="feature-item">🌱 Monitor crop conditions efficiently</div>
-        <div class="feature-item">💧 Reduce water wastage through smart irrigation</div>
-        <div class="feature-item">🌦️ Provide real-time weather information</div>
-        <div class="feature-item">📊 Generate reports and analytics</div>
-        <div class="feature-item">🚜 Improve overall farm productivity</div>
 
-        <h3 class="section-heading mt-4">
-            <i class="fas fa-code icon"></i>
-            Technologies Used
-        </h3>
+    <p class="about-description">
 
-        <p>
-            Python, Flask, SQLite, HTML, CSS, Bootstrap, JavaScript
-        </p>
+        AgriNavo is a smart agriculture management platform
+        designed to bring important farming activities into
+        one connected digital environment.
 
-        <div class="mission-box">
-            <h5>🌍 Our Mission</h5>
-            <p>
-                To empower farmers with smart digital tools that make farming
-                more efficient, sustainable, and productive.
+        From crop management and weather information to
+        irrigation, monitoring, AI assistance and analytics,
+        AgriNavo helps organize the complete farming workflow
+        in one place.
+
+    </p>
+
+</section>
+
+
+
+<div class="about-container">
+
+
+    <!-- =================================================
+         ABOUT
+    ================================================== -->
+
+    <section class="about-block">
+
+        <div class="block-heading">
+
+            <h2 class="block-title">
+
+                <small>01 — ABOUT</small>
+
+                What is AgriNavo?
+
+            </h2>
+
+
+            <p class="block-text">
+
+                Traditional farming often requires information
+                from different places and different tools.
+                AgriNavo brings these activities together into
+                a single platform.
+
+                <br><br>
+
+                The system is designed around a simple idea:
+                <strong style="color:#ddd6fe;">
+                    monitor, understand, manage and improve.
+                </strong>
+
+                It provides a structured digital workspace
+                where farmers can access useful farm
+                information and manage their activities
+                more efficiently.
+
             </p>
+
         </div>
 
-        <div class="text-center mt-4">
-            <a href="/dashboard" class="explore-btn">
-                Explore Dashboard
-            </a>
+    </section>
+
+
+
+    <!-- =================================================
+         PURPOSE
+    ================================================== -->
+
+    <section class="about-block">
+
+        <div class="block-heading">
+
+            <h2 class="block-title">
+
+                <small>02 — PURPOSE</small>
+
+                Built for smarter decisions.
+
+            </h2>
+
+
+            <div>
+
+                <p class="block-text">
+
+                    AgriNavo focuses on making agricultural
+                    information easier to access, understand
+                    and manage.
+
+                </p>
+
+
+                <div class="purpose-list">
+
+
+                    <div class="purpose-item">
+
+                        <div class="purpose-icon">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </div>
+
+
+                        <div class="purpose-content">
+
+                            <h4>
+                                Better Visibility
+                            </h4>
+
+                            <p>
+                                Keep important farm information
+                                organized and accessible.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="purpose-item">
+
+                        <div class="purpose-icon">
+
+                            <i class="fa-solid fa-cloud-sun"></i>
+
+                        </div>
+
+
+                        <div class="purpose-content">
+
+                            <h4>
+                                Weather Awareness
+                            </h4>
+
+                            <p>
+                                Use weather information as part
+                                of everyday farm planning.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="purpose-item">
+
+                        <div class="purpose-icon">
+
+                            <i class="fa-solid fa-droplet"></i>
+
+                        </div>
+
+
+                        <div class="purpose-content">
+
+                            <h4>
+                                Resource Management
+                            </h4>
+
+                            <p>
+                                Manage irrigation and farm
+                                resources through digital tools.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="purpose-item">
+
+                        <div class="purpose-icon">
+
+                            <i class="fa-solid fa-chart-line"></i>
+
+                        </div>
+
+
+                        <div class="purpose-content">
+
+                            <h4>
+                                Data-Based Insights
+                            </h4>
+
+                            <p>
+                                Records and analytics help turn
+                                farm activity into useful insights.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
         </div>
 
-    </div>
+    </section>
+
+
+
+    <!-- =================================================
+         MODULES
+    ================================================== -->
+
+    <section class="about-block">
+
+        <div class="block-heading">
+
+            <h2 class="block-title">
+
+                <small>03 — PLATFORM</small>
+
+                One system.
+                Multiple capabilities.
+
+            </h2>
+
+
+            <div>
+
+                <p class="block-text">
+
+                    AgriNavo is structured into independent
+                    modules that work together as a complete
+                    smart farming platform.
+
+                </p>
+
+
+                <div class="module-list">
+
+
+                    <div class="module-row">
+
+                        <span class="module-number">
+                            01
+                        </span>
+
+                        <span class="module-name">
+                            Crop Management
+                        </span>
+
+                        <span class="module-info">
+                            Crop records & management
+                        </span>
+
+                        <span class="module-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+
+                    <div class="module-row">
+
+                        <span class="module-number">
+                            02
+                        </span>
+
+                        <span class="module-name">
+                            Weather Monitoring
+                        </span>
+
+                        <span class="module-info">
+                            Weather information
+                        </span>
+
+                        <span class="module-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+
+                    <div class="module-row">
+
+                        <span class="module-number">
+                            03
+                        </span>
+
+                        <span class="module-name">
+                            Irrigation Management
+                        </span>
+
+                        <span class="module-info">
+                            Water management
+                        </span>
+
+                        <span class="module-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+
+                    <div class="module-row">
+
+                        <span class="module-number">
+                            04
+                        </span>
+
+                        <span class="module-name">
+                            Motor & Farm Control
+                        </span>
+
+                        <span class="module-info">
+                            Equipment control
+                        </span>
+
+                        <span class="module-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+
+                    <div class="module-row">
+
+                        <span class="module-number">
+                            05
+                        </span>
+
+                        <span class="module-name">
+                            AI Agriculture
+                        </span>
+
+                        <span class="module-info">
+                            AI-powered assistance
+                        </span>
+
+                        <span class="module-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+
+                    <div class="module-row">
+
+                        <span class="module-number">
+                            06
+                        </span>
+
+                        <span class="module-name">
+                            Analytics & Records
+                        </span>
+
+                        <span class="module-info">
+                            Data & activity insights
+                        </span>
+
+                        <span class="module-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         TECHNOLOGY
+    ================================================== -->
+
+    <section class="about-block">
+
+        <div class="block-heading">
+
+            <h2 class="block-title">
+
+                <small>04 — TECHNOLOGY</small>
+
+                Built with modern tools.
+
+            </h2>
+
+
+            <div>
+
+                <p class="block-text">
+
+                    AgriNavo combines web technologies,
+                    databases, APIs, AI concepts and
+                    responsive interfaces to create a
+                    practical smart agriculture solution.
+
+                </p>
+
+
+                <div class="tech-area">
+
+                    <span class="tech">
+                        Python
+                    </span>
+
+                    <span class="tech">
+                        Flask
+                    </span>
+
+                    <span class="tech">
+                        SQLite
+                    </span>
+
+                    <span class="tech">
+                        HTML5
+                    </span>
+
+                    <span class="tech">
+                        CSS3
+                    </span>
+
+                    <span class="tech">
+                        Bootstrap
+                    </span>
+
+                    <span class="tech">
+                        JavaScript
+                    </span>
+
+                    <span class="tech">
+                        Chart.js
+                    </span>
+
+                    <span class="tech">
+                        REST APIs
+                    </span>
+
+                    <span class="tech">
+                        AI
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- =================================================
+         WORKFLOW
+    ================================================== -->
+
+    <section class="about-block">
+
+        <div class="block-heading">
+
+            <h2 class="block-title">
+
+                <small>05 — WORKFLOW</small>
+
+                The AgriNavo approach.
+
+            </h2>
+
+
+            <div>
+
+                <p class="block-text">
+
+                    The platform follows a simple digital
+                    workflow designed to make farm information
+                    more useful.
+
+                </p>
+
+
+                <div class="process">
+
+
+                    <div class="process-step">
+
+                        <span class="process-number">
+                            STEP 01
+                        </span>
+
+                        <h4>
+                            Monitor
+                        </h4>
+
+                        <p>
+                            Observe farm conditions,
+                            weather and activities.
+                        </p>
+
+                    </div>
+
+
+                    <div class="process-step">
+
+                        <span class="process-number">
+                            STEP 02
+                        </span>
+
+                        <h4>
+                            Understand
+                        </h4>
+
+                        <p>
+                            Review records, information
+                            and available insights.
+                        </p>
+
+                    </div>
+
+
+                    <div class="process-step">
+
+                        <span class="process-number">
+                            STEP 03
+                        </span>
+
+                        <h4>
+                            Manage
+                        </h4>
+
+                        <p>
+                            Manage crops, irrigation
+                            and farm operations.
+                        </p>
+
+                    </div>
+
+
+                    <div class="process-step">
+
+                        <span class="process-number">
+                            STEP 04
+                        </span>
+
+                        <h4>
+                            Improve
+                        </h4>
+
+                        <p>
+                            Use organized information
+                            to support better decisions.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         ENDING
+    ================================================== -->
+
+    <section class="about-ending">
+
+        <div class="about-ending-line"></div>
+
+        <h2>
+            AgriNavo — Smarter Agriculture,
+            Connected Digitally.
+        </h2>
+
+        <p>
+
+            A project focused on bringing agriculture,
+            technology, monitoring and intelligent
+            digital tools together.
+
+        </p>
+
+    </section>
+
 
 </div>
+
 
 {% endblock %}
