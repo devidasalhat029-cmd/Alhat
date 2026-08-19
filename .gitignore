@@ -2,3 +2,5 @@
 __pycache__/
 *.pyc
 
+day_ai_templates/.env
+day_ai_templates/.env
