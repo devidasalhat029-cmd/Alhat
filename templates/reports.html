@@ -1,0 +1,608 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}
+Reports & History
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.reports-page{
+    min-height:calc(100vh - 70px);
+    padding:30px;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(34,197,94,.13), transparent 28%),
+        radial-gradient(circle at 90% 10%, rgba(14,165,233,.13), transparent 30%),
+        #f6fbf7;
+}
+
+/* HEADER */
+
+.report-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:25px;
+    flex-wrap:wrap;
+}
+
+.report-title h1{
+    margin:0;
+    font-size:30px;
+    font-weight:800;
+    color:#123524;
+}
+
+.report-title p{
+    margin:6px 0 0;
+    color:#64748b;
+}
+
+/* BUTTONS */
+
+.report-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.report-btn{
+    border:none;
+    padding:11px 17px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:700;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+}
+
+.print-btn{
+    background:#0f766e;
+    color:white;
+}
+
+.pdf-btn{
+    background:#166534;
+    color:white;
+}
+
+.report-btn:hover{
+    opacity:.9;
+    transform:translateY(-1px);
+}
+
+/* SUMMARY */
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:28px;
+}
+
+.summary-card{
+    background:white;
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 8px 25px rgba(15,23,42,.08);
+    border:1px solid #e2e8f0;
+}
+
+.summary-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.summary-icon{
+    width:45px;
+    height:45px;
+    border-radius:12px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#dcfce7;
+    color:#15803d;
+    font-size:20px;
+}
+
+.summary-card h4{
+    margin:14px 0 4px;
+    color:#64748b;
+    font-size:14px;
+}
+
+.summary-value{
+    font-size:27px;
+    font-weight:800;
+    color:#123524;
+}
+
+/* SECTION */
+
+.history-section{
+    background:white;
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:25px;
+    box-shadow:0 8px 25px rgba(15,23,42,.07);
+    border:1px solid #e2e8f0;
+}
+
+.section-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.section-heading h2{
+    margin:0;
+    font-size:21px;
+    color:#123524;
+}
+
+.search-box{
+    padding:10px 13px;
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+    outline:none;
+    min-width:210px;
+}
+
+/* TABLE */
+
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
+}
+
+.history-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+.history-table th{
+    background:#ecfdf5;
+    color:#166534;
+    padding:13px;
+    text-align:left;
+    font-size:13px;
+}
+
+.history-table td{
+    padding:13px;
+    border-bottom:1px solid #e2e8f0;
+    color:#334155;
+    font-size:14px;
+}
+
+.history-table tr:hover{
+    background:#f8fafc;
+}
+
+/* BADGES */
+
+.badge{
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.badge-green{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.badge-blue{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.badge-orange{
+    background:#ffedd5;
+    color:#c2410c;
+}
+
+/* EMPTY */
+
+.empty-state{
+    text-align:center;
+    padding:35px;
+    color:#64748b;
+}
+
+.empty-state i{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+    .summary-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .reports-page{
+        padding:18px;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+    .report-title h1{
+        font-size:24px;
+    }
+
+    .report-actions{
+        width:100%;
+    }
+
+    .report-btn{
+        flex:1;
+        justify-content:center;
+    }
+}
+
+</style>
+
+
+<div class="reports-page">
+
+    <!-- HEADER -->
+
+    <div class="report-header">
+
+        <div class="report-title">
+            <h1>
+                <i class="fa-solid fa-chart-column"></i>
+                Reports & History
+            </h1>
+
+            <p>
+                Monitor your farm activities, sensors and irrigation history.
+            </p>
+        </div>
+
+        <div class="report-actions">
+
+            <button onclick="window.print()" class="report-btn print-btn">
+                <i class="fa-solid fa-print"></i>
+                Print
+            </button>
+
+            <button onclick="window.print()" class="report-btn pdf-btn">
+                <i class="fa-solid fa-file-pdf"></i>
+                Generate Report
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUMMARY CARDS -->
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+
+            <div class="summary-top">
+                <div>
+                    <h4>Total Sensor Records</h4>
+
+                    <div class="summary-value">
+                        {{ sensor_summary['total_records'] or 0 }}
+                    </div>
+                </div>
+
+                <div class="summary-icon">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-top">
+                <div>
+                    <h4>Average Temperature</h4>
+
+                    <div class="summary-value">
+                        {{ sensor_summary['avg_temperature'] or 0 }}°C
+                    </div>
+                </div>
+
+                <div class="summary-icon">
+                    <i class="fa-solid fa-temperature-half"></i>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-top">
+                <div>
+                    <h4>Average Humidity</h4>
+
+                    <div class="summary-value">
+                        {{ sensor_summary['avg_humidity'] or 0 }}%
+                    </div>
+                </div>
+
+                <div class="summary-icon">
+                    <i class="fa-solid fa-droplet"></i>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-top">
+                <div>
+                    <h4>Total Irrigations</h4>
+
+                    <div class="summary-value">
+                        {{ irrigation_summary['total_irrigations'] or 0 }}
+                    </div>
+                </div>
+
+                <div class="summary-icon">
+                    <i class="fa-solid fa-water"></i>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SENSOR HISTORY -->
+
+    <div class="history-section">
+
+        <div class="section-heading">
+
+            <h2>
+                <i class="fa-solid fa-satellite-dish"></i>
+                Sensor History
+            </h2>
+
+            <input
+                type="text"
+                id="sensorSearch"
+                class="search-box"
+                placeholder="Search sensor records..."
+                onkeyup="searchTable('sensorSearch','sensorTable')"
+            >
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table class="history-table" id="sensorTable">
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Temperature</th>
+                        <th>Humidity</th>
+                        <th>Soil Moisture</th>
+                        <th>Date / Time</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for row in sensor_history %}
+
+                    <tr>
+
+                        <td>
+                            #{{ row['id'] }}
+                        </td>
+
+                        <td>
+                            <span class="badge badge-orange">
+                                {{ row['temperature'] }} °C
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="badge badge-blue">
+                                {{ row['humidity'] }} %
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="badge badge-green">
+                                {{ row['moisture'] }} %
+                            </span>
+                        </td>
+
+                        <td>
+                            {{ row['start_time'] or '-' }}
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="5">
+
+                            <div class="empty-state">
+                                <i class="fa-solid fa-database"></i>
+                                <br>
+                                No sensor history available.
+                            </div>
+
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- IRRIGATION HISTORY -->
+
+    <div class="history-section">
+
+        <div class="section-heading">
+
+            <h2>
+                <i class="fa-solid fa-faucet-drip"></i>
+                Irrigation & Motor History
+            </h2>
+
+            <input
+                type="text"
+                id="irrigationSearch"
+                class="search-box"
+                placeholder="Search irrigation..."
+                onkeyup="searchTable('irrigationSearch','irrigationTable')"
+            >
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table class="history-table" id="irrigationTable">
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Duration</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for row in irrigation_history %}
+
+                    <tr>
+
+                        <td>
+                            #{{ row['id'] }}
+                        </td>
+
+                        <td>
+                            {{ row['start_time'] or '-' }}
+                        </td>
+
+                        <td>
+                            {{ row['end_time'] or '-' }}
+                        </td>
+
+                        <td>
+                            {{ row['duration'] or '-' }}
+                        </td>
+
+                        <td>
+
+                            {% if row['end_time'] %}
+                                <span class="badge badge-green">
+                                    Completed
+                                </span>
+                            {% else %}
+                                <span class="badge badge-orange">
+                                    Running
+                                </span>
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="5">
+
+                            <div class="empty-state">
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+                                <br>
+                                No irrigation history available.
+                            </div>
+
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function searchTable(inputId, tableId){
+
+    const input =
+        document.getElementById(inputId);
+
+    const filter =
+        input.value.toLowerCase();
+
+    const table =
+        document.getElementById(tableId);
+
+    const rows =
+        table.getElementsByTagName("tr");
+
+    for(let i = 1; i < rows.length; i++){
+
+        const text =
+            rows[i].innerText.toLowerCase();
+
+        rows[i].style.display =
+            text.includes(filter) ? "" : "none";
+    }
+}
+
+</script>
+
+
+{% endblock %}

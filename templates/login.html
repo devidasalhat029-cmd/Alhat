@@ -1,51 +1,173 @@
 {% extends "baseofhtml.html" %}
 
 {% block title %}
-Login
+Farmer Login
 {% endblock %}
 
 {% block content %}
 
 <style>
 
-.login-container{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:80vh;
+*{
+    box-sizing:border-box;
 }
 
-.login-card{
-    width:450px;
-    background:white;
-    padding:40px;
-    border-radius:25px;
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
+.login-page{
+    min-height:calc(100vh - 70px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px 20px;
+
+    /* Background image */
+    background:
+        linear-gradient(
+            rgba(5,35,20,.58),
+            rgba(5,35,20,.68)
+        ),
+        url("{{ url_for('static', filename='images/farm-bg.jpg') }}");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    position:relative;
+    overflow:hidden;
 }
+
+/* Decorative circles */
+
+.login-page::before{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    background:rgba(74,222,128,.15);
+    border-radius:50%;
+    top:-100px;
+    left:-100px;
+    filter:blur(2px);
+}
+
+.login-page::after{
+    content:"";
+    position:absolute;
+    width:350px;
+    height:350px;
+    background:rgba(34,197,94,.12);
+    border-radius:50%;
+    bottom:-170px;
+    right:-120px;
+}
+
+
+/* Main card */
+
+.login-card{
+    width:460px;
+    max-width:100%;
+    padding:42px;
+
+    background:rgba(255,255,255,.96);
+
+    border:1px solid rgba(255,255,255,.7);
+
+    border-radius:28px;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.35),
+        0 5px 20px rgba(0,0,0,.15);
+
+    position:relative;
+    z-index:2;
+
+    animation:cardShow .6s ease;
+}
+
+@keyframes cardShow{
+
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+
+/* Header */
 
 .login-header{
     text-align:center;
-    margin-bottom:25px;
+    margin-bottom:30px;
 }
 
-.login-header i{
-    font-size:70px;
-    color:#16a34a;
-    margin-bottom:10px;
+.logo-circle{
+    width:85px;
+    height:85px;
+
+    margin:0 auto 15px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #4ade80
+        );
+
+    color:white;
+
+    box-shadow:
+        0 10px 25px rgba(22,163,74,.35);
+}
+
+.logo-circle i{
+    font-size:42px;
 }
 
 .login-header h1{
-    color:#16a34a;
+    margin:5px 0 7px;
+
+    color:#14532d;
+
+    font-size:30px;
+    font-weight:800;
 }
 
+.login-header p{
+    margin:0;
+
+    color:#64748b;
+
+    font-size:14px;
+}
+
+
+/* Inputs */
+
 .input-group{
-    margin-bottom:20px;
+    margin-bottom:21px;
 }
 
 .input-group label{
-    font-weight:bold;
     display:block;
+
+    color:#334155;
+
+    font-weight:700;
+
     margin-bottom:8px;
+
+    font-size:14px;
 }
 
 .input-box{
@@ -54,122 +176,298 @@ Login
 
 .input-box i{
     position:absolute;
-    left:15px;
-    top:15px;
+
+    left:16px;
+    top:50%;
+
+    transform:translateY(-50%);
+
     color:#16a34a;
+
+    font-size:16px;
+
+    z-index:2;
 }
 
 .input-box input{
     width:100%;
-    padding:14px 14px 14px 45px;
-    border:1px solid #ddd;
-    border-radius:10px;
+
+    padding:14px 16px 14px 47px;
+
+    border:1.5px solid #dbe4df;
+
+    border-radius:13px;
+
+    background:#f8faf9;
+
+    color:#1e293b;
+
+    font-size:15px;
+
     outline:none;
-}
 
-.input-box input:focus{
-    border-color:#16a34a;
-}
-
-.btn{
-    width:100%;
-    padding:14px;
-    border:none;
-    background:#16a34a;
-    color:white;
-    border-radius:10px;
-    font-size:16px;
-    cursor:pointer;
     transition:.3s;
 }
 
-.btn:hover{
-    background:#15803d;
+.input-box input::placeholder{
+    color:#94a3b8;
 }
+
+.input-box input:hover{
+    border-color:#86efac;
+}
+
+.input-box input:focus{
+    background:white;
+
+    border-color:#16a34a;
+
+    box-shadow:
+        0 0 0 4px rgba(34,197,94,.12);
+}
+
+
+/* Login button */
+
+.login-btn{
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #15803d,
+            #22c55e
+        );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 8px 18px rgba(22,163,74,.30);
+
+    transition:.3s;
+}
+
+.login-btn i{
+    margin-right:7px;
+}
+
+.login-btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 12px 25px rgba(22,163,74,.38);
+}
+
+.login-btn:active{
+    transform:translateY(0);
+}
+
+
+/* Register */
 
 .register-link{
     text-align:center;
-    margin-top:15px;
+
+    margin-top:23px;
+
+    color:#64748b;
+
+    font-size:14px;
 }
 
 .register-link a{
-    color:#16a34a;
+    color:#15803d;
+
     text-decoration:none;
-    font-weight:bold;
+
+    font-weight:800;
+
+    margin-left:4px;
+}
+
+.register-link a:hover{
+    color:#166534;
+
+    text-decoration:underline;
+}
+
+
+/* Small bottom text */
+
+.login-footer{
+    text-align:center;
+
+    margin-top:22px;
+
+    padding-top:18px;
+
+    border-top:1px solid #e2e8f0;
+
+    color:#94a3b8;
+
+    font-size:12px;
+}
+
+.login-footer i{
+    color:#16a34a;
+
+    margin-right:4px;
+}
+
+
+/* Mobile */
+
+@media(max-width:600px){
+
+    .login-page{
+        padding:25px 15px;
+    }
+
+    .login-card{
+        padding:30px 22px;
+
+        border-radius:22px;
+    }
+
+    .login-header h1{
+        font-size:25px;
+    }
+
+    .logo-circle{
+        width:72px;
+        height:72px;
+    }
+
+    .logo-circle i{
+        font-size:34px;
+    }
+
 }
 
 </style>
 
-<div class="login-container">
 
-<div class="login-card">
+<div class="login-page">
 
-<div class="login-header">
+    <div class="login-card">
 
-<i class="fas fa-seedling"></i>
+        <!-- Header -->
 
-<h1>Farmer Login</h1>
+        <div class="login-header">
 
-<p>Smart Agriculture Monitoring System</p>
+            <div class="logo-circle">
+                <i class="fas fa-seedling"></i>
+            </div>
 
-</div>
+            <h1>Farmer Login</h1>
 
-<form method="POST">
+            <p>
+                Welcome back to Smart Agriculture Monitoring
+            </p>
 
-<div class="input-group">
+        </div>
 
-<label>Username</label>
 
-<div class="input-box">
+        <!-- Login Form -->
 
-<i class="fas fa-user"></i>
+        <form method="POST">
 
-<input type="text"
-name="username"
-placeholder="Enter Username"
-required>
+            <div class="input-group">
 
-</div>
+                <label>
+                    Username
+                </label>
 
-</div>
+                <div class="input-box">
 
-<div class="input-group">
+                    <i class="fas fa-user"></i>
 
-<label>Password</label>
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Enter your username"
+                        autocomplete="username"
+                        required
+                    >
 
-<div class="input-box">
+                </div>
 
-<i class="fas fa-lock"></i>
+            </div>
 
-<input type="password"
-name="password"
-placeholder="Enter Password"
-required>
 
-</div>
+            <div class="input-group">
 
-</div>
+                <label>
+                    Password
+                </label>
 
-<button type="submit" class="btn">
+                <div class="input-box">
 
-<i class="fas fa-right-to-bracket"></i>
- Login
+                    <i class="fas fa-lock"></i>
 
-</button>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
 
-</form>
+                </div>
 
-<div class="register-link">
+            </div>
 
-Don't have an account?
 
-<a href="/register">
-Register Here
-</a>
+            <button
+                type="submit"
+                class="login-btn"
+            >
 
-</div>
+                <i class="fas fa-right-to-bracket"></i>
 
-</div>
+                Login to Dashboard
+
+            </button>
+
+        </form>
+
+
+        <!-- Register -->
+
+        <div class="register-link">
+
+            Don't have an account?
+
+            <a href="{{ url_for('register') }}">
+                Register Here
+            </a>
+
+        </div>
+
+
+        <!-- Footer -->
+
+        <div class="login-footer">
+
+            <i class="fas fa-shield-halved"></i>
+
+            Smart & Secure Agriculture System
+
+        </div>
+
+    </div>
 
 </div>
 

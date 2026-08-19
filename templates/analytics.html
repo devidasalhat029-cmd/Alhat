@@ -8,280 +8,708 @@ Motor Analytics
 
 <style>
 
+/* =====================================================
+   PAGE
+===================================================== */
+
 .analytics-page{
-    min-height:90vh;
-    padding:30px;
-    background:linear-gradient(
-        135deg,
-        #f5eaff,
-        #ffe8f4,
-        #ffffff
-    );
+
+    min-height:calc(100vh - 70px);
+
+    padding:32px;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(59,130,246,.14),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(14,165,233,.14),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #f8fbff,
+            #eef6ff
+        );
+
+    color:#172554;
 }
 
-.analytics-container{
-    max-width:1200px;
-    margin:auto;
-}
 
-/* HEADER */
+/* =====================================================
+   HEADER
+===================================================== */
 
 .analytics-header{
-    text-align:center;
-    margin-bottom:30px;
-}
 
-.analytics-header h1{
-    font-size:36px;
-    background:linear-gradient(
-        90deg,
-        #7b2cbf,
-        #d63384
-    );
-
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
-
-.analytics-header p{
-    color:#765477;
-    font-size:16px;
-}
-
-
-/* SUMMARY */
-
-.summary-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-    margin-bottom:30px;
-}
-
-.summary-card{
-    padding:25px;
-    text-align:center;
-    border-radius:25px;
-
-    background:rgba(255,255,255,.90);
-
-    box-shadow:
-        0 10px 30px
-        rgba(123,44,191,.13);
-
-    border:1px solid
-        rgba(214,51,132,.10);
-
-    transition:.3s;
-}
-
-.summary-card:hover{
-    transform:translateY(-6px);
-}
-
-.summary-icon{
-    font-size:40px;
-}
-
-.summary-card h3{
-    color:#6b2d77;
-    margin:10px 0;
-}
-
-.summary-card p{
-    color:#7b2cbf;
-    font-size:21px;
-    font-weight:bold;
-    margin:0;
-}
-
-
-/* GRAPH */
-
-.graph-card{
-    background:rgba(255,255,255,.93);
-    border-radius:28px;
-    padding:30px;
-    margin-bottom:30px;
-
-    box-shadow:
-        0 12px 35px
-        rgba(123,44,191,.14);
-}
-
-.graph-card h2{
-    text-align:center;
-    color:#7b2cbf;
-    margin-top:0;
-}
-
-.graph-card p{
-    text-align:center;
-    color:#765477;
-}
-
-.chart-box{
-    position:relative;
-    width:100%;
-    height:350px;
-    margin-top:25px;
-}
-
-
-/* TIME BOX */
-
-.time-box{
     display:flex;
-    justify-content:center;
-    gap:25px;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    margin-bottom:28px;
+
     flex-wrap:wrap;
-    margin-top:25px;
 }
 
-.time-card{
-    padding:18px 30px;
+
+.analytics-title h1{
+
+    margin:0;
+
+    font-size:31px;
+
+    font-weight:850;
+
+    color:#1e3a8a;
+}
+
+
+.analytics-title p{
+
+    margin:7px 0 0;
+
+    color:#64748b;
+
+    font-size:14px;
+}
+
+
+.header-icon{
+
+    width:58px;
+
+    height:58px;
+
     border-radius:18px;
-    text-align:center;
-    min-width:200px;
-}
 
-.on-time{
-    background:#e8fff1;
-}
+    display:flex;
 
-.off-time{
-    background:#fff0f4;
-}
+    align-items:center;
 
-.time-icon{
-    font-size:32px;
-}
+    justify-content:center;
 
-.time-title{
-    font-weight:bold;
-    color:#5b455f;
-}
+    font-size:25px;
 
-.on-value{
-    font-size:23px;
-    color:#00a84f;
-    font-weight:bold;
-    margin-top:5px;
-}
-
-.off-value{
-    font-size:23px;
-    color:#d6335c;
-    font-weight:bold;
-    margin-top:5px;
-}
-
-
-/* TABLE */
-
-.table-card{
-    background:rgba(255,255,255,.93);
-    border-radius:28px;
-    padding:25px;
-
-    box-shadow:
-        0 12px 35px
-        rgba(123,44,191,.12);
-
-    overflow-x:auto;
-}
-
-.table-card h2{
-    color:#7b2cbf;
-    margin-top:0;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:20px;
-}
-
-th{
-    padding:14px;
     color:white;
 
     background:
         linear-gradient(
             135deg,
-            #7b2cbf,
-            #d63384
+            #2563eb,
+            #0ea5e9
         );
+
+    box-shadow:
+        0 10px 25px
+        rgba(37,99,235,.25);
 }
 
-td{
-    padding:14px;
-    text-align:center;
 
-    border-bottom:
-        1px solid #eeeeee;
+/* =====================================================
+   STAT CARDS
+===================================================== */
 
-    color:#57435b;
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:20px;
+
+    margin-bottom:25px;
 }
 
-tr:hover{
-    background:#fff5fb;
+
+.stat-card{
+
+    background:white;
+
+    border:1px solid #dbeafe;
+
+    border-radius:20px;
+
+    padding:21px;
+
+    box-shadow:
+        0 12px 30px
+        rgba(30,64,175,.08);
+
+    transition:.2s;
 }
+
+
+.stat-card:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+.stat-icon{
+
+    width:44px;
+
+    height:44px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:12px;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    font-size:18px;
+}
+
+
+.stat-card h3{
+
+    margin:0;
+
+    font-size:27px;
+
+    font-weight:850;
+
+    color:#172554;
+}
+
+
+.stat-card p{
+
+    margin:5px 0 0;
+
+    color:#64748b;
+
+    font-size:11px;
+
+    font-weight:800;
+}
+
+
+/* =====================================================
+   MAIN GRID
+===================================================== */
+
+.analytics-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1.5fr .8fr;
+
+    gap:22px;
+
+    margin-bottom:25px;
+}
+
+
+.analytics-card{
+
+    background:white;
+
+    border:1px solid #dbeafe;
+
+    border-radius:22px;
+
+    padding:24px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(30,64,175,.08);
+}
+
+
+/* =====================================================
+   CARD HEADER
+===================================================== */
+
+.card-heading{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:20px;
+
+    flex-wrap:wrap;
+}
+
+
+.card-heading h2{
+
+    margin:0;
+
+    color:#1e3a8a;
+
+    font-size:19px;
+}
+
+
+.card-heading span{
+
+    color:#64748b;
+
+    font-size:12px;
+}
+
+
+/* =====================================================
+   GRAPH
+===================================================== */
+
+.chart-container{
+
+    position:relative;
+
+    width:100%;
+
+    height:340px;
+}
+
+
+.chart-container canvas{
+
+    width:100% !important;
+
+    height:100% !important;
+}
+
+
+/* =====================================================
+   RUNTIME
+===================================================== */
+
+.time-list{
+
+    display:grid;
+
+    gap:15px;
+}
+
+
+.time-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:13px;
+
+    padding:16px;
+
+    background:#f8fbff;
+
+    border:1px solid #e5efff;
+
+    border-radius:15px;
+}
+
+
+.time-icon{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    font-size:17px;
+}
+
+
+.time-item strong{
+
+    display:block;
+
+    color:#1e3a8a;
+
+    font-size:17px;
+
+    font-weight:800;
+}
+
+
+.time-item span{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:#64748b;
+
+    font-size:11px;
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+.summary-box{
+
+    margin-top:18px;
+
+    padding:16px;
+
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #f8fbff
+        );
+
+    border:1px solid #dbeafe;
+}
+
+
+.summary-box h3{
+
+    margin:0 0 7px;
+
+    font-size:13px;
+
+    color:#1e3a8a;
+}
+
+
+.summary-box p{
+
+    margin:0;
+
+    font-size:12px;
+
+    color:#64748b;
+
+    line-height:1.7;
+}
+
+
+/* =====================================================
+   HISTORY
+===================================================== */
+
+.history-card{
+
+    background:white;
+
+    border:1px solid #dbeafe;
+
+    border-radius:22px;
+
+    padding:24px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(30,64,175,.08);
+}
+
+
+.history-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:18px;
+
+    flex-wrap:wrap;
+}
+
+
+.history-header h2{
+
+    margin:0;
+
+    font-size:20px;
+
+    color:#1e3a8a;
+}
+
+
+.record-count{
+
+    padding:7px 12px;
+
+    border-radius:20px;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    font-size:11px;
+
+    font-weight:800;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.table-wrapper{
+
+    width:100%;
+
+    overflow-x:auto;
+}
+
+
+.analytics-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:850px;
+}
+
+
+.analytics-table th{
+
+    text-align:left;
+
+    padding:13px;
+
+    background:#eff6ff;
+
+    color:#1d4ed8;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    border-bottom:1px solid #dbeafe;
+}
+
+
+.analytics-table td{
+
+    padding:14px 13px;
+
+    border-bottom:1px solid #eef2f7;
+
+    color:#475569;
+
+    font-size:13px;
+}
+
+
+.analytics-table tbody tr:hover{
+
+    background:#f8fbff;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:6px 11px;
+
+    border-radius:20px;
+
+    font-size:11px;
+
+    font-weight:800;
+}
+
 
 .status-on{
-    color:#00a84f;
-    font-weight:bold;
+
+    background:#dcfce7;
+
+    color:#15803d;
 }
+
 
 .status-off{
-    color:#d6335c;
-    font-weight:bold;
+
+    background:#fee2e2;
+
+    color:#dc2626;
 }
 
 
-/* EMPTY */
+/* =====================================================
+   DELETE BUTTON
+===================================================== */
 
-.empty{
+.delete-btn{
+
+    border:none;
+
+    padding:8px 12px;
+
+    border-radius:9px;
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+
+.delete-btn:hover{
+
+    background:#fecaca;
+
+    transform:translateY(-1px);
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.empty-state{
+
     text-align:center;
-    padding:40px;
-    color:#765477;
+
+    padding:50px 20px;
+
+    color:#64748b;
 }
 
-.empty-icon{
-    font-size:60px;
+
+.empty-state i{
+
+    display:block;
+
+    font-size:42px;
+
+    color:#93c5fd;
+
+    margin-bottom:13px;
 }
 
 
-/* MOBILE */
+.empty-state h3{
 
-@media(max-width:850px){
+    margin:0 0 5px;
 
-    .summary-grid{
-        grid-template-columns:repeat(2,1fr);
+    color:#334155;
+
+    font-size:18px;
+}
+
+
+.empty-state p{
+
+    margin:0;
+
+    font-size:13px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:1050px){
+
+    .stats-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+
+    .analytics-grid{
+
+        grid-template-columns:1fr;
+
     }
 
 }
 
-@media(max-width:550px){
+
+@media(max-width:650px){
 
     .analytics-page{
-        padding:15px;
+
+        padding:18px;
+
     }
 
-    .summary-grid{
+
+    .analytics-title h1{
+
+        font-size:25px;
+
+    }
+
+
+    .stats-grid{
+
         grid-template-columns:1fr;
+
     }
 
-    .analytics-header h1{
-        font-size:28px;
+
+    .analytics-card,
+    .history-card{
+
+        padding:18px;
+
     }
 
-    .graph-card{
-        padding:15px;
-    }
 
-    .chart-box{
+    .chart-container{
+
         height:280px;
+
     }
 
 }
@@ -289,376 +717,725 @@ tr:hover{
 </style>
 
 
+
 <div class="analytics-page">
 
-<div class="analytics-container">
+
+    <!-- =================================================
+         HEADER
+    ================================================= -->
+
+    <div class="analytics-header">
+
+        <div class="analytics-title">
+
+            <h1>
+                Motor Analytics
+            </h1>
+
+            <p>
+                Monitor motor activity, usage and irrigation performance.
+            </p>
+
+        </div>
 
 
-<!-- HEADER -->
+        <div class="header-icon">
 
-<div class="analytics-header">
+            <i class="fa-solid fa-chart-column"></i>
 
-<h1>
-📊 Motor Analytics
-</h1>
+        </div>
 
-<p>
-See how much time the motor was ON and OFF.
-</p>
+    </div>
+
+
+
+    <!-- =================================================
+         STAT CARDS
+    ================================================= -->
+
+    <div class="stats-grid">
+
+
+        <!-- ON COUNT -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-play"></i>
+
+            </div>
+
+
+            <h3>
+                {{ on_count|default(0) }}
+            </h3>
+
+
+            <p>
+                MOTOR ON COUNT
+            </p>
+
+        </div>
+
+
+
+        <!-- OFF COUNT -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-stop"></i>
+
+            </div>
+
+
+            <h3>
+                {{ off_count|default(0) }}
+            </h3>
+
+
+            <p>
+                MOTOR OFF COUNT
+            </p>
+
+        </div>
+
+
+
+        <!-- ON TIME -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-clock"></i>
+
+            </div>
+
+
+            <h3>
+                {{ total_on_time|default("0 sec") }}
+            </h3>
+
+
+            <p>
+                TOTAL OFF TIME
+            </p>
+
+        </div>
+
+
+
+        <!-- OFF TIME -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-hourglass"></i>
+
+            </div>
+
+
+            <h3>
+                {{ total_off_time|default("0 sec") }}
+            </h3>
+
+
+            <p>
+                TOTAL ON TIME
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         GRAPH + RUNTIME
+    ================================================= -->
+
+    <div class="analytics-grid">
+
+
+        <!-- =================================================
+             GRAPH
+        ================================================= -->
+
+        <div class="analytics-card">
+
+
+            <div class="card-heading">
+
+                <h2>
+
+                    <i class="fa-solid fa-chart-simple"></i>
+
+                    Motor Activity Count
+
+                </h2>
+
+
+                <span>
+                    ON vs OFF
+                </span>
+
+            </div>
+
+
+            <div class="chart-container">
+
+                <canvas
+                    id="motorCountChart"
+                ></canvas>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             RUNTIME
+        ================================================= -->
+
+        <div class="analytics-card">
+
+
+            <div class="card-heading">
+
+                <h2>
+
+                    <i class="fa-solid fa-stopwatch"></i>
+
+                    Motor Runtime
+
+                </h2>
+
+
+                <span>
+                    Total duration
+                </span>
+
+            </div>
+
+
+            <div class="time-list">
+
+
+                <!-- ON TIME -->
+
+                <div class="time-item">
+
+                    <div class="time-icon">
+
+                        <i class="fa-solid fa-play"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            {{ total_on_time|default("0 sec") }}
+                        </strong>
+
+                        <span>
+                            Total motor OFF time
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- OFF TIME -->
+
+                <div class="time-item">
+
+                    <div class="time-icon">
+
+                        <i class="fa-solid fa-stop"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            {{ total_off_time|default("0 sec") }}
+                        </strong>
+
+                        <span>
+                            Total motor ON time
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- SUMMARY -->
+
+            <div class="summary-box">
+
+                <h3>
+                    Activity Summary
+                </h3>
+
+
+                <p>
+
+                    Motor ON:
+                    <strong>
+                        {{ on_count|default(0) }}
+                    </strong>
+                    records.
+
+                    <br>
+
+                    Motor OFF:
+                    <strong>
+                        {{ off_count|default(0) }}
+                    </strong>
+                    records.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         MOTOR HISTORY
+    ================================================= -->
+
+    <div class="history-card">
+
+
+        <div class="history-header">
+
+            <h2>
+
+                <i class="fa-solid fa-clock-rotate-left"></i>
+
+                Motor History
+
+            </h2>
+
+
+            <span class="record-count">
+
+                {{ records|length }}
+
+                Records
+
+            </span>
+
+        </div>
+
+
+
+        <div class="table-wrapper">
+
+
+            {% if records %}
+
+
+            <table class="analytics-table">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Start Time
+                        </th>
+
+                        <th>
+                            End Time
+                        </th>
+
+                        <th>
+                            Duration
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                {% for row in records %}
+
+
+                    <tr>
+
+
+                        <!-- ID -->
+
+                        <td>
+
+                            #{{ row['id'] }}
+
+                        </td>
+
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+
+                            {% if
+                                (row['motor_status'] or '')|upper
+                                == 'ON'
+                            %}
+
+
+                                <span
+                                    class="status status-on"
+                                >
+
+                                    <i
+                                        class="fa-solid fa-circle"
+                                    ></i>
+
+                                    ON
+
+                                </span>
+
+
+                            {% else %}
+
+
+                                <span
+                                    class="status status-off"
+                                >
+
+                                    <i
+                                        class="fa-solid fa-circle"
+                                    ></i>
+
+                                    OFF
+
+                                </span>
+
+
+                            {% endif %}
+
+
+                        </td>
+
+
+
+                        <!-- START TIME -->
+
+                        <td>
+
+                            {{ row['start_time'] or '--' }}
+
+                        </td>
+
+
+
+                        <!-- END TIME -->
+
+                        <td>
+
+                            {{ row['end_time'] or '--' }}
+
+                        </td>
+
+
+
+                        <!-- DURATION -->
+
+                        <td>
+
+                            {{ row['duration'] or '--' }}
+
+                        </td>
+
+
+
+                        <!-- DELETE -->
+
+                        <td>
+
+                            <form
+                                    action="{{ url_for('delete_record', id=row['id']) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Are you sure you want to delete this record?');"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="delete-btn"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                        Delete
+                                    </button>
+
+                            </form>
+
+                        </td>
+
+
+                    </tr>
+
+
+                {% endfor %}
+
+
+                </tbody>
+
+
+            </table>
+
+
+            {% else %}
+
+
+            <div class="empty-state">
+
+                <i
+                    class="fa-solid fa-chart-column"
+                ></i>
+
+
+                <h3>
+                    No Motor Records Found
+                </h3>
+
+
+                <p>
+                    Motor activity will appear here
+                    after the motor is used.
+                </p>
+
+            </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
 
 </div>
 
 
-<!-- SUMMARY -->
 
-<div class="summary-grid">
+<!-- =====================================================
+     CHART.JS
+===================================================== -->
 
+<script
+    src="https://cdn.jsdelivr.net/npm/chart.js"
+></script>
 
-<div class="summary-card">
-
-<div class="summary-icon">
-🟢
-</div>
-
-<h3>
-Motor ON Events
-</h3>
-
-<p>
-{{ on_count }}
-</p>
-
-</div>
-
-
-<div class="summary-card">
-
-<div class="summary-icon">
-🔴
-</div>
-
-<h3>
-Motor OFF Events
-</h3>
-
-<p>
-{{ off_count }}
-</p>
-
-</div>
-
-
-<div class="summary-card">
-
-<div class="summary-icon">
-⏱️
-</div>
-
-<h3>
-Total ON Time
-</h3>
-
-<p>
-{{ total_on_time }}
-</p>
-
-</div>
-
-
-<div class="summary-card">
-
-<div class="summary-icon">
-⏸️
-</div>
-
-<h3>
-Total OFF Time
-</h3>
-
-<p>
-{{ total_off_time }}
-</p>
-
-</div>
-
-
-</div>
-
-
-<!-- GRAPH -->
-
-<div class="graph-card">
-
-<h2>
-🚰 Motor ON vs OFF Time
-</h2>
-
-<p>
-Actual total motor ON and OFF duration
-</p>
-
-
-<div class="chart-box">
-
-<canvas id="motorChart"></canvas>
-
-</div>
-
-
-<!-- TIME DETAILS -->
-
-<div class="time-box">
-
-
-<div class="time-card on-time">
-
-<div class="time-icon">
-🟢
-</div>
-
-<div class="time-title">
-Motor ON Time
-</div>
-
-<div class="on-value">
-{{ total_on_time }}
-</div>
-
-</div>
-
-
-<div class="time-card off-time">
-
-<div class="time-icon">
-🔴
-</div>
-
-<div class="time-title">
-Motor OFF Time
-</div>
-
-<div class="off-value">
-{{ total_off_time }}
-</div>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-<!-- HISTORY -->
-
-<div class="table-card">
-
-<h2>
-📋 Motor Activity History
-</h2>
-
-
-{% if records %}
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>
-Status
-</th>
-
-<th>
-Start Time
-</th>
-
-<th>
-End Time
-</th>
-
-<th>
-Duration
-</th>
-
-</tr>
-
-</thead>
-
-
-<tbody>
-
-{% for record in records %}
-
-<tr>
-
-
-<td>
-
-{% if record["motor_status"] == "ON" %}
-
-<span class="status-on">
-🟢 ON
-</span>
-
-{% else %}
-
-<span class="status-off">
-🔴 OFF
-</span>
-
-{% endif %}
-
-</td>
-
-
-<td>
-{{ record["start_time"] or "-" }}
-</td>
-
-
-<td>
-{{ record["end_time"] or "-" }}
-</td>
-
-
-<td>
-{{ record["duration"] or "-" }}
-</td>
-
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
-
-
-{% else %}
-
-
-<div class="empty">
-
-<div class="empty-icon">
-🚰
-</div>
-
-<h3>
-No Motor Records Yet
-</h3>
-
-<p>
-Start and stop the motor to see its timing.
-</p>
-
-</div>
-
-
-{% endif %}
-
-
-</div>
-
-
-</div>
-
-</div>
-
-
-<!-- CHART JS -->
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 <script>
 
-const onMinutes =
-    {{ graph_on_minutes | default(0) }};
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
 
-const offMinutes =
-    {{ graph_off_minutes | default(0) }};
-
-
-const canvas =
-    document.getElementById("motorChart");
-
-
-if(canvas){
-
-    const ctx =
-        canvas.getContext("2d");
+        const canvas =
+            document.getElementById(
+                "motorCountChart"
+            );
 
 
-    new Chart(ctx, {
+        if(!canvas){
 
-        type:"bar",
+            return;
 
-        data:{
-
-            labels:[
-                "🟢 Motor ON",
-                "🔴 Motor OFF"
-            ],
-
-            datasets:[{
-
-                label:"Time in Minutes",
-
-                data:[
-                    onMinutes,
-                    offMinutes
-                ],
-
-                backgroundColor:[
-
-                    "rgba(0,200,83,0.75)",
-
-                    "rgba(214,51,92,0.75)"
-
-                ],
-
-                borderColor:[
-
-                    "#00a84f",
-
-                    "#d6335c"
-
-                ],
-
-                borderWidth:2,
-
-                borderRadius:12
-
-            }]
-
-        },
+        }
 
 
-        options:{
+        /* ===============================================
+           EXACT COUNT FROM FLASK
+        =============================================== */
 
-            responsive:true,
+        const onCount =
+            Number(
+                {{ on_count|default(0) }}
+            );
 
-            maintainAspectRatio:false,
 
-            plugins:{
+        const offCount =
+            Number(
+                {{ off_count|default(0) }}
+            );
 
-                legend:{
-                    display:true
+
+        /* ===============================================
+           BAR GRAPH
+        =============================================== */
+
+        new Chart(
+
+            canvas,
+
+            {
+
+                type:"bar",
+
+
+                data:{
+
+                    labels:[
+
+                        "Motor ON",
+
+                        "Motor OFF"
+
+                    ],
+
+
+                    datasets:[
+
+                        {
+
+                            label:
+                                "Motor Count",
+
+
+                            data:[
+
+                                onCount,
+
+                                offCount
+
+                            ],
+
+
+                            borderWidth:1,
+
+                            borderRadius:8,
+
+                            maxBarThickness:75
+
+                        }
+
+                    ]
+
                 },
 
-                tooltip:{
 
-                    callbacks:{
+                options:{
 
-                        label:function(context){
+                    responsive:true,
 
-                            return (
-                                context.raw +
-                                " minutes"
-                            );
+                    maintainAspectRatio:false,
+
+
+                    plugins:{
+
+                        legend:{
+
+                            display:false
+
+                        },
+
+
+                        tooltip:{
+
+                            callbacks:{
+
+                                label:function(
+                                    context
+                                ){
+
+                                    return (
+                                        " Count: "
+                                        +
+                                        context.parsed.y
+                                    );
+
+                                }
+
+                            }
+
+                        }
+
+                    },
+
+
+                    scales:{
+
+                        y:{
+
+                            beginAtZero:true,
+
+                            ticks:{
+
+                                precision:0,
+
+                                stepSize:1
+
+                            },
+
+
+                            title:{
+
+                                display:true,
+
+                                text:
+                                    "Number of Records"
+
+                            }
+
+                        },
+
+
+                        x:{
+
+                            title:{
+
+                                display:true,
+
+                                text:
+                                    "Motor Status"
+
+                            }
 
                         }
 
@@ -666,46 +1443,16 @@ if(canvas){
 
                 }
 
-            },
-
-
-            scales:{
-
-                y:{
-
-                    beginAtZero:true,
-
-                    title:{
-
-                        display:true,
-
-                        text:"Time (Minutes)"
-
-                    }
-
-                },
-
-                x:{
-
-                    title:{
-
-                        display:true,
-
-                        text:"Motor Status"
-
-                    }
-
-                }
-
             }
 
-        }
+        );
 
-    });
+    }
 
-}
+);
 
 </script>
+
 
 
 {% endblock %}

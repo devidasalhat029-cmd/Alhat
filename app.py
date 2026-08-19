@@ -1,10 +1,14 @@
 from datetime import datetime
 import random
 import sqlite3
+import joblib
 import os
+import base64
 import requests
 from flask_mail import Message
+
 from werkzeug.utils import secure_filename
+from PIL import Image
 
 from flask import (
     Flask,
@@ -21,6 +25,15 @@ from math import ceil
 from dotenv import load_dotenv
 from groq import Groq
 from openai import OpenAI
+import pandas as pd
+import joblib
+
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+
+
+
 
 
 # ============================================================
@@ -29,10 +42,6 @@ from openai import OpenAI
 
 app = Flask(__name__)
 app.secret_key = "agrotech123"
-
-# ============================================================
-# LOAD ENVIRONMENT VARIABLES
-# ============================================================
 
 # ============================================================
 # LOAD ENVIRONMENT VARIABLES
@@ -69,6 +78,21 @@ app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
 app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
 
 mail = Mail(app)
+# ============================================================
+# CROP RECOMMENDATION ML MODEL
+# ============================================================
+
+MODEL_PATH = os.path.join(
+    app.root_path,
+    "crop_model.pkl"
+)
+
+crop_model = joblib.load(MODEL_PATH)
+
+print("Crop Recommendation Model Loaded Successfully")
+irrigation_model = joblib.load(
+    "irrigation_model.pkl"
+)
 
 # ============================================================
 # UPLOAD FOLDER
@@ -250,7 +274,7 @@ def setup_tables():
     conn.close()
 
 
-setup_tables()    
+setup_tables()
 
 
 
@@ -346,6 +370,99 @@ def home():
         "home1.html",
         farmer=farmer
     )
+@app.route("/crop_recommendation", methods=["GET", "POST"])
+def crop_recommendation():
+
+    prediction = None
+    error = None
+
+    if request.method == "POST":
+
+        try:
+            N = float(request.form["N"])
+            P = float(request.form["P"])
+            K = float(request.form["K"])
+            temperature = float(request.form["temperature"])
+            humidity = float(request.form["humidity"])
+            ph = float(request.form["ph"])
+            rainfall = float(request.form["rainfall"])
+
+            prediction = crop_model.predict([[
+                N, P, K,
+                temperature,
+                humidity,
+                ph, rainfall
+            ]])[0]
+
+        except Exception as e:
+            print("Crop Error:", e)
+            error = "Please enter valid values."
+
+    return render_template(
+        "crop_recommendation.html",
+        prediction=prediction,
+        error=error
+    )
+
+@app.route('/reports')
+def reports():
+
+    conn = sqlite3.connect('agriculture.db')
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    # -----------------------------
+    # Sensor History
+    # -----------------------------
+    cursor.execute("""
+        SELECT *
+        FROM sensor_record
+        ORDER BY id DESC
+    """)
+    sensor_history = cursor.fetchall()
+
+    # -----------------------------
+    # Irrigation History
+    # -----------------------------
+    cursor.execute("""
+        SELECT *
+        FROM irrigation_schedule
+        ORDER BY id DESC
+    """)
+    irrigation_history = cursor.fetchall()
+
+    # -----------------------------
+    # Sensor Summary
+    # -----------------------------
+    cursor.execute("""
+        SELECT
+            COUNT(*) AS total_records,
+            ROUND(AVG(temperature), 2) AS avg_temperature,
+            ROUND(AVG(humidity), 2) AS avg_humidity,
+            ROUND(AVG(moisture), 2) AS avg_moisture
+        FROM sensor_record
+    """)
+    sensor_summary = cursor.fetchone()
+
+    # -----------------------------
+    # Motor / Irrigation Summary
+    # -----------------------------
+    cursor.execute("""
+        SELECT COUNT(*) AS total_irrigations
+        FROM irrigation_schedule
+    """)
+    irrigation_summary = cursor.fetchone()
+
+    conn.close()
+
+    return render_template(
+        'reports.html',
+        sensor_history=sensor_history,
+        irrigation_history=irrigation_history,
+        sensor_summary=sensor_summary,
+        irrigation_summary=irrigation_summary
+    )
+
 
 
 # ============================================================
@@ -442,7 +559,51 @@ def login():
         "login.html"
     )
 
+@app.route("/sensor_monitoring")
+def sensor_monitoring():
 
+    return render_template(
+        "sensor_monitoring.html"
+    )
+    #======================================================
+
+#=======================================
+#
+@app.route("/sensor_data")
+def sensor_data():
+
+    conn = sqlite3.connect("agriculture.db")
+    conn.row_factory = sqlite3.Row
+
+    latest = conn.execute("""
+        SELECT *
+        FROM sensor_record
+        ORDER BY id DESC
+        LIMIT 1
+    """).fetchone()
+
+    readings = conn.execute("""
+        SELECT *
+        FROM sensor_record
+        ORDER BY id DESC
+        LIMIT 100
+    """).fetchall()
+
+    conn.close()
+
+    if not latest:
+        return jsonify({
+            "success": False,
+            "message": "No sensor data available"
+        })
+
+    latest = dict(latest)
+
+    return jsonify({
+        "success": True,
+        "latest": latest,
+        "readings": [dict(x) for x in reversed(readings)]
+    })
 # ============================================================
 # REGISTER
 # ============================================================
@@ -575,6 +736,8 @@ def register():
     return render_template(
         "register.html"
     )
+
+
 # ============================================================
 # ADMIN DASHBOARD
 # FARMERS + CROPS + SENSOR + MOTOR + FEEDBACK
@@ -772,65 +935,93 @@ def admin_dashboard():
 
         feedback_list=feedback_list
 
-    )
-# ============================================================
+    )# ============================================================
 # FARMER DASHBOARD
 # ============================================================
 
 @app.route("/farmer_dashboard")
 def farmer_dashboard():
 
+    # Login check
     if "username" not in session:
+        return redirect(url_for("login"))
 
-        return redirect(
-            url_for("login")
-        )
-
-
+    # Farmer only
     if session.get("role") != "farmer":
+        return redirect(url_for("admin_dashboard"))
 
-        return redirect(
-            url_for("admin_dashboard")
+    # Farmer ID
+    farmer_id = session.get("farmer_id")
+
+    # जर farmer_id session मध्ये नसेल
+    if not farmer_id:
+
+        flash(
+            "Farmer session expired. Please login again.",
+            "warning"
         )
 
+        session.clear()
 
-    farmer_id = session.get(
-        "farmer_id"
-    )
-
+        return redirect(url_for("login"))
 
     conn = connect()
 
+    try:
 
-    farmer = conn.execute("""
-        SELECT *
-        FROM farmers
-        WHERE id = ?
-    """, (
-        farmer_id,
-    )).fetchone()
+        # -----------------------------------------
+        # FARMER
+        # -----------------------------------------
 
-
-    latest_record = conn.execute("""
-        SELECT *
-        FROM sensor_record
-        ORDER BY id DESC
-        LIMIT 1
-    """).fetchone()
+        farmer = conn.execute("""
+            SELECT *
+            FROM farmers
+            WHERE id = ?
+            AND role = 'farmer'
+        """, (farmer_id,)).fetchone()
 
 
-    irrigation = conn.execute("""
-        SELECT *
-        FROM irrigation
-        WHERE farmer_id = ?
-        ORDER BY id DESC
-        LIMIT 1
-    """, (
-        farmer_id,
-    )).fetchone()
+        # Farmer सापडला नाही
+        if not farmer:
+
+            flash(
+                "Farmer account not found.",
+                "danger"
+            )
+
+            session.clear()
+
+            return redirect(url_for("login"))
 
 
-    conn.close()
+        # -----------------------------------------
+        # LATEST SENSOR RECORD
+        # -----------------------------------------
+
+        latest_record = conn.execute("""
+            SELECT *
+            FROM sensor_record
+            ORDER BY id DESC
+            LIMIT 1
+        """).fetchone()
+
+
+        # -----------------------------------------
+        # IRRIGATION
+        # -----------------------------------------
+
+        irrigation = conn.execute("""
+            SELECT *
+            FROM irrigation
+            WHERE farmer_id = ?
+            ORDER BY id DESC
+            LIMIT 1
+        """, (farmer_id,)).fetchone()
+
+
+    finally:
+
+        conn.close()
 
 
     return render_template(
@@ -838,12 +1029,90 @@ def farmer_dashboard():
 
         farmer=farmer,
 
+        farmer_id=farmer_id,
+
         latest_record=latest_record,
 
         irrigation=irrigation
     )
+# ============================================================
+# MODULE USAGE TRACKER
+# ============================================================
+
+MODULE_ENDPOINTS = {
+
+    "crop": [
+        "crop",
+        "add_crop",
+        "edit_crop",
+        "delete_crop"
+    ],
+
+    "weather": [
+        "weather"
+    ],
+
+    "irrigation": [
+        "irrigation"
+    ],
+
+    "records": [
+        "records"
+    ],
+
+    "analytics": [
+        "analytics"
+    ],
+
+    "disease": [
+        "disease"
+    ],
+
+    "schemes": [
+        "schemes"
+    ],
+
+    "live_farm": [
+        "live_farm"
+    ]
+}
 
 
+@app.before_request
+def track_farmer_module():
+
+    # Login नसल्यास काही करू नका
+    if "username" not in session:
+        return
+
+    # Farmer नसल्यास काही करू नका
+    if session.get("role") != "farmer":
+        return
+
+    current_endpoint = request.endpoint
+
+    if not current_endpoint:
+        return
+
+    used_modules = session.get(
+        "used_modules",
+        []
+    )
+
+    # कोणता module वापरला ते शोधा
+    for module_name, endpoints in MODULE_ENDPOINTS.items():
+
+        if current_endpoint in endpoints:
+
+            if module_name not in used_modules:
+
+                used_modules.append(
+                    module_name
+                )
+
+                session["used_modules"] = used_modules
+
+            break
 # ============================================================
 # FARMERS LIST - ADMIN ONLY
 # ============================================================
@@ -2295,6 +2564,9 @@ def delete_weather_city(city):
     return redirect(
         url_for("weather")
     )
+@app.route('/sensor_analytics')
+def sensor_analytics():
+    return render_template('sensor_analytics.html')
 # ----------------------------
 # Motor Control
 # ----------------------------
@@ -2416,283 +2688,285 @@ def live_farm():
     )
 
 
-# ----------------------------
-# Records
-# ----------------------------
 
-@app.route("/records")
-def records():
-
-    if "username" not in session:
-        return redirect("/login")
-
-    conn = connect()
-
-    records = conn.execute("""
-        SELECT *
-        FROM sensor_record
-        ORDER BY id DESC
-    """).fetchall()
-
-    conn.close()
-
-    return render_template(
-        "records.html",
-        records=records
-    )
-
-
-# ----------------------------
-# Delete Record
-# ----------------------------
-
-@app.route("/delete_record/<int:id>")
-def delete_record(id):
-
-    if "username" not in session:
-        return redirect("/login")
-
-    conn = connect()
-
-    conn.execute(
-        "DELETE FROM sensor_record WHERE id=?",
-        (id,)
-    )
-
-    conn.commit()
-    conn.close()
-
-    flash("Record Deleted Successfully!", "success")
-
-    return redirect("/records")
-
-
-# ----------------------------
-# Remove Record (Analytics)
-# ----------------------------
-
-@app.route("/clean_record/<int:record_id>")
-def clean_record(record_id):
-
-    if "username" not in session:
-        return redirect("/login")
-
-    conn = connect()
-
-    conn.execute(
-        "DELETE FROM sensor_record WHERE id = ?",
-        (record_id,)
-    )
-
-    conn.commit()
-    conn.close()
-
-    return redirect(url_for("analytics"))
-
+     
 
 # =========================================================
 # IRRIGATION PAGE
 # =========================================================
 
-@app.route("/irrigation", methods=["GET", "POST"])
+
+@app.route('/irrigation')
 def irrigation():
 
-    # -----------------------------------------------------
-    # MOTOR STATUS
-    # -----------------------------------------------------
-
-    motor_status = session.get("motor_status", "OFF")
-
-
-    # -----------------------------------------------------
-    # SAVE IRRIGATION SCHEDULE
-    # -----------------------------------------------------
-
-    if request.method == "POST":
-
-        crop = request.form.get("crop")
-        date = request.form.get("date")
-        start_time = request.form.get("start_time")
-        duration = request.form.get("duration")
-
-
-        # Basic validation
-
-        if not crop or not date or not start_time or not duration:
-
-            flash(
-                "Please fill all irrigation schedule fields.",
-                "warning"
-            )
-
-            return redirect(url_for("irrigation"))
-
-
-        try:
-
-            conn = connect()
-
-            cursor = conn.cursor()
-
-
-            # -------------------------------------------------
-            # SAVE SCHEDULE
-            # -------------------------------------------------
-
-            cursor.execute("""
-                INSERT INTO irrigation_schedule
-                (
-                    crop,
-                    date,
-                    start_time,
-                    duration
-                )
-                VALUES (?, ?, ?, ?)
-            """, (
-                crop,
-                date,
-                start_time,
-                duration
-            ))
-
-
-            conn.commit()
-
-            conn.close()
-
-
-            flash(
-                "Irrigation schedule saved successfully.",
-                "success"
-            )
-
-
-        except sqlite3.Error as e:
-
-            print("IRRIGATION DATABASE ERROR:", e)
-
-            flash(
-                "Unable to save irrigation schedule.",
-                "danger"
-            )
-
-
-        return redirect(url_for("irrigation"))
-
-
-    # =====================================================
-    # GET SAVED SCHEDULES
-    # =====================================================
-
-    schedules = []
-
-    try:
-
-        conn = connect()
-
-        cursor = conn.cursor()
-
-
-        cursor.execute("""
-            SELECT *
-            FROM irrigation_schedule
-            ORDER BY date ASC, start_time ASC
-        """)
-
-
-        schedules = cursor.fetchall()
-
-        conn.close()
-
-
-    except sqlite3.Error as e:
-
-        print("SCHEDULE LOAD ERROR:", e)
-
-
-    # =====================================================
-    # TODAY'S MOTOR RECORDS
-    # =====================================================
-
-    today = datetime.now().strftime("%Y-%m-%d")
-
-    today_records = []
-
-    try:
-
-        conn = connect()
-
-        cursor = conn.cursor()
-
-
-        cursor.execute("""
-            SELECT *
-            FROM sensor_record
-            WHERE DATE(start_time) = ?
-            ORDER BY start_time DESC
-        """, (today,))
-
-
-        today_records = cursor.fetchall()
-
-        conn.close()
-
-
-    except sqlite3.Error as e:
-
-        print("MOTOR RECORD ERROR:", e)
-
-
-    # =====================================================
-    # CALCULATE TODAY'S RUNTIME
-    # =====================================================
-
-    total_runtime = 0
-
-
-    for record in today_records:
-
-        try:
-
-            duration = record["duration"]
-
-            if duration:
-
-                total_runtime += float(duration)
-
-        except:
-
-            pass
-
-
-    # =====================================================
-    # RENDER PAGE
-    # =====================================================
+    conn = sqlite3.connect('agriculture.db')
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    # Create table if it does not exist
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS irrigation_schedule (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            start_time TEXT NOT NULL,
+            end_time TEXT NOT NULL,
+            duration INTEGER DEFAULT 0,
+            status TEXT DEFAULT 'Scheduled',
+            created_at TEXT
+        )
+    """)
+
+    cursor.execute("""
+        SELECT *
+        FROM irrigation_schedule
+        ORDER BY id DESC
+    """)
+
+    schedules = cursor.fetchall()
+
+    conn.commit()
+    conn.close()
 
     return render_template(
-        "irrigation.html",
-
-        motor_status=motor_status,
-
-        schedules=schedules,
-
-        today_records=today_records,
-
-        total_runtime=total_runtime
+        'irrigation.html',
+        schedules=schedules
     )
 
 
-# -------------------------
-# MOTOR ANALYTICS
-# ----------------------------
+# ==========================================================
+# ADD NEW IRRIGATION SCHEDULE
+# ==========================================================
+
+@app.route('/add_irrigation', methods=['POST'])
+def add_irrigation():
+
+    start_time = request.form.get('start_time')
+    end_time = request.form.get('end_time')
+
+    if not start_time or not end_time:
+        flash("Please select start and end time.", "error")
+        return redirect(url_for('irrigation'))
+
+    try:
+
+        start = datetime.strptime(
+            start_time,
+            "%Y-%m-%dT%H:%M"
+        )
+
+        end = datetime.strptime(
+            end_time,
+            "%Y-%m-%dT%H:%M"
+        )
+
+        if end <= start:
+            flash(
+                "End time must be after start time.",
+                "error"
+            )
+            return redirect(url_for('irrigation'))
+
+        duration_seconds = (
+            end - start
+        ).total_seconds()
+
+        duration_minutes = int(
+            duration_seconds / 60
+        )
+
+        conn = sqlite3.connect(
+            'agriculture.db'
+        )
+
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS irrigation_schedule (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                start_time TEXT NOT NULL,
+                end_time TEXT NOT NULL,
+                duration INTEGER DEFAULT 0,
+                status TEXT DEFAULT 'Scheduled',
+                created_at TEXT
+            )
+        """)
+
+        cursor.execute("""
+            INSERT INTO irrigation_schedule
+            (
+                start_time,
+                end_time,
+                duration,
+                status,
+                created_at
+            )
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+            start_time,
+            end_time,
+            duration_minutes,
+            "Scheduled",
+            datetime.now().strftime(
+                "%Y-%m-%d %H:%M:%S"
+            )
+        ))
+
+        conn.commit()
+        conn.close()
+
+        flash(
+            "Irrigation schedule created successfully!",
+            "success"
+        )
+
+    except Exception as e:
+
+        print("Irrigation Error:", e)
+
+        flash(
+            "Unable to create irrigation schedule.",
+            "error"
+        )
+
+    return redirect(
+        url_for('irrigation')
+    )
+
+
+# ==========================================================
+# START SCHEDULE
+# ==========================================================
+
+@app.route(
+    '/start_irrigation/<int:schedule_id>',
+    methods=['POST']
+)
+def start_irrigation(schedule_id):
+
+    conn = sqlite3.connect(
+        'agriculture.db'
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE irrigation_schedule
+        SET status = 'Running'
+        WHERE id = ?
+    """, (schedule_id,))
+
+    conn.commit()
+    conn.close()
+
+    flash(
+        "Irrigation schedule started.",
+        "success"
+    )
+
+    # ------------------------------------------------------
+    # REAL MOTOR CONTROL
+    # ------------------------------------------------------
+    # If your relay/GPIO hardware is connected,
+    # call your motor ON function here.
+    #
+    # Example:
+    # motor_on()
+    #
+    # ------------------------------------------------------
+
+    return redirect(
+        url_for('irrigation')
+    )
+
+
+# ==========================================================
+# STOP SCHEDULE
+# ==========================================================
+
+@app.route(
+    '/stop_irrigation/<int:schedule_id>',
+    methods=['POST']
+)
+def stop_irrigation(schedule_id):
+
+    conn = sqlite3.connect(
+        'agriculture.db'
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE irrigation_schedule
+        SET status = 'Stopped'
+        WHERE id = ?
+    """, (schedule_id,))
+
+    conn.commit()
+    conn.close()
+
+    # ------------------------------------------------------
+    # REAL MOTOR CONTROL
+    # ------------------------------------------------------
+    # If relay/GPIO hardware is connected:
+    #
+    # motor_off()
+    #
+    # ------------------------------------------------------
+
+    flash(
+        "Irrigation schedule stopped.",
+        "success"
+    )
+
+    return redirect(
+        url_for('irrigation')
+    )
+
+
+# ==========================================================
+# DELETE SCHEDULE
+# ==========================================================
+
+@app.route(
+    '/delete_irrigation/<int:schedule_id>',
+    methods=['POST']
+)
+def delete_irrigation(schedule_id):
+
+    conn = sqlite3.connect(
+        'agriculture.db'
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        DELETE FROM irrigation_schedule
+        WHERE id = ?
+    """, (schedule_id,))
+
+    conn.commit()
+    conn.close()
+
+    flash(
+        "Schedule deleted successfully.",
+        "success"
+    )
+
+    return redirect(
+        url_for('irrigation')
+    )
+# ==========================================================
+# ANALYTICS
+# ==========================================================
 
 @app.route("/analytics")
 def analytics():
 
     if "username" not in session:
-        return redirect("/login")
+        return redirect(url_for("login"))
 
     conn = connect()
+
+    conn.row_factory = sqlite3.Row
 
     rows = conn.execute("""
         SELECT
@@ -2708,112 +2982,179 @@ def analytics():
 
     conn.close()
 
-    # ----------------------------
-    # Calculate ON / OFF time
-    # ----------------------------
 
-    total_on_seconds = 0
-    total_off_seconds = 0
+    # ======================================================
+    # MOTOR COUNTS
+    # ======================================================
 
     on_count = 0
     off_count = 0
 
-    motor_events = []
 
     for row in rows:
 
-        status = row["motor_status"]
+        status = (
+            row["motor_status"] or ""
+        ).strip().upper()
+
 
         if status == "ON":
+
             on_count += 1
+
+
         elif status == "OFF":
+
             off_count += 1
+
+
+    # ======================================================
+    # TOTAL MOTOR TIME
+    # ======================================================
+
+    total_on_seconds = 0
+    total_off_seconds = 0
+
+
+    for row in rows:
+
+        status = (
+            row["motor_status"] or ""
+        ).strip().upper()
+
+        duration = row["duration"]
+
+
+        # --------------------------------------------------
+        # FIRST: USE STORED DURATION
+        # --------------------------------------------------
+
+        if duration not in (None, "", 0, "0"):
+
+            try:
+
+                duration_text = str(
+                    duration
+                ).strip()
+
+
+                # If duration is numeric
+                if duration_text.isdigit():
+
+                    seconds = int(
+                        duration_text
+                    )
+
+
+                # If duration is HH:MM:SS
+                else:
+
+                    parts = duration_text.split(":")
+
+
+                    if len(parts) == 3:
+
+                        hours = int(parts[0])
+
+                        minutes = int(parts[1])
+
+                        secs = int(parts[2])
+
+                        seconds = (
+                            hours * 3600
+                            + minutes * 60
+                            + secs
+                        )
+
+                    else:
+
+                        seconds = 0
+
+
+                if status == "ON":
+
+                    total_on_seconds += seconds
+
+
+                elif status == "OFF":
+
+                    total_off_seconds += seconds
+
+
+                continue
+
+
+            except Exception as e:
+
+                print(
+                    "Duration Error:",
+                    e
+                )
+
+
+        # --------------------------------------------------
+        # SECOND: CALCULATE FROM START / END
+        # --------------------------------------------------
 
         try:
 
-            # ON record
-            if status == "ON" and row["start_time"]:
+            start = row["start_time"]
 
-                time_value = datetime.strptime(
-                    row["start_time"],
-                    "%Y-%m-%d %H:%M:%S"
+            end = row["end_time"]
+
+
+            if not start or not end:
+
+                continue
+
+
+            start_time = datetime.strptime(
+                str(start),
+                "%Y-%m-%d %H:%M:%S"
+            )
+
+
+            end_time = datetime.strptime(
+                str(end),
+                "%Y-%m-%d %H:%M:%S"
+            )
+
+
+            difference = (
+                end_time - start_time
+            ).total_seconds()
+
+
+            if difference < 0:
+
+                difference = 0
+
+
+            if status == "ON":
+
+                total_on_seconds += int(
+                    difference
                 )
 
-                motor_events.append({
-                    "status": "ON",
-                    "time": time_value
-                })
 
-            # OFF record
             elif status == "OFF":
 
-                time_value = None
+                total_off_seconds += int(
+                    difference
+                )
 
-                if row["end_time"]:
-
-                    time_value = datetime.strptime(
-                        row["end_time"],
-                        "%Y-%m-%d %H:%M:%S"
-                    )
-
-                elif row["start_time"]:
-
-                    time_value = datetime.strptime(
-                        row["start_time"],
-                        "%Y-%m-%d %H:%M:%S"
-                    )
-
-                if time_value:
-
-                    motor_events.append({
-                        "status": "OFF",
-                        "time": time_value
-                    })
 
         except Exception as e:
 
-            print("Time Error:", e)
+            print(
+                "Time Calculation Error:",
+                e
+            )
 
 
-    # ----------------------------
-    # Sort events by time
-    # ----------------------------
-
-    motor_events.sort(
-        key=lambda x: x["time"]
-    )
-
-
-    # ----------------------------
-    # Calculate duration between events
-    # ----------------------------
-
-    for i in range(len(motor_events) - 1):
-
-        current = motor_events[i]
-
-        next_event = motor_events[i + 1]
-
-        difference = (
-            next_event["time"]
-            - current["time"]
-        ).total_seconds()
-
-        if difference < 0:
-            difference = 0
-
-        if current["status"] == "ON":
-
-            total_on_seconds += difference
-
-        elif current["status"] == "OFF":
-
-            total_off_seconds += difference
-
-
-    # ----------------------------
-    # Format time
-    # ----------------------------
+    # ======================================================
+    # FORMAT TIME
+    # ======================================================
 
     def format_time(seconds):
 
@@ -2821,17 +3162,28 @@ def analytics():
 
         hours = seconds // 3600
 
-        minutes = (seconds % 3600) // 60
+        minutes = (
+            seconds % 3600
+        ) // 60
 
         secs = seconds % 60
 
+
         if hours > 0:
 
-            return f"{hours} hr {minutes} min"
+            return (
+                f"{hours} hr "
+                f"{minutes} min"
+            )
+
 
         elif minutes > 0:
 
-            return f"{minutes} min {secs} sec"
+            return (
+                f"{minutes} min "
+                f"{secs} sec"
+            )
+
 
         else:
 
@@ -2842,34 +3194,69 @@ def analytics():
         total_on_seconds
     )
 
+
     total_off_time = format_time(
         total_off_seconds
     )
 
 
-    # ----------------------------
-    # Graph values
-    # ----------------------------
+    # ======================================================
+    # GRAPH DATA
+    # IMPORTANT:
+    # GRAPH = COUNT
+    # ======================================================
 
-    graph_on_minutes = round(
-        total_on_seconds / 60,
-        2
+    graph_on_count = on_count
+
+    graph_off_count = off_count
+
+
+    # ======================================================
+    # DEBUG
+    # ======================================================
+
+    print("\n================================")
+
+    print("        MOTOR ANALYTICS")
+
+    print("================================")
+
+    print(
+        "ON COUNT:",
+        on_count
     )
 
-    graph_off_minutes = round(
-        total_off_seconds / 60,
-        2
+    print(
+        "OFF COUNT:",
+        off_count
     )
 
+    print(
+        "TOTAL ON TIME:",
+        total_on_time
+    )
 
-    print("ON TIME:", total_on_time)
+    print(
+        "TOTAL OFF TIME:",
+        total_off_time
+    )
 
-    print("OFF TIME:", total_off_time)
+    print(
+        "GRAPH ON COUNT:",
+        graph_on_count
+    )
 
-    print("ON MINUTES:", graph_on_minutes)
+    print(
+        "GRAPH OFF COUNT:",
+        graph_off_count
+    )
 
-    print("OFF MINUTES:", graph_off_minutes)
+    print("================================\n")
 
+
+    # ======================================================
+    # SEND DATA TO HTML
+    # ======================================================
 
     return render_template(
 
@@ -2885,11 +3272,59 @@ def analytics():
 
         total_off_time=total_off_time,
 
-        graph_on_minutes=graph_on_minutes,
+        graph_on_count=graph_on_count,
 
-        graph_off_minutes=graph_off_minutes
+        graph_off_count=graph_off_count
 
     )
+
+@app.route("/delete_record/<int:id>", methods=["POST"])
+def delete_record(id):
+
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    conn = connect()
+
+    try:
+
+        conn.execute(
+            """
+            DELETE FROM sensor_record
+            WHERE id = ?
+            """,
+            (id,)
+        )
+
+        conn.commit()
+
+        flash(
+            "Motor record deleted successfully.",
+            "success"
+        )
+
+    except Exception as e:
+
+        print("Delete Record Error:", e)
+
+        flash(
+            "Unable to delete motor record.",
+            "error"
+        )
+
+    finally:
+
+        conn.close()
+
+    return redirect(
+        url_for("analytics")
+    )
+ 
+
+@app.route("/features")
+def features():
+    return render_template("features.html")
+
 # ----------------------------
 # AI Tips
 # ----------------------------
@@ -3484,136 +3919,158 @@ def alerts():
 # ============================================================
 
 
-@app.route("/ai_disease", methods=["GET", "POST"])
+@app.route("/ai-disease", methods=["GET", "POST"])
 def ai_disease():
-
-    if "username" not in session:
-        return redirect(url_for("login"))
 
     result = None
     error = None
 
     if request.method == "POST":
 
-        crop_name = request.form.get("crop_name", "").strip()
-        symptoms = request.form.get("symptoms", "").strip()
-        photo = request.files.get("leaf_image")
+        if "leaf_image" not in request.files:
+            error = "Please select a leaf image."
 
-        # --------------------------------------------
-        # VALIDATION
-        # --------------------------------------------
+            return render_template(
+                "ai_disease.html",
+                result=result,
+                error=error
+            )
 
-        if not crop_name:
-            error = "Please select a crop."
+        image = request.files["leaf_image"]
 
-        elif not photo or photo.filename == "":
-            error = "Please upload a leaf image."
+        if image.filename == "":
+            error = "Please select an image."
 
-        else:
+            return render_template(
+                "ai_disease.html",
+                result=result,
+                error=error
+            )
 
-            try:
+        allowed_extensions = {
+            "jpg",
+            "jpeg",
+            "png",
+            "webp"
+        }
 
-                # ------------------------------------
-                # SAVE IMAGE
-                # ------------------------------------
+        extension = image.filename.rsplit(".", 1)[-1].lower()
 
-                filename = secure_filename(photo.filename)
+        if extension not in allowed_extensions:
+            error = "Please upload JPG, JPEG, PNG or WEBP image."
 
-                filepath = os.path.join(
-                    app.config["UPLOAD_FOLDER"],
-                    filename
+            return render_template(
+                "ai_disease.html",
+                result=result,
+                error=error
+            )
+
+        try:
+
+            image_bytes = image.read()
+
+            # Groq vision request has a base64 image-size limit,
+            # so reject unusually large uploads.
+            if len(image_bytes) > 4 * 1024 * 1024:
+                error = "Image is too large. Please upload an image below 4 MB."
+
+                return render_template(
+                    "ai_disease.html",
+                    result=result,
+                    error=error
                 )
 
-                photo.save(filepath)
+            base64_image = base64.b64encode(
+                image_bytes
+            ).decode("utf-8")
 
+            mime_type = "image/jpeg"
 
-                # ------------------------------------
-                # AI PROMPT
-                # ------------------------------------
+            if extension == "png":
+                mime_type = "image/png"
 
-                prompt = f"""
-You are an agriculture assistant.
+            elif extension == "webp":
+                mime_type = "image/webp"
 
-Crop: {crop_name}
+            prompt = """
+You are an AI assistant for an agriculture disease detection system.
 
-Farmer observed symptoms:
-{symptoms if symptoms else "No symptoms provided."}
+Analyze the uploaded plant leaf image carefully.
 
-Provide a preliminary crop-health analysis.
+Return the result in this exact format:
 
-Give the answer in this format:
+Disease: <disease name or Healthy>
 
-🌿 Crop:
-{crop_name}
+Confidence: <Low / Medium / High>
 
-🦠 Possible Disease:
-<disease name or Healthy>
+Crop: <crop name if identifiable>
 
-📊 Confidence:
-<Low / Medium / High>
+Symptoms:
+- <symptom 1>
+- <symptom 2>
+- <symptom 3>
 
-🔍 Symptoms:
+Possible Cause:
 <short explanation>
 
-原因 / Cause:
-<short explanation>
+Treatment:
+- <treatment 1>
+- <treatment 2>
+- <treatment 3>
 
-💊 Suggested Care:
-<basic safe care suggestion>
+Prevention:
+- <prevention 1>
+- <prevention 2>
+- <prevention 3>
 
-🛡️ Prevention:
-<short prevention suggestion>
+Important:
+If the image is unclear, the leaf is not visible, or the disease cannot be identified reliably, clearly say that the result is uncertain. Do not invent a disease.
 
-⚠️ Note:
-This is an AI-based preliminary assessment and should not replace advice from an agricultural expert.
+Keep the answer practical and easy for a farmer to understand.
 """
 
-                # ------------------------------------
-                # OPENROUTER
-                # ------------------------------------
+            completion = groq_client.chat.completions.create(
 
-                response = openrouter_client.chat.completions.create(
+                model="qwen/qwen3.6-27b",
 
-                    model="openai/gpt-4o-mini",
+                messages=[
+                    {
+                        "role": "user",
 
-                    messages=[
-                        {
-                            "role": "user",
-                            "content": prompt
-                        }
-                    ],
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": prompt
+                            },
+                            {
+                                "type": "image_url",
 
-                    temperature=0.2,
+                                "image_url": {
+                                    "url": (
+                                        f"data:{mime_type};base64,"
+                                        f"{base64_image}"
+                                    )
+                                }
+                            }
+                        ]
+                    }
+                ],
 
-                    max_tokens=600
-                )
+                temperature=0.2,
+                max_completion_tokens=1000,
+                stream=False
+            )
 
+            result = completion.choices[0].message.content
 
-                # ------------------------------------
-                # GET RESULT
-                # ------------------------------------
+        except Exception as e:
 
-                result = response.choices[0].message.content
+            print("========== GROQ ERROR ==========")
+            print(type(e).__name__)
+            print(str(e))
+            print("================================")
 
-
-                if not result:
-
-                    error = "AI returned an empty result."
-
-
-            except Exception as e:
-
-                print("================================")
-                print("AI DISEASE ERROR:")
-                print(str(e))
-                print("================================")
-
-                error = (
-                    "AI analysis failed. "
-                    "Please check your OpenRouter API key "
-                    "and try again."
-                )
-
+            error = f"Groq Error: {str(e)}"
 
     return render_template(
         "ai_disease.html",

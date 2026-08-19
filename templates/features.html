@@ -1,71 +1,2860 @@
 {% extends "baseofhtml.html" %}
 
 {% block title %}
-Dashboard
+AgriNova | Intelligent Farm Monitoring & Management
 {% endblock %}
 
 {% block content %}
 
-<div class="container-fluid mt-4">
+<style>
 
-    <div class="row g-4">
+/* =========================================================
+   AGRINOVA HOME PAGE
+   PREMIUM BLUE • VIOLET • CYAN • PINK
+========================================================= */
 
-        <div class="col-md-3">
-            <div class="card text-white bg-success shadow-lg border-0 rounded-4">
-                <div class="card-body">
-                    <h5><i class="fa-solid fa-users"></i> Total Farmers</h5>
-                    <h2>{{ total_farmers }}</h2>
-                </div>
-            </div>
-        </div>
+.home-page{
 
-        <div class="col-md-3">
-            <div class="card text-white bg-primary shadow-lg border-0 rounded-4">
-                <div class="card-body">
-                    <h5><i class="fa-solid fa-seedling"></i> Total Crops</h5>
-                    <h2>{{ total_crops }}</h2>
-                </div>
-            </div>
-        </div>
+    min-height:100vh;
 
-        <div class="col-md-3">
-            <div class="card text-dark bg-warning shadow-lg border-0 rounded-4">
-                <div class="card-body">
-                    <h5><i class="fa-solid fa-temperature-three-quarters"></i> Temperature</h5>
-                    <h2>31°C</h2>
-                </div>
-            </div>
-        </div>
+    color:#f8fafc;
 
-        <div class="col-md-3">
-            <div class="card text-white bg-danger shadow-lg border-0 rounded-4">
-                <div class="card-body">
-                    <h5><i class="fa-solid fa-faucet-drip"></i> Motor</h5>
-                    <h2>ON</h2>
-                </div>
-            </div>
+    background:
+
+        radial-gradient(
+            circle at 5% 10%,
+            rgba(37,99,235,.14),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 95% 20%,
+            rgba(168,85,247,.13),
+            transparent 28%
+        ),
+
+        #080d1c;
+
+    overflow:hidden;
+}
+
+
+/* =========================================================
+   WELCOME BAR
+========================================================= */
+
+.home-marquee{
+
+    width:100%;
+
+    overflow:hidden;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #0f172a,
+            #1d4ed8,
+            #4338ca,
+            #7c3aed,
+            #db2777,
+            #2563eb,
+            #0f172a
+        );
+
+    background-size:400% 100%;
+
+    animation:marqueeBg 10s linear infinite;
+
+    padding:13px 0;
+
+    box-shadow:
+        0 6px 30px rgba(37,99,235,.25);
+
+    position:relative;
+
+    z-index:10;
+}
+
+
+@keyframes marqueeBg{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    100%{
+        background-position:400% 50%;
+    }
+
+}
+
+
+.home-marquee-track{
+
+    width:max-content;
+
+    display:flex;
+
+    align-items:center;
+
+    animation:
+        homeMarquee 27s linear infinite;
+}
+
+
+.home-marquee span{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    padding:0 42px;
+
+    color:#ffffff;
+
+    font-size:13px;
+
+    font-weight:800;
+
+    letter-spacing:.5px;
+
+    white-space:nowrap;
+}
+
+
+.home-marquee span i{
+
+    color:#93c5fd;
+
+    font-size:15px;
+
+    filter:
+        drop-shadow(0 0 7px rgba(96,165,250,.9));
+}
+
+
+@keyframes homeMarquee{
+
+    0%{
+        transform:translateX(0);
+    }
+
+    100%{
+        transform:translateX(-50%);
+    }
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    min-height:88vh;
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+
+    background:
+
+        linear-gradient(
+            125deg,
+            rgba(2,6,23,.86),
+            rgba(15,23,42,.74),
+            rgba(30,27,75,.66),
+            rgba(49,46,129,.48),
+            rgba(88,28,135,.40)
+        ),
+
+        url("{{ url_for('static', filename='images/hero-bg.jpg') }}")
+
+        center center/cover no-repeat;
+
+    border-bottom-left-radius:45px;
+
+    border-bottom-right-radius:45px;
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.40);
+}
+
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(129,140,248,.16),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 15% 75%,
+            rgba(14,165,233,.16),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(236,72,153,.13),
+            transparent 28%
+        );
+}
+
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:0;
+
+    left:-30%;
+
+    width:160%;
+
+    height:4px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            #38bdf8,
+            #6366f1,
+            #a855f7,
+            #ec4899,
+            #38bdf8,
+            transparent
+        );
+
+    box-shadow:
+        0 0 22px rgba(99,102,241,.85);
+
+    animation:heroLine 5s linear infinite;
+}
+
+
+@keyframes heroLine{
+
+    from{
+        transform:translateX(-20%);
+    }
+
+    to{
+        transform:translateX(20%);
+    }
+
+}
+
+
+.hero-overlay{
+
+    position:relative;
+
+    z-index:2;
+
+    width:100%;
+
+    min-height:88vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:40px 25px;
+}
+
+
+.hero-content{
+
+    position:relative;
+
+    z-index:3;
+
+    width:min(1000px,100%);
+
+    text-align:center;
+
+    padding:40px 25px;
+
+    animation:
+        heroFloat 4s ease-in-out infinite alternate;
+}
+
+
+@keyframes heroFloat{
+
+    from{
+        transform:translateY(0);
+    }
+
+    to{
+        transform:translateY(-7px);
+    }
+
+}
+
+
+/* =========================================================
+   HERO BADGE
+========================================================= */
+
+.hero-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    padding:9px 18px;
+
+    margin-bottom:24px;
+
+    border-radius:50px;
+
+    color:#dbeafe;
+
+    background:
+        rgba(15,23,42,.58);
+
+    border:
+        1px solid rgba(96,165,250,.35);
+
+    font-size:11px;
+
+    font-weight:800;
+
+    letter-spacing:1.5px;
+
+    box-shadow:
+
+        0 0 20px rgba(59,130,246,.10),
+
+        inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+
+.hero-badge i{
+
+    color:#38bdf8;
+
+    filter:
+        drop-shadow(0 0 8px rgba(56,189,248,.8));
+}
+
+
+/* =========================================================
+   HERO TITLE
+========================================================= */
+
+.hero-title{
+
+    margin:0;
+
+    line-height:1.05;
+
+    font-weight:950;
+
+    color:white;
+
+    text-shadow:
+        0 8px 35px rgba(0,0,0,.65);
+}
+
+
+.hero-title .brand{
+
+    display:block;
+
+    font-size:20px;
+
+    margin-bottom:14px;
+
+    letter-spacing:5px;
+
+    text-transform:uppercase;
+
+    font-weight:900;
+
+    color:#93c5fd;
+
+    text-shadow:
+        0 0 20px rgba(59,130,246,.55);
+}
+
+
+.hero-title .main-title{
+
+    display:block;
+
+    font-size:clamp(42px,6vw,76px);
+
+    font-weight:950;
+
+    letter-spacing:-2px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #bfdbfe,
+            #93c5fd,
+            #c4b5fd,
+            #e9d5ff,
+            #fbcfe8,
+            #ffffff
+        );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    background-clip:text;
+
+    background-size:300% auto;
+
+    animation:titleShine 7s linear infinite;
+}
+
+
+@keyframes titleShine{
+
+    0%{
+        background-position:0% center;
+    }
+
+    100%{
+        background-position:300% center;
+    }
+
+}
+
+
+.title-line{
+
+    width:170px;
+
+    height:4px;
+
+    margin:22px auto 0;
+
+    border-radius:50px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #38bdf8,
+            #6366f1,
+            #a855f7,
+            #ec4899
+        );
+
+    box-shadow:
+
+        0 0 10px rgba(99,102,241,.8),
+
+        0 0 25px rgba(236,72,153,.35);
+
+    animation:
+        linePulse 3s ease-in-out infinite alternate;
+}
+
+
+@keyframes linePulse{
+
+    from{
+        transform:scaleX(.75);
+        opacity:.7;
+    }
+
+    to{
+        transform:scaleX(1.15);
+        opacity:1;
+    }
+
+}
+
+
+/* =========================================================
+   HERO TEXT
+========================================================= */
+
+.hero-text{
+
+    max-width:760px;
+
+    margin:28px auto 32px;
+
+    color:#cbd5e1;
+
+    font-size:18px;
+
+    line-height:1.8;
+
+    text-shadow:
+        0 2px 15px rgba(0,0,0,.55);
+}
+
+
+/* =========================================================
+   HERO BUTTONS
+========================================================= */
+
+.hero-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:14px;
+
+    flex-wrap:wrap;
+}
+
+
+.hero-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:9px;
+
+    padding:14px 26px;
+
+    border-radius:14px;
+
+    font-weight:850;
+
+    text-decoration:none;
+
+    transition:.35s;
+}
+
+
+.btn-start{
+
+    color:white;
+
+    border:1px solid rgba(255,255,255,.12);
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5,
+            #7c3aed,
+            #db2777
+        );
+
+    box-shadow:
+
+        0 10px 35px rgba(79,70,229,.35);
+}
+
+
+.btn-start:hover{
+
+    color:white;
+
+    transform:
+        translateY(-4px)
+        scale(1.03);
+
+    box-shadow:
+
+        0 16px 45px rgba(236,72,153,.30);
+}
+
+
+.btn-learn{
+
+    color:#e2e8f0;
+
+    border:
+        1px solid rgba(148,163,184,.35);
+
+    background:
+        rgba(15,23,42,.62);
+
+    backdrop-filter:
+        blur(10px);
+}
+
+
+.btn-learn:hover{
+
+    color:#312e81;
+
+    background:#ffffff;
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.35);
+}
+
+
+/* =========================================================
+   FEATURES SECTION
+========================================================= */
+
+.features-section{
+
+    position:relative;
+
+    padding:90px 0;
+
+    overflow:hidden;
+
+    background:
+
+        radial-gradient(
+            circle at 8% 20%,
+            rgba(37,99,235,.14),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 92% 75%,
+            rgba(168,85,247,.13),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #080d1c,
+            #101936,
+            #17133a,
+            #0a1022
+        );
+}
+
+
+.section-heading{
+
+    text-align:center;
+
+    margin-bottom:52px;
+}
+
+
+.mini-title{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:9px 17px;
+
+    border-radius:50px;
+
+    color:#93c5fd;
+
+    background:
+        rgba(30,41,59,.65);
+
+    border:
+        1px solid rgba(96,165,250,.28);
+
+    font-size:10px;
+
+    font-weight:900;
+
+    letter-spacing:1.8px;
+}
+
+
+.features-title{
+
+    margin:17px 0 12px;
+
+    color:#f8fafc;
+
+    font-size:40px;
+
+    font-weight:950;
+
+    letter-spacing:-.8px;
+}
+
+
+.section-subtitle{
+
+    max-width:700px;
+
+    margin:auto;
+
+    color:#aebbd0;
+
+    font-size:15px;
+
+    line-height:1.8;
+}
+
+
+.features-title::after{
+
+    content:"";
+
+    display:block;
+
+    width:110px;
+
+    height:4px;
+
+    margin:15px auto 0;
+
+    border-radius:50px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #38bdf8,
+            #6366f1,
+            #a855f7,
+            #ec4899
+        );
+
+    box-shadow:
+        0 0 15px rgba(99,102,241,.55);
+}
+
+
+/* =========================================================
+   FEATURE CARDS
+========================================================= */
+
+.feature-card{
+
+    height:100%;
+
+    position:relative;
+
+    padding:28px 25px 25px;
+
+    overflow:hidden;
+
+    border-radius:23px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(22,34,64,.94),
+            rgba(15,23,48,.88)
+        );
+
+    border:
+        1px solid rgba(148,163,184,.15);
+
+    box-shadow:
+        0 16px 42px rgba(0,0,0,.27);
+
+    transition:.4s;
+}
+
+
+.feature-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:3px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #38bdf8,
+            #6366f1,
+            #a855f7,
+            #ec4899
+        );
+}
+
+
+.feature-card:hover{
+
+    transform:
+        translateY(-9px);
+
+    border-color:
+        rgba(129,140,248,.38);
+
+    box-shadow:
+
+        0 25px 55px rgba(0,0,0,.38),
+
+        0 0 28px rgba(99,102,241,.12);
+}
+
+
+.feature-top{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:21px;
+}
+
+
+.feature-icon{
+
+    width:62px;
+
+    height:62px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:18px;
+
+    color:#38bdf8;
+
+    background:
+        rgba(14,165,233,.11);
+
+    border:
+        1px solid rgba(56,189,248,.18);
+
+    font-size:26px;
+
+    transition:.4s;
+}
+
+
+.feature-card:hover .feature-icon{
+
+    transform:
+        translateY(-4px)
+        scale(1.08);
+
+    box-shadow:
+        0 10px 25px rgba(56,189,248,.17);
+}
+
+
+.feature-card:nth-child(2) .feature-icon{
+
+    color:#22d3ee;
+
+    background:
+        rgba(6,182,212,.11);
+}
+
+
+.feature-card:nth-child(3) .feature-icon{
+
+    color:#818cf8;
+
+    background:
+        rgba(99,102,241,.11);
+}
+
+
+.feature-card:nth-child(4) .feature-icon{
+
+    color:#38bdf8;
+
+    background:
+        rgba(14,165,233,.11);
+}
+
+
+.feature-card:nth-child(5) .feature-icon{
+
+    color:#c084fc;
+
+    background:
+        rgba(168,85,247,.11);
+}
+
+
+.feature-card:nth-child(6) .feature-icon{
+
+    color:#f472b6;
+
+    background:
+        rgba(236,72,153,.11);
+}
+
+
+.feature-number{
+
+    color:#64748b;
+
+    font-size:12px;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+}
+
+
+.feature-card h3{
+
+    margin:0 0 12px;
+
+    color:#f8fafc;
+
+    font-size:20px;
+
+    font-weight:900;
+}
+
+
+.feature-card p{
+
+    min-height:75px;
+
+    margin:0 0 18px;
+
+    color:#aebbd0;
+
+    font-size:14px;
+
+    line-height:1.75;
+}
+
+
+.feature-points{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+    padding:0;
+
+    margin:0 0 22px;
+
+    list-style:none;
+}
+
+
+.feature-points li{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:6px 9px;
+
+    border-radius:8px;
+
+    color:#cbd5e1;
+
+    background:
+        rgba(30,41,59,.65);
+
+    border:
+        1px solid rgba(148,163,184,.10);
+
+    font-size:11px;
+
+    font-weight:700;
+}
+
+
+.feature-points li i{
+
+    color:#38bdf8;
+
+    font-size:9px;
+}
+
+
+.feature-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 17px;
+
+    border-radius:11px;
+
+    color:#dbeafe;
+
+    background:
+        rgba(79,70,229,.14);
+
+    border:
+        1px solid rgba(129,140,248,.27);
+
+    text-decoration:none;
+
+    font-size:12px;
+
+    font-weight:850;
+
+    transition:.3s;
+}
+
+
+.feature-btn:hover{
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5,
+            #7c3aed,
+            #db2777
+        );
+
+    transform:
+        translateY(-2px);
+}
+
+
+.features-more{
+
+    text-align:center;
+
+    margin-top:48px;
+}
+
+
+.all-features-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:14px 25px;
+
+    border-radius:14px;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    font-weight:900;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5,
+            #7c3aed,
+            #db2777
+        );
+
+    box-shadow:
+        0 10px 30px rgba(79,70,229,.25);
+
+    transition:.35s;
+}
+
+
+.all-features-btn:hover{
+
+    color:white;
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 16px 40px rgba(236,72,153,.25);
+}
+
+
+/* =========================================================
+   WHY AGRINOVA
+========================================================= */
+
+.why-agrinova{
+
+    padding:90px 0;
+
+    position:relative;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #0b1020,
+            #111936,
+            #1a1640,
+            #0a1020
+        );
+
+    border-top:
+        1px solid rgba(99,102,241,.12);
+}
+
+
+.why-grid{
+
+    margin-top:45px;
+}
+
+
+.why-card{
+
+    height:100%;
+
+    padding:27px 24px;
+
+    border-radius:20px;
+
+    background:
+        rgba(18,30,58,.72);
+
+    border:
+        1px solid rgba(148,163,184,.13);
+
+    transition:.35s;
+}
+
+
+.why-card:hover{
+
+    transform:
+        translateY(-7px);
+
+    border-color:
+        rgba(129,140,248,.32);
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.28);
+}
+
+
+.why-number{
+
+    width:44px;
+
+    height:44px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:17px;
+
+    border-radius:13px;
+
+    color:white;
+
+    font-size:12px;
+
+    font-weight:900;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #6366f1,
+            #8b5cf6,
+            #db2777
+        );
+}
+
+
+.why-card h4{
+
+    margin-bottom:10px;
+
+    color:#f8fafc;
+
+    font-size:18px;
+
+    font-weight:850;
+}
+
+
+.why-card p{
+
+    margin:0;
+
+    color:#aebbd0;
+
+    font-size:14px;
+
+    line-height:1.75;
+}
+
+
+/* =========================================================
+   HOW IT WORKS
+========================================================= */
+
+.how-section{
+
+    position:relative;
+
+    padding:90px 0;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(99,102,241,.09),
+            transparent 45%
+        ),
+
+        #080d1c;
+}
+
+
+.workflow{
+
+    position:relative;
+
+    margin-top:45px;
+}
+
+
+.workflow::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:40px;
+
+    left:16%;
+
+    right:16%;
+
+    height:2px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #38bdf8,
+            #6366f1,
+            #a855f7,
+            #ec4899
+        );
+
+    opacity:.35;
+}
+
+
+.workflow-card{
+
+    position:relative;
+
+    z-index:2;
+
+    text-align:center;
+
+    padding:10px 20px;
+}
+
+
+.workflow-icon{
+
+    width:80px;
+
+    height:80px;
+
+    margin:0 auto 20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    color:white;
+
+    font-size:27px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5,
+            #8b5cf6,
+            #db2777
+        );
+
+    border:
+
+        5px solid #080d1c;
+
+    box-shadow:
+
+        0 0 25px rgba(99,102,241,.30);
+}
+
+
+.workflow-card h4{
+
+    color:#f8fafc;
+
+    font-size:19px;
+
+    font-weight:850;
+
+    margin-bottom:10px;
+}
+
+
+.workflow-card p{
+
+    color:#94a3b8;
+
+    font-size:13px;
+
+    line-height:1.7;
+
+    margin:0;
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.cta-section{
+
+    position:relative;
+
+    padding:85px 20px;
+
+    text-align:center;
+
+    overflow:hidden;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #111827,
+            #312e81,
+            #4338ca,
+            #6d28d9,
+            #9d174d
+        );
+
+    background-size:250% 250%;
+
+    animation:
+        ctaGradient 10s ease infinite;
+}
+
+
+@keyframes ctaGradient{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+
+}
+
+
+.cta-section::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255,255,255,.11),
+            transparent 40%
+        );
+}
+
+
+.cta-section h2{
+
+    position:relative;
+
+    color:white;
+
+    font-size:36px;
+
+    font-weight:950;
+
+    margin-bottom:13px;
+}
+
+
+.cta-section p{
+
+    position:relative;
+
+    max-width:680px;
+
+    margin:0 auto 27px;
+
+    color:#e2e8f0;
+
+    line-height:1.75;
+}
+
+
+.cta-btn{
+
+    position:relative;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:14px 27px;
+
+    border-radius:14px;
+
+    background:white;
+
+    color:#4338ca;
+
+    font-weight:900;
+
+    text-decoration:none;
+
+    transition:.35s;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.25);
+}
+
+
+.cta-btn:hover{
+
+    color:#db2777;
+
+    transform:
+        translateY(-4px)
+        scale(1.03);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.35);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:768px){
+
+    .home-marquee span{
+
+        padding:0 25px;
+
+        font-size:11px;
+    }
+
+
+    .hero{
+
+        min-height:88vh;
+
+        border-radius:
+            0 0 30px 30px;
+    }
+
+
+    .hero-overlay{
+
+        min-height:88vh;
+
+        padding:20px 15px;
+    }
+
+
+    .hero-content{
+
+        padding:30px 10px;
+    }
+
+
+    .hero-title .brand{
+
+        font-size:15px;
+
+        letter-spacing:3px;
+    }
+
+
+    .hero-title .main-title{
+
+        font-size:39px;
+
+        letter-spacing:-1px;
+    }
+
+
+    .hero-text{
+
+        font-size:15px;
+
+        line-height:1.7;
+
+        padding:0 8px;
+    }
+
+
+    .hero-btn{
+
+        width:100%;
+
+        max-width:260px;
+    }
+
+
+    .features-section,
+    .why-agrinova,
+    .how-section{
+
+        padding:65px 15px;
+    }
+
+
+    .features-title{
+
+        font-size:30px;
+    }
+
+
+    .section-subtitle{
+
+        padding:0 15px;
+    }
+
+
+    .workflow::before{
+
+        display:none;
+    }
+
+
+    .workflow-card{
+
+        margin-bottom:25px;
+    }
+
+
+    .cta-section h2{
+
+        font-size:29px;
+    }
+
+}
+
+</style>
+
+
+<!-- =========================================================
+     HOME PAGE
+========================================================= -->
+
+<div class="home-page">
+
+
+    <!-- =====================================================
+         MOVING WELCOME BAR
+    ====================================================== -->
+
+    <div class="home-marquee">
+
+        <div class="home-marquee-track">
+
+            <span>
+
+                <i class="fa-solid fa-leaf"></i>
+
+                Welcome to AgriNova — Intelligent Farm Monitoring & Management
+
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-seedling"></i>
+
+                Smart Farming • Live Monitoring • Intelligent Management
+
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-satellite-dish"></i>
+
+                Connected Technology for Modern Agriculture
+
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Monitor • Manage • Analyze • Decide Smarter
+
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-leaf"></i>
+
+                Welcome to AgriNova — Intelligent Farm Monitoring & Management
+
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-seedling"></i>
+
+                Smart Farming • Live Monitoring • Intelligent Management
+
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-satellite-dish"></i>
+
+                Connected Technology for Modern Agriculture
+
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Monitor • Manage • Analyze • Decide Smarter
+
+            </span>
+
         </div>
 
     </div>
 
-    <div class="card shadow-lg border-0 rounded-4 mt-4">
-        <div class="card-body">
-            <h4 class="text-success">🌦️ Weather Information</h4>
-            <p>Temperature : 31°C</p>
-            <p>Humidity : 72%</p>
-            <p>Soil Moisture : 48%</p>
+
+    <!-- =====================================================
+         HERO SECTION
+    ====================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-overlay">
+
+            <div class="hero-content">
+
+
+                <div class="hero-badge">
+
+                    <i class="fa-solid fa-microchip"></i>
+
+                    INTELLIGENT FARMING • DIGITAL AGRICULTURE
+
+                </div>
+
+
+                <h1 class="hero-title">
+
+
+                    <span class="brand">
+
+                        🌱 AGRINOVA
+
+                    </span>
+
+
+                    <span class="main-title">
+
+                        Intelligent Farm<br>
+                        Monitoring & Management
+
+                    </span>
+
+
+                    <div class="title-line"></div>
+
+
+                </h1>
+
+
+                <p class="hero-text">
+
+                    A next-generation smart agriculture platform
+                    designed to monitor farm conditions, manage
+                    crops, track weather, control irrigation and
+                    transform farming data into smarter decisions.
+
+                </p>
+
+
+                <div class="hero-buttons">
+
+
+                    <a
+                        href="{{ url_for('register') }}"
+                        class="hero-btn btn-start">
+
+                        <i class="fa-solid fa-rocket"></i>
+
+                        Get Started
+
+                    </a>
+
+
+                    <a
+                        href="{{ url_for('about') }}"
+                        class="hero-btn btn-learn">
+
+                        <i class="fa-solid fa-circle-info"></i>
+
+                        Explore AgriNova
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
         </div>
-    </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FEATURES SECTION
+    ====================================================== -->
+
+    <section class="features-section">
+
+        <div class="container">
+
+
+            <div class="section-heading">
+
+
+                <span class="mini-title">
+
+                    <i class="fa-solid fa-layer-group"></i>
+
+                    AGRINOVA SMART FEATURES
+
+                </span>
+
+
+                <h2 class="features-title">
+
+                    Powerful Tools for Smarter Farming
+
+                </h2>
+
+
+                <p class="section-subtitle">
+
+                    AgriNova brings important farming tools together
+                    in one intelligent platform to help farmers
+                    monitor, manage and understand their farm better.
+
+                </p>
+
+
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <!-- FEATURE 01 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="feature-card">
+
+
+                        <div class="feature-top">
+
+
+                            <div class="feature-icon">
+
+                                <i class="fa-solid fa-seedling"></i>
+
+                            </div>
+
+
+                            <span class="feature-number">
+
+                                01
+
+                            </span>
+
+
+                        </div>
+
+
+                        <h3>
+
+                            Crop Management
+
+                        </h3>
+
+
+                        <p>
+
+                            Manage crop details, farming activities
+                            and important crop information digitally
+                            from one organized platform.
+
+                        </p>
+
+
+                        <ul class="feature-points">
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Crop Details
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Activities
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Records
+
+                            </li>
+
+
+                        </ul>
+
+
+                        <a
+                            href="{{ url_for('crop') }}"
+                            class="feature-btn">
+
+                            Explore Feature
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- FEATURE 02 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="feature-card">
+
+
+                        <div class="feature-top">
+
+
+                            <div class="feature-icon">
+
+                                <i class="fa-solid fa-microchip"></i>
+
+                            </div>
+
+
+                            <span class="feature-number">
+
+                                02
+
+                            </span>
+
+
+                        </div>
+
+
+                        <h3>
+
+                            Smart Sensor Monitoring
+
+                        </h3>
+
+
+                        <p>
+
+                            Monitor temperature, humidity and soil
+                            moisture to understand changing farm
+                            conditions more clearly.
+
+                        </p>
+
+
+                        <ul class="feature-points">
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Temperature
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Humidity
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Soil Moisture
+
+                            </li>
+
+
+                        </ul>
+
+
+                        <a
+                            href="{{ url_for('live_farm') }}"
+                            class="feature-btn">
+
+                            Explore Feature
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- FEATURE 03 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="feature-card">
+
+
+                        <div class="feature-top">
+
+
+                            <div class="feature-icon">
+
+                                <i class="fa-solid fa-cloud-sun"></i>
+
+                            </div>
+
+
+                            <span class="feature-number">
+
+                                03
+
+                            </span>
+
+
+                        </div>
+
+
+                        <h3>
+
+                            Weather Intelligence
+
+                        </h3>
+
+
+                        <p>
+
+                            Get useful weather information and
+                            environmental updates to support
+                            better farming planning.
+
+                        </p>
+
+
+                        <ul class="feature-points">
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Weather
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Temperature
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Updates
+
+                            </li>
+
+
+                        </ul>
+
+
+                        <a
+                            href="{{ url_for('weather') }}"
+                            class="feature-btn">
+
+                            Explore Feature
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- FEATURE 04 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="feature-card">
+
+
+                        <div class="feature-top">
+
+
+                            <div class="feature-icon">
+
+                                <i class="fa-solid fa-droplet"></i>
+
+                            </div>
+
+
+                            <span class="feature-number">
+
+                                04
+
+                            </span>
+
+
+                        </div>
+
+
+                        <h3>
+
+                            Smart Irrigation
+
+                        </h3>
+
+
+                        <p>
+
+                            Manage irrigation schedules and
+                            support efficient water usage for
+                            organized farm management.
+
+                        </p>
+
+
+                        <ul class="feature-points">
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Schedule
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Water
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Motor
+
+                            </li>
+
+
+                        </ul>
+
+
+                        <a
+                            href="{{ url_for('irrigation') }}"
+                            class="feature-btn">
+
+                            Explore Feature
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- FEATURE 05 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="feature-card">
+
+
+                        <div class="feature-top">
+
+
+                            <div class="feature-icon">
+
+                                <i class="fa-solid fa-chart-line"></i>
+
+                            </div>
+
+
+                            <span class="feature-number">
+
+                                05
+
+                            </span>
+
+
+                        </div>
+
+
+                        <h3>
+
+                            Farm Analytics
+
+                        </h3>
+
+
+                        <p>
+
+                            Analyze farming records and activities
+                            to understand trends and gain useful
+                            insights about farm performance.
+
+                        </p>
+
+
+                        <ul class="feature-points">
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Records
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Analysis
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Insights
+
+                            </li>
+
+
+                        </ul>
+
+
+                        <a
+                            href="{{ url_for('analytics') }}"
+                            class="feature-btn">
+
+                            Explore Feature
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- FEATURE 06 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="feature-card">
+
+
+                        <div class="feature-top">
+
+
+                            <div class="feature-icon">
+
+                                <i class="fa-solid fa-bell"></i>
+
+                            </div>
+
+
+                            <span class="feature-number">
+
+                                06
+
+                            </span>
+
+
+                        </div>
+
+
+                        <h3>
+
+                            Intelligent Alerts
+
+                        </h3>
+
+
+                        <p>
+
+                            Stay informed about important farming
+                            activities and changing monitoring
+                            conditions through timely alerts.
+
+                        </p>
+
+
+                        <ul class="feature-points">
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Notifications
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Conditions
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Updates
+
+                            </li>
+
+
+                        </ul>
+
+
+                        <a
+                            href="#"
+                            class="feature-btn">
+
+                            Explore Feature
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="features-more">
+
+
+                <a
+                    href="{{ url_for('features') }}"
+                    class="all-features-btn">
+
+                    <i class="fa-solid fa-layer-group"></i>
+
+                    View All Features
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         WHY AGRINOVA
+    ====================================================== -->
+
+    <section class="why-agrinova">
+
+        <div class="container">
+
+
+            <div class="section-heading">
+
+
+                <span class="mini-title">
+
+                    <i class="fa-solid fa-lightbulb"></i>
+
+                    WHY AGRINOVA
+
+                </span>
+
+
+                <h2 class="features-title">
+
+                    Designed for Smarter Agriculture
+
+                </h2>
+
+
+                <p class="section-subtitle">
+
+                    AgriNova connects everyday farming activities
+                    with digital technology to make farm management
+                    simpler and more organized.
+
+                </p>
+
+
+            </div>
+
+
+            <div class="row g-4 why-grid">
+
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="why-card">
+
+
+                        <div class="why-number">
+
+                            01
+
+                        </div>
+
+
+                        <h4>
+
+                            One Connected Platform
+
+                        </h4>
+
+
+                        <p>
+
+                            Keep important crop, weather, irrigation,
+                            monitoring and farming information together
+                            in one convenient platform.
+
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="why-card">
+
+
+                        <div class="why-number">
+
+                            02
+
+                        </div>
+
+
+                        <h4>
+
+                            Easy Farm Monitoring
+
+                        </h4>
+
+
+                        <p>
+
+                            View important farm conditions in an
+                            organized way so that monitoring becomes
+                            easier and more understandable.
+
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="why-card">
+
+
+                        <div class="why-number">
+
+                            03
+
+                        </div>
+
+
+                        <h4>
+
+                            Better Decisions
+
+                        </h4>
+
+
+                        <p>
+
+                            Use farming records, environmental data
+                            and analytics to support more informed
+                            agricultural decisions.
+
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="why-card">
+
+
+                        <div class="why-number">
+
+                            04
+
+                        </div>
+
+
+                        <h4>
+
+                            Smart Agriculture
+
+                        </h4>
+
+
+                        <p>
+
+                            Combine traditional farming practices
+                            with modern digital technology for a
+                            more connected farming experience.
+
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         HOW AGRINOVA WORKS
+    ====================================================== -->
+
+    <section class="how-section">
+
+        <div class="container">
+
+
+            <div class="section-heading">
+
+
+                <span class="mini-title">
+
+                    <i class="fa-solid fa-route"></i>
+
+                    SIMPLE WORKFLOW
+
+                </span>
+
+
+                <h2 class="features-title">
+
+                    How AgriNova Works
+
+                </h2>
+
+
+                <p class="section-subtitle">
+
+                    AgriNova follows a simple digital workflow
+                    that helps farmers move from monitoring
+                    to better farming decisions.
+
+                </p>
+
+
+            </div>
+
+
+            <div class="row g-4 workflow">
+
+
+                <!-- STEP 01 -->
+
+                <div class="col-lg-4">
+
+                    <div class="workflow-card">
+
+
+                        <div class="workflow-icon">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </div>
+
+
+                        <h4>
+
+                            Monitor
+
+                        </h4>
+
+
+                        <p>
+
+                            Collect and view important farm
+                            information such as sensor readings,
+                            crop details and weather conditions.
+
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- STEP 02 -->
+
+                <div class="col-lg-4">
+
+                    <div class="workflow-card">
+
+
+                        <div class="workflow-icon">
+
+                            <i class="fa-solid fa-sliders"></i>
+
+                        </div>
+
+
+                        <h4>
+
+                            Manage
+
+                        </h4>
+
+
+                        <p>
+
+                            Manage crops, irrigation schedules,
+                            motor activities and other farming
+                            operations from one platform.
+
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- STEP 03 -->
+
+                <div class="col-lg-4">
+
+                    <div class="workflow-card">
+
+
+                        <div class="workflow-icon">
+
+                            <i class="fa-solid fa-brain"></i>
+
+                        </div>
+
+
+                        <h4>
+
+                            Decide Smarter
+
+                        </h4>
+
+
+                        <p>
+
+                            Use organized records, analytics and
+                            environmental information to support
+                            better agricultural decisions.
+
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FINAL CTA
+    ====================================================== -->
+
+    <section class="cta-section">
+
+
+        <h2>
+
+            Build a Smarter Farm with AgriNova
+
+        </h2>
+
+
+        <p>
+
+            Bring crop management, live monitoring, weather,
+            irrigation and farm analytics together in one
+            intelligent agriculture platform.
+
+        </p>
+
+
+        <a
+            href="{{ url_for('register') }}"
+            class="cta-btn">
+
+            <i class="fa-solid fa-user-plus"></i>
+
+            Create Farmer Account
+
+        </a>
+
+
+    </section>
+
 
 </div>
 
-<style>
-.card{
-    transition:0.3s;
-}
-.card:hover{
-    transform:translateY(-8px);
-}
-</style>
+    <!-- =====================================================
+         GITHUB
+    ====================================================== -->
+
+    <section class="github-section">
+
+        <div class="github-box">
+
+            <h3>
+
+                <i class="fa-brands fa-github"></i>
+
+                Explore AgriSense Project
+
+            </h3>
+
+
+            <p>
+
+                Explore the source code, project files and
+                development work of AgriSense on GitHub.
+
+            </p>
+
+
+            <!--
+                IMPORTANT:
+                Replace YOUR_GITHUB_LINK_HERE
+                with your actual GitHub repository URL.
+            -->
+
+            <a
+                href="YOUR_GITHUB_LINK_HERE"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <i class="fa-brands fa-github"></i>
+
+                View Project on GitHub
+
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+</div>
 
 {% endblock %}
+

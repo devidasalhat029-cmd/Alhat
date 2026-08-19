@@ -9,43 +9,38 @@ AgriNova | Intelligent Farm Monitoring & Management
 <style>
 
 /* =========================================================
-   AGRINOVA
-   DARK • BLUE • VIOLET • CYAN • PINK
-   PREMIUM INTELLIGENT AGRICULTURE UI
+   AGRINOVA HOME PAGE
+   PREMIUM BLUE • VIOLET • CYAN • PINK
 ========================================================= */
 
 .home-page{
+
     min-height:100vh;
 
     color:#f8fafc;
 
     background:
+
         radial-gradient(
             circle at 5% 10%,
-            rgba(37,99,235,.16),
+            rgba(37,99,235,.14),
             transparent 28%
         ),
 
         radial-gradient(
-            circle at 95% 15%,
-            rgba(168,85,247,.16),
+            circle at 95% 20%,
+            rgba(168,85,247,.13),
             transparent 28%
         ),
 
-        radial-gradient(
-            circle at 50% 85%,
-            rgba(14,165,233,.10),
-            transparent 30%
-        ),
-
-        #070914;
+        #080d1c;
 
     overflow:hidden;
 }
 
 
 /* =========================================================
-   MOVING WELCOME BAR
+   WELCOME BAR
 ========================================================= */
 
 .home-marquee{
@@ -55,6 +50,7 @@ AgriNova | Intelligent Farm Monitoring & Management
     overflow:hidden;
 
     background:
+
         linear-gradient(
             90deg,
             #0f172a,
@@ -68,12 +64,12 @@ AgriNova | Intelligent Farm Monitoring & Management
 
     background-size:400% 100%;
 
-    animation:marqueeBg 9s linear infinite;
+    animation:marqueeBg 10s linear infinite;
 
     padding:13px 0;
 
     box-shadow:
-        0 6px 30px rgba(37,99,235,.30);
+        0 6px 30px rgba(37,99,235,.25);
 
     position:relative;
 
@@ -103,7 +99,7 @@ AgriNova | Intelligent Farm Monitoring & Management
     align-items:center;
 
     animation:
-        homeMarquee 25s linear infinite;
+        homeMarquee 27s linear infinite;
 }
 
 
@@ -131,9 +127,9 @@ AgriNova | Intelligent Farm Monitoring & Management
 
 .home-marquee span i{
 
-    font-size:15px;
-
     color:#93c5fd;
+
+    font-size:15px;
 
     filter:
         drop-shadow(0 0 7px rgba(96,165,250,.9));
@@ -175,11 +171,11 @@ AgriNova | Intelligent Farm Monitoring & Management
 
         linear-gradient(
             125deg,
-            rgba(2,6,23,.90),
-            rgba(15,23,42,.80),
-            rgba(30,27,75,.72),
-            rgba(49,46,129,.58),
-            rgba(88,28,135,.46)
+            rgba(2,6,23,.86),
+            rgba(15,23,42,.74),
+            rgba(30,27,75,.66),
+            rgba(49,46,129,.48),
+            rgba(88,28,135,.40)
         ),
 
         url("{{ url_for('static', filename='images/hero-bg.jpg') }}")
@@ -191,13 +187,9 @@ AgriNova | Intelligent Farm Monitoring & Management
     border-bottom-right-radius:45px;
 
     box-shadow:
-        0 20px 70px rgba(0,0,0,.45);
+        0 20px 70px rgba(0,0,0,.40);
 }
 
-
-/* =========================================================
-   HERO LIGHT EFFECTS
-========================================================= */
 
 .hero::before{
 
@@ -211,27 +203,23 @@ AgriNova | Intelligent Farm Monitoring & Management
 
         radial-gradient(
             circle at 50% 35%,
-            rgba(129,140,248,.18),
+            rgba(129,140,248,.16),
             transparent 30%
         ),
 
         radial-gradient(
             circle at 15% 75%,
-            rgba(14,165,233,.18),
+            rgba(14,165,233,.16),
             transparent 28%
         ),
 
         radial-gradient(
             circle at 85% 75%,
-            rgba(236,72,153,.16),
+            rgba(236,72,153,.13),
             transparent 28%
         );
 }
 
-
-/* =========================================================
-   MOVING BOTTOM LIGHT
-========================================================= */
 
 .hero::after{
 
@@ -263,8 +251,7 @@ AgriNova | Intelligent Farm Monitoring & Management
     box-shadow:
         0 0 22px rgba(99,102,241,.85);
 
-    animation:
-        heroLine 5s linear infinite;
+    animation:heroLine 5s linear infinite;
 }
 
 
@@ -280,10 +267,6 @@ AgriNova | Intelligent Farm Monitoring & Management
 
 }
 
-
-/* =========================================================
-   HERO OVERLAY
-========================================================= */
 
 .hero-overlay{
 
@@ -304,11 +287,6 @@ AgriNova | Intelligent Farm Monitoring & Management
     padding:40px 25px;
 }
 
-
-/* =========================================================
-   HERO CONTENT
-   NO CARD / NO BOX
-========================================================= */
 
 .hero-content{
 
@@ -341,7 +319,7 @@ AgriNova | Intelligent Farm Monitoring & Management
 
 
 /* =========================================================
-   SMALL TOP BADGE
+   HERO BADGE
 ========================================================= */
 
 .hero-badge{
@@ -361,7 +339,7 @@ AgriNova | Intelligent Farm Monitoring & Management
     color:#dbeafe;
 
     background:
-        rgba(15,23,42,.60);
+        rgba(15,23,42,.58);
 
     border:
         1px solid rgba(96,165,250,.35);
@@ -374,7 +352,7 @@ AgriNova | Intelligent Farm Monitoring & Management
 
     box-shadow:
 
-        0 0 20px rgba(59,130,246,.12),
+        0 0 20px rgba(59,130,246,.10),
 
         inset 0 1px 0 rgba(255,255,255,.05);
 }
@@ -390,8 +368,23 @@ AgriNova | Intelligent Farm Monitoring & Management
 
 
 /* =========================================================
-   BRAND NAME
+   HERO TITLE
 ========================================================= */
+
+.hero-title{
+
+    margin:0;
+
+    line-height:1.05;
+
+    font-weight:950;
+
+    color:white;
+
+    text-shadow:
+        0 8px 35px rgba(0,0,0,.65);
+}
+
 
 .hero-title .brand{
 
@@ -411,25 +404,6 @@ AgriNova | Intelligent Farm Monitoring & Management
 
     text-shadow:
         0 0 20px rgba(59,130,246,.55);
-}
-
-
-/* =========================================================
-   MAIN PROJECT TITLE
-========================================================= */
-
-.hero-title{
-
-    margin:0;
-
-    line-height:1.05;
-
-    font-weight:950;
-
-    color:white;
-
-    text-shadow:
-        0 8px 35px rgba(0,0,0,.65);
 }
 
 
@@ -464,8 +438,7 @@ AgriNova | Intelligent Farm Monitoring & Management
 
     background-size:300% auto;
 
-    animation:
-        titleShine 7s linear infinite;
+    animation:titleShine 7s linear infinite;
 }
 
 
@@ -481,10 +454,6 @@ AgriNova | Intelligent Farm Monitoring & Management
 
 }
 
-
-/* =========================================================
-   TITLE UNDERLINE
-========================================================= */
 
 .title-line{
 
@@ -590,16 +559,8 @@ AgriNova | Intelligent Farm Monitoring & Management
     text-decoration:none;
 
     transition:.35s;
-
-    position:relative;
-
-    overflow:hidden;
 }
 
-
-/* =========================================================
-   GET STARTED
-========================================================= */
 
 .btn-start{
 
@@ -619,9 +580,7 @@ AgriNova | Intelligent Farm Monitoring & Management
 
     box-shadow:
 
-        0 10px 35px rgba(79,70,229,.35),
-
-        0 0 20px rgba(99,102,241,.15);
+        0 10px 35px rgba(79,70,229,.35);
 }
 
 
@@ -635,15 +594,9 @@ AgriNova | Intelligent Farm Monitoring & Management
 
     box-shadow:
 
-        0 16px 45px rgba(236,72,153,.35),
-
-        0 0 25px rgba(99,102,241,.25);
+        0 16px 45px rgba(236,72,153,.30);
 }
 
-
-/* =========================================================
-   EXPLORE
-========================================================= */
 
 .btn-learn{
 
@@ -680,43 +633,53 @@ AgriNova | Intelligent Farm Monitoring & Management
 
 .features-section{
 
+    position:relative;
+
     padding:90px 0;
+
+    overflow:hidden;
 
     background:
 
         radial-gradient(
-            circle at 10% 20%,
-            rgba(37,99,235,.08),
+            circle at 8% 20%,
+            rgba(37,99,235,.14),
             transparent 30%
         ),
 
         radial-gradient(
-            circle at 90% 80%,
-            rgba(168,85,247,.08),
+            circle at 92% 75%,
+            rgba(168,85,247,.13),
             transparent 30%
         ),
 
-        #080a14;
+        linear-gradient(
+            135deg,
+            #080d1c,
+            #101936,
+            #17133a,
+            #0a1022
+        );
 }
 
-
-/* =========================================================
-   SECTION HEADING
-========================================================= */
 
 .section-heading{
 
     text-align:center;
 
-    margin-bottom:48px;
+    margin-bottom:52px;
 }
 
 
 .mini-title{
 
-    display:inline-block;
+    display:inline-flex;
 
-    padding:8px 16px;
+    align-items:center;
+
+    gap:8px;
+
+    padding:9px 17px;
 
     border-radius:50px;
 
@@ -726,44 +689,41 @@ AgriNova | Intelligent Farm Monitoring & Management
         rgba(30,41,59,.65);
 
     border:
-        1px solid rgba(96,165,250,.22);
+        1px solid rgba(96,165,250,.28);
 
     font-size:10px;
 
     font-weight:900;
 
     letter-spacing:1.8px;
-
-    box-shadow:
-        0 0 20px rgba(37,99,235,.08);
 }
 
 
 .features-title{
 
-    margin:16px 0 10px;
+    margin:17px 0 12px;
+
+    color:#f8fafc;
 
     font-size:40px;
 
     font-weight:950;
 
-    color:#f8fafc;
-
-    letter-spacing:-.7px;
+    letter-spacing:-.8px;
 }
 
 
 .section-subtitle{
 
-    max-width:680px;
+    max-width:700px;
 
     margin:auto;
 
-    color:#94a3b8;
-
-    line-height:1.75;
+    color:#aebbd0;
 
     font-size:15px;
+
+    line-height:1.8;
 }
 
 
@@ -792,12 +752,12 @@ AgriNova | Intelligent Farm Monitoring & Management
         );
 
     box-shadow:
-        0 0 14px rgba(99,102,241,.55);
+        0 0 15px rgba(99,102,241,.55);
 }
 
 
 /* =========================================================
-   FEATURE CARD
+   FEATURE CARDS
 ========================================================= */
 
 .feature-card{
@@ -806,24 +766,25 @@ AgriNova | Intelligent Farm Monitoring & Management
 
     position:relative;
 
+    padding:28px 25px 25px;
+
     overflow:hidden;
 
-    border-radius:22px;
-
-    border:
-        1px solid rgba(148,163,184,.12);
+    border-radius:23px;
 
     background:
 
         linear-gradient(
             145deg,
-            rgba(15,23,42,.96),
-            rgba(17,24,39,.92)
+            rgba(22,34,64,.94),
+            rgba(15,23,48,.88)
         );
 
-    box-shadow:
+    border:
+        1px solid rgba(148,163,184,.15);
 
-        0 15px 40px rgba(0,0,0,.28);
+    box-shadow:
+        0 16px 42px rgba(0,0,0,.27);
 
     transition:.4s;
 }
@@ -855,61 +816,39 @@ AgriNova | Intelligent Farm Monitoring & Management
 }
 
 
-.feature-card::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:150px;
-
-    height:150px;
-
-    right:-70px;
-
-    bottom:-70px;
-
-    border-radius:50%;
-
-    background:
-
-        radial-gradient(
-            circle,
-            rgba(99,102,241,.13),
-            transparent 70%
-        );
-}
-
-
 .feature-card:hover{
 
     transform:
-        translateY(-10px);
+        translateY(-9px);
 
     border-color:
-        rgba(129,140,248,.35);
+        rgba(129,140,248,.38);
 
     box-shadow:
 
-        0 25px 55px rgba(0,0,0,.40),
+        0 25px 55px rgba(0,0,0,.38),
 
-        0 0 25px rgba(79,70,229,.10);
+        0 0 28px rgba(99,102,241,.12);
 }
 
 
-.feature-card .card-body{
+.feature-top{
 
-    padding:34px 23px;
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:21px;
 }
 
 
 .feature-icon{
 
-    width:68px;
+    width:62px;
 
-    height:68px;
-
-    margin:0 auto 18px;
+    height:62px;
 
     display:flex;
 
@@ -917,63 +856,30 @@ AgriNova | Intelligent Farm Monitoring & Management
 
     justify-content:center;
 
-    border-radius:19px;
+    border-radius:18px;
 
-    font-size:28px;
-
-    transition:.4s;
+    color:#38bdf8;
 
     background:
-        rgba(30,41,59,.75);
+        rgba(14,165,233,.11);
 
     border:
-        1px solid rgba(148,163,184,.12);
+        1px solid rgba(56,189,248,.18);
+
+    font-size:26px;
+
+    transition:.4s;
 }
 
 
 .feature-card:hover .feature-icon{
 
     transform:
-        translateY(-5px)
+        translateY(-4px)
         scale(1.08);
 
     box-shadow:
-        0 10px 25px rgba(99,102,241,.18);
-}
-
-
-.feature-card h4{
-
-    color:#f8fafc;
-
-    font-weight:850;
-
-    font-size:18px;
-
-    margin-bottom:10px;
-}
-
-
-.feature-card p{
-
-    color:#94a3b8;
-
-    line-height:1.75;
-
-    margin:0;
-}
-
-
-/* =========================================================
-   ICON COLORS
-========================================================= */
-
-.feature-card:nth-child(1) .feature-icon{
-
-    color:#38bdf8;
-
-    background:
-        rgba(14,165,233,.10);
+        0 10px 25px rgba(56,189,248,.17);
 }
 
 
@@ -982,7 +888,7 @@ AgriNova | Intelligent Farm Monitoring & Management
     color:#22d3ee;
 
     background:
-        rgba(6,182,212,.10);
+        rgba(6,182,212,.11);
 }
 
 
@@ -991,16 +897,16 @@ AgriNova | Intelligent Farm Monitoring & Management
     color:#818cf8;
 
     background:
-        rgba(99,102,241,.10);
+        rgba(99,102,241,.11);
 }
 
 
 .feature-card:nth-child(4) .feature-icon{
 
-    color:#a78bfa;
+    color:#38bdf8;
 
     background:
-        rgba(139,92,246,.10);
+        rgba(14,165,233,.11);
 }
 
 
@@ -1009,7 +915,7 @@ AgriNova | Intelligent Farm Monitoring & Management
     color:#c084fc;
 
     background:
-        rgba(168,85,247,.10);
+        rgba(168,85,247,.11);
 }
 
 
@@ -1018,72 +924,271 @@ AgriNova | Intelligent Farm Monitoring & Management
     color:#f472b6;
 
     background:
-        rgba(236,72,153,.10);
+        rgba(236,72,153,.11);
 }
 
 
-/* =========================================================
-   HOW AGRINOVA HELPS
-========================================================= */
+.feature-number{
 
-.help-section{
+    color:#64748b;
 
-    padding:85px 0;
+    font-size:12px;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+}
+
+
+.feature-card h3{
+
+    margin:0 0 12px;
+
+    color:#f8fafc;
+
+    font-size:20px;
+
+    font-weight:900;
+}
+
+
+.feature-card p{
+
+    min-height:75px;
+
+    margin:0 0 18px;
+
+    color:#aebbd0;
+
+    font-size:14px;
+
+    line-height:1.75;
+}
+
+
+.feature-points{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+    padding:0;
+
+    margin:0 0 22px;
+
+    list-style:none;
+}
+
+
+.feature-points li{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:6px 9px;
+
+    border-radius:8px;
+
+    color:#cbd5e1;
+
+    background:
+        rgba(30,41,59,.65);
+
+    border:
+        1px solid rgba(148,163,184,.10);
+
+    font-size:11px;
+
+    font-weight:700;
+}
+
+
+.feature-points li i{
+
+    color:#38bdf8;
+
+    font-size:9px;
+}
+
+
+.feature-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 17px;
+
+    border-radius:11px;
+
+    color:#dbeafe;
+
+    background:
+        rgba(79,70,229,.14);
+
+    border:
+        1px solid rgba(129,140,248,.27);
+
+    text-decoration:none;
+
+    font-size:12px;
+
+    font-weight:850;
+
+    transition:.3s;
+}
+
+
+.feature-btn:hover{
+
+    color:white;
 
     background:
 
         linear-gradient(
             135deg,
-            #080a14,
-            #0b1020,
-            #0e0b1d,
-            #080a14
+            #2563eb,
+            #4f46e5,
+            #7c3aed,
+            #db2777
         );
 
-    border-top:
-        1px solid rgba(99,102,241,.10);
+    transform:
+        translateY(-2px);
 }
 
 
-.help-card{
+.features-more{
 
-    height:100%;
+    text-align:center;
 
-    padding:30px 23px;
+    margin-top:48px;
+}
 
-    border-radius:21px;
+
+.all-features-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:14px 25px;
+
+    border-radius:14px;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    font-weight:900;
 
     background:
-        rgba(15,23,42,.75);
 
-    border:
-        1px solid rgba(148,163,184,.12);
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5,
+            #7c3aed,
+            #db2777
+        );
 
     box-shadow:
-        0 14px 35px rgba(0,0,0,.25);
+        0 10px 30px rgba(79,70,229,.25);
 
     transition:.35s;
 }
 
 
-.help-card:hover{
+.all-features-btn:hover{
+
+    color:white;
 
     transform:
-        translateY(-8px);
-
-    border-color:
-        rgba(129,140,248,.30);
+        translateY(-4px);
 
     box-shadow:
-        0 20px 45px rgba(0,0,0,.38);
+        0 16px 40px rgba(236,72,153,.25);
 }
 
 
-.help-number{
+/* =========================================================
+   WHY AGRINOVA
+========================================================= */
 
-    width:47px;
+.why-agrinova{
 
-    height:47px;
+    padding:90px 0;
+
+    position:relative;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #0b1020,
+            #111936,
+            #1a1640,
+            #0a1020
+        );
+
+    border-top:
+        1px solid rgba(99,102,241,.12);
+}
+
+
+.why-grid{
+
+    margin-top:45px;
+}
+
+
+.why-card{
+
+    height:100%;
+
+    padding:27px 24px;
+
+    border-radius:20px;
+
+    background:
+        rgba(18,30,58,.72);
+
+    border:
+        1px solid rgba(148,163,184,.13);
+
+    transition:.35s;
+}
+
+
+.why-card:hover{
+
+    transform:
+        translateY(-7px);
+
+    border-color:
+        rgba(129,140,248,.32);
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.28);
+}
+
+
+.why-number{
+
+    width:44px;
+
+    height:44px;
 
     display:flex;
 
@@ -1091,9 +1196,13 @@ AgriNova | Intelligent Farm Monitoring & Management
 
     justify-content:center;
 
-    border-radius:14px;
+    margin-bottom:17px;
+
+    border-radius:13px;
 
     color:white;
+
+    font-size:12px;
 
     font-weight:900;
 
@@ -1104,45 +1213,180 @@ AgriNova | Intelligent Farm Monitoring & Management
             #2563eb,
             #6366f1,
             #8b5cf6,
-            #ec4899
+            #db2777
         );
-
-    margin-bottom:17px;
-
-    box-shadow:
-        0 8px 22px rgba(99,102,241,.25);
 }
 
 
-.help-card h4{
+.why-card h4{
+
+    margin-bottom:10px;
 
     color:#f8fafc;
+
+    font-size:18px;
 
     font-weight:850;
 }
 
 
-.help-card p{
+.why-card p{
+
+    margin:0;
+
+    color:#aebbd0;
+
+    font-size:14px;
+
+    line-height:1.75;
+}
+
+
+/* =========================================================
+   HOW IT WORKS
+========================================================= */
+
+.how-section{
+
+    position:relative;
+
+    padding:90px 0;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(99,102,241,.09),
+            transparent 45%
+        ),
+
+        #080d1c;
+}
+
+
+.workflow{
+
+    position:relative;
+
+    margin-top:45px;
+}
+
+
+.workflow::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:40px;
+
+    left:16%;
+
+    right:16%;
+
+    height:2px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #38bdf8,
+            #6366f1,
+            #a855f7,
+            #ec4899
+        );
+
+    opacity:.35;
+}
+
+
+.workflow-card{
+
+    position:relative;
+
+    z-index:2;
+
+    text-align:center;
+
+    padding:10px 20px;
+}
+
+
+.workflow-icon{
+
+    width:80px;
+
+    height:80px;
+
+    margin:0 auto 20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    color:white;
+
+    font-size:27px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5,
+            #8b5cf6,
+            #db2777
+        );
+
+    border:
+
+        5px solid #080d1c;
+
+    box-shadow:
+
+        0 0 25px rgba(99,102,241,.30);
+}
+
+
+.workflow-card h4{
+
+    color:#f8fafc;
+
+    font-size:19px;
+
+    font-weight:850;
+
+    margin-bottom:10px;
+}
+
+
+.workflow-card p{
 
     color:#94a3b8;
 
-    line-height:1.75;
+    font-size:13px;
+
+    line-height:1.7;
 
     margin:0;
 }
 
 
 /* =========================================================
-   FINAL CTA
+   CTA
 ========================================================= */
 
 .cta-section{
 
+    position:relative;
+
     padding:85px 20px;
 
     text-align:center;
-
-    position:relative;
 
     overflow:hidden;
 
@@ -1161,26 +1405,6 @@ AgriNova | Intelligent Farm Monitoring & Management
 
     animation:
         ctaGradient 10s ease infinite;
-
-    color:white;
-}
-
-
-.cta-section::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-
-        radial-gradient(
-            circle at 50% 50%,
-            rgba(255,255,255,.12),
-            transparent 40%
-        );
 }
 
 
@@ -1201,9 +1425,29 @@ AgriNova | Intelligent Farm Monitoring & Management
 }
 
 
+.cta-section::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255,255,255,.11),
+            transparent 40%
+        );
+}
+
+
 .cta-section h2{
 
     position:relative;
+
+    color:white;
 
     font-size:36px;
 
@@ -1341,9 +1585,10 @@ AgriNova | Intelligent Farm Monitoring & Management
 
 
     .features-section,
-    .help-section{
+    .why-agrinova,
+    .how-section{
 
-        padding:65px 0;
+        padding:65px 15px;
     }
 
 
@@ -1355,7 +1600,19 @@ AgriNova | Intelligent Farm Monitoring & Management
 
     .section-subtitle{
 
-        padding:0 18px;
+        padding:0 15px;
+    }
+
+
+    .workflow::before{
+
+        display:none;
+    }
+
+
+    .workflow-card{
+
+        margin-bottom:25px;
     }
 
 
@@ -1376,609 +1633,1210 @@ AgriNova | Intelligent Farm Monitoring & Management
 <div class="home-page">
 
 
-<!-- =====================================================
-     MOVING WELCOME BAR
-====================================================== -->
+    <!-- =====================================================
+         MOVING WELCOME BAR
+    ====================================================== -->
 
-<div class="home-marquee">
+    <div class="home-marquee">
 
-    <div class="home-marquee-track">
+        <div class="home-marquee-track">
 
-        <span>
-            <i class="fa-solid fa-leaf"></i>
-            Welcome to AgriNova — Intelligent Farm Monitoring & Management
-        </span>
+            <span>
 
-        <span>
-            <i class="fa-solid fa-seedling"></i>
-            Smart Farming • Live Monitoring • Intelligent Management
-        </span>
+                <i class="fa-solid fa-leaf"></i>
 
-        <span>
-            <i class="fa-solid fa-satellite-dish"></i>
-            Connected Technology for Modern Agriculture
-        </span>
-
-        <span>
-            <i class="fa-solid fa-leaf"></i>
-            Welcome to AgriNova — Intelligent Farm Monitoring & Management
-        </span>
-
-        <span>
-            <i class="fa-solid fa-seedling"></i>
-            Smart Farming • Live Monitoring • Intelligent Management
-        </span>
-
-        <span>
-            <i class="fa-solid fa-satellite-dish"></i>
-            Connected Technology for Modern Agriculture
-        </span>
-
-    </div>
-
-</div>
-
-<!-- =====================================================
-     HERO
-====================================================== -->
-
-<section class="hero">
-
-    <div class="hero-overlay">
-
-        <div class="hero-content">
-
-
-            <div class="hero-badge">
-
-                <i class="fa-solid fa-microchip"></i>
-
-                INTELLIGENT FARMING • DIGITAL AGRICULTURE
-
-            </div>
-
-
-            <h1 class="hero-title">
-
-
-                <span class="brand">
-
-                    🌱 AGRINOVA
-
-                </span>
-
-
-                <span class="main-title">
-
-                    Intelligent Farm<br>
-                    Monitoring & Management
-
-                </span>
-
-
-                <div class="title-line"></div>
-
-
-            </h1>
-
-
-            <p class="hero-text">
-
-                A next-generation smart agriculture platform designed
-                to monitor farm conditions, manage crops, track weather,
-                control irrigation and transform farming data into
-                smarter decisions.
-
-            </p>
-
-
-            <div class="hero-buttons">
-
-
-                <a
-                    href="{{ url_for('register') }}"
-                    class="hero-btn btn-start">
-
-                    <i class="fa-solid fa-rocket"></i>
-
-                    Get Started
-
-                </a>
-
-
-                <a
-                    href="{{ url_for('about') }}"
-                    class="hero-btn btn-learn">
-
-                    <i class="fa-solid fa-circle-info"></i>
-
-                    Explore AgriNova
-
-                </a>
-
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     SMART FEATURES
-====================================================== -->
-
-<section class="features-section">
-
-    <div class="container">
-
-
-        <div class="section-heading">
-
-
-            <span class="mini-title">
-
-                AGRINOVA INTELLIGENT MODULES
+                Welcome to AgriNova — Intelligent Farm Monitoring & Management
 
             </span>
 
 
-            <h2 class="features-title">
+            <span>
 
-                Everything Your Farm Needs
+                <i class="fa-solid fa-seedling"></i>
 
-            </h2>
+                Smart Farming • Live Monitoring • Intelligent Management
+
+            </span>
 
 
-            <p class="section-subtitle">
+            <span>
 
-                One connected platform to monitor,
-                manage and understand your farming
-                activities with greater clarity.
+                <i class="fa-solid fa-satellite-dish"></i>
 
-            </p>
+                Connected Technology for Modern Agriculture
 
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Monitor • Manage • Analyze • Decide Smarter
+
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-leaf"></i>
+
+                Welcome to AgriNova — Intelligent Farm Monitoring & Management
+
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-seedling"></i>
+
+                Smart Farming • Live Monitoring • Intelligent Management
+
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-satellite-dish"></i>
+
+                Connected Technology for Modern Agriculture
+
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Monitor • Manage • Analyze • Decide Smarter
+
+            </span>
 
         </div>
 
+    </div>
 
-        <div class="row g-4">
+
+    <!-- =====================================================
+         HERO SECTION
+    ====================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-overlay">
+
+            <div class="hero-content">
 
 
-            <!-- =================================================
-                 FEATURE 1
-            ================================================== -->
+                <div class="hero-badge">
 
-            <div class="col-md-4">
+                    <i class="fa-solid fa-microchip"></i>
 
-                <div class="feature-card">
+                    INTELLIGENT FARMING • DIGITAL AGRICULTURE
 
-                    <div class="card-body text-center">
+                </div>
 
-                        <div class="feature-icon">
 
-                            <i class="fa-solid fa-seedling"></i>
+                <h1 class="hero-title">
+
+
+                    <span class="brand">
+
+                        🌱 AGRINOVA
+
+                    </span>
+
+
+                    <span class="main-title">
+
+                        Intelligent Farm<br>
+                        Monitoring & Management
+
+                    </span>
+
+
+                    <div class="title-line"></div>
+
+
+                </h1>
+
+
+                <p class="hero-text">
+
+                    A next-generation smart agriculture platform
+                    designed to monitor farm conditions, manage
+                    crops, track weather, control irrigation and
+                    transform farming data into smarter decisions.
+
+                </p>
+
+
+                <div class="hero-buttons">
+
+
+                    <a
+                        href="{{ url_for('register') }}"
+                        class="hero-btn btn-start">
+
+                        <i class="fa-solid fa-rocket"></i>
+
+                        Get Started
+
+                    </a>
+
+
+                    <a
+                        href="{{ url_for('about') }}"
+                        class="hero-btn btn-learn">
+
+                        <i class="fa-solid fa-circle-info"></i>
+
+                        Explore AgriNova
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FEATURES SECTION
+    ====================================================== -->
+
+    <section class="features-section">
+
+        <div class="container">
+
+
+            <div class="section-heading">
+
+
+                <span class="mini-title">
+
+                    <i class="fa-solid fa-layer-group"></i>
+
+                    AGRINOVA SMART FEATURES
+
+                </span>
+
+
+                <h2 class="features-title">
+
+                    Powerful Tools for Smarter Farming
+
+                </h2>
+
+
+                <p class="section-subtitle">
+
+                    AgriNova brings important farming tools together
+                    in one intelligent platform to help farmers
+                    monitor, manage and understand their farm better.
+
+                </p>
+
+
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <!-- FEATURE 01 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="feature-card">
+
+
+                        <div class="feature-top">
+
+
+                            <div class="feature-icon">
+
+                                <i class="fa-solid fa-seedling"></i>
+
+                            </div>
+
+
+                            <span class="feature-number">
+
+                                01
+
+                            </span>
+
 
                         </div>
 
 
-                        <h4>
+                        <h3>
 
                             Crop Management
 
-                        </h4>
+                        </h3>
 
 
                         <p>
 
-                            Organize crop information,
-                            monitor farming activities and
-                            manage important crop details.
+                            Manage crop details, farming activities
+                            and important crop information digitally
+                            from one organized platform.
 
                         </p>
+
+
+                        <ul class="feature-points">
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Crop Details
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Activities
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Records
+
+                            </li>
+
+
+                        </ul>
+
+
+                        <a
+                            href="{{ url_for('crop') }}"
+                            class="feature-btn">
+
+                            Explore Feature
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
 
                     </div>
 
                 </div>
 
-            </div>
+
+                <!-- FEATURE 02 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="feature-card">
 
 
-            <!-- =================================================
-                 FEATURE 2
-            ================================================== -->
+                        <div class="feature-top">
 
-            <div class="col-md-4">
 
-                <div class="feature-card">
+                            <div class="feature-icon">
 
-                    <div class="card-body text-center">
+                                <i class="fa-solid fa-microchip"></i>
 
-                        <div class="feature-icon">
+                            </div>
 
-                            <i class="fa-solid fa-microchip"></i>
+
+                            <span class="feature-number">
+
+                                02
+
+                            </span>
+
 
                         </div>
 
 
-                        <h4>
+                        <h3>
 
                             Smart Sensor Monitoring
 
-                        </h4>
+                        </h3>
 
 
                         <p>
 
-                            Monitor temperature, humidity
-                            and soil moisture to understand
-                            changing farm conditions.
+                            Monitor temperature, humidity and soil
+                            moisture to understand changing farm
+                            conditions more clearly.
 
                         </p>
+
+
+                        <ul class="feature-points">
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Temperature
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Humidity
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Soil Moisture
+
+                            </li>
+
+
+                        </ul>
+
+
+                        <a
+                            href="{{ url_for('live_farm') }}"
+                            class="feature-btn">
+
+                            Explore Feature
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
 
                     </div>
 
                 </div>
 
-            </div>
+
+                <!-- FEATURE 03 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="feature-card">
 
 
-            <!-- =================================================
-                 FEATURE 3
-            ================================================== -->
+                        <div class="feature-top">
 
-            <div class="col-md-4">
 
-                <div class="feature-card">
+                            <div class="feature-icon">
 
-                    <div class="card-body text-center">
+                                <i class="fa-solid fa-cloud-sun"></i>
 
-                        <div class="feature-icon">
+                            </div>
 
-                            <i class="fa-solid fa-cloud-sun"></i>
+
+                            <span class="feature-number">
+
+                                03
+
+                            </span>
+
 
                         </div>
 
 
-                        <h4>
+                        <h3>
 
-                            Live Weather Insights
+                            Weather Intelligence
 
-                        </h4>
+                        </h3>
 
 
                         <p>
 
-                            Access weather information and
-                            environmental conditions to support
+                            Get useful weather information and
+                            environmental updates to support
                             better farming planning.
 
                         </p>
 
+
+                        <ul class="feature-points">
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Weather
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Temperature
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Updates
+
+                            </li>
+
+
+                        </ul>
+
+
+                        <a
+                            href="{{ url_for('weather') }}"
+                            class="feature-btn">
+
+                            Explore Feature
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+
                     </div>
 
                 </div>
 
-            </div>
+
+                <!-- FEATURE 04 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="feature-card">
 
 
-            <!-- =================================================
-                 FEATURE 4
-            ================================================== -->
+                        <div class="feature-top">
 
-            <div class="col-md-4">
 
-                <div class="feature-card">
+                            <div class="feature-icon">
 
-                    <div class="card-body text-center">
+                                <i class="fa-solid fa-droplet"></i>
 
-                        <div class="feature-icon">
+                            </div>
 
-                            <i class="fa-solid fa-droplet"></i>
+
+                            <span class="feature-number">
+
+                                04
+
+                            </span>
+
 
                         </div>
 
 
-                        <h4>
+                        <h3>
 
                             Smart Irrigation
 
-                        </h4>
+                        </h3>
 
 
                         <p>
 
-                            Manage irrigation activities and
-                            support efficient water usage
-                            for healthier crop management.
+                            Manage irrigation schedules and
+                            support efficient water usage for
+                            organized farm management.
 
                         </p>
+
+
+                        <ul class="feature-points">
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Schedule
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Water
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Motor
+
+                            </li>
+
+
+                        </ul>
+
+
+                        <a
+                            href="{{ url_for('irrigation') }}"
+                            class="feature-btn">
+
+                            Explore Feature
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
 
                     </div>
 
                 </div>
 
-            </div>
+
+                <!-- FEATURE 05 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="feature-card">
 
 
-            <!-- =================================================
-                 FEATURE 5
-            ================================================== -->
+                        <div class="feature-top">
 
-            <div class="col-md-4">
 
-                <div class="feature-card">
+                            <div class="feature-icon">
 
-                    <div class="card-body text-center">
+                                <i class="fa-solid fa-chart-line"></i>
 
-                        <div class="feature-icon">
+                            </div>
 
-                            <i class="fa-solid fa-chart-line"></i>
+
+                            <span class="feature-number">
+
+                                05
+
+                            </span>
+
 
                         </div>
 
 
-                        <h4>
+                        <h3>
 
                             Farm Analytics
 
-                        </h4>
+                        </h3>
 
 
                         <p>
 
-                            Understand farming records,
-                            activities and trends through
-                            meaningful analytics.
+                            Analyze farming records and activities
+                            to understand trends and gain useful
+                            insights about farm performance.
 
                         </p>
+
+
+                        <ul class="feature-points">
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Records
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Analysis
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Insights
+
+                            </li>
+
+
+                        </ul>
+
+
+                        <a
+                            href="{{ url_for('analytics') }}"
+                            class="feature-btn">
+
+                            Explore Feature
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
 
                     </div>
 
                 </div>
 
+
+                <!-- FEATURE 06 -->
+
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="feature-card">
+
+
+                        <div class="feature-top">
+
+
+                            <div class="feature-icon">
+
+                                <i class="fa-solid fa-bell"></i>
+
+                            </div>
+
+
+                            <span class="feature-number">
+
+                                06
+
+                            </span>
+
+
+                        </div>
+
+
+                        <h3>
+
+                            Intelligent Alerts
+
+                        </h3>
+
+
+                        <p>
+
+                            Stay informed about important farming
+                            activities and changing monitoring
+                            conditions through timely alerts.
+
+                        </p>
+
+
+                        <ul class="feature-points">
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Notifications
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Conditions
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Updates
+
+                            </li>
+
+
+                        </ul>
+
+
+                        <a
+                            href="#"
+                            class="feature-btn">
+
+                            Explore Feature
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+
             </div>
 
 
-            <!-- =================================================
-                 FEATURE 6
-            ================================================== -->
 
-            <div class="col-md-4">
+        </div>
 
-                <div class="feature-card">
+    </section>
 
-                    <div class="card-body text-center">
 
-                        <div class="feature-icon">
+    <!-- =====================================================
+         WHY AGRINOVA
+    ====================================================== -->
 
-                            <i class="fa-solid fa-bell"></i>
+    <section class="why-agrinova">
+
+        <div class="container">
+
+
+            <div class="section-heading">
+
+
+                <span class="mini-title">
+
+                    <i class="fa-solid fa-lightbulb"></i>
+
+                    WHY AGRINOVA
+
+                </span>
+
+
+                <h2 class="features-title">
+
+                    Designed for Smarter Agriculture
+
+                </h2>
+
+
+                <p class="section-subtitle">
+
+                    AgriNova connects everyday farming activities
+                    with digital technology to make farm management
+                    simpler and more organized.
+
+                </p>
+
+
+            </div>
+
+
+            <div class="row g-4 why-grid">
+
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="why-card">
+
+
+                        <div class="why-number">
+
+                            01
 
                         </div>
 
 
                         <h4>
 
-                            Intelligent Alerts
+                            One Connected Platform
 
                         </h4>
 
 
                         <p>
 
-                            Stay informed about important
-                            farming activities and changing
-                            monitoring conditions.
+                            Keep important crop, weather, irrigation,
+                            monitoring and farming information together
+                            in one convenient platform.
 
                         </p>
 
+
                     </div>
 
                 </div>
 
-            </div>
 
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="why-card">
+
+
+                        <div class="why-number">
+
+                            02
+
+                        </div>
+
+
+                        <h4>
+
+                            Easy Farm Monitoring
+
+                        </h4>
+
+
+                        <p>
+
+                            View important farm conditions in an
+                            organized way so that monitoring becomes
+                            easier and more understandable.
+
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="why-card">
+
+
+                        <div class="why-number">
+
+                            03
+
+                        </div>
+
+
+                        <h4>
+
+                            Better Decisions
+
+                        </h4>
+
+
+                        <p>
+
+                            Use farming records, environmental data
+                            and analytics to support more informed
+                            agricultural decisions.
+
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="why-card">
+
+
+                        <div class="why-number">
+
+                            04
+
+                        </div>
+
+
+                        <h4>
+
+                            Smart Agriculture
+
+                        </h4>
+
+
+                        <p>
+
+                            Combine traditional farming practices
+                            with modern digital technology for a
+                            more connected farming experience.
+
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
 
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- =====================================================
-     HOW AGRINOVA HELPS
-====================================================== -->
+    <!-- =====================================================
+         HOW AGRINOVA WORKS
+    ====================================================== -->
 
-<section class="help-section">
+    <section class="how-section">
 
-    <div class="container">
-
-
-        <div class="section-heading">
+        <div class="container">
 
 
-            <span class="mini-title">
-
-                HOW AGRINOVA WORKS
-
-            </span>
+            <div class="section-heading">
 
 
-            <h2 class="features-title">
+                <span class="mini-title">
 
-                Monitor. Manage. Decide.
+                    <i class="fa-solid fa-route"></i>
 
-            </h2>
+                    SIMPLE WORKFLOW
+
+                </span>
 
 
-            <p class="section-subtitle">
+                <h2 class="features-title">
 
-                A simple digital workflow that connects
-                important farming activities in one place.
+                    How AgriNova Works
 
-            </p>
+                </h2>
 
+
+                <p class="section-subtitle">
+
+                    AgriNova follows a simple digital workflow
+                    that helps farmers move from monitoring
+                    to better farming decisions.
+
+                </p>
+
+
+            </div>
+
+
+            <div class="row g-4 workflow">
+
+
+                <!-- STEP 01 -->
+
+                <div class="col-lg-4">
+
+                    <div class="workflow-card">
+
+
+                        <div class="workflow-icon">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </div>
+
+
+                        <h4>
+
+                            Monitor
+
+                        </h4>
+
+
+                        <p>
+
+                            Collect and view important farm
+                            information such as sensor readings,
+                            crop details and weather conditions.
+
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- STEP 02 -->
+
+                <div class="col-lg-4">
+
+                    <div class="workflow-card">
+
+
+                        <div class="workflow-icon">
+
+                            <i class="fa-solid fa-sliders"></i>
+
+                        </div>
+
+
+                        <h4>
+
+                            Manage
+
+                        </h4>
+
+
+                        <p>
+
+                            Manage crops, irrigation schedules,
+                            motor activities and other farming
+                            operations from one platform.
+
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- STEP 03 -->
+
+                <div class="col-lg-4">
+
+                    <div class="workflow-card">
+
+
+                        <div class="workflow-icon">
+
+                            <i class="fa-solid fa-brain"></i>
+
+                        </div>
+
+
+                        <h4>
+
+                            Decide Smarter
+
+                        </h4>
+
+
+                        <p>
+
+                            Use organized records, analytics and
+                            environmental information to support
+                            better agricultural decisions.
+
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
 
         </div>
 
+    </section>
 
-        <div class="row g-4">
 
+    <!-- =====================================================
+         FINAL CTA
+    ====================================================== -->
 
-            <!-- STEP 01 -->
+    <section class="cta-section">
 
-            <div class="col-md-4">
 
-                <div class="help-card">
+        <h2>
 
+            Build a Smarter Farm with AgriNova
 
-                    <div class="help-number">
+        </h2>
 
-                        01
 
-                    </div>
+        <p>
 
+            Bring crop management, live monitoring, weather,
+            irrigation and farm analytics together in one
+            intelligent agriculture platform.
 
-                    <h4>
+        </p>
 
-                        Monitor
 
-                    </h4>
+        <a
+            href="{{ url_for('register') }}"
+            class="cta-btn">
 
+            <i class="fa-solid fa-user-plus"></i>
 
-                    <p>
+            Create Farmer Account
 
-                        Monitor farm conditions such as
-                        temperature, humidity and soil
-                        moisture through the system.
+        </a>
 
-                    </p>
 
-
-                </div>
-
-            </div>
-
-
-            <!-- STEP 02 -->
-
-            <div class="col-md-4">
-
-                <div class="help-card">
-
-
-                    <div class="help-number">
-
-                        02
-
-                    </div>
-
-
-                    <h4>
-
-                        Manage
-
-                    </h4>
-
-
-                    <p>
-
-                        Manage crops, irrigation, weather
-                        information and farming records
-                        from one connected platform.
-
-                    </p>
-
-
-                </div>
-
-            </div>
-
-
-            <!-- STEP 03 -->
-
-            <div class="col-md-4">
-
-                <div class="help-card">
-
-
-                    <div class="help-number">
-
-                        03
-
-                    </div>
-
-
-                    <h4>
-
-                        Decide Smarter
-
-                    </h4>
-
-
-                    <p>
-
-                        Use organized information and
-                        analytics to support more informed
-                        farming decisions.
-
-                    </p>
-
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     FINAL CTA
-====================================================== -->
-
-<section class="cta-section">
-
-
-    <h2>
-
-        Build a Smarter Farm with AgriNova
-
-    </h2>
-
-
-    <p>
-
-        Bring monitoring, crop management, weather,
-        irrigation and farm analytics together in
-        one intelligent agriculture platform.
-
-    </p>
-
-
-    <a
-        href="{{ url_for('register') }}"
-        class="cta-btn">
-
-        <i class="fa-solid fa-user-plus"></i>
-
-        Create Farmer Account
-
-    </a>
-
-
-</section>
+    </section>
 
 
 </div>
 
+    <!-- =====================================================
+         GITHUB
+    ====================================================== -->
+
+    <section class="github-section">
+
+        <div class="github-box">
+
+            <h3>
+
+                <i class="fa-brands fa-github"></i>
+
+                Explore AgriSense Project
+
+            </h3>
+
+
+            <p>
+
+                Explore the source code, project files and
+                development work of AgriSense on GitHub.
+
+            </p>
+
+
+            <!--
+                IMPORTANT:
+                Replace YOUR_GITHUB_LINK_HERE
+                with your actual GitHub repository URL.
+            -->
+
+            <a
+                href="YOUR_GITHUB_LINK_HERE"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <i class="fa-brands fa-github"></i>
+
+                View Project on GitHub
+
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+</div>
 
 {% endblock %}
+

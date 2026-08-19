@@ -1,0 +1,1045 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}Smart Irrigation | AgriNevo{% endblock %}
+
+{% block content %}
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+.smart-page {
+    min-height: 100vh;
+    padding: 40px 15px 70px;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(34,197,94,.12), transparent 28%),
+        radial-gradient(circle at 90% 20%, rgba(14,165,233,.10), transparent 28%),
+        linear-gradient(135deg,#f0fdf4,#f8fafc,#eff6ff);
+}
+
+
+/* ================= HEADER ================= */
+
+.hero {
+    max-width: 1150px;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.ai-badge {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 50px;
+    background: #dcfce7;
+    color: #166534;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.hero h1 {
+    font-size: 44px;
+    font-weight: 900;
+    color: #14532d;
+    margin: 0 0 10px;
+}
+
+.hero p {
+    color: #64748b;
+    font-size: 17px;
+    max-width: 720px;
+    margin: auto;
+    line-height: 1.7;
+}
+
+
+/* ================= MAIN CARD ================= */
+
+.main-container {
+    max-width: 1150px;
+    margin: auto;
+}
+
+.glass-card {
+    background: rgba(255,255,255,.94);
+    border: 1px solid rgba(148,163,184,.2);
+    border-radius: 28px;
+    padding: 32px;
+    box-shadow: 0 25px 70px rgba(15,23,42,.10);
+}
+
+
+/* ================= INPUT ================= */
+
+.section-title {
+    font-size: 23px;
+    font-weight: 850;
+    color: #14532d;
+    margin-bottom: 22px;
+}
+
+.input-box {
+    margin-bottom: 20px;
+}
+
+.input-box label {
+    display: block;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 8px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 13px;
+    background: #f8fafc;
+    outline: none;
+    font-size: 15px;
+}
+
+.input-box input:focus {
+    border-color: #22c55e;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(34,197,94,.10);
+}
+
+.unit {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 5px;
+}
+
+
+/* ================= BUTTON ================= */
+
+.predict-btn {
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    background: linear-gradient(135deg,#16a34a,#15803d);
+    color: white;
+    font-size: 17px;
+    font-weight: 850;
+    cursor: pointer;
+    box-shadow: 0 12px 28px rgba(22,163,74,.25);
+    transition: .25s;
+}
+
+.predict-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 17px 35px rgba(22,163,74,.32);
+}
+
+
+/* ================= AI PANEL ================= */
+
+.ai-panel {
+    height: 100%;
+    padding: 30px;
+    border-radius: 23px;
+    color: white;
+    background:
+        linear-gradient(145deg,#14532d,#166534,#15803d);
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-panel:after {
+    content: "💧";
+    position: absolute;
+    right: -25px;
+    bottom: -35px;
+    font-size: 160px;
+    opacity: .08;
+}
+
+.ai-panel h2 {
+    font-size: 25px;
+    font-weight: 850;
+}
+
+.ai-panel > p {
+    color: #dcfce7;
+    line-height: 1.7;
+}
+
+.ai-feature {
+    display: flex;
+    gap: 13px;
+    margin-top: 22px;
+}
+
+.ai-icon {
+    width: 43px;
+    height: 43px;
+    min-width: 43px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+}
+
+.ai-feature strong {
+    display: block;
+    margin-bottom: 3px;
+}
+
+.ai-feature span {
+    color: #d1fae5;
+    font-size: 13px;
+}
+
+
+/* ================= RESULT ================= */
+
+.result-card {
+    margin-top: 25px;
+    padding: 32px;
+    border-radius: 24px;
+    text-align: center;
+    animation: appear .5s ease;
+}
+
+.required {
+    background: linear-gradient(135deg,#fff7ed,#ffffff);
+    border: 2px solid #fdba74;
+}
+
+.not-required {
+    background: linear-gradient(135deg,#ecfdf5,#ffffff);
+    border: 2px solid #86efac;
+}
+
+.result-icon {
+    font-size: 58px;
+}
+
+.result-title {
+    font-size: 35px;
+    font-weight: 900;
+    margin: 8px 0;
+}
+
+.required .result-title {
+    color: #c2410c;
+}
+
+.not-required .result-title {
+    color: #15803d;
+}
+
+.result-card p {
+    color: #64748b;
+}
+
+
+/* ================= CONFIDENCE ================= */
+
+.confidence {
+    max-width: 450px;
+    margin: 20px auto 0;
+}
+
+.confidence-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 7px;
+}
+
+.progress {
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg,#22c55e,#16a34a);
+    border-radius: 20px;
+}
+
+
+/* ================= INFO GRID ================= */
+
+.info-grid {
+    max-width: 1150px;
+    margin: 28px auto 0;
+}
+
+.info-card {
+    height: 100%;
+    padding: 25px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.95);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 30px rgba(15,23,42,.06);
+}
+
+.info-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.info-card h3 {
+    color: #14532d;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.info-card p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* ================= PROCESS ================= */
+
+.process {
+    max-width: 1150px;
+    margin: 30px auto 0;
+}
+
+.process-title {
+    text-align: center;
+    color: #14532d;
+    font-size: 27px;
+    font-weight: 850;
+    margin-bottom: 22px;
+}
+
+.step {
+    text-align: center;
+    padding: 22px;
+}
+
+.step-number {
+    width: 48px;
+    height: 48px;
+    margin: auto auto 12px;
+    border-radius: 50%;
+    background: #dcfce7;
+    color: #15803d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+}
+
+.step h4 {
+    color: #334155;
+    font-weight: 800;
+}
+
+.step p {
+    color: #64748b;
+    font-size: 13px;
+}
+
+
+/* ================= TIPS ================= */
+
+.tips {
+    max-width: 1150px;
+    margin: 30px auto 0;
+    padding: 30px;
+    border-radius: 23px;
+    background: linear-gradient(135deg,#eff6ff,#ffffff);
+    border: 1px solid #dbeafe;
+}
+
+.tips h2 {
+    color: #1e3a8a;
+    font-weight: 850;
+}
+
+.tip {
+    padding: 13px 0;
+    color: #475569;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.tip:last-child {
+    border-bottom: none;
+}
+
+
+/* ================= ERROR ================= */
+
+.error {
+    max-width: 1150px;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 13px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+    text-align: center;
+    font-weight: 700;
+}
+
+
+/* ================= ANIMATION ================= */
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:768px) {
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .glass-card {
+        padding: 20px;
+    }
+
+    .result-title {
+        font-size: 28px;
+    }
+}
+
+</style>
+
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+
+<div class="smart-page">
+
+<div class="hero">
+
+    <div class="ai-badge">
+        🤖 AI POWERED • SMART AGRICULTURE
+    </div>
+
+    <h1>
+        💧 Smart Irrigation Prediction
+    </h1>
+
+    <p>
+        Make smarter irrigation decisions using Machine Learning.
+        AgriNevo analyses soil moisture, temperature, humidity and
+        rainfall conditions to estimate irrigation requirements.
+    </p>
+
+</div>
+
+
+<!-- ======================================================
+     INPUT + AI
+====================================================== -->
+
+<div class="main-container">
+
+<div class="glass-card">
+
+<div class="row g-4">
+
+<!-- INPUT -->
+
+<div class="col-lg-7">
+
+<h2 class="section-title">
+    📊 Enter Farm Conditions
+</h2>
+
+<form method="POST">
+
+<div class="row">
+
+<div class="col-md-6">
+
+<div class="input-box">
+
+<label>
+🌡️ Temperature
+</label>
+
+<input
+    type="number"
+    step="any"
+    name="temperature"
+    placeholder="Example: 28"
+    required
+>
+
+<div class="unit">
+    Degree Celsius (°C)
+</div>
+
+</div>
+
+</div>
+
+
+<div class="col-md-6">
+
+<div class="input-box">
+
+<label>
+💦 Humidity
+</label>
+
+<input
+    type="number"
+    step="any"
+    name="humidity"
+    placeholder="Example: 65"
+    required
+>
+
+<div class="unit">
+    Relative humidity (%)
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="input-box">
+
+<label>
+🌱 Soil Moisture
+</label>
+
+<input
+    type="number"
+    step="any"
+    name="soil_moisture"
+    placeholder="Example: 30"
+    required
+>
+
+<div class="unit">
+    Soil moisture percentage (%)
+</div>
+
+</div>
+
+
+<div class="input-box">
+
+<label>
+🌧️ Rainfall
+</label>
+
+<input
+    type="number"
+    step="any"
+    name="rainfall"
+    placeholder="Example: 5"
+    required
+>
+
+<div class="unit">
+    Rainfall amount (mm)
+</div>
+
+</div>
+
+
+<button
+    type="submit"
+    class="predict-btn"
+>
+    🤖 Predict Irrigation Requirement
+</button>
+
+</form>
+
+</div>
+
+
+<!-- AI INFORMATION -->
+
+<div class="col-lg-5">
+
+<div class="ai-panel">
+
+<h2>
+    🧠 How AI Decides
+</h2>
+
+<p>
+    The Random Forest model evaluates multiple environmental
+    factors together and predicts whether irrigation may be
+    required.
+</p>
+
+
+<div class="ai-feature">
+
+<div class="ai-icon">
+    🌱
+</div>
+
+<div>
+<strong>Soil Moisture</strong>
+
+<span>
+The most important indicator of current soil water condition.
+</span>
+</div>
+
+</div>
+
+
+<div class="ai-feature">
+
+<div class="ai-icon">
+    🌡️
+</div>
+
+<div>
+<strong>Temperature</strong>
+
+<span>
+Higher temperature can increase crop water demand.
+</span>
+</div>
+
+</div>
+
+
+<div class="ai-feature">
+
+<div class="ai-icon">
+    💦
+</div>
+
+<div>
+<strong>Humidity</strong>
+
+<span>
+Helps understand atmospheric moisture conditions.
+</span>
+</div>
+
+</div>
+
+
+<div class="ai-feature">
+
+<div class="ai-icon">
+    🌧️
+</div>
+
+<div>
+<strong>Rainfall</strong>
+
+<span>
+Recent rainfall can reduce the need for irrigation.
+</span>
+</div>
+
+</div>
+
+
+<div class="ai-feature">
+
+<div class="ai-icon">
+    🌳
+</div>
+
+<div>
+<strong>Water Saving</strong>
+
+<span>
+Smart decisions can help avoid unnecessary watering.
+</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ======================================================
+     RESULT
+====================================================== -->
+
+{% if prediction %}
+
+<div class="main-container">
+
+{% if prediction|string|lower in [
+    "1",
+    "yes",
+    "true",
+    "required",
+    "irrigation required"
+] %}
+
+<div class="result-card required">
+
+<div class="result-icon">
+    💧
+</div>
+
+<div class="result-title">
+    Irrigation Required
+</div>
+
+<p>
+    The AI model indicates that the current conditions
+    may require irrigation.
+</p>
+
+{% if probability %}
+
+<div class="confidence">
+
+<div class="confidence-label">
+
+<span>
+    AI Confidence
+</span>
+
+<span>
+    {{ probability }}%
+</span>
+
+</div>
+
+<div class="progress">
+
+<div
+    class="progress-bar"
+    style="width: {{ probability }}%;"
+></div>
+
+</div>
+
+</div>
+
+{% endif %}
+
+</div>
+
+
+{% else %}
+
+<div class="result-card not-required">
+
+<div class="result-icon">
+    🌿
+</div>
+
+<div class="result-title">
+    Irrigation Not Required
+</div>
+
+<p>
+    The AI model indicates that additional irrigation
+    may not currently be necessary.
+</p>
+
+{% if probability %}
+
+<div class="confidence">
+
+<div class="confidence-label">
+
+<span>
+    AI Confidence
+</span>
+
+<span>
+    {{ probability }}%
+</span>
+
+</div>
+
+<div class="progress">
+
+<div
+    class="progress-bar"
+    style="width: {{ probability }}%;"
+></div>
+
+</div>
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endif %}
+
+
+<!-- ======================================================
+     INFORMATION CARDS
+====================================================== -->
+
+<div class="info-grid">
+
+<div class="row g-4">
+
+
+<div class="col-md-4">
+
+<div class="info-card">
+
+<div class="info-icon">
+    🌱
+</div>
+
+<h3>
+    Soil Moisture Monitoring
+</h3>
+
+<p>
+    Soil moisture indicates how much water is currently
+    available around the crop roots. Monitoring it can
+    help prevent both overwatering and underwatering.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="col-md-4">
+
+<div class="info-card">
+
+<div class="info-icon">
+    💧
+</div>
+
+<h3>
+    Efficient Water Management
+</h3>
+
+<p>
+    Smart irrigation can help apply water when it is
+    needed instead of following a fixed watering schedule.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="col-md-4">
+
+<div class="info-card">
+
+<div class="info-icon">
+    🤖
+</div>
+
+<h3>
+    Machine Learning
+</h3>
+
+<p>
+    Random Forest combines multiple decision trees to
+    learn patterns from irrigation training data.
+</p>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- ======================================================
+     HOW IT WORKS
+====================================================== -->
+
+<div class="process">
+
+<h2 class="process-title">
+    ⚙️ How Smart Irrigation Works
+</h2>
+
+<div class="glass-card">
+
+<div class="row">
+
+<div class="col-md-3">
+
+<div class="step">
+
+<div class="step-number">
+    1
+</div>
+
+<h4>
+    📡 Collect
+</h4>
+
+<p>
+    Collect temperature, humidity, moisture and rainfall data.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="col-md-3">
+
+<div class="step">
+
+<div class="step-number">
+    2
+</div>
+
+<h4>
+    📊 Analyse
+</h4>
+
+<p>
+    Prepare the environmental values for the ML model.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="col-md-3">
+
+<div class="step">
+
+<div class="step-number">
+    3
+</div>
+
+<h4>
+    🤖 Predict
+</h4>
+
+<p>
+    Random Forest predicts the irrigation requirement.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="col-md-3">
+
+<div class="step">
+
+<div class="step-number">
+    4
+</div>
+
+<h4>
+    💧 Act
+</h4>
+
+<p>
+    Use the prediction to make a smarter irrigation decision.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ======================================================
+     FARMER TIPS
+====================================================== -->
+
+<div class="tips">
+
+<h2>
+    🌾 Smart Irrigation Tips
+</h2>
+
+<div class="tip">
+    💧 Avoid watering simply because of a fixed daily schedule.
+</div>
+
+<div class="tip">
+    🌱 Check soil moisture before deciding to irrigate.
+</div>
+
+<div class="tip">
+    🌧️ Consider recent rainfall when planning irrigation.
+</div>
+
+<div class="tip">
+    🌡️ Hot and dry conditions can increase crop water demand.
+</div>
+
+<div class="tip">
+    🕒 Regular sensor monitoring can improve irrigation decisions.
+</div>
+
+<div class="tip">
+    ♻️ Avoid excessive irrigation because it can waste water
+    and affect soil conditions.
+</div>
+
+</div>
+
+
+{% if error %}
+
+<div class="error">
+    ⚠️ {{ error }}
+</div>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

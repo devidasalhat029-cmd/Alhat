@@ -5,10 +5,7 @@
 
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>
     {% block title %}Agro Monitor{% endblock %}
@@ -51,53 +48,41 @@
    GLOBAL
    ========================================================= */
 
-*{
-
-    margin:0;
-
-    padding:0;
-
-    box-sizing:border-box;
-
-    font-family:'Inter','Segoe UI',sans-serif;
-
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
 
-:root{
+:root {
 
-    --green-dark:#123b26;
+    --green-dark: #123b26;
+    --green: #198754;
+    --green-light: #20a464;
+    --green-soft: #eaf7ef;
 
-    --green:#198754;
+    --white: #ffffff;
 
-    --green-light:#20a464;
+    --text: #20352a;
+    --muted: #748278;
 
-    --green-soft:#eaf7ef;
+    --border: #e2ebe5;
 
-    --white:#ffffff;
-
-    --text:#20352a;
-
-    --muted:#748278;
-
-    --border:#e2ebe5;
-
-    --bg:#f5f8f6;
+    --bg: #f5f8f6;
 
     --shadow:
         0 10px 30px rgba(20,60,38,.08);
-
 }
 
 
-html{
-
-    scroll-behavior:smooth;
-
+html {
+    scroll-behavior: smooth;
 }
 
 
-body{
+body {
 
     background:
 
@@ -121,40 +106,42 @@ body{
 
         #08070d;
 
-    color:#e9e7f5;
+    color: #e9e7f5;
 
-    min-height:100vh;
+    min-height: 100vh;
 
-    display:flex;
+    display: flex;
 
-    flex-direction:column;
+    flex-direction: column;
 
     transition:
         background .3s ease,
         color .3s ease;
-
 }
+
+
 /* =========================================================
    MAIN CONTENT
    ========================================================= */
 
-.main-content{
+.main-content {
 
-    flex:1;
+    flex: 1;
 
-    width:100%;
+    width: 100%;
 
-    padding:28px;
-
+    padding: 28px;
 }
 
 
 /* =========================================================
    NAVBAR
    ========================================================= */
-.navbar{
+
+.navbar {
 
     background:
+
         linear-gradient(
             135deg,
             #07050d 0%,
@@ -163,7 +150,7 @@ body{
             #3b145f 100%
         ) !important;
 
-    padding:12px 18px;
+    padding: 12px 18px;
 
     border-bottom:
         1px solid rgba(168,85,247,.25);
@@ -171,57 +158,70 @@ body{
     box-shadow:
         0 8px 30px rgba(0,0,0,.55);
 
-    position:sticky;
+    position: sticky;
 
-    top:0;
+    top: 0;
 
-    z-index:9999;
-
+    z-index: 9999;
 }
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.navbar-brand {
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+    color: white !important;
+}
+
+
 /* =========================================================
    NAV LINKS
    ========================================================= */
 
-.navbar .nav-link{
+.navbar .nav-link {
 
     color:
         rgba(255,255,255,.90) !important;
 
-    font-size:13px;
+    font-size: 13px;
 
-    font-weight:600;
+    font-weight: 600;
 
-    padding:9px 11px !important;
+    padding: 9px 11px !important;
 
-    margin:2px;
+    margin: 2px;
 
-    border-radius:10px;
+    border-radius: 10px;
 
     transition:
         background .2s ease,
         color .2s ease,
         transform .2s ease;
-
 }
 
 
-.navbar .nav-link:hover{
+.navbar .nav-link:hover {
 
     background:
         rgba(255,255,255,.14);
 
-    color:white !important;
+    color: white !important;
 
-    transform:translateY(-1px);
-
+    transform:
+        translateY(-1px);
 }
 
 
-.navbar .nav-link.active{
+.navbar .nav-link.active {
 
     background:
         rgba(255,255,255,.18);
-
 }
 
 
@@ -229,23 +229,21 @@ body{
    NAVBAR TOGGLER
    ========================================================= */
 
-.navbar-toggler{
+.navbar-toggler {
 
     border:
         1px solid rgba(255,255,255,.35);
 
-    border-radius:10px;
+    border-radius: 10px;
 
-    padding:7px 10px;
-
+    padding: 7px 10px;
 }
 
 
-.navbar-toggler:focus{
+.navbar-toggler:focus {
 
     box-shadow:
         0 0 0 3px rgba(255,255,255,.15);
-
 }
 
 
@@ -253,49 +251,47 @@ body{
    DROPDOWN
    ========================================================= */
 
-.dropdown-menu{
+.dropdown-menu {
 
-    border:1px solid var(--border);
+    border:
+        1px solid var(--border);
 
-    border-radius:15px;
+    border-radius: 15px;
 
-    padding:8px;
+    padding: 8px;
 
-    margin-top:8px !important;
+    margin-top: 8px !important;
 
-    background:white;
+    background: white;
 
     box-shadow:
         0 15px 40px rgba(0,0,0,.12);
-
 }
 
 
-.dropdown-item{
+.dropdown-item {
 
-    padding:10px 13px;
+    padding: 10px 13px;
 
-    border-radius:10px;
+    border-radius: 10px;
 
-    color:#304338;
+    color: #304338;
 
-    font-size:13px;
+    font-size: 13px;
 
-    font-weight:600;
+    font-weight: 600;
 
-    transition:.2s;
-
+    transition: .2s;
 }
 
 
-.dropdown-item:hover{
+.dropdown-item:hover {
 
     background:
         var(--green-soft);
 
     color:
         var(--green-dark);
-
 }
 
 
@@ -303,78 +299,74 @@ body{
    SEARCH
    ========================================================= */
 
-.nav-search{
+.nav-search {
 
-    position:relative;
-
+    position: relative;
 }
 
 
-.nav-search input{
+.nav-search input {
 
-    width:190px;
+    width: 190px;
 
-    height:40px;
+    height: 40px;
 
     padding:
         0 43px 0 14px;
 
-    border:none;
+    border: none;
 
-    outline:none;
+    outline: none;
 
-    border-radius:12px;
+    border-radius: 12px;
 
     background:
         rgba(255,255,255,.97);
 
-    color:#26382c;
+    color: #26382c;
 
-    font-size:13px;
+    font-size: 13px;
 
     box-shadow:
         0 5px 15px rgba(0,0,0,.08);
-
 }
 
 
-.btn-search{
+.btn-search {
 
-    position:absolute;
+    position: absolute;
 
-    right:4px;
+    right: 4px;
 
-    top:4px;
+    top: 4px;
 
-    width:32px;
+    width: 32px;
 
-    height:32px;
+    height: 32px;
 
-    border:none;
+    border: none;
 
-    border-radius:9px;
+    border-radius: 9px;
 
     background:
         var(--green);
 
-    color:white;
+    color: white;
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    justify-content:center;
+    justify-content: center;
 
-    transition:.2s;
-
+    transition: .2s;
 }
 
 
-.btn-search:hover{
+.btn-search:hover {
 
     background:
         var(--green-dark);
-
 }
 
 
@@ -382,23 +374,22 @@ body{
    COMMON BUTTON
    ========================================================= */
 
-.btn{
+.btn {
 
-    border-radius:11px;
+    border-radius: 11px;
 
-    font-weight:600;
+    font-weight: 600;
 
     transition:
         transform .2s ease,
         box-shadow .2s ease;
-
 }
 
 
-.btn:hover{
+.btn:hover {
 
-    transform:translateY(-1px);
-
+    transform:
+        translateY(-1px);
 }
 
 
@@ -406,37 +397,35 @@ body{
    DARK MODE BUTTON
    ========================================================= */
 
-.dark-btn{
+.dark-btn {
 
-    width:40px;
+    width: 40px;
 
-    height:40px;
+    height: 40px;
 
-    padding:0;
+    padding: 0;
 
-    border:none;
+    border: none;
 
-    border-radius:12px;
+    border-radius: 12px;
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    justify-content:center;
+    justify-content: center;
 
     background:
         rgba(255,255,255,.14);
 
-    color:white;
-
+    color: white;
 }
 
 
-.dark-btn:hover{
+.dark-btn:hover {
 
     background:
         rgba(255,255,255,.25);
-
 }
 
 
@@ -444,16 +433,15 @@ body{
    VOICE CONTROL
    ========================================================= */
 
-.voice-wrapper{
+.voice-wrapper {
 
-    position:relative;
-
+    position: relative;
 }
 
 
-.voice-btn{
+.voice-btn {
 
-    height:40px;
+    height: 40px;
 
     padding:
         0 15px;
@@ -461,57 +449,54 @@ body{
     border:
         1px solid rgba(255,255,255,.18);
 
-    border-radius:12px;
+    border-radius: 12px;
 
     background:
         rgba(255,255,255,.12);
 
-    color:white;
+    color: white;
 
-    font-size:13px;
+    font-size: 13px;
 
-    font-weight:700;
+    font-weight: 700;
 
-    transition:.2s;
-
+    transition: .2s;
 }
 
 
-.voice-btn:hover{
+.voice-btn:hover {
 
     background:
         rgba(255,255,255,.22);
 
-    color:white;
-
+    color: white;
 }
 
 
-#voiceResult{
+#voiceResult {
 
-    position:absolute;
+    position: absolute;
 
-    right:0;
+    right: 0;
 
-    top:48px;
+    top: 48px;
 
-    min-width:190px;
+    min-width: 190px;
 
-    background:white;
+    background: white;
 
-    color:#304338;
+    color: #304338;
 
-    padding:10px 13px;
+    padding: 10px 13px;
 
-    border-radius:11px;
+    border-radius: 11px;
 
     box-shadow:
         0 10px 30px rgba(0,0,0,.14);
 
-    font-size:12px;
+    font-size: 12px;
 
-    z-index:10000;
-
+    z-index: 10000;
 }
 
 
@@ -519,14 +504,14 @@ body{
    CARDS
    ========================================================= */
 
-.card{
+.card {
 
     border:
         1px solid var(--border);
 
-    border-radius:20px;
+    border-radius: 20px;
 
-    background:white;
+    background: white;
 
     box-shadow:
         var(--shadow);
@@ -534,17 +519,16 @@ body{
     transition:
         transform .25s ease,
         box-shadow .25s ease;
-
 }
 
 
-.card:hover{
+.card:hover {
 
-    transform:translateY(-4px);
+    transform:
+        translateY(-4px);
 
     box-shadow:
         0 16px 35px rgba(20,60,38,.12);
-
 }
 
 
@@ -553,44 +537,44 @@ body{
    ========================================================= */
 
 .form-control,
-.form-select{
+.form-select {
 
     border:
         1px solid #dce6df;
 
-    border-radius:11px;
+    border-radius: 11px;
 
-    padding:11px 13px;
-
+    padding: 11px 13px;
 }
 
 
 .form-control:focus,
-.form-select:focus{
+.form-select:focus {
 
     border-color:
         var(--green);
 
     box-shadow:
         0 0 0 4px rgba(25,135,84,.10);
-
 }
 
 
 /* =========================================================
    FOOTER
    ========================================================= */
-.footer{
 
-    margin-top:45px;
+.footer {
 
-    padding:24px 20px;
+    margin-top: 45px;
 
-    text-align:center;
+    padding: 24px 20px;
 
-    color:#e9d5ff;
+    text-align: center;
+
+    color: #e9d5ff;
 
     background:
+
         linear-gradient(
             135deg,
             #08070d,
@@ -605,24 +589,21 @@ body{
     box-shadow:
         0 -10px 35px rgba(0,0,0,.25);
 
-    font-size:13px;
-
+    font-size: 13px;
 }
 
 
-.footer strong{
+.footer strong {
 
-    color:#c4b5fd;
+    color: #c4b5fd;
 
-    font-weight:800;
-
+    font-weight: 800;
 }
 
 
-.footer span{
+.footer span {
 
-    color:#9ca3af;
-
+    color: #9ca3af;
 }
 
 
@@ -630,121 +611,112 @@ body{
    DARK MODE
    ========================================================= */
 
-body.dark{
+body.dark {
 
-    --bg:#0d1511;
+    --bg: #0d1511;
 
-    --text:#eef8f1;
+    --text: #eef8f1;
 
-    --muted:#a7b5ab;
+    --muted: #a7b5ab;
 
-    --border:#26372d;
+    --border: #26372d;
 
     background:
+
         radial-gradient(
             circle at 0% 0%,
             rgba(32,164,100,.08),
             transparent 30%
         ),
+
         #0d1511;
 
-    color:#eef8f1;
-
+    color: #eef8f1;
 }
 
 
-.dark .main-content{
+.dark .main-content {
 
-    color:#eef8f1;
-
+    color: #eef8f1;
 }
 
 
-.dark .card{
+.dark .card {
 
-    background:#17221b !important;
+    background: #17221b !important;
 
-    border-color:#293a30;
+    border-color: #293a30;
 
-    color:#eef8f1;
-
+    color: #eef8f1;
 }
 
 
-.dark .dropdown-menu{
+.dark .dropdown-menu {
 
-    background:#17221b;
+    background: #17221b;
 
-    border-color:#293a30;
-
+    border-color: #293a30;
 }
 
 
-.dark .dropdown-item{
+.dark .dropdown-item {
 
-    color:#e5f0e8;
-
+    color: #e5f0e8;
 }
 
 
-.dark .dropdown-item:hover{
+.dark .dropdown-item:hover {
 
-    background:#244431;
+    background: #244431;
 
-    color:white;
-
+    color: white;
 }
 
 
 .dark .form-control,
-.dark .form-select{
+.dark .form-select {
 
-    background:#17221b;
+    background: #17221b;
 
-    color:white;
+    color: white;
 
-    border-color:#35483b;
-
+    border-color: #35483b;
 }
 
 
-.dark .form-control::placeholder{
+.dark .form-control::placeholder {
 
-    color:#87958c;
-
+    color: #87958c;
 }
 
 
-.dark .table{
+.dark .table {
 
-    color:white;
-
+    color: white;
 }
 
 
 .dark .table td,
-.dark .table th{
+.dark .table th {
 
-    border-color:#35483b;
-
+    border-color: #35483b;
 }
 
 
-.dark #voiceResult{
+.dark #voiceResult {
 
-    background:#17221b;
+    background: #17221b;
 
-    color:white;
+    color: white;
 
-    border:1px solid #35483b;
-
+    border:
+        1px solid #35483b;
 }
 
 
-.dark .footer{
+.dark .footer {
 
-    background:#07100a;
-
+    background: #07100a;
 }
 
 
@@ -752,90 +724,79 @@ body.dark{
    MOBILE
    ========================================================= */
 
-@media(max-width:991px){
+@media(max-width:991px) {
 
-    .main-content{
+    .main-content {
 
-        padding:18px 13px;
-
+        padding: 18px 13px;
     }
 
 
-    .navbar-collapse{
+    .navbar-collapse {
 
-        padding-top:15px;
-
+        padding-top: 15px;
     }
 
 
-    .navbar-nav{
+    .navbar-nav {
 
-        margin-top:5px;
+        margin-top: 5px;
 
-        padding-bottom:10px;
-
+        padding-bottom: 10px;
     }
 
 
-    .navbar .nav-link{
+    .navbar .nav-link {
 
-        margin:2px 0;
-
+        margin: 2px 0;
     }
 
 
-    .nav-search{
+    .nav-search {
 
-        margin-top:10px;
+        margin-top: 10px;
 
-        width:100%;
-
+        width: 100%;
     }
 
 
-    .nav-search input{
+    .nav-search input {
 
-        width:100%;
-
+        width: 100%;
     }
 
 
-    .voice-wrapper{
+    .voice-wrapper {
 
-        margin-top:10px;
-
+        margin-top: 10px;
     }
 
 
-    .voice-btn{
+    .voice-btn {
 
-        width:100%;
-
+        width: 100%;
     }
 
 
-    .dark-btn{
+    .dark-btn {
 
-        margin-top:10px;
-
+        margin-top: 10px;
     }
 
 }
 
 
-@media(max-width:500px){
+@media(max-width:500px) {
 
-    .navbar{
+    .navbar {
 
-        padding:10px;
-
+        padding: 10px;
     }
 
 
-    .navbar-brand{
+    .navbar-brand {
 
-        font-size:20px;
-
+        font-size: 20px;
     }
 
 }
@@ -854,7 +815,6 @@ body.dark{
 
 <nav class="navbar navbar-expand-lg navbar-dark">
 
-
 <div class="container-fluid">
 
 
@@ -864,9 +824,7 @@ body.dark{
         class="navbar-brand"
         href="/"
     >
-
         🌾 AgriNavo
-
     </a>
 
 
@@ -891,13 +849,13 @@ body.dark{
 
 
         <!-- =================================================
-             NAVIGATION
+             MAIN PROJECT FLOW
              ================================================= -->
 
         <ul class="navbar-nav me-auto">
 
 
-            <!-- HOME -->
+            <!-- 1. HOME -->
 
             <li class="nav-item">
 
@@ -911,11 +869,13 @@ body.dark{
             </li>
 
 
-            <!-- ROLE DASHBOARD -->
+            <!-- 2. ROLE DASHBOARD -->
 
             {% if session.get("username") %}
 
                 {% if session.get("role") == "admin" %}
+
+                <!-- ADMIN DASHBOARD -->
 
                 <li class="nav-item">
 
@@ -929,6 +889,8 @@ body.dark{
                 </li>
 
                 {% else %}
+
+                <!-- FARMER DASHBOARD -->
 
                 <li class="nav-item">
 
@@ -944,9 +906,9 @@ body.dark{
                 {% endif %}
 
             {% endif %}
+            
 
-
-            <!-- CROP -->
+            <!-- 3. CROP MANAGEMENT -->
 
             <li class="nav-item">
 
@@ -954,13 +916,27 @@ body.dark{
                     class="nav-link"
                     href="/crop"
                 >
-                    🌱 Crop
+                    🌱 Crop Management
                 </a>
 
             </li>
 
 
-            <!-- WEATHER -->
+            <!-- 4. CROP RECOMMENDATION -->
+
+            <li class="nav-item">
+
+                <a
+                    class="nav-link"
+                    href="/crop_recommendation"
+                >
+                    🌾 Crop Recommendation
+                </a>
+
+            </li>
+
+
+            <!-- 5. WEATHER -->
 
             <li class="nav-item">
 
@@ -974,7 +950,22 @@ body.dark{
             </li>
 
 
-            <!-- IRRIGATION -->
+
+            <!-- 7. SENSOR ANALYTICS -->
+
+            <li class="nav-item">
+
+                <a
+                    class="nav-link"
+                    href="{{ url_for('sensor_analytics') }}"
+                >
+                    📊 Sensor Analytics
+                </a>
+
+            </li>
+
+
+            <!-- 8. IRRIGATION -->
 
             <li class="nav-item">
 
@@ -988,7 +979,7 @@ body.dark{
             </li>
 
 
-            <!-- MOTOR -->
+            <!-- 9. MOTOR CONTROL -->
 
             <li class="nav-item">
 
@@ -996,13 +987,13 @@ body.dark{
                     class="nav-link"
                     href="/motor"
                 >
-                    ⚙️ Motor
+                    ⚙️ Motor Control
                 </a>
 
             </li>
+            
 
-
-            <!-- LIVE FARM -->
+            <!-- 6. LIVE FARM -->
 
             <li class="nav-item">
 
@@ -1016,21 +1007,11 @@ body.dark{
             </li>
 
 
-            <!-- RECORDS -->
+   
 
-            <li class="nav-item">
+            
 
-                <a
-                    class="nav-link"
-                    href="/records"
-                >
-                    📋 Records
-                </a>
-
-            </li>
-
-
-            <!-- ANALYTICS -->
+            <!-- 11. ANALYTICS -->
 
             <li class="nav-item">
 
@@ -1044,7 +1025,7 @@ body.dark{
             </li>
 
 
-            <!-- ALERTS -->
+            <!-- 12. ALERTS -->
 
             <li class="nav-item">
 
@@ -1058,50 +1039,8 @@ body.dark{
             </li>
 
 
-            <!-- DISEASE -->
-
-            <li class="nav-item">
-
-                <a
-                    class="nav-link"
-                    href="/ai_disease"
-                >
-                    🦠 Disease
-                </a>
-
-            </li>
-
-
-            <!-- CONTACT -->
-
-            <li class="nav-item">
-
-                <a
-                    class="nav-link"
-                    href="/contact"
-                >
-                    📞 Contact
-                </a>
-
-            </li>
-
-
-            <!-- FEEDBACK -->
-
-            <li class="nav-item">
-
-                <a
-                    class="nav-link"
-                    href="/feedback"
-                >
-                    💬 Feedback
-                </a>
-
-            </li>
-
-
             <!-- =================================================
-                 AI DROPDOWN
+                 13. AI MODULES
                  ================================================= -->
 
             <li class="nav-item dropdown">
@@ -1121,17 +1060,21 @@ body.dark{
                 <ul class="dropdown-menu">
 
 
+                    <!-- AI DISEASE -->
+
                     <li>
 
                         <a
                             class="dropdown-item"
                             href="/ai_disease"
                         >
-                            🧬 AI Disease Detection
+                            🦠 AI Disease Detection
                         </a>
 
                     </li>
 
+
+                    <!-- AI ASSISTANT -->
 
                     <li>
 
@@ -1144,6 +1087,8 @@ body.dark{
 
                     </li>
 
+
+                    <!-- AI TIPS -->
 
                     <li>
 
@@ -1162,7 +1107,49 @@ body.dark{
             </li>
 
 
-            <!-- LOGIN / LOGOUT -->
+            <!-- 14. REPORTS -->
+
+            <li class="nav-item">
+
+                <a
+                    class="nav-link"
+                    href="/reports"
+                >
+                    📄 Reports
+                </a>
+
+            </li>
+
+
+            <!-- 15. CONTACT -->
+
+            <li class="nav-item">
+
+                <a
+                    class="nav-link"
+                    href="/contact"
+                >
+                    📞 Contact
+                </a>
+
+            </li>
+
+
+            <!-- 16. FEEDBACK -->
+
+            <li class="nav-item">
+
+                <a
+                    class="nav-link"
+                    href="/feedback"
+                >
+                    💬 Feedback
+                </a>
+
+            </li>
+
+
+            <!-- 17. LOGIN / LOGOUT -->
 
             {% if session.get("username") %}
 
@@ -1205,7 +1192,9 @@ body.dark{
         >
 
 
-            <!-- SEARCH -->
+            <!-- =================================================
+                 SEARCH
+                 ================================================= -->
 
             <form
                 class="nav-search"
@@ -1219,6 +1208,7 @@ body.dark{
                     placeholder="Search crop..."
                     required
                 >
+
 
                 <button
                     class="btn-search"
@@ -1234,7 +1224,9 @@ body.dark{
             </form>
 
 
-            <!-- VOICE -->
+            <!-- =================================================
+                 VOICE CONTROL
+                 ================================================= -->
 
             <div class="voice-wrapper">
 
@@ -1257,7 +1249,9 @@ body.dark{
             </div>
 
 
-            <!-- DARK MODE -->
+            <!-- =================================================
+                 DARK MODE
+                 ================================================= -->
 
             <button
                 type="button"
@@ -1320,20 +1314,22 @@ body.dark{
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 ></script>
+
+
 <!-- =======================================================
      DARK MODE
      ======================================================= -->
 
 <script>
 
-function darkMode(){
+function darkMode() {
 
     document.body.classList.toggle("dark");
 
 
-    if(
+    if (
         document.body.classList.contains("dark")
-    ){
+    ) {
 
         localStorage.setItem(
             "theme",
@@ -1342,7 +1338,7 @@ function darkMode(){
 
     }
 
-    else{
+    else {
 
         localStorage.setItem(
             "theme",
@@ -1356,13 +1352,13 @@ function darkMode(){
 
 window.addEventListener(
     "DOMContentLoaded",
-    function(){
+    function() {
 
-        if(
+        if (
             localStorage.getItem("theme")
             ===
             "dark"
-        ){
+        ) {
 
             document.body.classList.add("dark");
 
@@ -1372,20 +1368,22 @@ window.addEventListener(
 );
 
 </script>
+
+
 <!-- =======================================================
      VOICE CONTROL
      ======================================================= -->
 
 <script>
 
-function startVoice(){
+function startVoice() {
 
     const SpeechRecognition =
         window.SpeechRecognition ||
         window.webkitSpeechRecognition;
 
 
-    if(!SpeechRecognition){
+    if (!SpeechRecognition) {
 
         alert(
             "Voice recognition is not supported. Please use Chrome."
@@ -1430,7 +1428,8 @@ function startVoice(){
 
 
     recognition.onresult =
-        function(event){
+        function(event) {
+
 
             const command =
                 event.results[0][0]
@@ -1446,7 +1445,7 @@ function startVoice(){
                MOTOR ON
                ========================================== */
 
-            if(
+            if (
 
                 command.includes("motor on") ||
 
@@ -1456,7 +1455,7 @@ function startVoice(){
 
                 command.includes("motor chalu")
 
-            ){
+            ) {
 
                 const confirmAction =
                     confirm(
@@ -1464,7 +1463,7 @@ function startVoice(){
                     );
 
 
-                if(confirmAction){
+                if (confirmAction) {
 
                     window.location.href =
                         "/motor/on";
@@ -1480,7 +1479,7 @@ function startVoice(){
                MOTOR OFF
                ========================================== */
 
-            if(
+            if (
 
                 command.includes("motor off") ||
 
@@ -1490,7 +1489,7 @@ function startVoice(){
 
                 command.includes("motor band")
 
-            ){
+            ) {
 
                 const confirmAction =
                     confirm(
@@ -1498,7 +1497,7 @@ function startVoice(){
                     );
 
 
-                if(confirmAction){
+                if (confirmAction) {
 
                     window.location.href =
                         "/motor/off";
@@ -1514,7 +1513,7 @@ function startVoice(){
                WEATHER
                ========================================== */
 
-            if(
+            if (
 
                 command.includes("weather") ||
 
@@ -1522,7 +1521,7 @@ function startVoice(){
 
                 command.includes("हवामान")
 
-            ){
+            ) {
 
                 window.location.href =
                     "/weather";
@@ -1536,7 +1535,7 @@ function startVoice(){
                IRRIGATION
                ========================================== */
 
-            if(
+            if (
 
                 command.includes("irrigation") ||
 
@@ -1544,7 +1543,7 @@ function startVoice(){
 
                 command.includes("सिंचन")
 
-            ){
+            ) {
 
                 window.location.href =
                     "/irrigation";
@@ -1555,10 +1554,10 @@ function startVoice(){
 
 
             /* ==========================================
-               AI DISEASE
+               DISEASE DETECTION
                ========================================== */
 
-            if(
+            if (
 
                 command.includes("disease") ||
 
@@ -1568,7 +1567,7 @@ function startVoice(){
 
                 command.includes("disease check")
 
-            ){
+            ) {
 
                 window.location.href =
                     "/ai_disease";
@@ -1579,7 +1578,7 @@ function startVoice(){
 
 
             /* ==========================================
-               UNKNOWN
+               UNKNOWN COMMAND
                ========================================== */
 
             alert(
@@ -1604,10 +1603,11 @@ function startVoice(){
 
 
     recognition.onerror =
-        function(event){
+        function(event) {
 
             voiceResult.style.display =
                 "block";
+
 
             voiceResult.innerText =
                 "❌ Voice Error: "

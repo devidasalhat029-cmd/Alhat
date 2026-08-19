@@ -1,152 +1,714 @@
 {% extends "baseofhtml.html" %}
 
 {% block title %}
-Register
+Farmer Registration
 {% endblock %}
 
 {% block content %}
 
 <style>
 
-.register-container{
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:80vh;
+/* =========================
+   PAGE
+========================= */
+
+.register-page{
+    min-height:calc(100vh - 70px);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:45px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(4,47,46,.72),
+            rgba(6,78,59,.65)
+        ),
+        url("{{ url_for('static', filename='images/farm-register.jpg') }}");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    position:relative;
+    overflow:hidden;
 }
+
+
+/* Decorative circles */
+
+.register-page::before{
+    content:"";
+
+    position:absolute;
+
+    width:330px;
+    height:330px;
+
+    border-radius:50%;
+
+    background:rgba(45,212,191,.15);
+
+    top:-150px;
+    left:-120px;
+}
+
+.register-page::after{
+    content:"";
+
+    position:absolute;
+
+    width:380px;
+    height:380px;
+
+    border-radius:50%;
+
+    background:rgba(52,211,153,.13);
+
+    bottom:-190px;
+    right:-150px;
+}
+
+
+/* =========================
+   CARD
+========================= */
 
 .register-card{
-width:550px;
-background:white;
-padding:35px;
-border-radius:25px;
-box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+    width:570px;
+    max-width:100%;
+
+    padding:38px 42px;
+
+    background:rgba(255,255,255,.97);
+
+    border-radius:30px;
+
+    border:1px solid rgba(255,255,255,.8);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.35);
+
+    position:relative;
+
+    z-index:2;
+
+    animation:registerShow .6s ease;
 }
+
+
+@keyframes registerShow{
+
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
 
 .register-header{
-text-align:center;
-margin-bottom:20px;
+
+    text-align:center;
+
+    margin-bottom:25px;
 }
 
-.register-header i{
-font-size:70px;
-color:#16a34a;
-margin-bottom:10px;
+
+.register-logo{
+
+    width:78px;
+    height:78px;
+
+    margin:0 auto 13px;
+
+    border-radius:24px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0f766e,
+            #10b981
+        );
+
+    color:white;
+
+    box-shadow:
+        0 12px 25px rgba(16,185,129,.30);
 }
 
-.input-group{
-margin-bottom:15px;
+
+.register-logo i{
+    font-size:36px;
 }
+
+
+.register-header h1{
+
+    margin:5px 0 6px;
+
+    color:#134e4a;
+
+    font-size:29px;
+
+    font-weight:800;
+}
+
+
+.register-header p{
+
+    margin:0;
+
+    color:#64748b;
+
+    font-size:14px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.register-card form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    width:100%;
+}
+
+
+/* IMPORTANT:
+   Every field full width
+   and one below another
+*/
+
+.register-card .input-group{
+
+    display:block;
+
+    width:100%;
+
+    flex:0 0 100%;
+
+    margin-bottom:16px;
+}
+
+
+.register-card .input-box{
+
+    position:relative;
+
+    display:block;
+
+    width:100%;
+}
+
+
+/* =========================
+   LABEL
+========================= */
 
 .input-group label{
-font-weight:bold;
-display:block;
-margin-bottom:5px;
+
+    display:block;
+
+    width:100%;
+
+    margin-bottom:7px;
+
+    color:#334155;
+
+    font-size:14px;
+
+    font-weight:700;
 }
 
-.input-box{
-position:relative;
-}
+
+/* =========================
+   ICON
+========================= */
 
 .input-box i{
-position:absolute;
-left:15px;
-top:15px;
-color:#16a34a;
+
+    position:absolute;
+
+    left:16px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#0f766e;
+
+    font-size:15px;
+
+    z-index:2;
 }
+
+
+/* =========================
+   INPUT
+========================= */
 
 .input-box input{
-width:100%;
-padding:14px 14px 14px 45px;
-border:1px solid #ddd;
-border-radius:10px;
+
+    display:block;
+
+    width:100%;
+
+    max-width:100%;
+
+    height:48px;
+
+    padding:13px 15px 13px 46px;
+
+    border:1.5px solid #d9e5e1;
+
+    border-radius:13px;
+
+    background:#f8fbfa;
+
+    color:#1e293b;
+
+    font-size:14px;
+
+    outline:none;
+
+    transition:.3s;
+
+    font-family:inherit;
 }
 
-.btn{
-width:100%;
-padding:14px;
-border:none;
-background:#16a34a;
-color:white;
-border-radius:10px;
-font-size:17px;
-cursor:pointer;
-margin-top:10px;
+
+.input-box input::placeholder{
+
+    color:#94a3b8;
+}
+
+
+.input-box input:hover{
+
+    border-color:#5eead4;
+}
+
+
+.input-box input:focus{
+
+    background:white;
+
+    border-color:#0f766e;
+
+    box-shadow:
+        0 0 0 4px rgba(20,184,166,.12);
+}
+
+
+/* =========================
+   FILE INPUT
+========================= */
+
+.input-box input[type="file"]{
+
+    height:48px;
+
+    padding:7px 10px 7px 46px;
+
+    cursor:pointer;
+
+    color:#64748b;
+}
+
+
+.input-box input[type="file"]::file-selector-button{
+
+    border:none;
+
+    background:#ccfbf1;
+
+    color:#115e59;
+
+    padding:7px 12px;
+
+    border-radius:8px;
+
+    font-weight:600;
+
+    margin-right:8px;
+
+    cursor:pointer;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.register-btn{
+
+    width:100%;
+
+    height:52px;
+
+    margin-top:7px;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0f766e,
+            #10b981
+        );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 9px 22px rgba(15,118,110,.30);
+
+    transition:.3s;
+}
+
+
+.register-btn i{
+
+    margin-right:7px;
+}
+
+
+.register-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 13px 28px rgba(15,118,110,.38);
+}
+
+
+.register-btn:active{
+
+    transform:translateY(0);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.register-footer{
+
+    text-align:center;
+
+    margin-top:20px;
+
+    padding-top:17px;
+
+    border-top:1px solid #e2e8f0;
+
+    color:#94a3b8;
+
+    font-size:12px;
+}
+
+
+.register-footer i{
+
+    color:#0f766e;
+
+    margin-right:4px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    .register-page{
+
+        padding:25px 14px;
+
+    }
+
+    .register-card{
+
+        padding:28px 20px;
+
+        border-radius:23px;
+
+    }
+
+    .register-header h1{
+
+        font-size:24px;
+
+    }
+
+    .register-logo{
+
+        width:68px;
+
+        height:68px;
+
+    }
+
+    .register-logo i{
+
+        font-size:31px;
+
+    }
+
 }
 
 </style>
 
-<div class="register-container">
 
-<div class="register-card">
+<!-- =========================
+     REGISTER PAGE
+========================= -->
 
-<div class="register-header">
+<div class="register-page">
 
-<i class="fas fa-user-plus"></i>
+    <div class="register-card">
 
-<h1>Farmer Registration</h1>
 
-<p>Create New Account</p>
+        <!-- HEADER -->
 
-</div>
+        <div class="register-header">
 
-<form method="POST" enctype="multipart/form-data">
+            <div class="register-logo">
 
-<div class="input-group">
-<label>Name</label>
-<div class="input-box">
-<i class="fas fa-user"></i>
-<input type="text" name="name" required>
-</div>
-</div>
+                <i class="fas fa-user-plus"></i>
 
-<div class="input-group">
-<label>Mobile</label>
-<div class="input-box">
-<i class="fas fa-phone"></i>
-<input type="text" name="mobile" required>
-</div>
-</div>
+            </div>
 
-<div class="input-group">
-<label>Village</label>
-<div class="input-box">
-<i class="fas fa-location-dot"></i>
-<input type="text" name="village" required>
-</div>
-</div>
+            <h1>Farmer Registration</h1>
 
-<div class="input-group">
-<label>Username</label>
-<div class="input-box">
-<i class="fas fa-id-card"></i>
-<input type="text" name="username" required>
-</div>
-</div>
+            <p>
+                Join Smart Agriculture Monitoring System
+            </p>
 
-<div class="input-group">
-<label>Password</label>
-<div class="input-box">
-<i class="fas fa-lock"></i>
-<input type="password" name="password" required>
-</div>
-</div>
-<div class="input-group">
-    <label>Photo</label>
-    <div class="input-box">
-        <i class="fas fa-image"></i>
-        <input type="file" name="photo" accept="image/*">
+        </div>
+
+
+
+        <!-- =========================
+             FORM
+        ========================= -->
+
+        <form method="POST" enctype="multipart/form-data">
+
+
+            <!-- NAME -->
+
+            <div class="input-group">
+
+                <label>
+                    Full Name
+                </label>
+
+                <div class="input-box">
+
+                    <i class="fas fa-user"></i>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MOBILE -->
+
+            <div class="input-group">
+
+                <label>
+                    Mobile Number
+                </label>
+
+                <div class="input-box">
+
+                    <i class="fas fa-phone"></i>
+
+                    <input
+                        type="tel"
+                        name="mobile"
+                        placeholder="Enter mobile number"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- VILLAGE -->
+
+            <div class="input-group">
+
+                <label>
+                    Village
+                </label>
+
+                <div class="input-box">
+
+                    <i class="fas fa-location-dot"></i>
+
+                    <input
+                        type="text"
+                        name="village"
+                        placeholder="Enter village name"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- USERNAME -->
+
+            <div class="input-group">
+
+                <label>
+                    Username
+                </label>
+
+                <div class="input-box">
+
+                    <i class="fas fa-id-card"></i>
+
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Create username"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PASSWORD -->
+
+            <div class="input-group">
+
+                <label>
+                    Password
+                </label>
+
+                <div class="input-box">
+
+                    <i class="fas fa-lock"></i>
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Create password"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PHOTO -->
+
+            <div class="input-group">
+
+                <label>
+                    Profile Photo
+                </label>
+
+                <div class="input-box">
+
+                    <i class="fas fa-camera"></i>
+
+                    <input
+                        type="file"
+                        name="photo"
+                        accept="image/*"
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- REGISTER BUTTON -->
+
+            <button
+                type="submit"
+                class="register-btn"
+            >
+
+                <i class="fas fa-user-check"></i>
+
+                Create Farmer Account
+
+            </button>
+
+
+        </form>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="register-footer">
+
+            <i class="fas fa-leaf"></i>
+
+            Smart Farming • Better Agriculture • Better Future
+
+        </div>
+
+
     </div>
-</div>
-
-<button class="btn">
-<i class="fas fa-user-check"></i>
- Register
-</button>
-
-</form>
-
-</div>
 
 </div>
 

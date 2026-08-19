@@ -1,0 +1,576 @@
+{% extends "baseofhtml.html" %}
+
+{% block title %}AI Crop Recommendation | AgriNevo{% endblock %}
+
+{% block content %}
+
+<style>
+    .crop-page {
+        min-height: 90vh;
+        padding: 45px 15px 70px;
+        background:
+            radial-gradient(circle at 10% 10%, rgba(34,197,94,.12), transparent 30%),
+            radial-gradient(circle at 90% 20%, rgba(16,185,129,.10), transparent 30%),
+            linear-gradient(135deg, #f0fdf4, #ffffff 45%, #ecfdf5);
+    }
+
+    .hero-card {
+        max-width: 1100px;
+        margin: auto;
+        padding: 35px;
+        border-radius: 28px;
+        background: rgba(255,255,255,.88);
+        box-shadow: 0 20px 60px rgba(22,101,52,.12);
+        border: 1px solid rgba(34,197,94,.15);
+    }
+
+    .hero-title {
+        font-size: 42px;
+        font-weight: 800;
+        color: #166534;
+        margin-bottom: 8px;
+    }
+
+    .hero-subtitle {
+        color: #64748b;
+        font-size: 17px;
+        margin-bottom: 30px;
+    }
+
+    .ai-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 15px;
+        border-radius: 50px;
+        background: #dcfce7;
+        color: #166534;
+        font-weight: 700;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .form-card {
+        background: #ffffff;
+        border-radius: 22px;
+        padding: 28px;
+        border: 1px solid #e2e8f0;
+        height: 100%;
+    }
+
+    .form-title {
+        font-size: 22px;
+        font-weight: 750;
+        color: #14532d;
+        margin-bottom: 20px;
+    }
+
+    .input-box {
+        margin-bottom: 17px;
+    }
+
+    .input-box label {
+        display: block;
+        font-weight: 650;
+        color: #334155;
+        margin-bottom: 7px;
+    }
+
+    .input-box input {
+        width: 100%;
+        padding: 13px 15px;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        outline: none;
+        font-size: 15px;
+        transition: .25s;
+        background: #f8fafc;
+    }
+
+    .input-box input:focus {
+        border-color: #22c55e;
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(34,197,94,.10);
+    }
+
+    .unit {
+        font-size: 12px;
+        color: #94a3b8;
+        margin-top: 4px;
+    }
+
+    .predict-btn {
+        width: 100%;
+        border: none;
+        padding: 15px;
+        border-radius: 13px;
+        background: linear-gradient(135deg, #16a34a, #15803d);
+        color: white;
+        font-size: 17px;
+        font-weight: 750;
+        cursor: pointer;
+        transition: .25s;
+        box-shadow: 0 10px 25px rgba(22,163,74,.20);
+    }
+
+    .predict-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 30px rgba(22,163,74,.30);
+    }
+
+    .info-card {
+        background: linear-gradient(135deg, #14532d, #166534);
+        color: white;
+        border-radius: 22px;
+        padding: 30px;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .info-card::after {
+        content: "🌾";
+        position: absolute;
+        right: -15px;
+        bottom: -25px;
+        font-size: 130px;
+        opacity: .10;
+    }
+
+    .info-card h3 {
+        font-weight: 750;
+        margin-bottom: 12px;
+    }
+
+    .feature {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+        align-items: flex-start;
+    }
+
+    .feature-icon {
+        min-width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255,255,255,.14);
+        font-size: 20px;
+    }
+
+    .feature strong {
+        display: block;
+        margin-bottom: 3px;
+    }
+
+    .feature span {
+        color: #d1fae5;
+        font-size: 13px;
+    }
+
+    .result-card {
+        max-width: 1100px;
+        margin: 25px auto 0;
+        padding: 28px;
+        border-radius: 22px;
+        background: linear-gradient(135deg, #ecfdf5, #ffffff);
+        border: 2px solid #86efac;
+        text-align: center;
+        box-shadow: 0 15px 40px rgba(22,101,52,.10);
+        animation: resultShow .5s ease;
+    }
+
+    .result-icon {
+        font-size: 55px;
+        margin-bottom: 5px;
+    }
+
+    .result-label {
+        color: #64748b;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .crop-name {
+        font-size: 38px;
+        font-weight: 850;
+        color: #15803d;
+        margin: 5px 0;
+        text-transform: capitalize;
+    }
+
+    .result-text {
+        color: #64748b;
+        margin: 0;
+    }
+
+    .error-card {
+        max-width: 1100px;
+        margin: 20px auto;
+        padding: 16px 20px;
+        border-radius: 14px;
+        background: #fef2f2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    @keyframes resultShow {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media(max-width: 768px) {
+        .hero-title {
+            font-size: 31px;
+        }
+
+        .hero-card {
+            padding: 22px;
+        }
+
+        .crop-name {
+            font-size: 30px;
+        }
+    }
+</style>
+
+
+<div class="crop-page">
+
+    <!-- HEADER -->
+    <div class="hero-card">
+
+        <div class="text-center">
+
+            <div class="ai-badge">
+                🤖 AI Powered
+            </div>
+
+            <h1 class="hero-title">
+                🌱 Smart Crop Recommendation
+            </h1>
+
+            <p class="hero-subtitle">
+                Get the most suitable crop recommendation using
+                Machine Learning and soil & weather conditions.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <!-- FORM -->
+            <div class="col-lg-7">
+
+                <div class="form-card">
+
+                    <h3 class="form-title">
+                        📊 Enter Agricultural Data
+                    </h3>
+
+                    <form method="POST">
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="input-box">
+                                    <label>🌿 Nitrogen (N)</label>
+
+                                    <input
+                                        type="number"
+                                        step="any"
+                                        name="N"
+                                        placeholder="e.g. 90"
+                                        required
+                                    >
+
+                                    <div class="unit">
+                                        Soil nutrient value
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="input-box">
+                                    <label>🧪 Phosphorus (P)</label>
+
+                                    <input
+                                        type="number"
+                                        step="any"
+                                        name="P"
+                                        placeholder="e.g. 42"
+                                        required
+                                    >
+
+                                    <div class="unit">
+                                        Soil nutrient value
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="input-box">
+                                    <label>⚗️ Potassium (K)</label>
+
+                                    <input
+                                        type="number"
+                                        step="any"
+                                        name="K"
+                                        placeholder="e.g. 43"
+                                        required
+                                    >
+
+                                    <div class="unit">
+                                        Soil nutrient value
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="input-box">
+                                    <label>🌡️ Temperature</label>
+
+                                    <input
+                                        type="number"
+                                        step="any"
+                                        name="temperature"
+                                        placeholder="e.g. 25.5 °C"
+                                        required
+                                    >
+
+                                    <div class="unit">
+                                        Degree Celsius
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="input-box">
+                                    <label>💧 Humidity</label>
+
+                                    <input
+                                        type="number"
+                                        step="any"
+                                        name="humidity"
+                                        placeholder="e.g. 80 %"
+                                        required
+                                    >
+
+                                    <div class="unit">
+                                        Relative humidity
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="input-box">
+                                    <label>🧫 Soil pH</label>
+
+                                    <input
+                                        type="number"
+                                        step="any"
+                                        name="ph"
+                                        placeholder="e.g. 6.5"
+                                        required
+                                    >
+
+                                    <div class="unit">
+                                        Soil acidity / alkalinity
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="input-box">
+                                    <label>🌧️ Rainfall</label>
+
+                                    <input
+                                        type="number"
+                                        step="any"
+                                        name="rainfall"
+                                        placeholder="e.g. 200 mm"
+                                        required
+                                    >
+
+                                    <div class="unit">
+                                        Millimetres
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="predict-btn"
+                        >
+                            🤖 Predict Best Crop
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI INFORMATION -->
+            <div class="col-lg-5">
+
+                <div class="info-card">
+
+                    <h3>
+                        🧠 How AI Works
+                    </h3>
+
+                    <p>
+                        AgriNevo uses a trained
+                        <strong>Random Forest Machine Learning model</strong>
+                        to analyse agricultural conditions and recommend
+                        a suitable crop.
+                    </p>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🌱
+                        </div>
+
+                        <div>
+                            <strong>Soil Analysis</strong>
+
+                            <span>
+                                N, P, K and pH values are analysed.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🌤️
+                        </div>
+
+                        <div>
+                            <strong>Weather Conditions</strong>
+
+                            <span>
+                                Temperature, humidity and rainfall
+                                are considered.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🤖
+                        </div>
+
+                        <div>
+                            <strong>Machine Learning</strong>
+
+                            <span>
+                                Random Forest predicts the most suitable
+                                crop from the trained dataset.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🎯
+                        </div>
+
+                        <div>
+                            <strong>Smart Recommendation</strong>
+
+                            <span>
+                                Get your recommended crop instantly.
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RESULT -->
+    {% if prediction %}
+
+    <div class="result-card">
+
+        <div class="result-icon">
+            🌾
+        </div>
+
+        <div class="result-label">
+            AI Recommended Crop
+        </div>
+
+        <div class="crop-name">
+            {{ prediction }}
+        </div>
+
+        <p class="result-text">
+            Based on the soil and weather conditions you entered,
+            AgriNevo's Random Forest model recommends this crop.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- ERROR -->
+    {% if error %}
+
+    <div class="error-card">
+        ⚠️ {{ error }}
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
