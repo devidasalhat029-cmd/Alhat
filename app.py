@@ -2014,8 +2014,7 @@ Give practical and simple information.
 
 
                 response = groq_client.chat.completions.create(
-
-                    model="llama-3.3-70b-versatile",
+                    model="openai/gpt-oss-20b",
 
                     messages=[
                         {
@@ -3347,7 +3346,7 @@ def ai_tips():
     try:
 
         response = groq_client.chat.completions.create(
-            model="llama-3.1-8b-instant",
+            model="openai/gpt-oss-20b",
             messages=[
                 {
                     "role": "user",
@@ -3398,7 +3397,7 @@ def ai_chat():
     try:
 
         response = groq_client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model="openai/gpt-oss-20b",
             messages=[
                 {
                     "role": "system",
